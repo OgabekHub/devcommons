@@ -1,0 +1,61 @@
+{
+  "Header": {
+    "snippets": "Snippets",
+    "prompts": "Prompts",
+    "login": "Kirish"
+  },
+  "Index": {
+    "badge": "100% bepul va ochiq manba",
+    "title_start": "Kod yozing. ",
+    "title_highlight": "Ulashing.",
+    "title_end": " Hammaga foydali bo'lsin.",
+    "subtitle": "DevCommons — dasturchilar o'z bilim va kodlarini bepul ulashadigan ochiq platforma.",
+    "no_barrier": "Ro'yxatdan o'tish shart emas. To'siq yo'q. Faqat bilim.",
+    "btn_snippets": "Snippet'larni kashf qiling",
+    "btn_prompts": "AI Prompt'lar",
+    "trust_open_source": "Open Source",
+    "trust_community": "Community-driven",
+    "trust_free": "Abadiy bepul"
+  },
+  "Snippets": {
+    "meta_title": "Kod Snippet'lar — DevCommons",
+    "meta_description": "Dasturchilar uchun tayyor kod snippet'lar to'plami. Bepul, ochiq, hammaga.",
+    "badge": "Snippet'lar",
+    "title": "Kod Snippet'lar",
+    "subtitle": "Real loyihalardan tayyor yechimlar — nusxalang va ishlating",
+    "btn_add": "Snippet qo'shish",
+    "search_placeholder": "Snippet qidirish...",
+    "filter": "Filter",
+    "supabase_error_title": "Supabase sozlanmagan",
+    "supabase_error_desc1": "Snippet'larni ko'rish uchun",
+    "supabase_error_desc2": "fayliga Supabase URL va Anon Key kiriting."
+  },
+  "Prompts": {
+    "meta_title": "AI Prompt'lar — DevCommons",
+    "meta_description": "ChatGPT, Claude, Gemini uchun tayyor AI prompt'lar. Bepul, ochiq, hammaga.",
+    "badge": "Prompt'lar",
+    "title": "AI Prompt'lar",
+    "subtitle": "ChatGPT, Claude, Gemini uchun tayyor prompt'lar to'plami",
+    "btn_add": "Prompt qo'shish",
+    "search_placeholder": "Prompt qidirish...",
+    "cat_all": "Hammasi",
+    "supabase_error_title": "Supabase sozlanmagan",
+    "supabase_error_desc1": "Prompt'larni ko'rish uchun",
+    "supabase_error_desc2": "fayliga Supabase URL va Anon Key kiriting."
+  },
+  "Auth": {
+    "meta_title": "Kirish — DevCommons",
+    "meta_description": "DevCommons'ga GitHub orqali kiring va bilim ulashing.",
+    "back_home": "Bosh sahifaga qaytish",
+    "title": "DevCommons'ga kirish",
+    "subtitle": "Snippet va prompt qo'shish uchun GitHub akkauntingiz bilan kiring.",
+    "login_github": "GitHub bilan kirish",
+    "or": "yoki",
+    "no_login_desc": "Ro'yxatdan o'tmasdan ham barcha snippet va prompt'larni ko'rishingiz mumkin.",
+    "btn_snippets": "Snippets",
+    "btn_prompts": "Prompts",
+    "trust_oauth": "Xavfsiz OAuth",
+    "trust_no_email": "Email shart emas",
+    "trust_delete": "Istalgan payt o'chirish"
+  }
+}

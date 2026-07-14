@@ -1,0 +1,20 @@
+{
+  "Header": {
+    "snippets": "Сниппеты",
+    "prompts": "Промпты",
+    "login": "Войти"
+  },
+  "Index": {
+    "badge": "100% бесплатно и открыто",
+    "title_start": "Пишите код. ",
+    "title_highlight": "Делитесь.",
+    "title_end": " Полезно для всех.",
+    "subtitle": "DevCommons — открытая платформа, где разработчики бесплатно делятся своими знаниями.",
+    "no_barrier": "Регистрация не обязательна. Никаких преград. Только знания.",
+    "btn_snippets": "Найти Сниппеты",
+    "btn_prompts": "AI Промпты",
+    "trust_open_source": "Open Source",
+    "trust_community": "Community-driven",
+    "trust_free": "Навсегда бесплатно"
+  }
+}

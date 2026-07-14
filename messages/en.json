@@ -1,0 +1,61 @@
+{
+  "Header": {
+    "snippets": "Snippets",
+    "prompts": "Prompts",
+    "login": "Login"
+  },
+  "Index": {
+    "badge": "100% free and open source",
+    "title_start": "Write code. ",
+    "title_highlight": "Share.",
+    "title_end": " Helpful for everyone.",
+    "subtitle": "DevCommons is an open platform where developers share their knowledge and code for free.",
+    "no_barrier": "No registration required. No barriers. Just knowledge.",
+    "btn_snippets": "Discover Snippets",
+    "btn_prompts": "AI Prompts",
+    "trust_open_source": "Open Source",
+    "trust_community": "Community-driven",
+    "trust_free": "Forever free"
+  },
+  "Snippets": {
+    "meta_title": "Code Snippets — DevCommons",
+    "meta_description": "Collection of ready-to-use code snippets for developers. Free, open, for everyone.",
+    "badge": "Snippets",
+    "title": "Code Snippets",
+    "subtitle": "Ready-made solutions from real projects — copy and use",
+    "btn_add": "Add Snippet",
+    "search_placeholder": "Search snippets...",
+    "filter": "Filter",
+    "supabase_error_title": "Supabase not configured",
+    "supabase_error_desc1": "To view snippets, please add your Supabase URL and Anon Key to the",
+    "supabase_error_desc2": "file."
+  },
+  "Prompts": {
+    "meta_title": "AI Prompts — DevCommons",
+    "meta_description": "Ready-to-use AI prompts for ChatGPT, Claude, Gemini. Free, open, for everyone.",
+    "badge": "Prompts",
+    "title": "AI Prompts",
+    "subtitle": "Collection of ready-made prompts for ChatGPT, Claude, Gemini",
+    "btn_add": "Add Prompt",
+    "search_placeholder": "Search prompts...",
+    "cat_all": "All",
+    "supabase_error_title": "Supabase not configured",
+    "supabase_error_desc1": "To view prompts, please add your Supabase URL and Anon Key to the",
+    "supabase_error_desc2": "file."
+  },
+  "Auth": {
+    "meta_title": "Login — DevCommons",
+    "meta_description": "Login to DevCommons with GitHub and share your knowledge.",
+    "back_home": "Back to Home",
+    "title": "Log in to DevCommons",
+    "subtitle": "Log in with your GitHub account to add snippets and prompts.",
+    "login_github": "Log in with GitHub",
+    "or": "or",
+    "no_login_desc": "You can view all snippets and prompts without logging in.",
+    "btn_snippets": "Snippets",
+    "btn_prompts": "Prompts",
+    "trust_oauth": "Secure OAuth",
+    "trust_no_email": "No email required",
+    "trust_delete": "Delete anytime"
+  }
+}
