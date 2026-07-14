@@ -2,7 +2,7 @@ import { Code2, Plus, Search, Filter } from "lucide-react";
 import { isSupabaseConfigured, supabaseServer } from "@/lib/supabase";
 import type { Snippet } from "@/types/database";
 import Reveal from "@/components/Reveal";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: "Snippets" });
@@ -13,7 +13,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
 }
 
 export default async function SnippetsPage({ params: { locale } }: { params: { locale: string } }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Snippets");
   let snippets: Snippet[] = [];
   let error: string | null = null;

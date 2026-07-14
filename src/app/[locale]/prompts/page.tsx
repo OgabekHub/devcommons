@@ -2,7 +2,7 @@ import { Sparkles, Plus, Search, Filter } from "lucide-react";
 import { isSupabaseConfigured, supabaseServer } from "@/lib/supabase";
 import type { Prompt } from "@/types/database";
 import Reveal from "@/components/Reveal";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: "Prompts" });
@@ -13,7 +13,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
 }
 
 export default async function PromptsPage({ params: { locale } }: { params: { locale: string } }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Prompts");
   let prompts: Prompt[] = [];
   let error: string | null = null;

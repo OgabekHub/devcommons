@@ -1,6 +1,6 @@
 import { Github, ArrowLeft, Shield, Trash2, Mail, Code2 } from "lucide-react";
 
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
 }
 
 export default async function AuthPage({ params: { locale } }: { params: { locale: string } }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Auth");
 
   return (
