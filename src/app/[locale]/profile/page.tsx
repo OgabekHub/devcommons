@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { User, Code2, Sparkles, LogOut, Github } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function ProfilePage() {
@@ -13,13 +13,15 @@ export default function ProfilePage() {
   const [prompts, setPrompts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"snippets" | "prompts">("snippets");
+  const t = useTranslations("Profile");
+  const locale = useLocale();
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        window.location.href = "/uz/auth";
+        window.location.href = `/${locale}/auth`;
         return;
       }
       setUser(user);
@@ -40,7 +42,7 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = "/uz";
+    window.location.href = `/${locale}`;
   };
 
   if (loading) {
@@ -84,11 +86,11 @@ export default function ProfilePage() {
           <div className="mt-3 flex flex-wrap justify-center gap-3 sm:justify-start">
             <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-medium text-brand">
               <Code2 className="h-3.5 w-3.5" />
-              {snippets.length} snippet
+              {snippets.length} {t("snippets_count")}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1 text-sm font-medium text-violet-600">
               <Sparkles className="h-3.5 w-3.5" />
-              {prompts.length} prompt
+              {prompts.length} {t("prompts_count")}
             </span>
           </div>
         </div>
@@ -98,7 +100,7 @@ export default function ProfilePage() {
           className="flex items-center gap-2 rounded-xl border border-red-100 px-4 py-2 text-sm font-medium text-red-500 transition-all hover:bg-red-50"
         >
           <LogOut className="h-4 w-4" />
-          Chiqish
+          {t("logout")}
         </button>
       </div>
 
@@ -113,7 +115,7 @@ export default function ProfilePage() {
           }`}
         >
           <Code2 className="h-4 w-4" />
-          Snippet'larim ({snippets.length})
+          {t("tab_snippets")} ({snippets.length})
         </button>
         <button
           onClick={() => setTab("prompts")}
@@ -124,7 +126,7 @@ export default function ProfilePage() {
           }`}
         >
           <Sparkles className="h-4 w-4" />
-          Prompt'larim ({prompts.length})
+          {t("tab_prompts")} ({prompts.length})
         </button>
       </div>
 
@@ -134,9 +136,9 @@ export default function ProfilePage() {
           {snippets.length === 0 ? (
             <div className="card border-dashed p-10 text-center">
               <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">Hali snippet qo'shmagansiz</p>
+              <p className="text-gray-500">{t("no_snippets")}</p>
               <Link href="/snippets/new" className="btn-primary mt-4">
-                Snippet qo'shish
+                {t("btn_add_snippet")}
               </Link>
             </div>
           ) : (
@@ -165,9 +167,9 @@ export default function ProfilePage() {
           {prompts.length === 0 ? (
             <div className="card border-dashed p-10 text-center">
               <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">Hali prompt qo'shmagansiz</p>
+              <p className="text-gray-500">{t("no_prompts")}</p>
               <Link href="/prompts/new" className="btn-primary mt-4">
-                Prompt qo'shish
+                {t("btn_add_prompt")}
               </Link>
             </div>
           ) : (

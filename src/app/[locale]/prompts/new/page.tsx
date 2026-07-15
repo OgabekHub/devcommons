@@ -5,7 +5,7 @@ import { ArrowLeft, Sparkles, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const CATEGORIES = [
   "Coding", "Writing", "Analysis", "Marketing",
@@ -27,6 +27,7 @@ export default function NewPromptPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("NewPrompt");
   const supabase = createSupabaseBrowser();
 
   const addTag = () => {
@@ -46,7 +47,7 @@ export default function NewPromptPage() {
     setError("");
 
     if (!title.trim() || !content.trim()) {
-      setError("Sarlavha va prompt matni majburiy!");
+      setError(t("error_required"));
       return;
     }
 
@@ -87,7 +88,7 @@ export default function NewPromptPage() {
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-        Prompts'ga qaytish
+        {t("back")}
       </Link>
 
       {/* Header */}
@@ -96,8 +97,8 @@ export default function NewPromptPage() {
           <Sparkles className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Prompt qo'shish</h1>
-          <p className="text-sm text-gray-500">AI promptingizni hamjamiyat bilan ulashing</p>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-sm text-gray-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -106,39 +107,39 @@ export default function NewPromptPage() {
         {/* Title */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Sarlavha <span className="text-red-500">*</span>
+            {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Masalan: Senior Code Reviewer"
+            placeholder={t("field_title_placeholder")}
             maxLength={100}
-            className="input w-full"
+            className="input w-full bg-white text-gray-900"
           />
         </div>
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">Tavsif</label>
+          <label className="text-sm font-semibold text-gray-700">{t("field_desc")}</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Bu prompt nima uchun? Qanday natija beradi?"
+            placeholder={t("field_desc_placeholder")}
             rows={3}
             maxLength={500}
-            className="input w-full resize-none"
+            className="input w-full resize-none bg-white text-gray-900"
           />
         </div>
 
         {/* Category + AI Model */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">Kategoriya</label>
+            <label className="text-sm font-semibold text-gray-700">{t("field_category")}</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="input w-full"
+              className="input w-full bg-white text-gray-900"
             >
               {CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>{cat}</option>
@@ -146,11 +147,11 @@ export default function NewPromptPage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">AI Model</label>
+            <label className="text-sm font-semibold text-gray-700">{t("field_model")}</label>
             <select
               value={aiModel}
               onChange={(e) => setAiModel(e.target.value)}
-              className="input w-full"
+              className="input w-full bg-white text-gray-900"
             >
               {AI_MODELS.map((model) => (
                 <option key={model} value={model}>{model}</option>
@@ -162,9 +163,9 @@ export default function NewPromptPage() {
         {/* Prompt Content */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Prompt matni <span className="text-red-500">*</span>
+            {t("field_content")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+          <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-white">
             <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-4 py-2">
               <span className="text-xs font-medium text-gray-500">✨ Prompt</span>
               <span className="text-xs text-gray-400">{content.length} / 5000</span>
@@ -172,13 +173,10 @@ export default function NewPromptPage() {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Promptingizni shu yerga yozing...
-
-Masalan:
-Sen tajribali senior dasturchi sifatida menga kod review qilib berasan. Har bir muammoni aniq tushuntirib, yaxshilash uchun tavsiyalar berasan..."
+              placeholder={t("field_content_placeholder")}
               rows={12}
               maxLength={5000}
-              className="w-full p-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none"
+              className="w-full bg-white p-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none resize-none"
             />
           </div>
         </div>
@@ -186,7 +184,7 @@ Sen tajribali senior dasturchi sifatida menga kod review qilib berasan. Har bir 
         {/* Tags */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Teglar <span className="text-gray-400 font-normal">(max 5)</span>
+            {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
             <input
@@ -194,9 +192,9 @@ Sen tajribali senior dasturchi sifatida menga kod review qilib berasan. Har bir 
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-              placeholder="code-review, debugging..."
+              placeholder={t("field_tags_placeholder")}
               maxLength={20}
-              className="input flex-1"
+              className="input flex-1 bg-white text-gray-900"
             />
             <button
               type="button"
@@ -238,7 +236,7 @@ Sen tajribali senior dasturchi sifatida menga kod review qilib berasan. Har bir 
         {/* Submit */}
         <div className="flex gap-3 pt-2">
           <Link href="/prompts" className="btn-secondary flex-1 py-3 text-center">
-            Bekor qilish
+            {t("btn_cancel")}
           </Link>
           <button
             type="submit"
@@ -253,7 +251,7 @@ Sen tajribali senior dasturchi sifatida menga kod review qilib berasan. Har bir 
             ) : (
               <Save className="h-4 w-4" />
             )}
-            {loading ? "Saqlanmoqda..." : "Prompt saqlash"}
+            {loading ? t("saving") : t("btn_save")}
           </button>
         </div>
       </form>

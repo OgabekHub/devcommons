@@ -5,7 +5,7 @@ import { ArrowLeft, Code2, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const LANGUAGES = [
   "JavaScript", "TypeScript", "Python", "Rust", "Go",
@@ -24,6 +24,7 @@ export default function NewSnippetPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("NewSnippet");
   const supabase = createSupabaseBrowser();
 
   const addTag = () => {
@@ -43,7 +44,7 @@ export default function NewSnippetPage() {
     setError("");
 
     if (!title.trim() || !code.trim()) {
-      setError("Sarlavha va kod majburiy!");
+      setError(t("error_required"));
       return;
     }
 
@@ -83,7 +84,7 @@ export default function NewSnippetPage() {
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-        Snippets'ga qaytish
+        {t("back")}
       </Link>
 
       {/* Header */}
@@ -92,8 +93,8 @@ export default function NewSnippetPage() {
           <Code2 className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Snippet qo'shish</h1>
-          <p className="text-sm text-gray-500">Kodingizni hamjamiyat bilan ulashing</p>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-sm text-gray-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -102,42 +103,42 @@ export default function NewSnippetPage() {
         {/* Title */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Sarlavha <span className="text-red-500">*</span>
+            {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Masalan: Array deduplication with Set"
+            placeholder={t("field_title_placeholder")}
             maxLength={100}
-            className="input w-full"
+            className="input w-full bg-white text-gray-900"
           />
         </div>
 
         {/* Description */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Tavsif
+            {t("field_desc")}
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Bu snippet nima qiladi? Qachon ishlatiladi?"
+            placeholder={t("field_desc_placeholder")}
             rows={3}
             maxLength={500}
-            className="input w-full resize-none"
+            className="input w-full resize-none bg-white text-gray-900"
           />
         </div>
 
         {/* Language */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Dasturlash tili <span className="text-red-500">*</span>
+            {t("field_lang")} <span className="text-red-500">*</span>
           </label>
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="input w-full"
+            className="input w-full bg-white text-gray-900"
           >
             {LANGUAGES.map((lang) => (
               <option key={lang} value={lang}>{lang}</option>
@@ -148,7 +149,7 @@ export default function NewSnippetPage() {
         {/* Code */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Kod <span className="text-red-500">*</span>
+            {t("field_code")} <span className="text-red-500">*</span>
           </label>
           <div className="overflow-hidden rounded-xl border border-gray-200 bg-gray-900 shadow-sm">
             <div className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2">
@@ -162,10 +163,10 @@ export default function NewSnippetPage() {
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              placeholder={`// ${language} kodingizni shu yerga yozing...`}
+              placeholder={`// ${language} ${t("field_code_placeholder")}`}
               rows={14}
               spellCheck={false}
-              className="w-full bg-transparent p-4 font-mono text-sm text-gray-100 placeholder-gray-600 focus:outline-none resize-none"
+              className="w-full bg-gray-900 p-4 font-mono text-sm text-gray-100 placeholder-gray-500 focus:outline-none resize-none"
             />
           </div>
         </div>
@@ -173,7 +174,7 @@ export default function NewSnippetPage() {
         {/* Tags */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-gray-700">
-            Teglar <span className="text-gray-400 font-normal">(max 5)</span>
+            {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
             <input
@@ -181,9 +182,9 @@ export default function NewSnippetPage() {
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-              placeholder="react, hooks, performance..."
+              placeholder={t("field_tags_placeholder")}
               maxLength={20}
-              className="input flex-1"
+              className="input flex-1 bg-white text-gray-900"
             />
             <button
               type="button"
@@ -225,7 +226,7 @@ export default function NewSnippetPage() {
         {/* Submit */}
         <div className="flex gap-3 pt-2">
           <Link href="/snippets" className="btn-secondary flex-1 py-3 text-center">
-            Bekor qilish
+            {t("btn_cancel")}
           </Link>
           <button
             type="submit"
@@ -240,7 +241,7 @@ export default function NewSnippetPage() {
             ) : (
               <Save className="h-4 w-4" />
             )}
-            {loading ? "Saqlanmoqda..." : "Snippet saqlash"}
+            {loading ? t("saving") : t("btn_save")}
           </button>
         </div>
       </form>
