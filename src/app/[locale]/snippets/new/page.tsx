@@ -28,6 +28,7 @@ export default function NewSnippetPage() {
   const [tagInput, setTagInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [prismLoaded, setPrismLoaded] = useState(false);
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("NewSnippet");
@@ -36,22 +37,26 @@ export default function NewSnippetPage() {
   // Load language grammars safely in the browser (prevents SSR crash)
   useEffect(() => {
     if (typeof window !== "undefined") {
-      (window as any).Prism = Prism;
-      require("prismjs/components/prism-javascript");
-      require("prismjs/components/prism-typescript");
-      require("prismjs/components/prism-python");
-      require("prismjs/components/prism-rust");
-      require("prismjs/components/prism-go");
-      require("prismjs/components/prism-java");
-      require("prismjs/components/prism-c");
-      require("prismjs/components/prism-cpp");
-      require("prismjs/components/prism-csharp");
-      require("prismjs/components/prism-php");
-      require("prismjs/components/prism-ruby");
-      require("prismjs/components/prism-sql");
-      require("prismjs/components/prism-bash");
-      require("prismjs/components/prism-yaml");
-      require("prismjs/components/prism-json");
+      const loadLanguages = async () => {
+        (window as any).Prism = Prism;
+        await import("prismjs/components/prism-javascript");
+        await import("prismjs/components/prism-typescript");
+        await import("prismjs/components/prism-python");
+        await import("prismjs/components/prism-rust");
+        await import("prismjs/components/prism-go");
+        await import("prismjs/components/prism-java");
+        await import("prismjs/components/prism-c");
+        await import("prismjs/components/prism-cpp");
+        await import("prismjs/components/prism-csharp");
+        await import("prismjs/components/prism-php");
+        await import("prismjs/components/prism-ruby");
+        await import("prismjs/components/prism-sql");
+        await import("prismjs/components/prism-bash");
+        await import("prismjs/components/prism-yaml");
+        await import("prismjs/components/prism-json");
+        setPrismLoaded(true);
+      };
+      loadLanguages();
     }
   }, []);
 
