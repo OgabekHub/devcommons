@@ -36,6 +36,7 @@ export default function NewSnippetPage() {
   // Load language grammars safely in the browser (prevents SSR crash)
   useEffect(() => {
     if (typeof window !== "undefined") {
+      (window as any).Prism = Prism;
       require("prismjs/components/prism-javascript");
       require("prismjs/components/prism-typescript");
       require("prismjs/components/prism-python");

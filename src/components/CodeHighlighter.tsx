@@ -14,7 +14,9 @@ interface Props {
 export default function CodeHighlighter({ code, language }: Props) {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // PrismJS componentlari faqat brauzerda yuklanishi kerak (SSR da window xatoligini bermasligi uchun)
+      // PrismJS componentlari global Prism o'zgaruvchisini talab qiladi
+      (window as any).Prism = Prism;
+      
       require("prismjs/components/prism-javascript");
       require("prismjs/components/prism-typescript");
       require("prismjs/components/prism-python");
