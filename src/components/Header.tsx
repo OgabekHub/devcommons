@@ -52,7 +52,7 @@ export default function Header() {
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+      <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 lg:px-12">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5 transition-all">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:shadow-brand">

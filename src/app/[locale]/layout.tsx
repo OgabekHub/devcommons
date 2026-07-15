@@ -33,7 +33,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
-          <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+          <main className="mx-auto max-w-[1440px] px-4 py-8 md:px-8 lg:px-12">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

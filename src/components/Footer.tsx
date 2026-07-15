@@ -10,7 +10,7 @@ export default function Footer() {
       {/* Top decoration */}
       <div className="pointer-events-none absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
 
-      <div className="mx-auto max-w-6xl px-4 py-12">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 md:px-8 lg:px-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
