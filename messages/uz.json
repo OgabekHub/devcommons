@@ -57,5 +57,14 @@
     "trust_oauth": "Xavfsiz OAuth",
     "trust_no_email": "Email shart emas",
     "trust_delete": "Istalgan payt o'chirish"
+  },
+  "Footer": {
+    "description": "Dasturchilar uchun ochiq bilim bazasi. Kod snippet'lar va AI prompt'larni bepul ulashing.",
+    "pages": "Sahifalar",
+    "login": "Kirish",
+    "status": "Holat",
+    "all_systems": "Barcha tizimlar ishlayapti",
+    "open_source": "Ochiq manba loyihasi.",
+    "made_with_love": "bilan yaratilgan"
   }
 }

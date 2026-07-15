@@ -16,5 +16,55 @@
     "trust_open_source": "Open Source",
     "trust_community": "Community-driven",
     "trust_free": "Навсегда бесплатно"
+  },
+  "Snippets": {
+    "meta_title": "Сниппеты — DevCommons",
+    "meta_description": "Коллекция готовых сниппетов для разработчиков. Бесплатно, открыто, для всех.",
+    "badge": "Сниппеты",
+    "title": "Код сниппеты",
+    "subtitle": "Готовые решения из реальных проектов — копируйте и используйте",
+    "btn_add": "Добавить сниппет",
+    "search_placeholder": "Поиск сниппетов...",
+    "filter": "Фильтр",
+    "supabase_error_title": "Supabase не настроен",
+    "supabase_error_desc1": "Для просмотра сниппетов добавьте Supabase URL и Anon Key в файл",
+    "supabase_error_desc2": "."
+  },
+  "Prompts": {
+    "meta_title": "AI Промпты — DevCommons",
+    "meta_description": "Готовые промпты для ChatGPT, Claude, Gemini. Бесплатно, открыто, для всех.",
+    "badge": "Промпты",
+    "title": "AI Промпты",
+    "subtitle": "Коллекция готовых промптов для ChatGPT, Claude, Gemini",
+    "btn_add": "Добавить промпт",
+    "search_placeholder": "Поиск промптов...",
+    "cat_all": "Все",
+    "supabase_error_title": "Supabase не настроен",
+    "supabase_error_desc1": "Для просмотра промптов добавьте Supabase URL и Anon Key в файл",
+    "supabase_error_desc2": "."
+  },
+  "Auth": {
+    "meta_title": "Вход — DevCommons",
+    "meta_description": "Войдите в DevCommons через GitHub и делитесь знаниями.",
+    "back_home": "На главную",
+    "title": "Войти в DevCommons",
+    "subtitle": "Войдите через GitHub, чтобы добавлять сниппеты и промпты.",
+    "login_github": "Войти через GitHub",
+    "or": "или",
+    "no_login_desc": "Вы можете просматривать все сниппеты и промпты без регистрации.",
+    "btn_snippets": "Сниппеты",
+    "btn_prompts": "Промпты",
+    "trust_oauth": "Безопасный OAuth",
+    "trust_no_email": "Email не нужен",
+    "trust_delete": "Удалить аккаунт в любое время"
+  },
+  "Footer": {
+    "description": "Открытая база знаний для разработчиков. Делитесь сниппетами и AI промптами бесплатно.",
+    "pages": "Страницы",
+    "login": "Войти",
+    "status": "Статус",
+    "all_systems": "Все системы работают",
+    "open_source": "Проект с открытым исходным кодом.",
+    "made_with_love": "сделано с любовью"
   }
 }

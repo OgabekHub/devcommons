@@ -19,7 +19,6 @@ import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 
 export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
-  console.log("Page received params locale:", locale);
   setRequestLocale(locale);
   const t = useTranslations("Index");
 

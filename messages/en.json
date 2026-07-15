@@ -57,5 +57,14 @@
     "trust_oauth": "Secure OAuth",
     "trust_no_email": "No email required",
     "trust_delete": "Delete anytime"
+  },
+  "Footer": {
+    "description": "Open knowledge base for developers. Share code snippets and AI prompts for free.",
+    "pages": "Pages",
+    "login": "Login",
+    "status": "Status",
+    "all_systems": "All systems operational",
+    "open_source": "Open source project.",
+    "made_with_love": "made with love"
   }
 }
