@@ -1,42 +1,44 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-function getSupabaseConfig() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-  if (!url || url === "your_supabase_project_url") {
-    console.warn(
-      "⚠️ NEXT_PUBLIC_SUPABASE_URL sozlanmagan. .env.local fayliga Supabase URL kiriting."
-    );
-    return { url: "", key: "" };
-  }
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl &&
+    supabaseAnonKey &&
+    supabaseUrl !== "your_supabase_project_url" &&
+    supabaseAnonKey !== "your_supabase_anon_key"
+);
 
-  if (!key || key === "your_supabase_anon_key") {
-    console.warn(
-      "⚠️ NEXT_PUBLIC_SUPABASE_ANON_KEY sozlanmagan. .env.local fayliga Supabase Anon Key kiriting."
-    );
-    return { url: "", key: "" };
-  }
-
-  return { url, key };
+// Browser (client component) uchun
+export function createSupabaseBrowser() {
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
 
-const { url, key } = getSupabaseConfig();
-
-// Supabase mavjudligini tekshirish uchun flag
-export const isSupabaseConfigured = Boolean(url && key);
-
-// Server komponentlar va API route'lar uchun
-export function supabaseServer() {
-  if (!isSupabaseConfigured) {
-    throw new Error(
-      "Supabase sozlanmagan. .env.local fayliga NEXT_PUBLIC_SUPABASE_URL va NEXT_PUBLIC_SUPABASE_ANON_KEY kiriting."
-    );
-  }
-  return createClient(url, key);
+// Server component va Route Handler uchun
+export function createSupabaseServer() {
+  const cookieStore = cookies();
+  return createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // Server Component'da set qilib bo'lmaydi — e'tibor bermaslik mumkin
+        }
+      },
+    },
+  });
 }
 
-// Client komponentlar uchun (browser) — faqat config mavjud bo'lsa yaratadi
+// Eski kod bilan moslik uchun (deprecated — asta-sekin olib tashlanadi)
+export const supabaseServer = createSupabaseServer;
 export const supabaseBrowser = isSupabaseConfigured
-  ? createClient(url, key)
+  ? createBrowserClient(supabaseUrl, supabaseAnonKey)
   : null;

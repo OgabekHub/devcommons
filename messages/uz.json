@@ -2,7 +2,8 @@
   "Header": {
     "snippets": "Snippets",
     "prompts": "Prompts",
-    "login": "Kirish"
+    "login": "Kirish",
+    "logout": "Chiqish"
   },
   "Index": {
     "badge": "100% bepul va ochiq manba",

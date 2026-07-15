@@ -1,19 +1,30 @@
-import { Github, ArrowLeft, Shield, Trash2, Mail, Code2 } from "lucide-react";
+"use client";
 
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Github, ArrowLeft, Shield, Trash2, Mail, Code2 } from "lucide-react";
+import { useState } from "react";
+import { createSupabaseBrowser } from "@/lib/supabase";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-  const t = await getTranslations({ locale, namespace: "Auth" });
-  return {
-    title: t("meta_title"),
-    description: t("meta_description"),
-  };
-}
+export default function AuthPage() {
+  const [loading, setLoading] = useState(false);
+  const t = useTranslations("Auth");
+  const locale = useLocale();
+  const supabase = createSupabaseBrowser();
 
-export default async function AuthPage({ params: { locale } }: { params: { locale: string } }) {
-  setRequestLocale(locale);
-  const t = await getTranslations("Auth");
+  const handleGitHubLogin = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=/${locale}`,
+      },
+    });
+    if (error) {
+      console.error("Login xatosi:", error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center py-8">
@@ -44,10 +55,19 @@ export default async function AuthPage({ params: { locale } }: { params: { local
         <div className="animate-fade-in-up card p-8" style={{ animationDelay: "0.2s" }}>
           <button
             type="button"
-            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-gray-900 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+            onClick={handleGitHubLogin}
+            disabled={loading}
+            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-gray-900 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
-            <Github className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-            {t("login_github")}
+            {loading ? (
+              <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <Github className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+            )}
+            {loading ? "Yo'naltirilmoqda..." : t("login_github")}
           </button>
 
           {/* Divider */}
@@ -67,16 +87,10 @@ export default async function AuthPage({ params: { locale } }: { params: { local
               {t("no_login_desc")}
             </p>
             <div className="mt-3 flex gap-2">
-              <Link
-                href="/snippets"
-                className="btn-secondary flex-1 py-2.5 text-sm"
-              >
+              <Link href="/snippets" className="btn-secondary flex-1 py-2.5 text-sm">
                 {t("btn_snippets")}
               </Link>
-              <Link
-                href="/prompts"
-                className="btn-secondary flex-1 py-2.5 text-sm"
-              >
+              <Link href="/prompts" className="btn-secondary flex-1 py-2.5 text-sm">
                 {t("btn_prompts")}
               </Link>
             </div>
