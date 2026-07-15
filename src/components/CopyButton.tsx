@@ -11,7 +11,9 @@ interface Props {
 export default function CopyButton({ text, label = "Nusxalash" }: Props) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -31,7 +33,7 @@ export default function CopyButton({ text, label = "Nusxalash" }: Props) {
 
   return (
     <button
-      onClick={handleCopy}
+      onClick={(e) => handleCopy(e)}
       className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
         copied
           ? "bg-green-500/20 text-green-400"
