@@ -6,6 +6,7 @@ import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import CustomSelect from "@/components/CustomSelect";
 
 const CATEGORIES = [
   "Coding", "Writing", "Analysis", "Marketing",
@@ -136,27 +137,19 @@ export default function NewPromptPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">{t("field_category")}</label>
-            <select
+            <CustomSelect
+              options={CATEGORIES}
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="input w-full bg-white text-gray-900"
-            >
-              {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
+              onChange={(val) => setCategory(val)}
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-700">{t("field_model")}</label>
-            <select
+            <CustomSelect
+              options={AI_MODELS}
               value={aiModel}
-              onChange={(e) => setAiModel(e.target.value)}
-              className="input w-full bg-white text-gray-900"
-            >
-              {AI_MODELS.map((model) => (
-                <option key={model} value={model}>{model}</option>
-              ))}
-            </select>
+              onChange={(val) => setAiModel(val)}
+            />
           </div>
         </div>
 

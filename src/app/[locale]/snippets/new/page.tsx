@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, Code2, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import CustomSelect from "@/components/CustomSelect";
+import Editor from "react-simple-code-editor";
+import Prism from "prismjs";
+
+// VS Code theme for editor
+import "prismjs/themes/prism-tomorrow.css";
 
 const LANGUAGES = [
   "JavaScript", "TypeScript", "Python", "Rust", "Go",
@@ -26,6 +32,50 @@ export default function NewSnippetPage() {
   const locale = useLocale();
   const t = useTranslations("NewSnippet");
   const supabase = createSupabaseBrowser();
+
+  // Load language grammars safely in the browser (prevents SSR crash)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      require("prismjs/components/prism-javascript");
+      require("prismjs/components/prism-typescript");
+      require("prismjs/components/prism-python");
+      require("prismjs/components/prism-rust");
+      require("prismjs/components/prism-go");
+      require("prismjs/components/prism-java");
+      require("prismjs/components/prism-c");
+      require("prismjs/components/prism-cpp");
+      require("prismjs/components/prism-csharp");
+      require("prismjs/components/prism-php");
+      require("prismjs/components/prism-ruby");
+      require("prismjs/components/prism-sql");
+      require("prismjs/components/prism-bash");
+      require("prismjs/components/prism-yaml");
+      require("prismjs/components/prism-json");
+    }
+  }, []);
+
+  const highlightCode = (input: string) => {
+    const lang = language.toLowerCase();
+    let grammar = Prism.languages.javascript;
+    
+    if (lang === "typescript") grammar = Prism.languages.typescript;
+    else if (lang === "python") grammar = Prism.languages.python;
+    else if (lang === "rust") grammar = Prism.languages.rust;
+    else if (lang === "go") grammar = Prism.languages.go;
+    else if (lang === "java") grammar = Prism.languages.java;
+    else if (lang === "cpp" || lang === "c++") grammar = Prism.languages.cpp;
+    else if (lang === "csharp" || lang === "c#") grammar = Prism.languages.csharp;
+    else if (lang === "php") grammar = Prism.languages.php;
+    else if (lang === "ruby") grammar = Prism.languages.ruby;
+    else if (lang === "sql") grammar = Prism.languages.sql;
+    else if (lang === "bash") grammar = Prism.languages.bash;
+    else if (lang === "yaml") grammar = Prism.languages.yaml;
+    else if (lang === "json") grammar = Prism.languages.json;
+    else if (lang === "html") grammar = Prism.languages.html;
+    else if (lang === "css") grammar = Prism.languages.css;
+
+    return Prism.highlight(input, grammar || Prism.languages.javascript, lang);
+  };
 
   const addTag = () => {
     const trimmed = tagInput.trim().toLowerCase();
@@ -135,15 +185,11 @@ export default function NewSnippetPage() {
           <label className="text-sm font-semibold text-gray-700">
             {t("field_lang")} <span className="text-red-500">*</span>
           </label>
-          <select
+          <CustomSelect
+            options={LANGUAGES}
             value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="input w-full bg-white text-gray-900"
-          >
-            {LANGUAGES.map((lang) => (
-              <option key={lang} value={lang}>{lang}</option>
-            ))}
-          </select>
+            onChange={(val) => setLanguage(val)}
+          />
         </div>
 
         {/* Code */}
@@ -151,8 +197,8 @@ export default function NewSnippetPage() {
           <label className="text-sm font-semibold text-gray-700">
             {t("field_code")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-gray-200 bg-gray-900 shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2">
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-[#0F0A1F] shadow-sm">
+            <div className="flex items-center justify-between border-b border-gray-800 bg-gray-900 px-4 py-2">
               <span className="text-xs font-medium text-gray-400">{language}</span>
               <div className="flex gap-1.5">
                 <div className="h-3 w-3 rounded-full bg-red-500/70" />
@@ -160,14 +206,21 @@ export default function NewSnippetPage() {
                 <div className="h-3 w-3 rounded-full bg-green-500/70" />
               </div>
             </div>
-            <textarea
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder={`// ${language} ${t("field_code_placeholder")}`}
-              rows={14}
-              spellCheck={false}
-              className="w-full bg-gray-900 p-4 font-mono text-sm text-gray-100 placeholder-gray-500 focus:outline-none resize-none"
-            />
+            <div className="min-h-[350px] font-mono text-sm leading-relaxed">
+              <Editor
+                value={code}
+                onValueChange={(val) => setCode(val)}
+                highlight={(val) => highlightCode(val)}
+                padding={20}
+                placeholder={`// ${language} ${t("field_code_placeholder")}`}
+                style={{
+                  fontFamily: '"Fira code", "Fira Mono", monospace',
+                  fontSize: 14,
+                  backgroundColor: 'transparent',
+                }}
+                className="w-full text-gray-100 placeholder-gray-500 focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 
