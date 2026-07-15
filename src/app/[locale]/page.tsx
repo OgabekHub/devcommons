@@ -162,7 +162,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                     <span className="text-blue-300">console</span>.
                     <span className="text-red-400">error</span>
                     <span className="text-yellow-300">(</span>
-                    <span className="text-green-300">&quot;Xato:&quot;</span>,{" "}
+                    <span className="text-green-300">&quot;{t("preview_error")}&quot;</span>,{" "}
                     <span className="text-orange-300">err</span>
                     <span className="text-yellow-300">)</span>;
                   </div>
@@ -177,7 +177,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                 <div className="mt-3 flex justify-end">
                   <button className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs text-gray-400 transition-all hover:bg-white/20 hover:text-white">
                     <Copy className="h-3.5 w-3.5" />
-                    Nusxalash
+                    {t("preview_copy")}
                   </button>
                 </div>
               </div>
@@ -193,14 +193,13 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <Reveal>
           <div className="text-center">
             <span className="mb-3 inline-block rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
-              Imkoniyatlar
+              {t("feat_badge")}
             </span>
             <h2 className="text-3xl font-bold sm:text-4xl">
-              Nima uchun <span className="text-gradient">DevCommons</span>?
+              {t("feat_title_start")}<span className="text-gradient">DevCommons</span>{t("feat_title_end")}
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-gray-500">
-              Bilimni ochiq qiling. Community bilan birga o&apos;sing.
-              Har bir dasturchi uchun kerakli vositalar.
+              {t("feat_desc")}
             </p>
           </div>
         </Reveal>
@@ -212,10 +211,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mb-5 inline-flex rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100 p-3.5 transition-transform duration-300 group-hover:scale-110">
                 <Code2 className="h-6 w-6 text-brand" />
               </div>
-              <h3 className="mb-2 text-lg font-bold">Kod Snippet&apos;lar</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("feat1_title")}</h3>
               <p className="text-sm leading-relaxed text-gray-500">
-                Real loyihalardan tayyor yechimlar. Nusxalang, ishlating,
-                vaqt tejang. Har bir snippet — sinab ko&apos;rilgan kod.
+                {t("feat1_desc")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-600">JavaScript</span>
@@ -229,10 +227,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mb-5 inline-flex rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 p-3.5 transition-transform duration-300 group-hover:scale-110">
                 <Sparkles className="h-6 w-6 text-purple-500" />
               </div>
-              <h3 className="mb-2 text-lg font-bold">AI Prompt&apos;lar</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("feat2_title")}</h3>
               <p className="text-sm leading-relaxed text-gray-500">
-                ChatGPT, Claude, Gemini uchun ishlaydigan prompt&apos;lar
-                to&apos;plami. O&apos;z prompt&apos;ingizni ham ulashing.
+                {t("feat2_desc")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="rounded-lg bg-violet-50 px-2.5 py-1 text-xs font-medium text-violet-600">ChatGPT</span>
@@ -246,15 +243,14 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mb-5 inline-flex rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 p-3.5 transition-transform duration-300 group-hover:scale-110">
                 <Users className="h-6 w-6 text-emerald-500" />
               </div>
-              <h3 className="mb-2 text-lg font-bold">Ochiq Community</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("feat3_title")}</h3>
               <p className="text-sm leading-relaxed text-gray-500">
-                Hamma uchun, hammaga. Junior yoki senior — bilim
-                darajangiz muhim emas, hissangiz muhim.
+                {t("feat3_desc")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600">Ochiq</span>
-                <span className="rounded-lg bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-600">Bepul</span>
-                <span className="rounded-lg bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-600">Hammaga</span>
+                <span className="rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600">{t("tag_open")}</span>
+                <span className="rounded-lg bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-600">{t("tag_free")}</span>
+                <span className="rounded-lg bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-600">{t("tag_all")}</span>
               </div>
             </div>
           </div>
@@ -268,10 +264,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <Reveal>
           <div className="text-center">
             <span className="mb-3 inline-block rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
-              Qanday ishlaydi
+              {t("how_badge")}
             </span>
             <h2 className="text-3xl font-bold sm:text-4xl">
-              3 oddiy qadam
+              {t("how_title")}
             </h2>
           </div>
         </Reveal>
@@ -282,9 +278,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark text-xl font-bold text-white shadow-brand">
                 1
               </div>
-              <h3 className="mb-2 text-lg font-bold">Qidiring</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("how1_title")}</h3>
               <p className="text-sm text-gray-500">
-                Kerakli snippet yoki prompt&apos;ni tezkor qidiruv orqali toping
+                {t("how1_desc")}
               </p>
               <Search className="mx-auto mt-3 h-5 w-5 text-brand/40" />
               {/* Connector line */}
@@ -296,9 +292,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-xl font-bold text-white shadow-lg shadow-purple-500/25">
                 2
               </div>
-              <h3 className="mb-2 text-lg font-bold">Nusxalang</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("how2_title")}</h3>
               <p className="text-sm text-gray-500">
-                Bir tugma bilan kodni nusxalab, loyihangizga qo&apos;shing
+                {t("how2_desc")}
               </p>
               <Copy className="mx-auto mt-3 h-5 w-5 text-purple-400/40" />
               <div className="absolute right-0 top-7 hidden h-0.5 w-8 bg-gradient-to-r from-purple-400/30 to-transparent sm:block" style={{ right: "-16px" }} />
@@ -309,9 +305,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-xl font-bold text-white shadow-lg shadow-emerald-500/25">
                 3
               </div>
-              <h3 className="mb-2 text-lg font-bold">Ulashing</h3>
+              <h3 className="mb-2 text-lg font-bold">{t("how3_title")}</h3>
               <p className="text-sm text-gray-500">
-                O&apos;z yechimlaringizni qo&apos;shing — community baholaydi
+                {t("how3_desc")}
               </p>
               <Heart className="mx-auto mt-3 h-5 w-5 text-emerald-400/40" />
             </div>
@@ -332,12 +328,12 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
 
           <div className="relative">
             <h2 className="mb-10 text-center text-2xl font-bold text-white sm:text-3xl">
-              Raqamlar gapiradi
+              {t("stats_title")}
             </h2>
             <div className="grid gap-10 sm:grid-cols-3">
-              <AnimatedCounter end={100} suffix="%" label="Bepul va ochiq" />
-              <AnimatedCounter end={0} suffix=" so'm" label="Hech qachon to'lov yo'q" />
-              <AnimatedCounter end={24} suffix="/7" label="Doim ochiq" />
+              <AnimatedCounter end={100} suffix="%" label={t("stat1_label")} />
+              <AnimatedCounter end={0} suffix={t("stat2_suffix")} label={t("stat2_label")} />
+              <AnimatedCounter end={24} suffix="/7" label={t("stat3_label")} />
             </div>
           </div>
         </section>
@@ -350,13 +346,13 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <Reveal>
           <div className="text-center">
             <span className="mb-3 inline-block rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
-              Tillar
+              {t("tech_badge")}
             </span>
             <h2 className="text-3xl font-bold sm:text-4xl">
-              Barcha tillar uchun
+              {t("tech_title")}
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-gray-500">
-              JavaScript, Python, Go, Rust va boshqa tillardagi snippet&apos;lar
+              {t("tech_desc")}
             </p>
           </div>
         </Reveal>
@@ -397,21 +393,20 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <Zap className="h-8 w-8 text-white" />
             </div>
             <h2 className="text-3xl font-bold sm:text-4xl">
-              Bilimingizni ulashing.{" "}
-              <span className="text-gradient">Bepul.</span>{" "}
-              Hoziroq.
+              {t("cta_title_start")}
+              <span className="text-gradient">{t("cta_title_highlight")}</span>{" "}
+              {t("cta_title_end")}
             </h2>
             <p className="text-gray-500">
-              Birinchi snippet yoki prompt&apos;ingizni qo&apos;shing va
-              global dasturchilar community&apos;siga qo&apos;shiling.
+              {t("cta_desc")}
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a href="/snippets" className="btn-primary text-lg">
-                Boshlash
+                {t("cta_btn_start")}
                 <ArrowRight className="h-5 w-5" />
               </a>
               <a href="/auth" className="btn-ghost text-lg">
-                GitHub bilan kirish
+                {t("cta_btn_login")}
               </a>
             </div>
           </div>
