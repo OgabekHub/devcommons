@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { ArrowLeft, Copy, Calendar, Code2, User, Tag } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import CopyButton from "@/components/CopyButton";
+import CodeHighlighter from "@/components/CodeHighlighter";
 
 interface Props {
   params: { id: string; locale: string };
@@ -97,10 +98,8 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         </div>
 
         {/* Code content */}
-        <div className="overflow-x-auto bg-gray-900">
-          <pre className="p-6 text-sm leading-relaxed text-gray-100">
-            <code>{snippet.code}</code>
-          </pre>
+        <div className="overflow-x-auto bg-[#0F0A1F]">
+          <CodeHighlighter code={snippet.code} language={snippet.language} />
         </div>
       </div>
 
