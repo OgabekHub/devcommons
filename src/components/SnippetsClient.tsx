@@ -5,6 +5,8 @@ import { Code2, Plus, Search, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Snippet } from "@/types/database";
 import { useLocale } from "next-intl";
+import VoteButton from "@/components/VoteButton";
+import CopyButton from "@/components/CopyButton";
 
 const LANGUAGES = [
   "Barchasi", "JavaScript", "TypeScript", "Python", "Rust",
@@ -153,9 +155,12 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                   ))}
                 </div>
               )}
-              <div className="flex items-center gap-4 text-xs text-gray-400">
-                <span>👍 {snippet.votes}</span>
-                <span>{new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <VoteButton id={snippet.id} type="snippet" initialVotes={snippet.votes ?? 0} />
+                  <span className="text-xs text-gray-400">{new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</span>
+                </div>
+                <CopyButton text={snippet.code} label="" />
               </div>
             </Link>
           ))}

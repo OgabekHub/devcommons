@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Sparkles, Plus, Search, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Prompt } from "@/types/database";
+import VoteButton from "@/components/VoteButton";
 
 const CATEGORIES = [
   "Barchasi", "Coding", "Writing", "Analysis", "Marketing",
@@ -162,9 +163,9 @@ export default function PromptsClient({ prompts, labels }: Props) {
               <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-500">
                 {prompt.content}
               </p>
-              <div className="flex items-center gap-4 text-xs text-gray-400">
-                <span>👍 {prompt.votes}</span>
-                <span>{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
+              <div className="flex items-center gap-3">
+                  <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
+                  <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
               </div>
             </Link>
           ))}
