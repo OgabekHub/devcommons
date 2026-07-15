@@ -98,6 +98,15 @@ export default function Header() {
               {/* Dropdown */}
               {dropdownOpen && (
                 <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-gray-100 bg-white p-1 shadow-lg">
+                  <Link
+                    href="/profile"
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                  >
+                    <User className="h-4 w-4" />
+                    {t("profile")}
+                  </Link>
+                  <div className="my-1 border-t border-gray-100" />
                   <button
                     onClick={handleLogout}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
@@ -155,10 +164,18 @@ export default function Header() {
 
           {user ? (
             <div className="mt-2 flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3">
-              <div className="flex items-center gap-2">
-                {avatarUrl && <img src={avatarUrl} alt={username} className="h-7 w-7 rounded-full" />}
-                <span className="text-sm font-medium text-gray-700">{username}</span>
-              </div>
+              <Link
+                href="/profile"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 hover:text-brand transition-colors"
+              >
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt={username} className="h-7 w-7 rounded-full" />
+                ) : (
+                  <User className="h-5 w-5 text-gray-500" />
+                )}
+                <span className="text-sm font-medium">{username}</span>
+              </Link>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1.5 text-sm text-red-500 hover:text-red-600"
