@@ -3,7 +3,8 @@
     "snippets": "Snippets",
     "prompts": "Prompts",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "profile": "Profile"
   },
   "Index": {
     "badge": "100% free and open source",
@@ -67,5 +68,54 @@
     "all_systems": "All systems operational",
     "open_source": "Open source project.",
     "made_with_love": "made with love"
+  },
+  "NewSnippet": {
+    "back": "Back to Snippets",
+    "title": "Add Snippet",
+    "subtitle": "Share your code with the community",
+    "field_title": "Title",
+    "field_title_placeholder": "Example: Array deduplication with Set",
+    "field_desc": "Description",
+    "field_desc_placeholder": "What does this snippet do? When to use?",
+    "field_lang": "Programming Language",
+    "field_code": "Code",
+    "field_code_placeholder": "write your code here...",
+    "field_tags": "Tags",
+    "field_tags_placeholder": "react, hooks, performance...",
+    "btn_cancel": "Cancel",
+    "btn_save": "Save Snippet",
+    "saving": "Saving...",
+    "error_required": "Title and code are required!"
+  },
+  "NewPrompt": {
+    "back": "Back to Prompts",
+    "title": "Add Prompt",
+    "subtitle": "Share your AI prompt with the community",
+    "field_title": "Title",
+    "field_title_placeholder": "Example: Senior Code Reviewer",
+    "field_desc": "Description",
+    "field_desc_placeholder": "What is this prompt for? What result does it give?",
+    "field_category": "Category",
+    "field_model": "AI Model",
+    "field_content": "Prompt Text",
+    "field_content_placeholder": "Write your prompt here...\n\nExample:\nYou are an experienced senior developer, please do code review. Explain each issue and suggest improvements...",
+    "field_tags": "Tags",
+    "field_tags_placeholder": "code-review, debugging...",
+    "btn_cancel": "Cancel",
+    "btn_save": "Save Prompt",
+    "saving": "Saving...",
+    "error_required": "Title and prompt text are required!"
+  },
+  "Profile": {
+    "title": "User Profile",
+    "snippets_count": "snippets",
+    "prompts_count": "prompts",
+    "logout": "Logout",
+    "tab_snippets": "My Snippets",
+    "tab_prompts": "My Prompts",
+    "no_snippets": "You have not added any snippets yet",
+    "no_prompts": "You have not added any prompts yet",
+    "btn_add_snippet": "Add Snippet",
+    "btn_add_prompt": "Add Prompt"
   }
 }

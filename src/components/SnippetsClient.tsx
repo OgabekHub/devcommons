@@ -84,7 +84,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
         <select
           value={lang}
           onChange={(e) => setLang(e.target.value)}
-          className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 focus:border-brand focus:outline-none"
+          className="input w-full sm:w-48 bg-white text-gray-700 cursor-pointer"
         >
           {LANGUAGES.map((l) => (
             <option key={l} value={l}>{l}</option>
