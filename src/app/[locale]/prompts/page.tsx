@@ -1,5 +1,5 @@
 import { Sparkles, Plus, Search, Filter } from "lucide-react";
-import { isSupabaseConfigured, supabaseServer } from "@/lib/supabase";
+import { isSupabaseConfigured, createSupabaseServer } from "@/lib/supabase-server";
 import type { Prompt } from "@/types/database";
 import Reveal from "@/components/Reveal";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -20,7 +20,7 @@ export default async function PromptsPage({ params: { locale } }: { params: { lo
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = supabaseServer();
+      const supabase = createSupabaseServer();
       const { data, error: dbError } = await supabase
         .from("prompts")
         .select("*")

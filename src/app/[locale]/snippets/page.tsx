@@ -1,5 +1,5 @@
 import { Code2, Plus, Search, Filter } from "lucide-react";
-import { isSupabaseConfigured, supabaseServer } from "@/lib/supabase";
+import { isSupabaseConfigured, createSupabaseServer } from "@/lib/supabase-server";
 import type { Snippet } from "@/types/database";
 import Reveal from "@/components/Reveal";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -20,7 +20,7 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = supabaseServer();
+      const supabase = createSupabaseServer();
       const { data, error: dbError } = await supabase
         .from("snippets")
         .select("*")
