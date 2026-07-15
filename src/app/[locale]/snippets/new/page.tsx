@@ -55,26 +55,31 @@ export default function NewSnippetPage() {
   }, []);
 
   const highlightCode = (input: string) => {
-    const lang = language.toLowerCase();
-    let grammar = Prism.languages.javascript;
+    if (!input) return "";
     
-    if (lang === "typescript") grammar = Prism.languages.typescript;
-    else if (lang === "python") grammar = Prism.languages.python;
-    else if (lang === "rust") grammar = Prism.languages.rust;
-    else if (lang === "go") grammar = Prism.languages.go;
-    else if (lang === "java") grammar = Prism.languages.java;
-    else if (lang === "cpp" || lang === "c++") grammar = Prism.languages.cpp;
-    else if (lang === "csharp" || lang === "c#") grammar = Prism.languages.csharp;
-    else if (lang === "php") grammar = Prism.languages.php;
-    else if (lang === "ruby") grammar = Prism.languages.ruby;
-    else if (lang === "sql") grammar = Prism.languages.sql;
-    else if (lang === "bash") grammar = Prism.languages.bash;
-    else if (lang === "yaml") grammar = Prism.languages.yaml;
-    else if (lang === "json") grammar = Prism.languages.json;
-    else if (lang === "html") grammar = Prism.languages.html;
-    else if (lang === "css") grammar = Prism.languages.css;
+    const lang = language.toLowerCase();
+    
+    // Prism.languages'dan kerakli til gramatika qoidasini xavfsiz qidirish
+    let grammar = Prism.languages[lang];
+    
+    if (!grammar) {
+      // Ba'zi tillar uchun maxsus nomlar xaritasi
+      if (lang === "c++") grammar = Prism.languages.cpp;
+      else if (lang === "c#") grammar = Prism.languages.csharp;
+      else if (lang === "typescript") grammar = Prism.languages.typescript;
+    }
 
-    return Prism.highlight(input, grammar || Prism.languages.javascript, lang);
+    // Agar tanlangan til hali yuklanmagan yoki mavjud bo'lmasa, fallback
+    if (!grammar) {
+      grammar = Prism.languages.javascript || Prism.languages.clike || Prism.languages.markup;
+    }
+
+    try {
+      return Prism.highlight(input, grammar, lang);
+    } catch (err) {
+      console.error("Syntax highlighting error:", err);
+      return input; // Xatolik yuz bersa, kodni shunchaki oddiy matn sifatida qaytaramiz (qulamasligi uchun)
+    }
   };
 
   const addTag = () => {
