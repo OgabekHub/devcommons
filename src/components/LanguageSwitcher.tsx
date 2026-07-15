@@ -34,8 +34,10 @@ export default function LanguageSwitcher() {
       return;
     }
     
-    router.replace(pathname, { locale: newLocale });
-    setIsOpen(false);
+    // Use full page reload to ensure translations apply and cache is cleared, preserving search params
+    const searchParams = window.location.search;
+    const newPath = `/${newLocale}${pathname === '/' ? '' : pathname}${searchParams}`;
+    window.location.href = newPath;
   };
 
   const currentLocale = locales.find((l) => l.code === locale) || locales[0];
