@@ -4,6 +4,10 @@ import { setRequestLocale } from "next-intl/server";
 import { ArrowLeft, Calendar, Sparkles, User, Tag, Bot } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import CopyButton from "@/components/CopyButton";
+import PromptActions from "@/components/PromptActions";
+import BookmarkButton from "@/components/BookmarkButton";
+import CommentsSection from "@/components/CommentsSection";
+import ShareButton from "@/components/ShareButton";
 
 interface Props {
   params: { id: string; locale: string };
@@ -13,6 +17,8 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
   setRequestLocale(locale);
   const supabase = createSupabaseServer();
 
+  const { data: { user } } = await supabase.auth.getUser();
+
   const { data: prompt, error } = await supabase
     .from("prompts")
     .select("*")
@@ -20,6 +26,11 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
     .single();
 
   if (error || !prompt) notFound();
+
+  const isAuthor = user?.id === prompt.author_id;
+
+  // Increment view count
+  await supabase.rpc("increment_view_count", { table_name: "prompts", item_id: id });
 
   const createdAt = new Date(prompt.created_at).toLocaleDateString("uz-UZ", {
     year: "numeric",
@@ -75,7 +86,13 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
             ) : (
               <User className="h-4 w-4" />
             )}
-            {prompt.author_name || "Anonymous"}
+            {prompt.author_name ? (
+              <Link href={`/users/${prompt.author_name}`} className="hover:text-brand transition-colors">
+                {prompt.author_name}
+              </Link>
+            ) : (
+              "Anonymous"
+            )}
           </span>
           <span className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4" />
@@ -84,6 +101,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           <span className="flex items-center gap-1.5">
             👍 {prompt.votes || 0} ovoz
           </span>
+          <BookmarkButton promptId={prompt.id} />
         </div>
       </div>
 
@@ -114,7 +132,14 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         <Link href="/prompts/new" className="btn-primary">
           + Yangi prompt
         </Link>
+        {isAuthor && (
+          <PromptActions promptId={prompt.id} locale={locale} />
+        )}
+        <ShareButton title={prompt.title} url={`/prompts/${prompt.id}`} />
       </div>
+
+      {/* Comments */}
+      <CommentsSection promptId={prompt.id} />
     </div>
   );
 }

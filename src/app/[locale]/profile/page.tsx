@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Sparkles, LogOut, Github } from "lucide-react";
+import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
@@ -11,6 +11,12 @@ export default function ProfilePage() {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [snippets, setSnippets] = useState<any[]>([]);
   const [prompts, setPrompts] = useState<any[]>([]);
+  const [stats, setStats] = useState({
+    totalViews: 0,
+    totalVotes: 0,
+    followers: 0,
+    following: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"snippets" | "prompts">("snippets");
   const t = useTranslations("Profile");
@@ -27,13 +33,29 @@ export default function ProfilePage() {
       setUser(user);
 
       // Foydalanuvchi snippet va promptlarini olish
-      const [{ data: snips }, { data: proms }] = await Promise.all([
-        supabase.from("snippets").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
-        supabase.from("prompts").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
+      const [{ data: snips }, { data: proms }, { data: follows }, { data: following }] = await Promise.all([
+        supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("follows").select("*").eq("following_id", user.id),
+        supabase.from("follows").select("*").eq("follower_id", user.id),
       ]);
 
       setSnippets(snips ?? []);
       setPrompts(proms ?? []);
+
+      // Calculate stats
+      const totalViews = (snips?.reduce((sum, s) => sum + (s.view_count || 0), 0) || 0) +
+                        (proms?.reduce((sum, p) => sum + (p.view_count || 0), 0) || 0);
+      const totalVotes = (snips?.reduce((sum, s) => sum + (s.votes || 0), 0) || 0) +
+                        (proms?.reduce((sum, p) => sum + (p.votes || 0), 0) || 0);
+
+      setStats({
+        totalViews,
+        totalVotes,
+        followers: follows?.length || 0,
+        following: following?.length || 0,
+      });
+
       setLoading(false);
     };
 
@@ -102,6 +124,30 @@ export default function ProfilePage() {
           <LogOut className="h-4 w-4" />
           {t("logout")}
         </button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid gap-4 sm:grid-cols-4">
+        <div className="card p-4 text-center">
+          <Eye className="mx-auto h-5 w-5 text-brand mb-2" />
+          <p className="text-2xl font-bold">{stats.totalViews}</p>
+          <p className="text-xs text-gray-500">Ko'rishlar</p>
+        </div>
+        <div className="card p-4 text-center">
+          <Heart className="mx-auto h-5 w-5 text-red-500 mb-2" />
+          <p className="text-2xl font-bold">{stats.totalVotes}</p>
+          <p className="text-xs text-gray-500">Ovozlar</p>
+        </div>
+        <div className="card p-4 text-center">
+          <Users className="mx-auto h-5 w-5 text-blue-500 mb-2" />
+          <p className="text-2xl font-bold">{stats.followers}</p>
+          <p className="text-xs text-gray-500">Obunachilar</p>
+        </div>
+        <div className="card p-4 text-center">
+          <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-2" />
+          <p className="text-2xl font-bold">{stats.following}</p>
+          <p className="text-xs text-gray-500">Obuna</p>
+        </div>
       </div>
 
       {/* Tabs */}

@@ -1,16 +1,23 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Code2, Plus, Search, X } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { Code2, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Snippet } from "@/types/database";
 import { useLocale } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
+import SkeletonCard from "@/components/SkeletonCard";
 
 const LANGUAGES = [
   "Barchasi", "JavaScript", "TypeScript", "Python", "Rust",
   "Go", "Java", "C++", "C#", "PHP", "Ruby", "SQL", "Other"
+];
+
+const SORT_OPTIONS = [
+  { value: "newest", label: "Eng yangi" },
+  { value: "oldest", label: "Eng eski" },
+  { value: "popular", label: "Mashhur" },
 ];
 
 interface Props {
@@ -27,10 +34,22 @@ interface Props {
 export default function SnippetsClient({ snippets, labels }: Props) {
   const [query, setQuery] = useState("");
   const [lang, setLang] = useState("Barchasi");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState("newest");
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(12);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const observerRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
 
+  // Simulate initial loading
+  useEffect(() => {
+    setTimeout(() => setInitialLoading(false), 500);
+  }, []);
+
   const filtered = useMemo(() => {
-    return snippets.filter((s) => {
+    let result = snippets.filter((s) => {
       const matchQuery =
         !query ||
         s.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -39,9 +58,56 @@ export default function SnippetsClient({ snippets, labels }: Props) {
 
       const matchLang = lang === "Barchasi" || s.language === lang;
 
-      return matchQuery && matchLang;
+      const matchTags = selectedTags.length === 0 ||
+        selectedTags.some(tag => (s as any).tags?.includes(tag));
+
+      return matchQuery && matchLang && matchTags;
     });
-  }, [snippets, query, lang]);
+
+    // Sort
+    result = [...result].sort((a, b) => {
+      if (sortBy === "newest") {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      } else if (sortBy === "oldest") {
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      } else if (sortBy === "popular") {
+        return (b.votes || 0) - (a.votes || 0);
+      }
+      return 0;
+    });
+
+    return result;
+  }, [snippets, query, lang, selectedTags, sortBy]);
+
+  const visibleSnippets = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
+
+  // Infinite scroll with Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          setLoading(true);
+          setTimeout(() => {
+            setVisibleCount((prev) => Math.min(prev + 12, filtered.length));
+            setLoading(false);
+          }, 300);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, loading, filtered.length]);
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleCount(12);
+  }, [query, lang, selectedTags, sortBy]);
 
   return (
     <div className="space-y-8">
@@ -90,13 +156,60 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             <option key={l} value={l}>{l}</option>
           ))}
         </select>
+        <div className="relative">
+          <button
+            onClick={() => setShowSortMenu(!showSortMenu)}
+            className="input flex items-center gap-2 bg-white text-gray-700 cursor-pointer sm:w-40"
+          >
+            <ArrowUpDown className="h-4 w-4" />
+            {SORT_OPTIONS.find(opt => opt.value === sortBy)?.label}
+          </button>
+          {showSortMenu && (
+            <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-xl border border-gray-200 bg-white p-1 shadow-lg">
+              {SORT_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => { setSortBy(opt.value); setShowSortMenu(false); }}
+                  className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                    sortBy === opt.value ? "bg-brand-50 text-brand" : "text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* Tag filter */}
+      {selectedTags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {selectedTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-medium text-brand transition-colors hover:bg-brand-100"
+            >
+              #{tag}
+              <X className="h-3 w-3" />
+            </button>
+          ))}
+          <button
+            onClick={() => setSelectedTags([])}
+            className="text-sm text-gray-500 hover:text-gray-700"
+          >
+            Barchasini tozalash
+          </button>
+        </div>
+      )}
+
       {/* Natijalar soni */}
-      {(query || lang !== "Barchasi") && (
+      {(query || lang !== "Barchasi" || selectedTags.length > 0) && (
         <p className="text-sm text-gray-500">
           {filtered.length} ta natija topildi
           {query && <span> — "<strong>{query}</strong>"</span>}
+          {selectedTags.length > 0 && <span> — {selectedTags.length} ta tag</span>}
         </p>
       )}
 
@@ -124,9 +237,15 @@ export default function SnippetsClient({ snippets, labels }: Props) {
       )}
 
       {/* Snippets Grid */}
-      {filtered.length > 0 && (
+      {initialLoading ? (
         <div className="grid gap-4 sm:grid-cols-2">
-          {filtered.map((snippet) => (
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      ) : visibleSnippets.length > 0 ? (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {visibleSnippets.map((snippet) => (
             <Link
               key={snippet.id}
               href={`/snippets/${snippet.id}` as `/snippets/${string}`}
@@ -149,9 +268,23 @@ export default function SnippetsClient({ snippets, labels }: Props) {
               {(snippet as any).tags?.length > 0 && (
                 <div className="mb-3 flex flex-wrap gap-1.5">
                   {((snippet as any).tags as string[]).slice(0, 3).map((tag) => (
-                    <span key={tag} className="rounded-md bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
+                    <button
+                      key={tag}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!selectedTags.includes(tag)) {
+                          setSelectedTags([...selectedTags, tag]);
+                        }
+                      }}
+                      className={`rounded-md px-2 py-0.5 text-xs transition-colors ${
+                        selectedTags.includes(tag)
+                          ? "bg-brand-100 text-brand"
+                          : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                      }`}
+                    >
                       #{tag}
-                    </span>
+                    </button>
                   ))}
                 </div>
               )}
@@ -164,6 +297,18 @@ export default function SnippetsClient({ snippets, labels }: Props) {
               </div>
             </Link>
           ))}
+        </div>
+      ) : null}
+
+      {/* Loading indicator for infinite scroll */}
+      {hasMore && (
+        <div ref={observerRef} className="flex justify-center py-8">
+          {loading && (
+            <div className="flex items-center gap-2 text-gray-500">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>Yuklanmoqda...</span>
+            </div>
+          )}
         </div>
       )}
     </div>

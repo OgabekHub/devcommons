@@ -1,10 +1,21 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale } from "next-intl/server";
-import { ArrowLeft, Copy, Calendar, Code2, User, Tag } from "lucide-react";
+import { ArrowLeft, Copy, Calendar, Code2, User, Tag, Edit, Trash2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import dynamic from "next/dynamic";
 import CopyButton from "@/components/CopyButton";
-import CodeHighlighter from "@/components/CodeHighlighter";
+import SnippetActions from "@/components/SnippetActions";
+import BookmarkButton from "@/components/BookmarkButton";
+import DownloadButton from "@/components/DownloadButton";
+import EmbedButton from "@/components/EmbedButton";
+import CommentsSection from "@/components/CommentsSection";
+import ShareButton from "@/components/ShareButton";
+
+const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
+  loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
+  ssr: false,
+});
 
 interface Props {
   params: { id: string; locale: string };
@@ -14,6 +25,8 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
   setRequestLocale(locale);
   const supabase = createSupabaseServer();
 
+  const { data: { user } } = await supabase.auth.getUser();
+
   const { data: snippet, error } = await supabase
     .from("snippets")
     .select("*")
@@ -21,6 +34,11 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
     .single();
 
   if (error || !snippet) notFound();
+
+  const isAuthor = user?.id === snippet.author_id;
+
+  // Increment view count
+  await supabase.rpc("increment_view_count", { table_name: "snippets", item_id: id });
 
   const createdAt = new Date(snippet.created_at).toLocaleDateString("uz-UZ", {
     year: "numeric",
@@ -70,7 +88,13 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
             ) : (
               <User className="h-4 w-4" />
             )}
-            {snippet.author_name || "Anonymous"}
+            {snippet.author_name ? (
+              <Link href={`/users/${snippet.author_name}`} className="hover:text-brand transition-colors">
+                {snippet.author_name}
+              </Link>
+            ) : (
+              "Anonymous"
+            )}
           </span>
           <span className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4" />
@@ -79,6 +103,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           <span className="flex items-center gap-1.5">
             👍 {snippet.votes || 0} ovoz
           </span>
+          <BookmarkButton snippetId={snippet.id} />
         </div>
       </div>
 
@@ -94,7 +119,11 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
             </div>
             <span className="text-xs font-medium text-gray-400">{snippet.language}</span>
           </div>
-          <CopyButton text={snippet.code} />
+          <div className="flex items-center gap-2">
+            <EmbedButton snippetId={snippet.id} />
+            <DownloadButton code={snippet.code} language={snippet.language} filename={`${snippet.title.replace(/\s+/g, '_')}`} />
+            <CopyButton text={snippet.code} />
+          </div>
         </div>
 
         {/* Code content */}
@@ -111,7 +140,14 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         <Link href="/snippets/new" className="btn-primary">
           + Yangi snippet
         </Link>
+        {isAuthor && (
+          <SnippetActions snippetId={snippet.id} locale={locale} />
+        )}
+        <ShareButton title={snippet.title} url={`/snippets/${snippet.id}`} />
       </div>
+
+      {/* Comments */}
+      <CommentsSection snippetId={snippet.id} />
     </div>
   );
 }
