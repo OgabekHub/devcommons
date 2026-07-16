@@ -111,28 +111,28 @@ export default function Header() {
                     onClick={() => setDropdownOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    Saved
+                    {t("saved")}
                   </Link>
                   <Link
                     href="/feed"
                     onClick={() => setDropdownOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    Feed
+                    {t("feed")}
                   </Link>
                   <Link
                     href="/analytics"
                     onClick={() => setDropdownOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    Analytics
+                    {t("analytics")}
                   </Link>
                   <Link
                     href="/tags"
                     onClick={() => setDropdownOpen(false)}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    Tags
+                    {t("tags")}
                   </Link>
                   <div className="my-1 border-t border-gray-100" />
                   <button

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
+import { useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Props {
@@ -15,6 +16,7 @@ export default function BookmarkButton({ snippetId, promptId, initialBookmarked 
   const [bookmarked, setBookmarked] = useState(initialBookmarked);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const t = useTranslations("Components");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function BookmarkButton({ snippetId, promptId, initialBookmarked 
       ) : (
         <Bookmark className="h-4 w-4" />
       )}
-      {bookmarked ? "Saqlangan" : "Saqlash"}
+      {bookmarked ? t("saved") : t("save")}
     </button>
   );
 }

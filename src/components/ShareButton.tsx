@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Share2, Twitter, Linkedin, Link as LinkIcon, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   title: string;
@@ -11,6 +12,7 @@ interface Props {
 export default function ShareButton({ title, url }: Props) {
   const [showMenu, setShowMenu] = useState(false);
   const [copied, setCopied] = useState(false);
+  const t = useTranslations("Components");
 
   const shareUrl = typeof window !== "undefined" ? window.location.origin + url : url;
   const shareText = `${title} - DevCommons`;
@@ -36,10 +38,10 @@ export default function ShareButton({ title, url }: Props) {
       <button
         onClick={() => setShowMenu(!showMenu)}
         className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100"
-        title="Share"
+        title={t("share")}
       >
         <Share2 className="h-4 w-4" />
-        Share
+        {t("share")}
       </button>
 
       {showMenu && (
@@ -63,7 +65,7 @@ export default function ShareButton({ title, url }: Props) {
             className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
           >
             {copied ? <Check className="h-4 w-4 text-green-500" /> : <LinkIcon className="h-4 w-4" />}
-            {copied ? "Copied!" : "Copy link"}
+            {copied ? t("copied") : "Copy link"}
           </button>
         </div>
       )}

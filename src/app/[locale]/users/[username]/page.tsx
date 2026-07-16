@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Code2, Sparkles, Calendar, Github } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import FollowButton from "@/components/FollowButton";
@@ -11,6 +11,7 @@ interface Props {
 
 export default async function PublicProfilePage({ params: { username, locale } }: Props) {
   setRequestLocale(locale);
+  const t = await getTranslations("User");
   const supabase = createSupabaseServer();
 
   const { data: user, error } = await supabase
@@ -37,7 +38,8 @@ export default async function PublicProfilePage({ params: { username, locale } }
     .order("created_at", { ascending: false })
     .limit(10);
 
-  const createdAt = new Date(user.created_at).toLocaleDateString("uz-UZ", {
+  const createdAt = new Date(user.created_at).toLocaleDateString(
+    locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US", {
     year: "numeric",
     month: "long",
   });
@@ -49,7 +51,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
         href="/"
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
-        ← Bosh sahifaga qaytish
+        {t("back")}
       </Link>
 
       {/* Profile Card */}
@@ -77,7 +79,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
               <h1 className="text-2xl font-bold">{user.github_username}</h1>
               <p className="text-sm text-gray-500">
                 <Calendar className="inline h-3 w-3 mr-1" />
-                {createdAt} dan beri a'zo
+                {createdAt} {t("member_since")}
               </p>
             </div>
             <FollowButton targetUserId={user.id} />
@@ -98,7 +100,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
       {/* Recent Snippets */}
       {snippets && snippets.length > 0 && (
         <div className="mb-8">
-          <h2 className="mb-4 text-lg font-semibold">So'nggi Snippets</h2>
+          <h2 className="mb-4 text-lg font-semibold">{t("recent_snippets")}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {snippets.map((snippet: any) => (
               <Link
@@ -111,7 +113,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
                   <span className="ml-2 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand">{snippet.language}</span>
                 </div>
                 {snippet.description && <p className="text-sm text-gray-500 line-clamp-2">{snippet.description}</p>}
-                <p className="mt-2 text-xs text-gray-400">👍 {snippet.votes} · {new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</p>
+                <p className="mt-2 text-xs text-gray-400">👍 {snippet.votes} · {new Date(snippet.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
               </Link>
             ))}
           </div>
@@ -121,7 +123,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
       {/* Recent Prompts */}
       {prompts && prompts.length > 0 && (
         <div>
-          <h2 className="mb-4 text-lg font-semibold">So'nggi Prompts</h2>
+          <h2 className="mb-4 text-lg font-semibold">{t("recent_prompts")}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {prompts.map((prompt: any) => (
               <Link
@@ -134,7 +136,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
                   <span className="ml-2 rounded-lg bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-600">{prompt.category}</span>
                 </div>
                 <p className="text-sm text-gray-500 line-clamp-2">{prompt.content}</p>
-                <p className="mt-2 text-xs text-gray-400">👍 {prompt.votes} · {new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</p>
+                <p className="mt-2 text-xs text-gray-400">👍 {prompt.votes} · {new Date(prompt.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
               </Link>
             ))}
           </div>
@@ -144,7 +146,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
       {/* Empty state */}
       {(!snippets || snippets.length === 0) && (!prompts || prompts.length === 0) && (
         <div className="card border-dashed p-10 text-center">
-          <p className="text-gray-500">Bu foydalanuvchi hozircha hech narsa qo'shmagan</p>
+          <p className="text-gray-500">{t("empty")}</p>
         </div>
       )}
     </div>

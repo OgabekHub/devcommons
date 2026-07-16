@@ -5,7 +5,7 @@ import { Code2, Sparkles, Bookmark } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 
 export default function SavedPage() {
@@ -15,6 +15,7 @@ export default function SavedPage() {
   const [tab, setTab] = useState<"snippets" | "prompts">("snippets");
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("Saved");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -71,8 +72,8 @@ export default function SavedPage() {
           <Bookmark className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Saqlanganlar</h1>
-          <p className="text-sm text-gray-500">Sizning sevimli snippet va promptlaringiz</p>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-sm text-gray-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -108,9 +109,9 @@ export default function SavedPage() {
           {snippets.length === 0 ? (
             <div className="card border-dashed p-10 text-center">
               <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">Hozircha saqlangan snippet yo'q</p>
+              <p className="text-gray-500">{t("empty")}</p>
               <Link href="/snippets" className="btn-primary mt-4">
-                Snippetlarni ko'rish
+                {t("discover")}
               </Link>
             </div>
           ) : (
@@ -126,7 +127,7 @@ export default function SavedPage() {
                     <span className="ml-2 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
                   {s.description && <p className="text-sm text-gray-500 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-gray-400">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString("uz-UZ")}</p>
+                  <p className="mt-2 text-xs text-gray-400">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>
@@ -139,9 +140,9 @@ export default function SavedPage() {
           {prompts.length === 0 ? (
             <div className="card border-dashed p-10 text-center">
               <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">Hozircha saqlangan prompt yo'q</p>
+              <p className="text-gray-500">{t("empty")}</p>
               <Link href="/prompts" className="btn-primary mt-4">
-                Promptlarni ko'rish
+                {t("discover")}
               </Link>
             </div>
           ) : (
@@ -157,7 +158,7 @@ export default function SavedPage() {
                     <span className="ml-2 rounded-lg bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-600">{p.category}</span>
                   </div>
                   <p className="text-sm text-gray-500 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-gray-400">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString("uz-UZ")}</p>
+                  <p className="mt-2 text-xs text-gray-400">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>

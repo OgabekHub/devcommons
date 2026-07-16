@@ -4,7 +4,11 @@
     "prompts": "Prompts",
     "login": "Login",
     "logout": "Logout",
-    "profile": "Profile"
+    "profile": "Profile",
+    "saved": "Saved",
+    "feed": "Feed",
+    "analytics": "Analytics",
+    "tags": "Tags"
   },
   "Index": {
     "badge": "100% free and open source",
@@ -154,5 +158,54 @@
     "no_prompts": "You have not added any prompts yet",
     "btn_add_snippet": "Add Snippet",
     "btn_add_prompt": "Add Prompt"
+  },
+  "Feed": {
+    "title": "Activity Feed",
+    "subtitle": "Recent activity from people you follow",
+    "empty": "No activity yet",
+    "empty_desc": "Visit other user profiles to follow them"
+  },
+  "Saved": {
+    "title": "Saved Items",
+    "subtitle": "All your saved snippets and prompts",
+    "empty": "Nothing saved yet",
+    "discover": "Discover new items"
+  },
+  "Tags": {
+    "title": "Tags",
+    "subtitle": "Browse by topic",
+    "empty": "No tags found"
+  },
+  "Analytics": {
+    "title": "Analytics",
+    "subtitle": "Your personal statistics",
+    "views": "Total Views",
+    "votes": "Total Votes",
+    "top_snippets": "Top Snippets",
+    "top_prompts": "Top Prompts"
+  },
+  "User": {
+    "back": "Back to home",
+    "member_since": "Member since",
+    "recent_snippets": "Recent Snippets",
+    "recent_prompts": "Recent Prompts",
+    "empty": "This user hasn't added anything yet"
+  },
+  "Components": {
+    "share": "Share",
+    "copied": "Copied!",
+    "follow": "Follow",
+    "following": "Following",
+    "embed": "Embed",
+    "embed_copy": "Copy Code",
+    "download": "Download",
+    "save": "Save",
+    "saved": "Saved",
+    "comments": "Comments",
+    "comments_login": "Log in to comment",
+    "login": "Log in",
+    "comment_placeholder": "Write a comment...",
+    "send": "Send",
+    "no_comments": "No comments yet. Be the first to share your thoughts!"
   }
 }

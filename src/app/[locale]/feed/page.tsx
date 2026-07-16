@@ -5,7 +5,7 @@ import { Code2, Sparkles, Rss } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 
 interface ActivityItem {
@@ -27,6 +27,7 @@ export default function FeedPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("Feed");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -95,8 +96,8 @@ export default function FeedPage() {
           <Rss className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Activity Feed</h1>
-          <p className="text-sm text-gray-500">Kuzatib turgan odamlaringizning so'nggi faoliyati</p>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-sm text-gray-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -104,9 +105,9 @@ export default function FeedPage() {
       {activities.length === 0 ? (
         <div className="card border-dashed p-10 text-center">
           <Rss className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-gray-500 mb-4">Hozircha faoliyat yo'q</p>
+          <p className="text-gray-500 mb-4">{t("empty")}</p>
           <Link href="/snippets" className="btn-primary">
-            Boshqa foydalanuvchilarni kuzatish uchun ularning profiliga tashrif buyuring
+            {t("empty_desc")}
           </Link>
         </div>
       ) : (
@@ -147,7 +148,9 @@ export default function FeedPage() {
                       ) : null}
                       {item.author_name}
                     </span>
-                    <span className="text-xs text-gray-400">{new Date(item.created_at).toLocaleDateString("uz-UZ")}</span>
+                    <span className="text-xs text-gray-400">
+                      {new Date(item.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                    </span>
                   </div>
                 </div>
               </div>

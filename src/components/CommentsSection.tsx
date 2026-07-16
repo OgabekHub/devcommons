@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { MessageSquare, Send, Trash2, ThumbsUp } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
+import { useLocale, useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Comment {
@@ -27,6 +28,8 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const locale = useLocale();
+  const t = useTranslations("Components");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -92,7 +95,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
     <div className="mt-8 space-y-6">
       <div className="flex items-center gap-2">
         <MessageSquare className="h-5 w-5 text-gray-600" />
-        <h3 className="text-lg font-semibold">Izohlar ({comments.length})</h3>
+        <h3 className="text-lg font-semibold">{t("comments")} ({comments.length})</h3>
       </div>
 
       {/* Add comment form */}
@@ -101,7 +104,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Izoh yozing..."
+            placeholder={t("comment_placeholder")}
             rows={3}
             className="input w-full resize-none bg-white"
             maxLength={1000}
@@ -113,20 +116,20 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
               className="btn-primary flex items-center gap-2 px-4 py-2 disabled:opacity-50"
             >
               <Send className="h-4 w-4" />
-              {submitting ? "Yuborilmoqda..." : "Yuborish"}
+              {submitting ? "..." : t("send")}
             </button>
           </div>
         </form>
       ) : (
         <div className="rounded-xl bg-gray-50 p-4 text-center text-sm text-gray-500">
-          Izoh yozish uchun <a href="/auth" className="text-brand hover:underline">tizimga kirishingiz</a> kerak
+          {t("comments_login")} <a href="/auth" className="text-brand hover:underline">{t("login")}</a>
         </div>
       )}
 
       {/* Comments list */}
       {comments.length === 0 ? (
         <div className="text-center text-gray-500 py-8">
-          Hozircha izoh yo'q. Birinchi izohni siz yozing!
+          {t("no_comments")}
         </div>
       ) : (
         <div className="space-y-4">
@@ -144,7 +147,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-gray-900">{comment.author_name}</span>
                     <span className="text-xs text-gray-400">
-                      {new Date(comment.created_at).toLocaleDateString("uz-UZ")}
+                      {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-gray-700">{comment.content}</p>

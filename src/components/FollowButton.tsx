@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { UserPlus, UserCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
+import { useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Props {
@@ -13,6 +14,7 @@ export default function FollowButton({ targetUserId }: Props) {
   const [following, setFollowing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const t = useTranslations("Components");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -80,12 +82,12 @@ export default function FollowButton({ targetUserId }: Props) {
       {following ? (
         <>
           <UserCheck className="h-4 w-4" />
-          {loading ? "..." : "Following"}
+          {loading ? "..." : t("following")}
         </>
       ) : (
         <>
           <UserPlus className="h-4 w-4" />
-          {loading ? "..." : "Follow"}
+          {loading ? "..." : t("follow")}
         </>
       )}
     </button>

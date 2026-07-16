@@ -1,6 +1,7 @@
 "use client";
 
 import { Download } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   code: string;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function DownloadButton({ code, language, filename }: Props) {
+  const t = useTranslations("Components");
   const handleDownload = () => {
     const extensions: Record<string, string> = {
       JavaScript: ".js",
@@ -49,10 +51,10 @@ export default function DownloadButton({ code, language, filename }: Props) {
     <button
       onClick={handleDownload}
       className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100"
-      title="Download code"
+      title={t("download")}
     >
       <Download className="h-4 w-4" />
-      Download
+      {t("download")}
     </button>
   );
 }

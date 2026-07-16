@@ -4,7 +4,11 @@
     "prompts": "Prompts",
     "login": "Kirish",
     "logout": "Chiqish",
-    "profile": "Profil"
+    "profile": "Profil",
+    "saved": "Saqlanganlar",
+    "feed": "Lenta",
+    "analytics": "Analitika",
+    "tags": "Teglar"
   },
   "Index": {
     "badge": "100% bepul va ochiq manba",
@@ -154,5 +158,54 @@
     "no_prompts": "Hali prompt qo'shmagansiz",
     "btn_add_snippet": "Snippet qo'shish",
     "btn_add_prompt": "Prompt qo'shish"
+  },
+  "Feed": {
+    "title": "Faoliyat lentasi",
+    "subtitle": "Kuzatib turgan odamlaringizning so'nggi faoliyati",
+    "empty": "Hozircha faoliyat yo'q",
+    "empty_desc": "Boshqa foydalanuvchilarni kuzatish uchun ularning profiliga tashrif buyuring"
+  },
+  "Saved": {
+    "title": "Saqlanganlar",
+    "subtitle": "Siz saqlab qo'ygan barcha snippet va prompt'lar",
+    "empty": "Hozircha hech narsa saqlanmagan",
+    "discover": "Yangi narsalarni kashf qiling"
+  },
+  "Tags": {
+    "title": "Teglar",
+    "subtitle": "Mavzular bo'yicha ko'rish",
+    "empty": "Teg topilmadi"
+  },
+  "Analytics": {
+    "title": "Analitika",
+    "subtitle": "Sizning shaxsiy statistikangiz",
+    "views": "Jami ko'rishlar",
+    "votes": "Jami ovozlar",
+    "top_snippets": "Eng mashhur snippetlar",
+    "top_prompts": "Eng mashhur promptlar"
+  },
+  "User": {
+    "back": "Bosh sahifaga qaytish",
+    "member_since": "dan beri a'zo",
+    "recent_snippets": "So'nggi Snippets",
+    "recent_prompts": "So'nggi Prompts",
+    "empty": "Bu foydalanuvchi hozircha hech narsa qo'shmagan"
+  },
+  "Components": {
+    "share": "Ulashish",
+    "copied": "Nusxalandi!",
+    "follow": "Kuzatish",
+    "following": "Kuzatilmoqda",
+    "embed": "Embed",
+    "embed_copy": "Kodni nusxalash",
+    "download": "Yuklab olish",
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "comments": "Fikrlar",
+    "comments_login": "Fikr qoldirish uchun tizimga kiring",
+    "login": "Kirish",
+    "comment_placeholder": "Fikr yozish...",
+    "send": "Yuborish",
+    "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!"
   }
 }

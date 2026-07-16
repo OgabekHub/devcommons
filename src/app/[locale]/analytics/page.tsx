@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { BarChart3, Eye, Code2, Sparkles, Calendar } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface AnalyticsData {
   total_snippet_views: number;
@@ -18,6 +18,7 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("Analytics");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -85,8 +86,8 @@ export default function AnalyticsPage() {
           <BarChart3 className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Analytics</h1>
-          <p className="text-sm text-gray-500">Kontentingizning ko'rish statistikasi</p>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
+          <p className="text-sm text-gray-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -99,7 +100,7 @@ export default function AnalyticsPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">{totalViews}</p>
-              <p className="text-xs text-gray-500">Jami ko'rishlar</p>
+              <p className="text-xs text-gray-500">{t("views")}</p>
             </div>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function AnalyticsPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">{data?.total_snippet_views || 0}</p>
-              <p className="text-xs text-gray-500">Snippet ko'rishlar</p>
+              <p className="text-xs text-gray-500">Snippet {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
@@ -121,7 +122,7 @@ export default function AnalyticsPage() {
             </div>
             <div>
               <p className="text-2xl font-bold">{data?.total_prompt_views || 0}</p>
-              <p className="text-xs text-gray-500">Prompt ko'rishlar</p>
+              <p className="text-xs text-gray-500">Prompt {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
@@ -129,7 +130,7 @@ export default function AnalyticsPage() {
 
       {/* Top Snippets */}
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold">Eng ko'p ko'rilgan Snippets</h2>
+        <h2 className="mb-4 text-lg font-semibold">{t("top_snippets")}</h2>
         {data?.top_snippets.length === 0 ? (
           <div className="card border-dashed p-6 text-center text-gray-500">
             Hozircha ma'lumot yo'q
@@ -164,7 +165,7 @@ export default function AnalyticsPage() {
 
       {/* Top Prompts */}
       <div>
-        <h2 className="mb-4 text-lg font-semibold">Eng ko'p ko'rilgan Prompts</h2>
+        <h2 className="mb-4 text-lg font-semibold">{t("top_prompts")}</h2>
         {data?.top_prompts.length === 0 ? (
           <div className="card border-dashed p-6 text-center text-gray-500">
             Hozircha ma'lumot yo'q
