@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Edit, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase";
+import { Link } from "@/i18n/routing";
 
 interface Props {
   snippetId: string;
