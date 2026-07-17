@@ -15,6 +15,7 @@ import {
 import Reveal from "@/components/Reveal";
 import Typewriter from "@/components/Typewriter";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import AnimatedIDE from "@/components/AnimatedIDE";
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 
@@ -108,148 +109,14 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
 
             {/* Right Column - Premium IDE Mockup */}
             <div className="relative lg:mt-0 mt-8 animate-fade-in-up" style={{ perspective: "1000px", animationDelay: "0.3s" }}>
-              {/* Massive Glow Behind IDE */}
-              <div className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-brand/30 via-purple-500/20 to-cyan-400/20 blur-[100px]" />
-
-              <div className="group relative mx-auto w-full max-w-xl rounded-2xl border border-white/10 bg-[#0B0914]/90 shadow-[0_0_50px_rgba(124,92,252,0.2)] backdrop-blur-2xl transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_0_80px_rgba(124,92,252,0.4)] hover:border-brand/40" style={{ transform: "rotateY(-12deg) rotateX(8deg)" }}>
-                {/* IDE Chrome / Header */}
-                <div className="flex items-center justify-between border-b border-gray-800/60 bg-[#161224]/80 px-4 py-3 rounded-t-2xl">
-                  <div className="flex gap-2">
-                    <div className="h-3 w-3 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]" />
-                    <div className="h-3 w-3 rounded-full bg-amber-500/80 shadow-[0_0_8px_rgba(245,158,11,0.4)]" />
-                    <div className="h-3 w-3 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
-                  </div>
-                  <div className="flex items-center gap-2 rounded-md bg-[#221C38] px-3 py-1 text-xs text-gray-400 border border-gray-700/50">
-                    <Search className="h-3 w-3" />
-                    devcommons / snippet.js
-                  </div>
-                  <div className="flex gap-2">
-                    <div className="h-3 w-3 rounded-full bg-transparent" />
-                  </div>
-                </div>
-
-                <div className="flex">
-                  {/* IDE Sidebar (Hidden on small screens) */}
-                  <div className="hidden w-12 flex-col items-center gap-4 border-r border-gray-800/60 py-4 sm:flex">
-                    <Code2 className="h-5 w-5 text-brand" />
-                    <Search className="h-5 w-5 text-gray-600 hover:text-gray-400 cursor-pointer transition-colors" />
-                    <Globe className="h-5 w-5 text-gray-600 hover:text-gray-400 cursor-pointer transition-colors" />
-                  </div>
-
-                  {/* IDE Content */}
-                  <div className="flex-1 p-5 font-mono text-sm leading-loose">
-                    <div className="space-y-1">
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">1</span>
-                        <div className="text-gray-300">
-                          <span className="text-purple-400 font-medium">const</span>{" "}
-                          <span className="text-blue-400">fetchData</span>{" "}
-                          <span className="text-gray-400">=</span>{" "}
-                          <span className="text-purple-400 font-medium">async</span>{" "}
-                          <span className="text-yellow-300">(</span>
-                          <span className="text-orange-300">url</span>
-                          <span className="text-yellow-300">)</span>{" "}
-                          <span className="text-purple-400 font-medium">=&gt;</span>{" "}
-                          <span className="text-yellow-300">{"{"}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">2</span>
-                        <div className="pl-4 text-gray-300">
-                          <span className="text-purple-400 font-medium">try</span>{" "}
-                          <span className="text-yellow-300">{"{"}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">3</span>
-                        <div className="pl-8 text-gray-300">
-                          <span className="text-purple-400 font-medium">const</span>{" "}
-                          <span className="text-blue-400">res</span>{" "}
-                          <span className="text-gray-400">=</span>{" "}
-                          <span className="text-purple-400 font-medium">await</span>{" "}
-                          <span className="text-green-400">fetch</span>
-                          <span className="text-yellow-300">(</span>
-                          <span className="text-orange-300">url</span>
-                          <span className="text-yellow-300">)</span>;
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">4</span>
-                        <div className="pl-8 text-gray-300">
-                          <span className="text-purple-400 font-medium">return await</span>{" "}
-                          <span className="text-blue-400">res</span>.
-                          <span className="text-green-400">json</span>
-                          <span className="text-yellow-300">()</span>;
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">5</span>
-                        <div className="pl-4 text-gray-300">
-                          <span className="text-yellow-300">{"}"}</span>{" "}
-                          <span className="text-purple-400 font-medium">catch</span>{" "}
-                          <span className="text-yellow-300">(</span>
-                          <span className="text-orange-300">err</span>
-                          <span className="text-yellow-300">)</span>{" "}
-                          <span className="text-yellow-300">{"{"}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4 bg-red-900/20 border-l-2 border-red-500/50 -ml-5 pl-5 w-[calc(100%+1.25rem)]">
-                        <span className="select-none text-gray-600 w-3 relative -left-1">6</span>
-                        <div className="pl-5 text-gray-300">
-                          <span className="text-blue-400">console</span>.
-                          <span className="text-red-400">error</span>
-                          <span className="text-yellow-300">(</span>
-                          <span className="text-green-400">&quot;{t("preview_error")}&quot;</span>,{" "}
-                          <span className="text-orange-300">err</span>
-                          <span className="text-yellow-300">)</span>;
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">7</span>
-                        <div className="pl-4 text-gray-300">
-                          <span className="text-yellow-300">{"}"}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <span className="select-none text-gray-600">8</span>
-                        <div className="text-gray-300">
-                          <span className="text-yellow-300">{"}"}</span>;
-                        </div>
-                      </div>
-                      
-                      {/* Typing cursor line */}
-                      <div className="flex gap-4 mt-2">
-                        <span className="select-none text-gray-600">9</span>
-                        <div className="text-gray-300 flex items-center">
-                          <span className="h-4 w-2 bg-brand/80 animate-pulse block"></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action Bar */}
-                    <div className="mt-6 flex justify-end pt-4 border-t border-gray-800/60">
-                      <button className="group/btn inline-flex items-center gap-2 rounded-lg bg-white/5 border border-white/10 px-4 py-2 text-xs font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white hover:border-brand/30 hover:shadow-[0_0_15px_rgba(124,92,252,0.2)]">
-                        <Copy className="h-3.5 w-3.5 group-hover/btn:scale-110 transition-transform" />
-                        {t("preview_copy")}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Decorative floating icons */}
-                <div className="absolute -right-4 -top-4 rounded-xl bg-yellow-400/10 p-3 shadow-lg backdrop-blur-md border border-yellow-400/20 animate-float">
-                  <Braces className="h-6 w-6 text-yellow-400" />
-                </div>
-                <div className="absolute -bottom-6 -left-6 rounded-xl bg-blue-400/10 p-3 shadow-lg backdrop-blur-md border border-blue-400/20 animate-float" style={{ animationDelay: "1.5s" }}>
-                  <Terminal className="h-6 w-6 text-blue-400" />
-                </div>
+              <AnimatedIDE />
+              
+              {/* Decorative floating icons */}
+              <div className="absolute -right-4 -top-4 rounded-xl bg-yellow-400/10 p-3 shadow-lg backdrop-blur-md border border-yellow-400/20 animate-float z-20">
+                <Braces className="h-6 w-6 text-yellow-400" />
+              </div>
+              <div className="absolute -bottom-6 -left-6 rounded-xl bg-blue-400/10 p-3 shadow-lg backdrop-blur-md border border-blue-400/20 animate-float z-20" style={{ animationDelay: "1.5s" }}>
+                <Terminal className="h-6 w-6 text-blue-400" />
               </div>
             </div>
           </div>
