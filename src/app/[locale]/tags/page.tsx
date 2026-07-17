@@ -85,16 +85,16 @@ export default function TagsPage() {
           <Hash className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
+          <p className="text-sm text-gray-400">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Tags Grid */}
       {tags.length === 0 ? (
-        <div className="card border-dashed p-10 text-center">
-          <Hash className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-gray-500">{t("empty")}</p>
+        <div className="card border-dashed border-white/10 p-10 text-center">
+          <Hash className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+          <p className="text-gray-400">{t("empty")}</p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -111,7 +111,7 @@ export default function TagsPage() {
                       #{tag.name}
                     </span>
                   </div>
-                  <div className="space-y-1 text-sm text-gray-500">
+                  <div className="space-y-1 text-sm text-gray-400">
                     <div className="flex items-center gap-2">
                       <Code2 className="h-3 w-3" />
                       <span>{tag.snippet_count} {t("snippet")}</span>
@@ -123,7 +123,7 @@ export default function TagsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-2xl font-bold text-gray-700">{tag.total_count}</span>
+                  <span className="text-2xl font-bold text-white">{tag.total_count}</span>
                   <p className="text-xs text-gray-400">{t("total")}</p>
                 </div>
               </div>

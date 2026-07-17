@@ -52,12 +52,12 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
       {/* Header */}
       <div className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1 text-sm font-semibold text-violet-600">
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-sm font-semibold text-violet-400">
             <Sparkles className="h-3.5 w-3.5" />
             {prompt.category}
           </span>
           {prompt.ai_model && prompt.ai_model !== "Any" && (
-            <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600">
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-sm font-medium text-blue-400">
               <Bot className="h-3.5 w-3.5" />
               {prompt.ai_model}
             </span>
@@ -65,7 +65,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           {prompt.tags?.map((tag: string) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
+              className="inline-flex items-center gap-1 rounded-lg bg-white/5 border border-white/10 px-2.5 py-1 text-xs font-medium text-gray-400"
             >
               <Tag className="h-3 w-3" />
               {tag}
@@ -73,10 +73,10 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           ))}
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{prompt.title}</h1>
+        <h1 className="text-2xl font-bold text-white sm:text-3xl">{prompt.title}</h1>
 
         {prompt.description && (
-          <p className="mt-3 text-gray-500 leading-relaxed">{prompt.description}</p>
+          <p className="mt-3 text-gray-400 leading-relaxed">{prompt.description}</p>
         )}
 
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
@@ -106,10 +106,10 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
       </div>
 
       {/* Prompt content */}
-      <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(124,92,252,0.1)]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-4 py-3">
-          <span className="flex items-center gap-2 text-sm font-medium text-gray-600">
+        <div className="flex items-center justify-between border-b border-white/10 bg-[#111] px-4 py-3">
+          <span className="flex items-center gap-2 text-sm font-medium text-gray-300">
             <Sparkles className="h-4 w-4 text-violet-500" />
             Prompt matni
           </span>
@@ -117,8 +117,8 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-800">
+        <div className="p-6 bg-[#0A0A0A]">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-300">
             {prompt.content}
           </p>
         </div>

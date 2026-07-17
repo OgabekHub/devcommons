@@ -17,8 +17,8 @@
   }
 
   body {
-    background-color: #FAFAFE;
-    @apply text-gray-900 antialiased;
+    background-color: #0A0A0A;
+    @apply text-white antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -74,8 +74,8 @@
 
   /* Glass morphism */
   .glass {
-    @apply bg-white/70 backdrop-blur-xl;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply bg-black/40 backdrop-blur-xl;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .glass-dark {
@@ -195,35 +195,35 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl
-           border-2 bg-white px-6 py-3 text-base font-semibold
+           border-2 bg-transparent px-6 py-3 text-base font-semibold
            transition-all duration-300
            hover:-translate-y-0.5 active:translate-y-0;
-    border-color: rgba(124, 92, 252, 0.15);
-    color: #7C5CFC;
+    border-color: rgba(124, 92, 252, 0.3);
+    color: #A78BFA;
   }
   .btn-secondary:hover {
-    border-color: rgba(124, 92, 252, 0.3);
-    background-color: #F5F3FF;
+    border-color: rgba(124, 92, 252, 0.6);
+    background-color: rgba(124, 92, 252, 0.1);
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-xl
-           px-6 py-3 text-base font-semibold text-gray-600
-           transition-all duration-300 hover:bg-gray-50;
+           px-6 py-3 text-base font-semibold text-gray-300
+           transition-all duration-300 hover:bg-white/10;
   }
   .btn-ghost:hover {
-    color: #7C5CFC;
+    color: #A78BFA;
   }
 
   /* Premium card */
   .card {
-    @apply relative rounded-2xl border border-gray-100/80 bg-white p-6
+    @apply relative rounded-2xl border border-white/5 bg-[#111111] p-6
            transition-all duration-300 hover:-translate-y-1;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   }
   .card:hover {
-    border-color: rgba(221, 214, 254, 0.5);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.08);
+    border-color: rgba(124, 92, 252, 0.3);
+    box-shadow: 0 8px 32px rgba(124,92,252,0.15);
   }
 
   /* Code block styling */
@@ -235,16 +235,16 @@
 
   /* Form input */
   .input {
-    @apply block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5
-           text-sm text-gray-900 placeholder-gray-400
+    @apply block w-full rounded-xl border border-gray-800 bg-[#1A1A1A] px-4 py-2.5
+           text-sm text-white placeholder-gray-500
            transition-all duration-200
            focus:border-brand focus:outline-none focus:ring-2;
-    focus-ring-color: rgba(124, 92, 252, 0.15);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    focus-ring-color: rgba(124, 92, 252, 0.2);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   .input:focus {
     border-color: #7C5CFC;
-    box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.12);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(124, 92, 252, 0.2);
   }
   select.input {
     @apply cursor-pointer;

@@ -48,7 +48,7 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-gray-100/50 bg-white/80 shadow-sm backdrop-blur-xl"
+          ? "border-b border-white/5 bg-[#0A0A0A]/80 shadow-sm backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
@@ -58,7 +58,7 @@ export default function Header() {
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:shadow-brand">
             <Code2 className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-gray-900">
+          <span className="text-xl font-bold tracking-tight text-white">
             Dev<span className="text-brand">Commons</span>
           </span>
         </Link>
@@ -67,17 +67,17 @@ export default function Header() {
         <div className="hidden items-center gap-1 md:flex">
           <Link
             href="/snippets"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 hover:bg-brand-50 hover:text-brand"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
           >
             {t("snippets")}
           </Link>
           <Link
             href="/prompts"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 hover:bg-brand-50 hover:text-brand"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
           >
             {t("prompts")}
           </Link>
-          <div className="mx-2 h-5 w-px bg-gray-200" />
+          <div className="mx-2 h-5 w-px bg-white/10" />
           <LanguageSwitcher />
 
           {/* Auth section */}
@@ -85,7 +85,7 @@ export default function Header() {
             <div className="relative ml-2">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 rounded-xl border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-all hover:border-brand/30 hover:bg-brand-50"
+                className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
               >
                 {avatarUrl ? (
                   <img src={avatarUrl} alt={username} className="h-6 w-6 rounded-full" />
@@ -97,11 +97,11 @@ export default function Header() {
 
               {/* Dropdown */}
               {dropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-gray-100 bg-white p-1 shadow-lg">
+                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#111111] p-1 shadow-lg">
                   <Link
                     href="/profile"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     <User className="h-4 w-4" />
                     {t("profile")}
@@ -109,35 +109,35 @@ export default function Header() {
                   <Link
                     href="/saved"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {t("saved")}
                   </Link>
                   <Link
                     href="/feed"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {t("feed")}
                   </Link>
                   <Link
                     href="/analytics"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {t("analytics")}
                   </Link>
                   <Link
                     href="/tags"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {t("tags")}
                   </Link>
-                  <div className="my-1 border-t border-gray-100" />
+                  <div className="my-1 border-t border-white/10" />
                   <button
                     onClick={handleLogout}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
                   >
                     <LogOut className="h-4 w-4" />
                     {t("logout")}
@@ -160,7 +160,7 @@ export default function Header() {
           <LanguageSwitcher />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100"
+            className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-white/10"
             aria-label="Menu"
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -170,32 +170,32 @@ export default function Header() {
 
       {/* Mobile nav */}
       <div
-        className={`overflow-hidden border-t border-gray-100/50 bg-white/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
+        className={`overflow-hidden border-t border-white/5 bg-[#0A0A0A]/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
           mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 border-none"
         }`}
       >
         <div className="space-y-1 px-4 py-4">
           <Link
             href="/snippets"
-            className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-brand-50 hover:text-brand"
+            className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
             onClick={() => setMobileOpen(false)}
           >
             {t("snippets")}
           </Link>
           <Link
             href="/prompts"
-            className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-brand-50 hover:text-brand"
+            className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
             onClick={() => setMobileOpen(false)}
           >
             {t("prompts")}
           </Link>
 
           {user ? (
-            <div className="mt-2 flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3">
+            <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">
               <Link
                 href="/profile"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 hover:text-brand transition-colors"
+                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
               >
                 {avatarUrl ? (
                   <img src={avatarUrl} alt={username} className="h-7 w-7 rounded-full" />
@@ -206,7 +206,7 @@ export default function Header() {
               </Link>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 text-sm text-red-500 hover:text-red-600"
+                className="flex items-center gap-1.5 text-sm text-red-400 hover:text-red-300"
               >
                 <LogOut className="h-4 w-4" />
                 {t("logout")}

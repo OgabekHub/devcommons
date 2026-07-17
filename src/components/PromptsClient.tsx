@@ -19,13 +19,13 @@ const SORT_OPTIONS = [
 ];
 
 const categoryStyles: Record<string, string> = {
-  Coding: "bg-blue-50 text-blue-600",
-  Writing: "bg-emerald-50 text-emerald-600",
-  Analysis: "bg-purple-50 text-purple-600",
-  Creative: "bg-pink-50 text-pink-600",
-  Marketing: "bg-orange-50 text-orange-600",
-  Education: "bg-teal-50 text-teal-600",
-  default: "bg-gray-100 text-gray-600",
+  Coding: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  Writing: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  Analysis: "bg-purple-500/10 text-purple-400 border border-purple-500/20",
+  Creative: "bg-pink-500/10 text-pink-400 border border-pink-500/20",
+  Marketing: "bg-orange-500/10 text-orange-400 border border-orange-500/20",
+  Education: "bg-teal-500/10 text-teal-400 border border-teal-500/20",
+  default: "bg-white/5 text-gray-400 border border-white/10",
 };
 
 interface Props {
@@ -121,12 +121,12 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-600">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 border border-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-400">
             <Sparkles className="h-3.5 w-3.5" />
             {labels.badge}
           </div>
-          <h1 className="text-3xl font-bold sm:text-4xl">{labels.title}</h1>
-          <p className="mt-2 text-gray-500">{labels.subtitle}</p>
+          <h1 className="text-3xl font-bold text-white sm:text-4xl">{labels.title}</h1>
+          <p className="mt-2 text-gray-400">{labels.subtitle}</p>
         </div>
         <Link href="/prompts/new" className="btn-primary">
           <Plus className="h-4 w-4" />
@@ -143,12 +143,12 @@ export default function PromptsClient({ prompts, labels }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={labels.search_placeholder}
-            className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-10 text-sm transition-all focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+            className="w-full rounded-xl border border-white/10 bg-[#111] py-3 pl-11 pr-10 text-sm text-white transition-all focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 placeholder:text-gray-500"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
             >
               <X className="h-4 w-4" />
             </button>
@@ -164,8 +164,8 @@ export default function PromptsClient({ prompts, labels }: Props) {
                 onClick={() => setCategory(cat)}
                 className={`rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
                   category === cat
-                    ? "bg-brand text-white shadow-sm"
-                    : "border border-gray-200 text-gray-600 hover:border-brand/30 hover:text-brand"
+                    ? "bg-brand text-white shadow-brand/20"
+                    : "border border-white/10 text-gray-400 hover:border-brand/30 hover:text-brand"
                 }`}
               >
                 {cat}
@@ -177,19 +177,19 @@ export default function PromptsClient({ prompts, labels }: Props) {
           <div className="relative">
             <button
               onClick={() => setShowSortMenu(!showSortMenu)}
-              className="input flex items-center gap-2 bg-white text-gray-700 cursor-pointer sm:w-40"
+              className="input flex items-center gap-2 bg-[#111] text-gray-300 cursor-pointer sm:w-40 border-white/10 hover:border-brand/50"
             >
               <ArrowUpDown className="h-4 w-4" />
               {SORT_OPTIONS.find(opt => opt.value === sortBy)?.label}
             </button>
             {showSortMenu && (
-              <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-xl border border-gray-200 bg-white p-1 shadow-lg">
+              <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-xl border border-white/10 bg-[#1A1A1A] p-1 shadow-2xl">
                 {SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => { setSortBy(opt.value); setShowSortMenu(false); }}
                     className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                      sortBy === opt.value ? "bg-brand-50 text-brand" : "text-gray-700 hover:bg-gray-50"
+                      sortBy === opt.value ? "bg-brand/10 text-brand" : "text-gray-300 hover:bg-white/5 hover:text-white"
                     }`}
                   >
                     {opt.label}
@@ -208,7 +208,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
             <button
               key={tag}
               onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1 text-sm font-medium text-violet-600 transition-colors hover:bg-violet-100"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-violet-500/10 px-3 py-1 text-sm font-medium text-violet-400 transition-colors hover:bg-violet-500/20 border border-violet-500/20"
             >
               #{tag}
               <X className="h-3 w-3" />
@@ -216,7 +216,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
           ))}
           <button
             onClick={() => setSelectedTags([])}
-            className="text-sm text-gray-500 hover:text-gray-700"
+            className="text-sm text-gray-400 hover:text-gray-300"
           >
             Barchasini tozalash
           </button>
@@ -225,23 +225,23 @@ export default function PromptsClient({ prompts, labels }: Props) {
 
       {/* Natijalar soni */}
       {(query || category !== "Barchasi" || selectedTags.length > 0) && (
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-400">
           {filtered.length} ta natija
-          {query && <span> — "<strong>{query}</strong>"</span>}
+          {query && <span> — "<strong className="text-gray-200">{query}</strong>"</span>}
           {selectedTags.length > 0 && <span> — {selectedTags.length} ta tag</span>}
         </p>
       )}
 
       {/* Bo'sh holat */}
       {filtered.length === 0 && (
-        <div className="card border-dashed bg-gradient-to-br from-purple-50/50 to-white p-14 text-center">
-          <div className="mx-auto mb-5 inline-flex rounded-2xl bg-purple-50 p-4">
-            <Sparkles className="h-7 w-7 text-purple-500" />
+        <div className="card border-dashed border-white/10 bg-gradient-to-br from-[#111] to-[#0A0A0A] p-14 text-center">
+          <div className="mx-auto mb-5 inline-flex rounded-2xl bg-purple-500/10 border border-purple-500/20 p-4">
+            <Sparkles className="h-7 w-7 text-purple-400" />
           </div>
-          <h2 className="mb-2 text-xl font-bold">
+          <h2 className="mb-2 text-xl font-bold text-white">
             {query ? "Hech narsa topilmadi" : "Hozircha prompt yo'q"}
           </h2>
-          <p className="mx-auto max-w-sm text-sm text-gray-500">
+          <p className="mx-auto max-w-sm text-sm text-gray-400">
             {query
               ? "Boshqa kalit so'z bilan qidiring"
               : "Birinchi bo'lib AI prompt qo'shing!"}
@@ -271,7 +271,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
               className="card card-shine group cursor-pointer block"
             >
               <div className="mb-3 flex items-start justify-between">
-                <h2 className="font-bold leading-snug transition-colors group-hover:text-brand">
+                <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
                   {prompt.title}
                 </h2>
                 <span className={`ml-2 flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${categoryStyles[prompt.category] || categoryStyles.default}`}>
@@ -279,11 +279,11 @@ export default function PromptsClient({ prompts, labels }: Props) {
                 </span>
               </div>
               {(prompt as any).description && (
-                <p className="mb-2 text-sm text-gray-500 line-clamp-1">
+                <p className="mb-2 text-sm text-gray-400 line-clamp-1">
                   {(prompt as any).description}
                 </p>
               )}
-              <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-500">
+              <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-400">
                 {prompt.content}
               </p>
               {/* Tags */}
@@ -299,10 +299,10 @@ export default function PromptsClient({ prompts, labels }: Props) {
                           setSelectedTags([...selectedTags, tag]);
                         }
                       }}
-                      className={`rounded-md px-2 py-0.5 text-xs transition-colors ${
+                      className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
                         selectedTags.includes(tag)
-                          ? "bg-violet-100 text-violet-600"
-                          : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                          ? "bg-violet-500/20 text-violet-400 border-violet-500/30"
+                          : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
                       }`}
                     >
                       #{tag}
@@ -323,7 +323,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {hasMore && (
         <div ref={observerRef} className="flex justify-center py-8">
           {loading && (
-            <div className="flex items-center gap-2 text-gray-500">
+            <div className="flex items-center gap-2 text-gray-400">
               <Loader2 className="h-5 w-5 animate-spin" />
               <span>Yuklanmoqda...</span>
             </div>

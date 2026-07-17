@@ -38,13 +38,13 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
 
   if (error === "supabase_not_configured") {
     return (
-      <div className="card border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-10 text-center">
-        <div className="mx-auto mb-5 inline-flex rounded-2xl bg-amber-100 p-4">
-          <Code2 className="h-7 w-7 text-amber-600" />
+      <div className="card border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-10 text-center">
+        <div className="mx-auto mb-5 inline-flex rounded-2xl bg-amber-500/10 p-4">
+          <Code2 className="h-7 w-7 text-amber-500" />
         </div>
-        <h2 className="mb-2 text-xl font-bold text-amber-800">{t("supabase_error_title")}</h2>
-        <p className="mx-auto max-w-md text-sm text-amber-600">
-          {t("supabase_error_desc1")} <code className="rounded bg-amber-100 px-2 py-0.5 font-mono text-xs">.env.local</code> {t("supabase_error_desc2")}
+        <h2 className="mb-2 text-xl font-bold text-amber-400">{t("supabase_error_title")}</h2>
+        <p className="mx-auto max-w-md text-sm text-amber-300/80">
+          {t("supabase_error_desc1")} <code className="rounded bg-amber-500/20 px-2 py-0.5 font-mono text-xs text-amber-200">.env.local</code> {t("supabase_error_desc2")}
         </p>
       </div>
     );
@@ -52,9 +52,9 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
 
   if (error) {
     return (
-      <div className="card border-red-200 bg-red-50 p-10 text-center">
-        <h2 className="mb-2 text-xl font-bold text-red-800">Xato</h2>
-        <p className="text-sm text-red-600">{error}</p>
+      <div className="card border-red-500/20 bg-red-500/10 p-10 text-center">
+        <h2 className="mb-2 text-xl font-bold text-red-400">Xato</h2>
+        <p className="text-sm text-red-300">{error}</p>
       </div>
     );
   }

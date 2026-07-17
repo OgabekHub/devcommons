@@ -72,19 +72,19 @@ export default function SavedPage() {
           <Bookmark className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
+          <p className="text-sm text-gray-400">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-100 mb-6">
+      <div className="flex gap-2 border-b border-white/10 mb-6">
         <button
           onClick={() => setTab("snippets")}
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "snippets"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-500 hover:text-gray-700"
+              : "border-transparent text-gray-400 hover:text-gray-200"
           }`}
         >
           <Code2 className="h-4 w-4" />
@@ -95,7 +95,7 @@ export default function SavedPage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "prompts"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-500 hover:text-gray-700"
+              : "border-transparent text-gray-400 hover:text-gray-200"
           }`}
         >
           <Sparkles className="h-4 w-4" />
@@ -107,10 +107,10 @@ export default function SavedPage() {
       {tab === "snippets" && (
         <div>
           {snippets.length === 0 ? (
-            <div className="card border-dashed p-10 text-center">
-              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">{t("empty")}</p>
-              <Link href="/snippets" className="btn-primary mt-4">
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("empty")}</p>
+              <Link href="/snippets" className="btn-primary mt-4 shadow-brand/20 shadow-lg">
                 {t("discover")}
               </Link>
             </div>
@@ -123,11 +123,11 @@ export default function SavedPage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold transition-colors group-hover:text-brand">{s.title}</h3>
-                    <span className="ml-2 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
+                    <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
-                  {s.description && <p className="text-sm text-gray-500 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-gray-400">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  {s.description && <p className="text-sm text-gray-400 line-clamp-2">{s.description}</p>}
+                  <p className="mt-2 text-xs text-gray-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>
@@ -138,10 +138,10 @@ export default function SavedPage() {
       {tab === "prompts" && (
         <div>
           {prompts.length === 0 ? (
-            <div className="card border-dashed p-10 text-center">
-              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">{t("empty")}</p>
-              <Link href="/prompts" className="btn-primary mt-4">
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("empty")}</p>
+              <Link href="/prompts" className="btn-primary mt-4 shadow-brand/20 shadow-lg">
                 {t("discover")}
               </Link>
             </div>
@@ -154,11 +154,11 @@ export default function SavedPage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold transition-colors group-hover:text-brand">{p.title}</h3>
-                    <span className="ml-2 rounded-lg bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-600">{p.category}</span>
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
+                    <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
-                  <p className="text-sm text-gray-500 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-gray-400">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
+                  <p className="mt-2 text-xs text-gray-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>

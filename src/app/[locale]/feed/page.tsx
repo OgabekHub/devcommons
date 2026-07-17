@@ -96,17 +96,17 @@ export default function FeedPage() {
           <Rss className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
+          <p className="text-sm text-gray-400">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Content */}
       {activities.length === 0 ? (
-        <div className="card border-dashed p-10 text-center">
-          <Rss className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-gray-500 mb-4">{t("empty")}</p>
-          <Link href="/snippets" className="btn-primary">
+        <div className="card border-dashed border-white/10 p-10 text-center">
+          <Rss className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+          <p className="text-gray-400 mb-4">{t("empty")}</p>
+          <Link href="/snippets" className="btn-primary shadow-[0_0_15px_rgba(124,92,252,0.3)]">
             {t("empty_desc")}
           </Link>
         </div>
@@ -120,26 +120,26 @@ export default function FeedPage() {
             >
               <div className="flex items-start gap-4">
                 <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-                  item.type === "snippet" ? "bg-brand-50" : "bg-violet-50"
+                  item.type === "snippet" ? "bg-brand/10" : "bg-violet-500/10"
                 }`}>
                   {item.type === "snippet" ? (
-                    <Code2 className={`h-5 w-5 ${item.type === "snippet" ? "text-brand" : "text-violet-500"}`} />
+                    <Code2 className={`h-5 w-5 ${item.type === "snippet" ? "text-brand" : "text-violet-400"}`} />
                   ) : (
                     <Sparkles className="h-5 w-5 text-violet-500" />
                   )}
                 </div>
                 <div className="flex-1">
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold transition-colors group-hover:text-brand">{item.title}</h3>
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{item.title}</h3>
                     {item.type === "snippet" && item.language && (
-                      <span className="ml-2 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand">{item.language}</span>
+                      <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{item.language}</span>
                     )}
                     {item.type === "prompt" && item.category && (
-                      <span className="ml-2 rounded-lg bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-600">{item.category}</span>
+                      <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{item.category}</span>
                     )}
                   </div>
                   {(item.description || item.content) && (
-                    <p className="text-sm text-gray-500 line-clamp-2">{item.description || item.content}</p>
+                    <p className="text-sm text-gray-400 line-clamp-2">{item.description || item.content}</p>
                   )}
                   <div className="mt-2 flex items-center gap-3">
                     <span className="flex items-center gap-1.5 text-xs text-gray-400">

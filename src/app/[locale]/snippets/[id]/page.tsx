@@ -60,14 +60,14 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       {/* Header */}
       <div className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-semibold text-brand">
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-semibold text-brand">
             <Code2 className="h-3.5 w-3.5" />
             {snippet.language}
           </span>
           {snippet.tags?.map((tag: string) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
+              className="inline-flex items-center gap-1 rounded-lg bg-white/5 border border-white/10 px-2.5 py-1 text-xs font-medium text-gray-400"
             >
               <Tag className="h-3 w-3" />
               {tag}
@@ -75,10 +75,10 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           ))}
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{snippet.title}</h1>
+        <h1 className="text-2xl font-bold text-white sm:text-3xl">{snippet.title}</h1>
 
         {snippet.description && (
-          <p className="mt-3 text-gray-500 leading-relaxed">{snippet.description}</p>
+          <p className="mt-3 text-gray-400 leading-relaxed">{snippet.description}</p>
         )}
 
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
@@ -108,9 +108,9 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       </div>
 
       {/* Code Block */}
-      <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(124,92,252,0.1)]">
         {/* Code header */}
-        <div className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-white/10 bg-[#111] px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-red-500" />
@@ -127,7 +127,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         </div>
 
         {/* Code content */}
-        <div className="overflow-x-auto bg-[#0F0A1F]">
+        <div className="overflow-x-auto bg-[#0A0A0A]">
           <CodeHighlighter code={snippet.code} language={snippet.language} />
         </div>
       </div>

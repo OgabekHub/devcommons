@@ -86,43 +86,43 @@ export default function AnalyticsPage() {
           <BarChart3 className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
+          <p className="text-sm text-gray-400">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Stats Cards */}
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
-        <div className="card p-6">
+        <div className="card p-6 border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10">
               <Eye className="h-5 w-5 text-brand" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{totalViews}</p>
-              <p className="text-xs text-gray-500">{t("views")}</p>
+              <p className="text-2xl font-bold text-white">{totalViews}</p>
+              <p className="text-xs text-gray-400">{t("views")}</p>
             </div>
           </div>
         </div>
-        <div className="card p-6">
+        <div className="card p-6 border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10">
               <Code2 className="h-5 w-5 text-brand" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{data?.total_snippet_views || 0}</p>
-              <p className="text-xs text-gray-500">Snippet {t("views").toLowerCase()}</p>
+              <p className="text-2xl font-bold text-white">{data?.total_snippet_views || 0}</p>
+              <p className="text-xs text-gray-400">Snippet {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
-        <div className="card p-6">
+        <div className="card p-6 border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10">
               <Sparkles className="h-5 w-5 text-violet-500" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{data?.total_prompt_views || 0}</p>
-              <p className="text-xs text-gray-500">Prompt {t("views").toLowerCase()}</p>
+              <p className="text-2xl font-bold text-white">{data?.total_prompt_views || 0}</p>
+              <p className="text-xs text-gray-400">Prompt {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
@@ -130,31 +130,31 @@ export default function AnalyticsPage() {
 
       {/* Top Snippets */}
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold">{t("top_snippets")}</h2>
+        <h2 className="mb-4 text-lg font-semibold text-white">{t("top_snippets")}</h2>
         {data?.top_snippets.length === 0 ? (
-          <div className="card border-dashed p-6 text-center text-gray-500">
+          <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
             {t("no_data")}
           </div>
         ) : (
-          <div className="card overflow-hidden">
+          <div className="card overflow-hidden border-white/10 bg-[#111]">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-white/5 border-b border-white/10">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("title_col")}</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("language")}</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">{t("views")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("language")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-300">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.top_snippets.map((snippet) => (
-                  <tr key={snippet.id} className="border-t border-gray-100">
+                  <tr key={snippet.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
                       <a href={`/snippets/${snippet.id}`} className="font-medium text-brand hover:underline">
                         {snippet.title}
                       </a>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{snippet.language}</td>
-                    <td className="px-4 py-3 text-right font-medium">{snippet.view_count}</td>
+                    <td className="px-4 py-3 text-sm text-gray-400">{snippet.language}</td>
+                    <td className="px-4 py-3 text-right font-medium text-white">{snippet.view_count}</td>
                   </tr>
                 ))}
               </tbody>
@@ -165,31 +165,31 @@ export default function AnalyticsPage() {
 
       {/* Top Prompts */}
       <div>
-        <h2 className="mb-4 text-lg font-semibold">{t("top_prompts")}</h2>
+        <h2 className="mb-4 text-lg font-semibold text-white">{t("top_prompts")}</h2>
         {data?.top_prompts.length === 0 ? (
-          <div className="card border-dashed p-6 text-center text-gray-500">
+          <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
             {t("no_data")}
           </div>
         ) : (
-          <div className="card overflow-hidden">
+          <div className="card overflow-hidden border-white/10 bg-[#111]">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-white/5 border-b border-white/10">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("title_col")}</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("category")}</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">{t("views")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("category")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-300">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.top_prompts.map((prompt) => (
-                  <tr key={prompt.id} className="border-t border-gray-100">
+                  <tr key={prompt.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <a href={`/prompts/${prompt.id}`} className="font-medium text-violet-600 hover:underline">
+                      <a href={`/prompts/${prompt.id}`} className="font-medium text-violet-400 hover:underline">
                         {prompt.title}
                       </a>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{prompt.category}</td>
-                    <td className="px-4 py-3 text-right font-medium">{prompt.view_count}</td>
+                    <td className="px-4 py-3 text-sm text-gray-400">{prompt.category}</td>
+                    <td className="px-4 py-3 text-right font-medium text-white">{prompt.view_count}</td>
                   </tr>
                 ))}
               </tbody>
