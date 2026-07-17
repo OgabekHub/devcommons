@@ -9,32 +9,45 @@ export default function Logo({ className = "h-8 w-8" }: { className?: string }) 
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="logo-d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#8B5CF6" /> {/* purple-500 */}
-          <stop offset="100%" stopColor="#4F46E5" /> {/* indigo-600 */}
+        <linearGradient id="cube-top" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#A855F7" />
+          <stop offset="100%" stopColor="#8B5CF6" />
         </linearGradient>
-        <linearGradient id="logo-c-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#06B6D4" /> {/* cyan-500 */}
-          <stop offset="100%" stopColor="#3B82F6" /> {/* blue-500 */}
+        <linearGradient id="cube-left" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#7C3AED" />
+          <stop offset="100%" stopColor="#4C1D95" />
+        </linearGradient>
+        <linearGradient id="cube-right" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#3B82F6" />
+          <stop offset="100%" stopColor="#1E40AF" />
+        </linearGradient>
+        <filter id="cube-glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+        <linearGradient id="d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#22D3EE" />
         </linearGradient>
       </defs>
       
-      {/* Background shape */}
-      <rect width="40" height="40" rx="10" fill="url(#logo-d-grad)" fillOpacity="0.15" stroke="url(#logo-d-grad)" strokeOpacity="0.2" strokeWidth="1" />
+      {/* Background shape glow */}
+      <polygon points="20,5 35,12 35,28 20,35 5,28 5,12" fill="#8B5CF6" filter="url(#cube-glow)" fillOpacity="0.4" />
 
-      {/* D Curve */}
-      <path 
-        d="M 14 10 V 30 M 14 10 H 20 A 10 10 0 0 1 20 30 H 14" 
-        stroke="url(#logo-d-grad)" 
-        strokeWidth="3.5" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-      />
+      {/* Cube Faces */}
+      <polygon points="20,5 35,12.5 20,20 5,12.5" fill="url(#cube-top)" stroke="#C084FC" strokeWidth="0.75" strokeLinejoin="round" />
+      <polygon points="5,12.5 20,20 20,35 5,27.5" fill="url(#cube-left)" stroke="#A855F7" strokeWidth="0.75" strokeLinejoin="round" />
+      <polygon points="20,20 35,12.5 35,27.5 20,35" fill="url(#cube-right)" stroke="#60A5FA" strokeWidth="0.75" strokeLinejoin="round" />
+      
+      {/* Inner subtle lines to make it look like glass */}
+      <line x1="20" y1="20" x2="20" y2="35" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
+      <line x1="20" y1="20" x2="5" y2="12.5" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
+      <line x1="20" y1="20" x2="35" y2="12.5" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
 
-      {/* C Curve */}
+      {/* Geometric 'D' overlaid */}
       <path 
-        d="M 31 13 A 10 10 0 1 0 31 27" 
-        stroke="url(#logo-c-grad)" 
+        d="M 14 11 V 29 M 14 11 H 20 A 9 9 0 0 1 20 29 H 14" 
+        stroke="url(#d-grad)" 
         strokeWidth="3.5" 
         strokeLinecap="round" 
         strokeLinejoin="round" 
