@@ -23,11 +23,11 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
   const t = useTranslations("Index");
 
   return (
-    <div className="space-y-28 pb-20">
+    <div className="space-y-16 pb-16">
       {/* ========================================
           HERO SECTION (Redesigned 2-Column Premium UI)
           ======================================== */}
-      <section className="relative overflow-hidden pt-12 sm:pt-20 lg:pt-28 pb-10">
+      <section className="relative overflow-hidden pt-8 sm:pt-12 lg:pt-16 pb-6">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           {/* Main glow - positioned towards top left */}
@@ -39,10 +39,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         </div>
 
         <div className="relative mx-auto max-w-[1440px]">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+
             {/* Left Column - Text Content */}
-            <div className="space-y-8 text-left max-w-2xl">
+            <div className="space-y-6 text-left max-w-2xl">
               {/* Badge */}
               <div className="animate-fade-in-down inline-flex items-center gap-2 rounded-full border border-brand/20 bg-white/60 px-4 py-2 text-sm font-semibold text-brand shadow-sm backdrop-blur-md">
                 <span className="relative flex h-2.5 w-2.5">
@@ -53,39 +53,39 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* Main Headline */}
-              <h1 className="animate-fade-in-up text-5xl font-extrabold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
+              <h1 className="animate-fade-in-up text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
                 {t("title_start")}
-                <span className="text-gradient-animated bg-clip-text text-transparent bg-[length:200%_auto] block mt-2 mb-2">
+                <span className="text-gradient-animated bg-clip-text text-transparent bg-[length:200%_auto] block mt-1 mb-1">
                   {t("title_highlight")}
                 </span>
                 {t("title_end")}
               </h1>
 
               {/* Typewriter subheadline */}
-              <div className="animate-fade-in-up text-lg leading-relaxed text-gray-500 sm:text-xl" style={{ animationDelay: "0.15s" }}>
+              <div className="animate-fade-in-up text-base leading-relaxed text-gray-500 sm:text-lg" style={{ animationDelay: "0.15s" }}>
                 <p>
                   {t("subtitle")}
                 </p>
-                <p className="mt-3 text-base text-gray-400 font-medium">
+                <p className="mt-2 text-sm text-gray-400 font-medium">
                   {t("no_barrier")}
                 </p>
               </div>
 
               {/* CTA Buttons */}
-              <div className="animate-fade-in-up flex flex-col gap-4 sm:flex-row" style={{ animationDelay: "0.3s" }}>
-                <a href="/snippets" className="btn-primary group text-lg px-8 py-4 shadow-brand/25">
-                  <Code2 className="h-5 w-5" />
+              <div className="animate-fade-in-up flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.3s" }}>
+                <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-brand/25">
+                  <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
-                <a href="/prompts" className="btn-secondary text-lg px-8 py-4 bg-white/50 backdrop-blur-sm border-gray-200 hover:border-brand/30">
-                  <Sparkles className="h-5 w-5 text-brand" />
+                <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-white/50 backdrop-blur-sm border-gray-200 hover:border-brand/30">
+                  <Sparkles className="h-4 w-4 text-brand" />
                   {t("btn_prompts")}
                 </a>
               </div>
 
               {/* Trust badges */}
-              <div className="animate-fade-in flex flex-wrap items-center gap-6 pt-6 text-sm font-medium text-gray-400" style={{ animationDelay: "0.45s" }}>
+              <div className="animate-fade-in flex flex-wrap items-center gap-4 pt-4 text-xs font-medium text-gray-400" style={{ animationDelay: "0.45s" }}>
                 <span className="flex items-center gap-2 transition-colors hover:text-gray-700">
                   <Globe className="h-4 w-4" />
                   {t("trust_open_source")}
@@ -104,11 +104,11 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             </div>
 
             {/* Right Column - Premium IDE Mockup */}
-            <Reveal className="relative lg:mt-0 mt-12" delay={300}>
+            <Reveal className="relative lg:mt-0 mt-8" delay={300}>
               {/* Massive Glow Behind IDE */}
               <div className="absolute left-1/2 top-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-brand/20 via-purple-400/10 to-blue-400/20 blur-[80px]" />
-              
-              <div className="group relative mx-auto w-full max-w-2xl rounded-2xl border border-gray-700/50 bg-[#0B0914]/90 shadow-2xl backdrop-blur-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-brand/20 hover:border-brand/40">
+
+              <div className="group relative mx-auto w-full max-w-xl rounded-2xl border border-gray-700/50 bg-[#0B0914]/90 shadow-2xl backdrop-blur-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-brand/20 hover:border-brand/40">
                 {/* IDE Chrome / Header */}
                 <div className="flex items-center justify-between border-b border-gray-800/60 bg-[#161224]/80 px-4 py-3 rounded-t-2xl">
                   <div className="flex gap-2">
@@ -257,76 +257,76 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
       {/* ========================================
           FEATURES SECTION
           ======================================== */}
-      <section className="space-y-12">
+      <section className="space-y-8">
         <Reveal>
           <div className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
+            <span className="mb-2 inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
               {t("feat_badge")}
             </span>
-            <h2 className="text-3xl font-bold sm:text-4xl">
+            <h2 className="text-2xl font-bold sm:text-3xl">
               {t("feat_title_start")}<span className="text-gradient">DevCommons</span>{t("feat_title_end")}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-gray-500">
+            <p className="mx-auto mt-2 max-w-xl text-sm text-gray-500">
               {t("feat_desc")}
             </p>
           </div>
         </Reveal>
 
         <Reveal stagger>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* Feature 1 */}
-            <div className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(124,92,252,0.1)] border border-gray-100">
+            <div className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(124,92,252,0.1)] border border-gray-100">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand/5 blur-3xl transition-all duration-500 group-hover:bg-brand/10" />
               <div className="relative z-10">
-                <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-4 shadow-lg shadow-brand/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  <Code2 className="h-6 w-6 text-white" />
+                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-3 shadow-lg shadow-brand/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  <Code2 className="h-5 w-5 text-white" />
                 </div>
-                <h3 className="mb-3 text-xl font-bold text-gray-900">{t("feat1_title")}</h3>
-                <p className="text-base leading-relaxed text-gray-500">
+                <h3 className="mb-2 text-lg font-bold text-gray-900">{t("feat1_title")}</h3>
+                <p className="text-sm leading-relaxed text-gray-500">
                   {t("feat1_desc")}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="rounded-xl bg-blue-50/80 px-3 py-1.5 text-xs font-semibold text-blue-600 border border-blue-100/50 backdrop-blur-sm">JavaScript</span>
-                  <span className="rounded-xl bg-green-50/80 px-3 py-1.5 text-xs font-semibold text-green-600 border border-green-100/50 backdrop-blur-sm">Python</span>
-                  <span className="rounded-xl bg-orange-50/80 px-3 py-1.5 text-xs font-semibold text-orange-600 border border-orange-100/50 backdrop-blur-sm">React</span>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-xl bg-blue-50/80 px-2 py-1 text-xs font-semibold text-blue-600 border border-blue-100/50 backdrop-blur-sm">JavaScript</span>
+                  <span className="rounded-xl bg-green-50/80 px-2 py-1 text-xs font-semibold text-green-600 border border-green-100/50 backdrop-blur-sm">Python</span>
+                  <span className="rounded-xl bg-orange-50/80 px-2 py-1 text-xs font-semibold text-orange-600 border border-orange-100/50 backdrop-blur-sm">React</span>
                 </div>
               </div>
             </div>
 
             {/* Feature 2 */}
-            <div className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(168,85,247,0.1)] border border-gray-100">
+            <div className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(168,85,247,0.1)] border border-gray-100">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-purple-500/5 blur-3xl transition-all duration-500 group-hover:bg-purple-500/10" />
               <div className="relative z-10">
-                <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 p-4 shadow-lg shadow-purple-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
-                  <Sparkles className="h-6 w-6 text-white" />
+                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 p-3 shadow-lg shadow-purple-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  <Sparkles className="h-5 w-5 text-white" />
                 </div>
-                <h3 className="mb-3 text-xl font-bold text-gray-900">{t("feat2_title")}</h3>
-                <p className="text-base leading-relaxed text-gray-500">
+                <h3 className="mb-2 text-lg font-bold text-gray-900">{t("feat2_title")}</h3>
+                <p className="text-sm leading-relaxed text-gray-500">
                   {t("feat2_desc")}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="rounded-xl bg-violet-50/80 px-3 py-1.5 text-xs font-semibold text-violet-600 border border-violet-100/50 backdrop-blur-sm">ChatGPT</span>
-                  <span className="rounded-xl bg-sky-50/80 px-3 py-1.5 text-xs font-semibold text-sky-600 border border-sky-100/50 backdrop-blur-sm">Claude</span>
-                  <span className="rounded-xl bg-indigo-50/80 px-3 py-1.5 text-xs font-semibold text-indigo-600 border border-indigo-100/50 backdrop-blur-sm">Gemini</span>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-xl bg-violet-50/80 px-2 py-1 text-xs font-semibold text-violet-600 border border-violet-100/50 backdrop-blur-sm">ChatGPT</span>
+                  <span className="rounded-xl bg-sky-50/80 px-2 py-1 text-xs font-semibold text-sky-600 border border-sky-100/50 backdrop-blur-sm">Claude</span>
+                  <span className="rounded-xl bg-indigo-50/80 px-2 py-1 text-xs font-semibold text-indigo-600 border border-indigo-100/50 backdrop-blur-sm">Gemini</span>
                 </div>
               </div>
             </div>
 
             {/* Feature 3 */}
-            <div className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(16,185,129,0.1)] border border-gray-100 sm:col-span-2 lg:col-span-1">
+            <div className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(16,185,129,0.1)] border border-gray-100 sm:col-span-2 lg:col-span-1">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-emerald-500/5 blur-3xl transition-all duration-500 group-hover:bg-emerald-500/10" />
               <div className="relative z-10">
-                <div className="mb-6 inline-flex rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-4 shadow-lg shadow-emerald-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  <Users className="h-6 w-6 text-white" />
+                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-3 shadow-lg shadow-emerald-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  <Users className="h-5 w-5 text-white" />
                 </div>
-                <h3 className="mb-3 text-xl font-bold text-gray-900">{t("feat3_title")}</h3>
-                <p className="text-base leading-relaxed text-gray-500">
+                <h3 className="mb-2 text-lg font-bold text-gray-900">{t("feat3_title")}</h3>
+                <p className="text-sm leading-relaxed text-gray-500">
                   {t("feat3_desc")}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="rounded-xl bg-emerald-50/80 px-3 py-1.5 text-xs font-semibold text-emerald-600 border border-emerald-100/50 backdrop-blur-sm">{t("tag_open")}</span>
-                  <span className="rounded-xl bg-amber-50/80 px-3 py-1.5 text-xs font-semibold text-amber-600 border border-amber-100/50 backdrop-blur-sm">{t("tag_free")}</span>
-                  <span className="rounded-xl bg-rose-50/80 px-3 py-1.5 text-xs font-semibold text-rose-600 border border-rose-100/50 backdrop-blur-sm">{t("tag_all")}</span>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-xl bg-emerald-50/80 px-2 py-1 text-xs font-semibold text-emerald-600 border border-emerald-100/50 backdrop-blur-sm">{t("tag_open")}</span>
+                  <span className="rounded-xl bg-amber-50/80 px-2 py-1 text-xs font-semibold text-amber-600 border border-amber-100/50 backdrop-blur-sm">{t("tag_free")}</span>
+                  <span className="rounded-xl bg-rose-50/80 px-2 py-1 text-xs font-semibold text-rose-600 border border-rose-100/50 backdrop-blur-sm">{t("tag_all")}</span>
                 </div>
               </div>
             </div>
@@ -337,56 +337,56 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
       {/* ========================================
           HOW IT WORKS
           ======================================== */}
-      <section className="space-y-12">
+      <section className="space-y-8">
         <Reveal>
           <div className="text-center">
-            <span className="mb-3 inline-block rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
+            <span className="mb-2 inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
               {t("how_badge")}
             </span>
-            <h2 className="text-3xl font-bold sm:text-4xl">
+            <h2 className="text-2xl font-bold sm:text-3xl">
               {t("how_title")}
             </h2>
           </div>
         </Reveal>
 
-        <div className="grid gap-8 sm:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-3">
           <Reveal delay={0}>
             <div className="relative text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark text-xl font-bold text-white shadow-brand">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark text-lg font-bold text-white shadow-brand">
                 1
               </div>
-              <h3 className="mb-2 text-lg font-bold">{t("how1_title")}</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="mb-1 text-base font-bold">{t("how1_title")}</h3>
+              <p className="text-xs text-gray-500">
                 {t("how1_desc")}
               </p>
-              <Search className="mx-auto mt-3 h-5 w-5 text-brand/40" />
+              <Search className="mx-auto mt-2 h-4 w-4 text-brand/40" />
               {/* Connector line */}
-              <div className="absolute right-0 top-7 hidden h-0.5 w-8 bg-gradient-to-r from-brand/30 to-transparent sm:block" style={{ right: "-16px" }} />
+              <div className="absolute right-0 top-6 hidden h-0.5 w-8 bg-gradient-to-r from-brand/30 to-transparent sm:block" style={{ right: "-16px" }} />
             </div>
           </Reveal>
           <Reveal delay={150}>
             <div className="relative text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-xl font-bold text-white shadow-lg shadow-purple-500/25">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 text-lg font-bold text-white shadow-lg shadow-purple-500/25">
                 2
               </div>
-              <h3 className="mb-2 text-lg font-bold">{t("how2_title")}</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="mb-1 text-base font-bold">{t("how2_title")}</h3>
+              <p className="text-xs text-gray-500">
                 {t("how2_desc")}
               </p>
-              <Copy className="mx-auto mt-3 h-5 w-5 text-purple-400/40" />
-              <div className="absolute right-0 top-7 hidden h-0.5 w-8 bg-gradient-to-r from-purple-400/30 to-transparent sm:block" style={{ right: "-16px" }} />
+              <Copy className="mx-auto mt-2 h-4 w-4 text-purple-400/40" />
+              <div className="absolute right-0 top-6 hidden h-0.5 w-8 bg-gradient-to-r from-purple-400/30 to-transparent sm:block" style={{ right: "-16px" }} />
             </div>
           </Reveal>
           <Reveal delay={300}>
             <div className="text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-xl font-bold text-white shadow-lg shadow-emerald-500/25">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/25">
                 3
               </div>
-              <h3 className="mb-2 text-lg font-bold">{t("how3_title")}</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="mb-1 text-base font-bold">{t("how3_title")}</h3>
+              <p className="text-xs text-gray-500">
                 {t("how3_desc")}
               </p>
-              <Heart className="mx-auto mt-3 h-5 w-5 text-emerald-400/40" />
+              <Heart className="mx-auto mt-2 h-4 w-4 text-emerald-400/40" />
             </div>
           </Reveal>
         </div>
@@ -396,7 +396,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           STATS SECTION
           ======================================== */}
       <Reveal>
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-surface-dark via-brand-900 to-surface-dark px-8 py-16 noise">
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-surface-dark via-brand-900 to-surface-dark px-6 py-10 noise">
           {/* Background decoration */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand/20 blur-[100px]" />
@@ -404,10 +404,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           </div>
 
           <div className="relative">
-            <h2 className="mb-10 text-center text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="mb-6 text-center text-xl font-bold text-white sm:text-2xl">
               {t("stats_title")}
             </h2>
-            <div className="grid gap-10 sm:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-3">
               <AnimatedCounter end={100} suffix="%" label={t("stat1_label")} />
               <AnimatedCounter end={0} suffix={t("stat2_suffix")} label={t("stat2_label")} />
               <AnimatedCounter end={24} suffix="/7" label={t("stat3_label")} />
