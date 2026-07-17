@@ -46,20 +46,20 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-brand"
+        className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-brand"
       >
         {currentLocale.code.toUpperCase()}
         <ChevronDown className={`h-4 w-4 opacity-50 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 w-36 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+        <div className="absolute right-0 top-full mt-1 w-36 overflow-hidden rounded-xl border border-white/10 bg-[#111111] py-1 shadow-2xl z-50">
           {locales.map((l) => (
             <button
               key={l.code}
               onClick={() => handleLanguageChange(l.code)}
-              className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-brand-50 hover:text-brand ${
-                l.code === locale ? "font-semibold text-brand bg-gray-50/50" : "text-gray-700"
+              className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-brand/20 hover:text-brand ${
+                l.code === locale ? "font-semibold text-brand bg-white/5" : "text-gray-400"
               }`}
             >
               {l.name}
