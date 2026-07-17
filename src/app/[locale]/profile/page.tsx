@@ -131,22 +131,22 @@ export default function ProfilePage() {
         <div className="card p-4 text-center">
           <Eye className="mx-auto h-5 w-5 text-brand mb-2" />
           <p className="text-2xl font-bold">{stats.totalViews}</p>
-          <p className="text-xs text-gray-500">Ko'rishlar</p>
+          <p className="text-xs text-gray-500">{t("views")}</p>
         </div>
         <div className="card p-4 text-center">
           <Heart className="mx-auto h-5 w-5 text-red-500 mb-2" />
           <p className="text-2xl font-bold">{stats.totalVotes}</p>
-          <p className="text-xs text-gray-500">Ovozlar</p>
+          <p className="text-xs text-gray-500">{t("votes")}</p>
         </div>
         <div className="card p-4 text-center">
           <Users className="mx-auto h-5 w-5 text-blue-500 mb-2" />
           <p className="text-2xl font-bold">{stats.followers}</p>
-          <p className="text-xs text-gray-500">Obunachilar</p>
+          <p className="text-xs text-gray-500">{t("followers")}</p>
         </div>
         <div className="card p-4 text-center">
           <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-2" />
           <p className="text-2xl font-bold">{stats.following}</p>
-          <p className="text-xs text-gray-500">Obuna</p>
+          <p className="text-xs text-gray-500">{t("following")}</p>
         </div>
       </div>
 

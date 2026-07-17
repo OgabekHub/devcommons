@@ -157,7 +157,11 @@
     "no_snippets": "Hali snippet qo'shmagansiz",
     "no_prompts": "Hali prompt qo'shmagansiz",
     "btn_add_snippet": "Snippet qo'shish",
-    "btn_add_prompt": "Prompt qo'shish"
+    "btn_add_prompt": "Prompt qo'shish",
+    "views": "Ko'rishlar",
+    "votes": "Ovozlar",
+    "followers": "Obunachilar",
+    "following": "Obuna"
   },
   "Feed": {
     "title": "Faoliyat lentasi",
@@ -174,7 +178,10 @@
   "Tags": {
     "title": "Teglar",
     "subtitle": "Mavzular bo'yicha ko'rish",
-    "empty": "Teg topilmadi"
+    "empty": "Teg topilmadi",
+    "snippet": "snippet",
+    "prompt": "prompt",
+    "total": "jami"
   },
   "Analytics": {
     "title": "Analitika",
@@ -182,7 +189,11 @@
     "views": "Jami ko'rishlar",
     "votes": "Jami ovozlar",
     "top_snippets": "Eng mashhur snippetlar",
-    "top_prompts": "Eng mashhur promptlar"
+    "top_prompts": "Eng mashhur promptlar",
+    "no_data": "Hozircha ma'lumot yo'q",
+    "language": "Til",
+    "category": "Kategoriya",
+    "title_col": "Sarlavha"
   },
   "User": {
     "back": "Bosh sahifaga qaytish",

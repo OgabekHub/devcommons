@@ -157,7 +157,11 @@
     "no_snippets": "You have not added any snippets yet",
     "no_prompts": "You have not added any prompts yet",
     "btn_add_snippet": "Add Snippet",
-    "btn_add_prompt": "Add Prompt"
+    "btn_add_prompt": "Add Prompt",
+    "views": "Views",
+    "votes": "Votes",
+    "followers": "Followers",
+    "following": "Following"
   },
   "Feed": {
     "title": "Activity Feed",
@@ -174,7 +178,10 @@
   "Tags": {
     "title": "Tags",
     "subtitle": "Browse by topic",
-    "empty": "No tags found"
+    "empty": "No tags found",
+    "snippet": "snippet",
+    "prompt": "prompt",
+    "total": "total"
   },
   "Analytics": {
     "title": "Analytics",
@@ -182,7 +189,11 @@
     "views": "Total Views",
     "votes": "Total Votes",
     "top_snippets": "Top Snippets",
-    "top_prompts": "Top Prompts"
+    "top_prompts": "Top Prompts",
+    "no_data": "No data yet",
+    "language": "Language",
+    "category": "Category",
+    "title_col": "Title"
   },
   "User": {
     "back": "Back to home",

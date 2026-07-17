@@ -114,17 +114,17 @@ export default function TagsPage() {
                   <div className="space-y-1 text-sm text-gray-500">
                     <div className="flex items-center gap-2">
                       <Code2 className="h-3 w-3" />
-                      <span>{tag.snippet_count} snippet</span>
+                      <span>{tag.snippet_count} {t("snippet")}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-3 w-3 text-violet-500" />
-                      <span>{tag.prompt_count} prompt</span>
+                      <span>{tag.prompt_count} {t("prompt")}</span>
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
                   <span className="text-2xl font-bold text-gray-700">{tag.total_count}</span>
-                  <p className="text-xs text-gray-400">jami</p>
+                  <p className="text-xs text-gray-400">{t("total")}</p>
                 </div>
               </div>
             </Link>

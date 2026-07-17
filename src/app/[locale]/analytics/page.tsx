@@ -133,16 +133,16 @@ export default function AnalyticsPage() {
         <h2 className="mb-4 text-lg font-semibold">{t("top_snippets")}</h2>
         {data?.top_snippets.length === 0 ? (
           <div className="card border-dashed p-6 text-center text-gray-500">
-            Hozircha ma'lumot yo'q
+            {t("no_data")}
           </div>
         ) : (
           <div className="card overflow-hidden">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Title</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Language</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">Views</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("language")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,16 +168,16 @@ export default function AnalyticsPage() {
         <h2 className="mb-4 text-lg font-semibold">{t("top_prompts")}</h2>
         {data?.top_prompts.length === 0 ? (
           <div className="card border-dashed p-6 text-center text-gray-500">
-            Hozircha ma'lumot yo'q
+            {t("no_data")}
           </div>
         ) : (
           <div className="card overflow-hidden">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Title</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Category</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">Views</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">{t("category")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
