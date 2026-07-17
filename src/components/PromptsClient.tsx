@@ -6,6 +6,8 @@ import { Link } from "@/i18n/routing";
 import type { Prompt } from "@/types/database";
 import VoteButton from "@/components/VoteButton";
 import SkeletonCard from "@/components/SkeletonCard";
+import SpotlightCard from "@/components/SpotlightCard";
+import CopyButton from "@/components/CopyButton";
 
 const CATEGORIES = [
   "Barchasi", "Coding", "Writing", "Analysis", "Marketing",
@@ -264,56 +266,58 @@ export default function PromptsClient({ prompts, labels }: Props) {
         </div>
       ) : visiblePrompts.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
-          {visiblePrompts.map((prompt) => (
+          {visiblePrompts.map((prompt, i) => (
             <Link
               key={prompt.id}
               href={`/prompts/${prompt.id}` as `/prompts/${string}`}
-              className="card card-shine group cursor-pointer block"
+              className="group block"
             >
-              <div className="mb-3 flex items-start justify-between">
-                <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
-                  {prompt.title}
-                </h2>
-                <span className={`ml-2 flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${categoryStyles[prompt.category] || categoryStyles.default}`}>
-                  {prompt.category}
-                </span>
-              </div>
-              {(prompt as any).description && (
-                <p className="mb-2 text-sm text-gray-400 line-clamp-1">
-                  {(prompt as any).description}
-                </p>
-              )}
-              <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-400">
-                {prompt.content}
-              </p>
-              {/* Tags */}
-              {(prompt as any).tags?.length > 0 && (
-                <div className="mb-3 flex flex-wrap gap-1.5">
-                  {((prompt as any).tags as string[]).slice(0, 3).map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (!selectedTags.includes(tag)) {
-                          setSelectedTags([...selectedTags, tag]);
-                        }
-                      }}
-                      className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
-                        selectedTags.includes(tag)
-                          ? "bg-violet-500/20 text-violet-400 border-violet-500/30"
-                          : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
-                      }`}
-                    >
-                      #{tag}
-                    </button>
-                  ))}
+              <SpotlightCard delay={i * 0.05} className="card card-shine h-full flex flex-col cursor-pointer">
+                <div className="mb-3 flex items-start justify-between">
+                  <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
+                    {prompt.title}
+                  </h2>
+                  <span className={`ml-2 flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${categoryStyles[prompt.category] || categoryStyles.default}`}>
+                    {prompt.category}
+                  </span>
                 </div>
-              )}
-              <div className="flex items-center gap-3">
-                  <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
-                  <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
-              </div>
+                {(prompt as any).description && (
+                  <p className="mb-2 text-sm text-gray-400 line-clamp-1">
+                    {(prompt as any).description}
+                  </p>
+                )}
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-400">
+                  {prompt.content}
+                </p>
+                {/* Tags */}
+                {(prompt as any).tags?.length > 0 && (
+                  <div className="mb-3 flex flex-wrap gap-1.5">
+                    {((prompt as any).tags as string[]).slice(0, 3).map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (!selectedTags.includes(tag)) {
+                            setSelectedTags([...selectedTags, tag]);
+                          }
+                        }}
+                        className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
+                          selectedTags.includes(tag)
+                            ? "bg-violet-500/20 text-violet-400 border-violet-500/30"
+                            : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
+                        }`}
+                      >
+                        #{tag}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
+                    <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
+                    <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
+                </div>
+              </SpotlightCard>
             </Link>
           ))}
         </div>

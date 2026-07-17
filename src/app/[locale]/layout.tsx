@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 import "@/app/globals.css";
 
 const inter = Inter({
@@ -32,9 +33,11 @@ export default async function RootLayout({
     <html lang={locale} className={inter.variable}>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main className="mx-auto max-w-[1440px] px-4 py-8 md:px-8 lg:px-12">{children}</main>
-          <Footer />
+          <SmoothScroll>
+            <Header />
+            <main className="mx-auto max-w-[1440px] px-4 py-8 md:px-8 lg:px-12">{children}</main>
+            <Footer />
+          </SmoothScroll>
         </NextIntlClientProvider>
       </body>
     </html>

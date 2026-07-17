@@ -8,6 +8,7 @@ import { useLocale } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import SkeletonCard from "@/components/SkeletonCard";
+import SpotlightCard from "@/components/SpotlightCard";
 
 const LANGUAGES = [
   "Barchasi", "JavaScript", "TypeScript", "Python", "Rust",
@@ -245,56 +246,58 @@ export default function SnippetsClient({ snippets, labels }: Props) {
         </div>
       ) : visibleSnippets.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
-          {visibleSnippets.map((snippet) => (
+          {visibleSnippets.map((snippet, i) => (
             <Link
               key={snippet.id}
               href={`/snippets/${snippet.id}` as `/snippets/${string}`}
-              className="card card-shine group cursor-pointer block"
+              className="group block"
             >
-              <div className="mb-3 flex items-start justify-between">
-                <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
-                  {snippet.title}
-                </h2>
-                <span className="ml-2 flex-shrink-0 rounded-lg bg-brand/10 border border-brand/20 px-2.5 py-1 text-xs font-semibold text-brand">
-                  {snippet.language}
-                </span>
-              </div>
-              {snippet.description && (
-                <p className="mb-4 line-clamp-2 text-sm text-gray-400">
-                  {snippet.description}
-                </p>
-              )}
-              {/* Tags */}
-              {(snippet as any).tags?.length > 0 && (
-                <div className="mb-3 flex flex-wrap gap-1.5">
-                  {((snippet as any).tags as string[]).slice(0, 3).map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (!selectedTags.includes(tag)) {
-                          setSelectedTags([...selectedTags, tag]);
-                        }
-                      }}
-                      className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
-                        selectedTags.includes(tag)
-                          ? "bg-brand/20 text-brand border-brand/30"
-                          : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
-                      }`}
-                    >
-                      #{tag}
-                    </button>
-                  ))}
+              <SpotlightCard delay={i * 0.05} className="card card-shine h-full flex flex-col cursor-pointer">
+                <div className="mb-3 flex items-start justify-between">
+                  <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
+                    {snippet.title}
+                  </h2>
+                  <span className="ml-2 flex-shrink-0 rounded-lg bg-brand/10 border border-brand/20 px-2.5 py-1 text-xs font-semibold text-brand">
+                    {snippet.language}
+                  </span>
                 </div>
-              )}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <VoteButton id={snippet.id} type="snippet" initialVotes={snippet.votes ?? 0} />
-                  <span className="text-xs text-gray-400">{new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</span>
+                {snippet.description && (
+                  <p className="mb-4 line-clamp-2 text-sm text-gray-400">
+                    {snippet.description}
+                  </p>
+                )}
+                {/* Tags */}
+                {(snippet as any).tags?.length > 0 && (
+                  <div className="mb-3 flex flex-wrap gap-1.5">
+                    {((snippet as any).tags as string[]).slice(0, 3).map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (!selectedTags.includes(tag)) {
+                            setSelectedTags([...selectedTags, tag]);
+                          }
+                        }}
+                        className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
+                          selectedTags.includes(tag)
+                            ? "bg-brand/20 text-brand border-brand/30"
+                            : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
+                        }`}
+                      >
+                        #{tag}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-3">
+                    <VoteButton id={snippet.id} type="snippet" initialVotes={snippet.votes ?? 0} />
+                    <span className="text-xs text-gray-400">{new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</span>
+                  </div>
+                  <CopyButton text={snippet.code} label="" />
                 </div>
-                <CopyButton text={snippet.code} label="" />
-              </div>
+              </SpotlightCard>
             </Link>
           ))}
         </div>

@@ -16,6 +16,7 @@ import Reveal from "@/components/Reveal";
 import Typewriter from "@/components/Typewriter";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import AnimatedIDE from "@/components/AnimatedIDE";
+import BackgroundBeams from "@/components/BackgroundBeams";
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 
@@ -34,12 +35,12 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 h-[calc(100%+120px)] w-[100vw] -translate-x-1/2 overflow-hidden"
           style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
         >
-          {/* Main glow - positioned towards top left */}
-          <div className="absolute left-0 top-0 h-[800px] w-[800px] -translate-x-1/4 -translate-y-1/4 rounded-full bg-gradient-radial from-brand/15 via-brand/5 to-transparent blur-[100px]" />
-          {/* Side accents */}
-          <div className="absolute right-0 top-1/4 h-[600px] w-[600px] translate-x-1/4 rounded-full bg-blue-300/10 blur-[100px] animate-float-slower" />
+          {/* Background decorations */}
+        <BackgroundBeams />
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           {/* Dot grid */}
-          <div className="absolute inset-0 bg-dot-pattern bg-dot-md opacity-30" />
+          <div className="absolute inset-0 bg-dot-pattern bg-dot-md opacity-20" />
+        </div>
         </div>
 
         <div className="relative mx-auto max-w-[1440px]">
