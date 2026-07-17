@@ -86,9 +86,9 @@ export default function LogoTestPage() {
         {/* Concept 4 */}
         <div className="flex flex-col items-center gap-6">
           <div className="w-48 h-48 flex items-center justify-center bg-[#111] rounded-3xl border border-white/5 p-10 hover:bg-[#151515] hover:scale-105 transition-all duration-300 cursor-pointer shadow-2xl shadow-pink-900/10">
-            <svg viewBox="0 0 40 40" className="w-full h-full overflow-visible">
-              <path d="M 28 8 C 36 8 36 20 28 20 H 12 C 4 20 4 32 12 32 H 28" fill="none" stroke="url(#grad-main)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#glow-sm)" />
-              <path d="M 12 32 C 4 32 4 20 12 20 H 28 C 36 20 36 8 28 8" fill="none" stroke="url(#grad-alt)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" filter="url(#glow)" />
+            <svg viewBox="0 0 40 40" className="w-full h-full overflow-visible drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]">
+              <path d="M 28 8 C 36 8 36 20 28 20 H 12 C 4 20 4 32 12 32 H 28" fill="none" stroke="url(#grad-main)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 12 32 C 4 32 4 20 12 20 H 28 C 36 20 36 8 28 8" fill="none" stroke="url(#grad-alt)" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
             </svg>
           </div>
           <div className="text-center">
