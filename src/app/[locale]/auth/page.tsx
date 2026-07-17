@@ -73,16 +73,16 @@ export default function AuthPage() {
           {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-100" />
+              <div className="w-full border-t border-white/10" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-4 text-xs font-medium text-gray-400">
+              <span className="bg-[#111111] px-4 text-xs font-medium text-gray-400">
                 {t("or")}
               </span>
             </div>
           </div>
 
-          <div className="rounded-xl bg-gray-50 p-4">
+          <div className="rounded-xl border border-white/5 bg-white/5 p-4">
             <p className="text-center text-sm text-gray-500">
               {t("no_login_desc")}
             </p>
@@ -99,19 +99,19 @@ export default function AuthPage() {
 
         {/* Trust points */}
         <div className="animate-fade-in grid grid-cols-3 gap-3" style={{ animationDelay: "0.35s" }}>
-          <div className="rounded-xl border border-gray-100 bg-white p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm">
+          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
             <Shield className="mx-auto mb-1.5 h-4 w-4 text-brand" />
             <span className="text-[11px] font-medium text-gray-500">
               {t("trust_oauth")}
             </span>
           </div>
-          <div className="rounded-xl border border-gray-100 bg-white p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm">
+          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
             <Mail className="mx-auto mb-1.5 h-4 w-4 text-brand" />
             <span className="text-[11px] font-medium text-gray-500">
               {t("trust_no_email")}
             </span>
           </div>
-          <div className="rounded-xl border border-gray-100 bg-white p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm">
+          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
             <Trash2 className="mx-auto mb-1.5 h-4 w-4 text-brand" />
             <span className="text-[11px] font-medium text-gray-500">
               {t("trust_delete")}
