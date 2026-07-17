@@ -7,6 +7,7 @@ import { Link } from "@/i18n/routing";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import Logo from "@/components/Logo";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -54,10 +55,8 @@ export default function Header() {
     >
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 lg:px-12">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2.5 transition-all">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:shadow-brand">
-            <Code2 className="h-5 w-5 text-white" />
-          </div>
+        <Link href="/" className="group flex items-center gap-2.5 transition-all hover:opacity-90">
+          <Logo className="h-9 w-9 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-[0_0_15px_rgba(139,92,246,0.2)]" />
           <span className="text-xl font-bold tracking-tight text-white">
             Dev<span className="text-brand">Commons</span>
           </span>
