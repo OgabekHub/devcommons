@@ -27,15 +27,18 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
       {/* ========================================
           HERO SECTION (Redesigned 2-Column Premium UI)
           ======================================== */}
-      <section className="relative overflow-hidden pt-8 sm:pt-12 lg:pt-16 pb-6">
-        {/* Background decorations */}
-        <div className="pointer-events-none absolute inset-0">
+      <section className="relative pt-8 sm:pt-12 lg:pt-16 pb-6">
+        {/* Full-width Background decorations */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-full w-[100vw] -translate-x-1/2 overflow-hidden">
           {/* Main glow - positioned towards top left */}
           <div className="absolute left-0 top-0 h-[800px] w-[800px] -translate-x-1/4 -translate-y-1/4 rounded-full bg-gradient-radial from-brand/15 via-brand/5 to-transparent blur-[100px]" />
           {/* Side accents */}
           <div className="absolute right-0 top-1/4 h-[600px] w-[600px] translate-x-1/4 rounded-full bg-blue-300/10 blur-[100px] animate-float-slower" />
           {/* Dot grid */}
           <div className="absolute inset-0 bg-dot-pattern bg-dot-md opacity-30" />
+          
+          {/* Bottom fade out to smoothly transition to the next section */}
+          <div className="absolute bottom-0 left-0 h-32 w-full bg-gradient-to-t from-white to-transparent" />
         </div>
 
         <div className="relative mx-auto max-w-[1440px]">
