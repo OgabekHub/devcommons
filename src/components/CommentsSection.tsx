@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { MessageSquare, Send, Trash2, ThumbsUp } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Comment {
@@ -122,7 +123,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
         </form>
       ) : (
         <div className="rounded-xl border border-white/5 bg-white/5 p-4 text-center text-sm text-gray-400">
-          {t("comments_login")} <a href="/auth" className="text-brand hover:underline">{t("login")}</a>
+          {t("comments_login")} <Link href="/auth" className="text-brand hover:underline">{t("login")}</Link>
         </div>
       )}
 
