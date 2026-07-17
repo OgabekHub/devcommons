@@ -94,8 +94,8 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
   return (
     <div className="mt-8 space-y-6">
       <div className="flex items-center gap-2">
-        <MessageSquare className="h-5 w-5 text-gray-600" />
-        <h3 className="text-lg font-semibold">{t("comments")} ({comments.length})</h3>
+        <MessageSquare className="h-5 w-5 text-gray-400" />
+        <h3 className="text-lg font-semibold text-gray-100">{t("comments")} ({comments.length})</h3>
       </div>
 
       {/* Add comment form */}
@@ -106,7 +106,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder={t("comment_placeholder")}
             rows={3}
-            className="input w-full resize-none bg-white"
+            className="input w-full resize-none bg-[#111111] border-white/10 text-gray-100 placeholder:text-gray-500"
             maxLength={1000}
           />
           <div className="flex justify-end">
@@ -121,7 +121,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
           </div>
         </form>
       ) : (
-        <div className="rounded-xl bg-gray-50 p-4 text-center text-sm text-gray-500">
+        <div className="rounded-xl border border-white/5 bg-white/5 p-4 text-center text-sm text-gray-400">
           {t("comments_login")} <a href="/auth" className="text-brand hover:underline">{t("login")}</a>
         </div>
       )}
@@ -139,18 +139,18 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                 {comment.author_avatar ? (
                   <img src={comment.author_avatar} alt={comment.author_name} className="h-8 w-8 rounded-full" />
                 ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-50 text-brand font-medium">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/20 text-brand font-medium">
                     {comment.author_name[0].toUpperCase()}
                   </div>
                 )}
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-gray-900">{comment.author_name}</span>
-                    <span className="text-xs text-gray-400">
+                    <span className="font-medium text-gray-200">{comment.author_name}</span>
+                    <span className="text-xs text-gray-500">
                       {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-700">{comment.content}</p>
+                  <p className="mt-1 text-sm text-gray-300">{comment.content}</p>
                   <div className="mt-2 flex items-center gap-4">
                     <button
                       onClick={() => handleVote(comment.id)}

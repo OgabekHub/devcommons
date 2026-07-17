@@ -1,4 +1,5 @@
-import { Code2, Github, Heart, ArrowUpRight } from "lucide-react";
+import { Github, Heart, ArrowUpRight } from "lucide-react";
+import Logo from "@/components/Logo";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -15,9 +16,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-dark shadow-sm">
-                <Code2 className="h-4 w-4 text-white" />
-              </div>
+              <Logo className="h-8 w-8" />
               <span className="text-lg font-bold tracking-tight text-white">
                 Dev<span className="text-brand">Commons</span>
               </span>

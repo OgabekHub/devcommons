@@ -1,6 +1,7 @@
 "use client";
 
-import { Github, ArrowLeft, Shield, Trash2, Mail, Code2 } from "lucide-react";
+import { Github, ArrowLeft, Shield, Trash2, Mail } from "lucide-react";
+import Logo from "@/components/Logo";
 import { useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations, useLocale } from "next-intl";
@@ -40,8 +41,8 @@ export default function AuthPage() {
 
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark shadow-brand animate-scale-in">
-            <Code2 className="h-8 w-8 text-white" />
+          <div className="mx-auto mb-5 flex justify-center animate-scale-in">
+            <Logo className="h-16 w-16" />
           </div>
           <h1 className="animate-fade-in-up text-2xl font-bold sm:text-3xl">
             {t("title")}
