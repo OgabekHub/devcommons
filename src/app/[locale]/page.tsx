@@ -251,9 +251,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                   <Terminal className="h-6 w-6 text-blue-400" />
                 </div>
               </div>
-              </div>
             </div>
-
           </div>
         </div>
       </section>
