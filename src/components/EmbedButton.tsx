@@ -31,7 +31,7 @@ export default function EmbedButton({ snippetId }: Props) {
     <div className="relative">
       <button
         onClick={() => setShowCode(!showCode)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:bg-white/5"
         title={t("embed")}
       >
         <Share2 className="h-4 w-4" />
@@ -39,12 +39,12 @@ export default function EmbedButton({ snippetId }: Props) {
       </button>
 
       {showCode && (
-        <div className="absolute right-0 top-full z-10 mt-2 w-96 rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+        <div className="absolute right-0 top-full z-10 mt-2 w-96 rounded-xl border border-white/10 bg-[#111111] p-4 shadow-2xl">
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-700">{t("embed")} code</span>
+            <span className="text-sm font-semibold text-gray-100">{t("embed")} code</span>
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-2 py-1 text-xs font-medium text-brand transition-colors hover:bg-brand-100"
+              className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-2 py-1 text-xs font-medium text-brand transition-colors hover:bg-brand/20"
             >
               {copied ? <Check className="h-3 w-3" /> : <Code className="h-3 w-3" />}
               {copied ? t("copied") : t("embed_copy")}

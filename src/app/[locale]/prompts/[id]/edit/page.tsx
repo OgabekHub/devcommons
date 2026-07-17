@@ -161,7 +161,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
             onChange={(e) => setTitle(e.target.value)}
             placeholder={t("field_title_placeholder")}
             maxLength={100}
-            className="input w-full bg-white text-gray-900"
+            className="input w-full"
           />
         </div>
 
@@ -174,7 +174,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
             placeholder={t("field_desc_placeholder")}
             rows={3}
             maxLength={500}
-            className="input w-full resize-none bg-white text-gray-900"
+            className="input w-full resize-none"
           />
         </div>
 
@@ -203,8 +203,8 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
           <label className="text-sm font-semibold text-gray-700">
             {t("field_content")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-white">
-            <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-4 py-2">
+          <div className="overflow-hidden rounded-xl border border-white/10 shadow-sm bg-[#111111]">
+            <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-2">
               <span className="text-xs font-medium text-gray-500">✨ Prompt</span>
               <span className="text-xs text-gray-400">{content.length} / 5000</span>
             </div>
@@ -214,7 +214,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
               placeholder={t("field_content_placeholder")}
               rows={12}
               maxLength={5000}
-              className="w-full bg-white p-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none resize-none"
+              className="w-full bg-transparent p-4 text-sm text-gray-100 placeholder-gray-500 focus:outline-none resize-none"
             />
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
               placeholder={t("field_tags_placeholder")}
               maxLength={20}
-              className="input flex-1 bg-white text-gray-900"
+              className="input flex-1"
             />
             <button
               type="button"

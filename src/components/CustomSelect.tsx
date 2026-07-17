@@ -30,14 +30,14 @@ export default function CustomSelect({ options, value, onChange, placeholder }: 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm transition-all duration-200 hover:border-brand focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15"
+        className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#111111] px-4 py-2.5 text-sm text-gray-300 shadow-sm transition-all duration-200 hover:border-brand focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15"
       >
         <span>{value || placeholder}</span>
         <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-gray-100 bg-white p-1 shadow-lg scrollbar-thin">
+        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-white/10 bg-[#111111] p-1 shadow-2xl scrollbar-thin">
           {options.map((option) => (
             <button
               key={option}
@@ -46,8 +46,8 @@ export default function CustomSelect({ options, value, onChange, placeholder }: 
                 onChange(option);
                 setIsOpen(false);
               }}
-              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-brand-50 hover:text-brand ${
-                value === option ? "bg-brand-50/50 font-semibold text-brand" : "text-gray-700"
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-brand/20 hover:text-brand ${
+                value === option ? "bg-white/5 font-semibold text-brand" : "text-gray-400"
               }`}
             >
               {option}

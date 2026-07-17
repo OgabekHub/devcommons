@@ -213,7 +213,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
             onChange={(e) => setTitle(e.target.value)}
             placeholder={t("field_title_placeholder")}
             maxLength={100}
-            className="input w-full bg-white text-gray-900"
+            className="input w-full"
           />
         </div>
 
@@ -228,7 +228,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
             placeholder={t("field_desc_placeholder")}
             rows={3}
             maxLength={500}
-            className="input w-full resize-none bg-white text-gray-900"
+            className="input w-full resize-none"
           />
         </div>
 
@@ -249,7 +249,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
           <label className="text-sm font-semibold text-gray-700">
             {t("field_code")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-gray-200 bg-[#0F0A1F] shadow-sm">
+          <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0F0A1F] shadow-sm">
             <div className="flex items-center justify-between border-b border-gray-800 bg-gray-900 px-4 py-2">
               <span className="text-xs font-medium text-gray-400">{language}</span>
               <div className="flex gap-1.5">
@@ -289,7 +289,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
               placeholder={t("field_tags_placeholder")}
               maxLength={20}
-              className="input flex-1 bg-white text-gray-900"
+              className="input flex-1"
             />
             <button
               type="button"
