@@ -1,27 +1,24 @@
 <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="cube-top" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#A855F7" />
+    <linearGradient id="ribbon-curve" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="50%" stop-color="#3B82F6" />
       <stop offset="100%" stop-color="#8B5CF6" />
     </linearGradient>
-    <linearGradient id="cube-left" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7C3AED" />
-      <stop offset="100%" stop-color="#4C1D95" />
-    </linearGradient>
-    <linearGradient id="cube-right" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6" />
-      <stop offset="100%" stop-color="#1E40AF" />
-    </linearGradient>
-    <linearGradient id="d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
+    <linearGradient id="ribbon-stem" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6" />
       <stop offset="100%" stop-color="#22D3EE" />
     </linearGradient>
+    <linearGradient id="spark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <filter id="ribbon-shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="0" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
   </defs>
-  <polygon points="20,5 35,12.5 20,20 5,12.5" fill="url(#cube-top)" stroke="#C084FC" stroke-width="0.75" stroke-linejoin="round" />
-  <polygon points="5,12.5 20,20 20,35 5,27.5" fill="url(#cube-left)" stroke="#A855F7" stroke-width="0.75" stroke-linejoin="round" />
-  <polygon points="20,20 35,12.5 35,27.5 20,35" fill="url(#cube-right)" stroke="#60A5FA" stroke-width="0.75" stroke-linejoin="round" />
-  <line x1="20" y1="20" x2="20" y2="35" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1" />
-  <line x1="20" y1="20" x2="5" y2="12.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1" />
-  <line x1="20" y1="20" x2="35" y2="12.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1" />
-  <path d="M 14 11 V 29 M 14 11 H 20 A 9 9 0 0 1 20 29 H 14" stroke="url(#d-grad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <path d="M 14 10 H 20 C 27 10 32 14.5 32 20 C 32 25.5 27 30 20 30 H 14" stroke="url(#ribbon-curve)" stroke-width="5" stroke-linecap="round" />
+  <path d="M 14 31 V 9" stroke="url(#ribbon-stem)" stroke-width="5" stroke-linecap="round" filter="url(#ribbon-shadow)" />
+  <path d="M 32 4 Q 32 10 38 10 Q 32 10 32 16 Q 32 10 26 10 Q 32 10 32 4 Z" fill="url(#spark-grad)" />
 </svg>

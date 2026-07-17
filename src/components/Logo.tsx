@@ -9,48 +9,54 @@ export default function Logo({ className = "h-8 w-8" }: { className?: string }) 
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="cube-top" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#A855F7" />
-          <stop offset="100%" stopColor="#8B5CF6" />
+        <linearGradient id="ribbon-curve" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#22D3EE" /> {/* Cyan */}
+          <stop offset="50%" stopColor="#3B82F6" /> {/* Blue */}
+          <stop offset="100%" stopColor="#8B5CF6" /> {/* Purple */}
         </linearGradient>
-        <linearGradient id="cube-left" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#7C3AED" />
-          <stop offset="100%" stopColor="#4C1D95" />
+        <linearGradient id="ribbon-stem" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#8B5CF6" /> {/* Purple */}
+          <stop offset="100%" stopColor="#22D3EE" /> {/* Cyan */}
         </linearGradient>
-        <linearGradient id="cube-right" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#1E40AF" />
+        <linearGradient id="spark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#A855F7" />
         </linearGradient>
-        <filter id="cube-glow" x="-30%" y="-30%" width="160%" height="160%">
+        
+        <filter id="ribbon-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="2" dy="0" stdDeviation="1.5" floodColor="#000000" floodOpacity="0.4" />
+        </filter>
+        <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="3" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
-        <linearGradient id="d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="100%" stopColor="#22D3EE" />
-        </linearGradient>
       </defs>
       
-      {/* Background shape glow */}
-      <polygon points="20,5 35,12 35,28 20,35 5,28 5,12" fill="#8B5CF6" filter="url(#cube-glow)" fillOpacity="0.4" />
+      {/* Background ambient glow */}
+      <circle cx="20" cy="20" r="14" fill="#3B82F6" fillOpacity="0.15" filter="url(#neon-glow)" />
 
-      {/* Cube Faces */}
-      <polygon points="20,5 35,12.5 20,20 5,12.5" fill="url(#cube-top)" stroke="#C084FC" strokeWidth="0.75" strokeLinejoin="round" />
-      <polygon points="5,12.5 20,20 20,35 5,27.5" fill="url(#cube-left)" stroke="#A855F7" strokeWidth="0.75" strokeLinejoin="round" />
-      <polygon points="20,20 35,12.5 35,27.5 20,35" fill="url(#cube-right)" stroke="#60A5FA" strokeWidth="0.75" strokeLinejoin="round" />
-      
-      {/* Inner subtle lines to make it look like glass */}
-      <line x1="20" y1="20" x2="20" y2="35" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
-      <line x1="20" y1="20" x2="5" y2="12.5" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
-      <line x1="20" y1="20" x2="35" y2="12.5" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" />
-
-      {/* Geometric 'D' overlaid */}
+      {/* The Curve (Back part of the ribbon) */}
       <path 
-        d="M 14 11 V 29 M 14 11 H 20 A 9 9 0 0 1 20 29 H 14" 
-        stroke="url(#d-grad)" 
-        strokeWidth="3.5" 
+        d="M 14 10 H 20 C 27 10 32 14.5 32 20 C 32 25.5 27 30 20 30 H 14" 
+        stroke="url(#ribbon-curve)" 
+        strokeWidth="5" 
         strokeLinecap="round" 
-        strokeLinejoin="round" 
+      />
+
+      {/* The Stem (Front part of the ribbon, overlapping the curve) */}
+      <path 
+        d="M 14 31 V 9" 
+        stroke="url(#ribbon-stem)" 
+        strokeWidth="5" 
+        strokeLinecap="round" 
+        filter="url(#ribbon-shadow)"
+      />
+
+      {/* AI Spark / Magic Star */}
+      <path 
+        d="M 32 4 Q 32 10 38 10 Q 32 10 32 16 Q 32 10 26 10 Q 32 10 32 4 Z" 
+        fill="url(#spark-grad)" 
+        filter="url(#neon-glow)"
       />
     </svg>
   );
