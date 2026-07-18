@@ -16,6 +16,8 @@ import Reveal from "@/components/Reveal";
 import Typewriter from "@/components/Typewriter";
 import HeroBentoBox from "@/components/HeroBentoBox";
 import BackgroundBeams from "@/components/BackgroundBeams";
+import Logo from "@/components/Logo";
+import GitHubLoginButton from "@/components/GitHubLoginButton";
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 
@@ -304,8 +306,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           <div className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-purple-500/20 blur-[60px]" />
 
           <div className="relative mx-auto max-w-lg space-y-6">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-dark shadow-[0_0_20px_rgba(124,92,252,0.4)] animate-bounce-subtle">
-              <Zap className="h-8 w-8 text-white" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center animate-bounce-subtle">
+              <Logo className="h-12 w-12" />
             </div>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
               {t("cta_title_start")}
@@ -320,9 +322,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                 {t("cta_btn_start")}
                 <ArrowRight className="h-5 w-5" />
               </a>
-              <a href="/auth" className="btn-ghost text-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white">
-                {t("cta_btn_login")}
-              </a>
+              <GitHubLoginButton 
+                text={t("cta_btn_login")} 
+                className="btn-ghost text-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center" 
+              />
             </div>
           </div>
         </section>
