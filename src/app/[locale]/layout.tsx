@@ -33,8 +33,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={inter.variable}>
-      <body className={inter.className}>
+    <html lang={locale} className={`${inter.variable} overflow-x-hidden`}>
+      <body className={`${inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <InteractiveTour />
           <Header />
