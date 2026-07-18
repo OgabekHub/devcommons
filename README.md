@@ -1,5 +1,6 @@
 <div align="center">
-  <h1 align="center">💻 DevCommons</h1>
+  <img src="public/logo.png" alt="DevCommons Logo" width="100" height="100">
+  <h1 align="center">DevCommons</h1>
   <p align="center">
     <strong>Dasturchilar uchun ochiq resurslar va tajriba almashish platformasi</strong>
   </p>
