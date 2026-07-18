@@ -197,14 +197,9 @@ export default function AnimatedIDE() {
         className="group relative w-full transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_0_80px_rgba(124,92,252,0.4)]"
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Computer Screen Frame (Laptop Mockup) */}
-        <div className="relative rounded-2xl border-[6px] border-[#1f2228] bg-black shadow-[0_0_50px_rgba(124,92,252,0.2)] flex flex-col overflow-hidden">
+        {/* Computer Screen Frame (Monitor Mockup) */}
+        <div className="relative rounded-xl border-[8px] border-[#181a1f] bg-black shadow-[0_0_50px_rgba(124,92,252,0.2)] flex flex-col overflow-hidden">
           
-          {/* Laptop Camera/Notch area */}
-          <div className="absolute top-1.5 left-1/2 -translate-x-1/2 h-2.5 w-16 bg-[#1f2228] rounded-b-lg flex items-center justify-center z-20">
-            <div className="h-1 w-1 rounded-full bg-blue-500/50 shadow-[0_0_4px_rgba(59,130,246,0.8)]" />
-          </div>
-
           {/* Glare effect on screen */}
           <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-br from-white/[0.03] to-transparent" />
 
@@ -278,11 +273,16 @@ export default function AnimatedIDE() {
           </AnimatePresence>
         </div>
 
-        {/* Laptop Base (Keyboard Deck edge) */}
-        <div className="h-3 w-[104%] -ml-[2%] bg-gradient-to-b from-[#2a2d35] to-[#121418] rounded-b-[10px] border-t border-gray-600/30 shadow-[0_10px_20px_rgba(0,0,0,0.5)] relative z-0" />
+        {/* Monitor Stand */}
+        <div className="flex flex-col items-center relative z-0">
+          {/* Neck */}
+          <div className="h-12 w-16 bg-gradient-to-b from-[#181a1f] to-[#0a0b0d] border-l border-r border-gray-800/80 shadow-inner" />
+          {/* Base Plate */}
+          <div className="h-3 w-48 bg-gradient-to-b from-[#2a2d35] to-[#121418] rounded-t-md border-t border-gray-600/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)]" />
+        </div>
         
-        {/* Glow directly under the laptop base */}
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-brand/30 blur-[20px]" />
+        {/* Glow directly under the monitor base */}
+        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-48 h-4 bg-brand/30 blur-[20px]" />
       </motion.div>
     </div>
   );
