@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import Typewriter from "@/components/Typewriter";
-import AnimatedCounter from "@/components/AnimatedCounter";
 import HeroBentoBox from "@/components/HeroBentoBox";
 import BackgroundBeams from "@/components/BackgroundBeams";
 import { setRequestLocale } from 'next-intl/server';
@@ -254,29 +253,6 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         </div>
       </section>
 
-      {/* ========================================
-          STATS SECTION
-          ======================================== */}
-      <Reveal>
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-surface-dark via-brand-900 to-surface-dark px-6 py-10 noise">
-          {/* Background decoration */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand/20 blur-[100px]" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-purple-500/15 blur-[100px]" />
-          </div>
-
-          <div className="relative">
-            <h2 className="mb-6 text-center text-xl font-bold text-white sm:text-2xl">
-              {t("stats_title")}
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-3">
-              <AnimatedCounter end={100} suffix="%" label={t("stat1_label")} />
-              <AnimatedCounter end={0} suffix={t("stat2_suffix")} label={t("stat2_label")} />
-              <AnimatedCounter end={24} suffix="/7" label={t("stat3_label")} />
-            </div>
-          </div>
-        </section>
-      </Reveal>
 
       {/* ========================================
           TECH STACK SECTION
