@@ -246,7 +246,7 @@ export default function AnimatedIDE() {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                className="border-t border-gray-800/60 bg-[#0A0812] overflow-hidden relative z-10"
+                className="absolute bottom-0 left-0 right-0 border-t border-gray-800/60 bg-[#0A0812] overflow-hidden z-20 shadow-[0_-10px_20px_rgba(0,0,0,0.5)]"
               >
                 <div className="px-4 py-2 flex items-center gap-2 border-b border-gray-800/40 bg-[#110D1A]">
                   <TerminalIcon className="h-3.5 w-3.5 text-gray-400" />
