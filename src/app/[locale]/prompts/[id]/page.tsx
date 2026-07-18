@@ -19,13 +19,26 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: prompt, error } = await supabase
+  const { data: promptRaw, error } = await supabase
     .from("prompts")
-    .select("*")
+    .select(`
+      *,
+      users (
+        github_username,
+        avatar_url
+      )
+    `)
     .eq("id", id)
     .single();
 
-  if (error || !prompt) notFound();
+  if (error || !promptRaw) notFound();
+
+  // Map user data
+  const prompt = {
+    ...promptRaw,
+    author_name: promptRaw.users?.github_username,
+    author_avatar: promptRaw.users?.avatar_url,
+  };
 
   const isAuthor = user?.id === prompt.author_id;
 

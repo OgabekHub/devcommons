@@ -27,13 +27,26 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: snippet, error } = await supabase
+  const { data: snippetRaw, error } = await supabase
     .from("snippets")
-    .select("*")
+    .select(`
+      *,
+      users (
+        github_username,
+        avatar_url
+      )
+    `)
     .eq("id", id)
     .single();
 
-  if (error || !snippet) notFound();
+  if (error || !snippetRaw) notFound();
+
+  // Map user data
+  const snippet = {
+    ...snippetRaw,
+    author_name: snippetRaw.users?.github_username,
+    author_avatar: snippetRaw.users?.avatar_url,
+  };
 
   const isAuthor = user?.id === snippet.author_id;
 
