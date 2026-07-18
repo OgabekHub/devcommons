@@ -233,5 +233,18 @@
     "prompts_desc": "ChatGPT yoki boshqa sun'iy intellektlar uchun to'g'ri savol (prompt) tuzishni o'rganing va ulashing.",
     "profile_title": "Shaxsiy Profil 👤",
     "profile_desc": "Tizimga kiring, o'zingiz yoqtirgan kodlarni saqlang, do'stlaringizga obuna bo'ling va o'z 'Lenta'ngizni yarating!"
+  },
+  "Feedback": {
+    "title": "Fikr va Takliflar",
+    "description": "Saytni rivojlantirish uchun o'z fikringiz, taklifingiz yoki topilgan xatoliklarni yuboring.",
+    "type_suggestion": "Taklif (Suggestion)",
+    "type_bug": "Xatolik (Bug)",
+    "type_other": "Boshqa",
+    "placeholder": "Bu yerga yozing...",
+    "btn_cancel": "Bekor qilish",
+    "btn_submit": "Yuborish",
+    "btn_submitting": "Yuborilmoqda...",
+    "success": "Katta rahmat! Fikringiz muvaffaqiyatli yuborildi.",
+    "btn_open": "Fikr bildirish"
   }
 }

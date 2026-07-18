@@ -233,5 +233,18 @@
     "prompts_desc": "Learn how to write the best prompts for ChatGPT and other AIs, and share them with the community.",
     "profile_title": "Personal Profile 👤",
     "profile_desc": "Log in to save your favorite codes, follow friends, and create your personalized feed!"
+  },
+  "Feedback": {
+    "title": "Feedback & Suggestions",
+    "description": "Send your thoughts, suggestions, or report any bugs to help us improve.",
+    "type_suggestion": "Suggestion",
+    "type_bug": "Bug Report",
+    "type_other": "Other",
+    "placeholder": "Write your message here...",
+    "btn_cancel": "Cancel",
+    "btn_submit": "Submit",
+    "btn_submitting": "Submitting...",
+    "success": "Thank you! Your feedback has been sent successfully.",
+    "btn_open": "Feedback"
   }
 }
