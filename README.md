@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/code-2.svg" alt="DevCommons Logo" width="80" height="80">
-  <h1 align="center">DevCommons</h1>
+  <h1 align="center">💻 DevCommons</h1>
   <p align="center">
     <strong>Dasturchilar uchun ochiq resurslar va tajriba almashish platformasi</strong>
   </p>
