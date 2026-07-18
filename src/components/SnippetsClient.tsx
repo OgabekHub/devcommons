@@ -9,6 +9,7 @@ import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
+import CustomSelect from "@/components/CustomSelect";
 
 const LANGUAGES = [
   "Barchasi", "JavaScript", "TypeScript", "Python", "Rust",
@@ -148,15 +149,13 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             </button>
           )}
         </div>
-        <select
-          value={lang}
-          onChange={(e) => setLang(e.target.value)}
-          className="input w-full sm:w-48 bg-[#111] text-gray-300 cursor-pointer border-white/10 focus:border-brand"
-        >
-          {LANGUAGES.map((l) => (
-            <option key={l} value={l}>{l}</option>
-          ))}
-        </select>
+        <div className="w-full sm:w-48">
+          <CustomSelect
+            options={LANGUAGES}
+            value={lang}
+            onChange={(val) => setLang(val)}
+          />
+        </div>
         <div className="relative">
           <button
             onClick={() => setShowSortMenu(!showSortMenu)}
