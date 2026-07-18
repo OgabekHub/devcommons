@@ -202,7 +202,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Top Right Panel: AI Prompt */}
@@ -225,7 +225,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
           <p className="text-xs text-purple-200/70 leading-relaxed">
             {promptText || "\"React.js uchun asinxron ma'lumot yuklaydigan universal custom hook yozib ber.\""}
           </p>
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Bottom Left Panel: Terminal */}
@@ -253,7 +253,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
               <span>All 24 tests passed!</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
