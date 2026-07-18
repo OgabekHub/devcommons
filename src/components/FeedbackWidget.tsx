@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { MessageSquarePlus, X, Send, CheckCircle2 } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { MessageSquarePlus, X, Send, CheckCircle2, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { submitFeedback } from "@/app/actions/feedback";
 
@@ -11,6 +11,19 @@ export default function FeedbackWidget() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [feedbackType, setFeedbackType] = useState("suggestion");
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+        setIsSelectOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,6 +42,7 @@ export default function FeedbackWidget() {
       setTimeout(() => {
         setIsOpen(false);
         setIsSuccess(false);
+        setFeedbackType("suggestion");
       }, 3000);
     }
   }
@@ -73,15 +87,37 @@ export default function FeedbackWidget() {
                   <label className="mb-1.5 block text-sm font-medium text-gray-300">
                     Turi
                   </label>
-                  <select
-                    name="type"
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3 text-sm text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-                  >
-                    <option value="suggestion">{t("type_suggestion")}</option>
-                    <option value="bug">{t("type_bug")}</option>
-                    <option value="other">{t("type_other")}</option>
-                  </select>
+                  <input type="hidden" name="type" value={feedbackType} />
+                  <div className="relative" ref={selectRef}>
+                    <button
+                      type="button"
+                      onClick={() => setIsSelectOpen(!isSelectOpen)}
+                      className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3 text-sm text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                    >
+                      <span>{t(`type_${feedbackType}`)}</span>
+                      <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${isSelectOpen ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {isSelectOpen && (
+                      <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-white/10 bg-[#1A1A1A] shadow-xl">
+                        {["suggestion", "bug", "other"].map((type) => (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => {
+                              setFeedbackType(type);
+                              setIsSelectOpen(false);
+                            }}
+                            className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-brand/20 hover:text-brand ${
+                              feedbackType === type ? "bg-white/5 font-medium text-brand" : "text-gray-300"
+                            }`}
+                          >
+                            {t(`type_${type}`)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div>
