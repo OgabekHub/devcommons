@@ -181,7 +181,7 @@
     @apply inline-flex items-center justify-center gap-2 rounded-xl
            px-6 py-3 text-base font-semibold text-white
            transition-all duration-300
-           hover:-translate-y-0.5 active:translate-y-0;
+            active:translate-y-0;
     background-color: #7C5CFC;
     box-shadow: 0 4px 14px rgba(124,92,252,0.25);
   }
@@ -197,7 +197,7 @@
     @apply inline-flex items-center justify-center gap-2 rounded-xl
            border-2 bg-transparent px-6 py-3 text-base font-semibold
            transition-all duration-300
-           hover:-translate-y-0.5 active:translate-y-0;
+            active:translate-y-0;
     border-color: rgba(124, 92, 252, 0.3);
     color: #A78BFA;
   }

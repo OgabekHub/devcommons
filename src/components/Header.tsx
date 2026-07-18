@@ -159,7 +159,7 @@ export default function Header() {
           ) : (
             <Link
               href="/auth"
-              className="ml-2 rounded-xl bg-brand px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-dark hover:shadow-brand hover:-translate-y-0.5"
+              className="ml-2 rounded-xl bg-brand px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-dark hover:shadow-brand "
             >
               {t("login")}
             </Link>

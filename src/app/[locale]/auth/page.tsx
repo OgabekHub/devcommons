@@ -35,7 +35,7 @@ export default function AuthPage() {
           href="/"
           className="group inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          <ArrowLeft className="h-4 w-4 transition-transform " />
           {t("back_home")}
         </Link>
 
@@ -58,7 +58,7 @@ export default function AuthPage() {
             type="button"
             onClick={handleGitHubLogin}
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-gray-900 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-gray-900 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-800 hover:shadow-xl   disabled:opacity-70 disabled:cursor-not-allowed "
           >
             {loading ? (
               <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">

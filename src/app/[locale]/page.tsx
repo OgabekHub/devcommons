@@ -82,7 +82,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                 <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 " />
                 </a>
                 <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-[#111]/50 backdrop-blur-sm border-white/10 hover:border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
                   <Sparkles className="h-4 w-4 text-brand" />

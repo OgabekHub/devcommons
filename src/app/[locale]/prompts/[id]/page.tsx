@@ -45,7 +45,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         href="/prompts"
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
-        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+        <ArrowLeft className="h-4 w-4 transition-transform " />
         Prompts'ga qaytish
       </Link>
 
