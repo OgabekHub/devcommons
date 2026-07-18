@@ -113,7 +113,6 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <HeroBentoBox />
             </div>
           </div>
-          </div>
         </div>
       </section>
 
