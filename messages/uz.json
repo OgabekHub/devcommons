@@ -219,5 +219,19 @@
     "comment_placeholder": "Fikr yozish...",
     "send": "Yuborish",
     "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!"
+  },
+  "Tour": {
+    "done": "Tugatish",
+    "close": "Yopish",
+    "next": "Keyingisi",
+    "prev": "Oldingisi",
+    "welcome_title": "DevCommons'ga xush kelibsiz! 👋",
+    "welcome_desc": "O'zbekistonning eng katta dasturchilar platformasiga xush kelibsiz. Keling, sizni sayt bilan qisqacha tanishtiramiz.",
+    "snippets_title": "Kod Snippetlar 💻",
+    "snippets_desc": "Bu yerdan siz kundalik ishingiz uchun eng kerakli va tayyor kod bo'laklarini topishingiz yoki o'zingiznikini qo'shishingiz mumkin.",
+    "prompts_title": "AI Promptlar 🤖",
+    "prompts_desc": "ChatGPT yoki boshqa sun'iy intellektlar uchun to'g'ri savol (prompt) tuzishni o'rganing va ulashing.",
+    "profile_title": "Shaxsiy Profil 👤",
+    "profile_desc": "Tizimga kiring, o'zingiz yoqtirgan kodlarni saqlang, do'stlaringizga obuna bo'ling va o'z 'Lenta'ngizni yarating!"
   }
 }

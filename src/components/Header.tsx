@@ -77,12 +77,14 @@ export default function Header() {
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 md:flex">
           <Link
+            id="tour-snippets"
             href="/snippets"
             className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
           >
             {t("snippets")}
           </Link>
           <Link
+            id="tour-prompts"
             href="/prompts"
             className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
           >
@@ -93,7 +95,7 @@ export default function Header() {
 
           {/* Auth section */}
           {user ? (
-            <div className="relative ml-2" ref={dropdownRef}>
+            <div id="tour-profile" className="relative ml-2" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
@@ -158,6 +160,7 @@ export default function Header() {
             </div>
           ) : (
             <Link
+              id="tour-profile"
               href="/auth"
               className="ml-2 rounded-xl bg-brand px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-dark hover:shadow-brand "
             >

@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
 };
 
+import InteractiveTour from "@/components/InteractiveTour";
+
 export default async function RootLayout({
   children,
   params: { locale }
@@ -33,6 +35,7 @@ export default async function RootLayout({
     <html lang={locale} className={inter.variable}>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <InteractiveTour />
           <Header />
           <main className="mx-auto max-w-[1440px] px-4 py-8 md:px-8 lg:px-12">{children}</main>
           <Footer />

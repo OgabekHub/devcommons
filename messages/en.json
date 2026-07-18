@@ -219,5 +219,19 @@
     "comment_placeholder": "Write a comment...",
     "send": "Send",
     "no_comments": "No comments yet. Be the first to share your thoughts!"
+  },
+  "Tour": {
+    "done": "Done",
+    "close": "Close",
+    "next": "Next",
+    "prev": "Previous",
+    "welcome_title": "Welcome to DevCommons! 👋",
+    "welcome_desc": "Welcome to the largest platform for developers in Uzbekistan. Let's take a quick tour.",
+    "snippets_title": "Code Snippets 💻",
+    "snippets_desc": "Here you can find ready-to-use code blocks for your daily work or share your own.",
+    "prompts_title": "AI Prompts 🤖",
+    "prompts_desc": "Learn how to write the best prompts for ChatGPT and other AIs, and share them with the community.",
+    "profile_title": "Personal Profile 👤",
+    "profile_desc": "Log in to save your favorite codes, follow friends, and create your personalized feed!"
   }
 }
