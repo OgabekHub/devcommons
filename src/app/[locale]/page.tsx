@@ -110,7 +110,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
 
             {/* Right Column - Hero Bento Box */}
             <div className="relative mt-12 lg:mt-0 w-full flex justify-center perspective-1000">
-              <HeroBentoBox />
+              <HeroBentoBox promptText={t("bento_ai_prompt")} />
             </div>
           </div>
         </div>

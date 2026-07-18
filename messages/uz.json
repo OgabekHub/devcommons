@@ -17,6 +17,7 @@
     "title_end": " Hammaga foydali bo'lsin.",
     "subtitle": "DevCommons — dasturchilar o'z bilim va kodlarini bepul ulashadigan ochiq platforma.",
     "no_barrier": "Ro'yxatdan o'tish shart emas. To'siq yo'q. Faqat bilim.",
+    "bento_ai_prompt": "\"React.js uchun asinxron ma'lumot yuklaydigan universal custom hook yozib ber.\"",
     "btn_snippets": "Snippet'larni kashf qiling",
     "btn_prompts": "AI Prompt'lar",
     "trust_open_source": "Open Source",

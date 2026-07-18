@@ -86,7 +86,7 @@ const CODE_LINES: CodeLine[] = [
   },
 ];
 
-export default function HeroBentoBox() {
+export default function HeroBentoBox({ promptText }: { promptText?: string }) {
   const [visibleChars, setVisibleChars] = useState(0);
 
   const totalChars = CODE_LINES.reduce(
@@ -179,8 +179,8 @@ export default function HeroBentoBox() {
         className="absolute inset-0 top-10 left-4 right-12 z-10"
       >
         <motion.div
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ y: -8 }}
+          transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
           className="h-full rounded-2xl border border-white/10 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col"
         >
           {/* Header */}
@@ -215,8 +215,8 @@ export default function HeroBentoBox() {
         className="absolute -top-4 right-0 w-64 z-20"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          animate={{ y: 8 }}
+          transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: 1 }}
           className="rounded-xl border border-purple-500/30 bg-[#1A1525]/90 backdrop-blur-md shadow-[0_20px_40px_rgba(0,0,0,0.4)] p-4"
         >
           <div className="flex items-center gap-3 mb-2">
@@ -226,7 +226,7 @@ export default function HeroBentoBox() {
             <span className="text-sm font-semibold text-white">AI Prompt</span>
           </div>
           <p className="text-xs text-purple-200/70 leading-relaxed">
-            "React.js uchun asinxron ma'lumot yuklaydigan universal custom hook yozib ber."
+            {promptText || "\"React.js uchun asinxron ma'lumot yuklaydigan universal custom hook yozib ber.\""}
           </p>
         </motion.div>
       </motion.div>
@@ -239,8 +239,8 @@ export default function HeroBentoBox() {
         className="absolute -bottom-6 -left-6 w-72 z-30"
       >
         <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          animate={{ y: -6 }}
+          transition={{ duration: 3.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: 0.5 }}
           className="rounded-xl border border-white/10 bg-[#050505]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
         >
           <div className="flex items-center gap-2 bg-white/5 px-4 py-2 border-b border-white/5">
