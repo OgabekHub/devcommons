@@ -182,7 +182,7 @@ export default function Header() {
       {/* Mobile nav */}
       <div
         className={`overflow-hidden border-t border-white/5 bg-[#0A0A0A]/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
-          mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0 border-none"
+          mobileOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 border-none"
         }`}
       >
         <div className="space-y-1 px-4 py-4">
@@ -202,7 +202,37 @@ export default function Header() {
           </Link>
 
           {user ? (
-            <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">
+            <>
+              <Link
+                href="/saved"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("saved")}
+              </Link>
+              <Link
+                href="/feed"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("feed")}
+              </Link>
+              <Link
+                href="/analytics"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("analytics")}
+              </Link>
+              <Link
+                href="/tags"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("tags")}
+              </Link>
+
+              <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">
               <Link
                 href="/profile"
                 onClick={() => setMobileOpen(false)}
@@ -223,6 +253,7 @@ export default function Header() {
                 {t("logout")}
               </button>
             </div>
+            </>
           ) : (
             <Link
               href="/auth"
