@@ -93,7 +93,7 @@ export default function ProfilePage() {
               className="h-20 w-20 rounded-2xl shadow-md"
             />
           ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-brand-50">
+            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
               <User className="h-10 w-10 text-brand" />
             </div>
           )}
@@ -106,11 +106,11 @@ export default function ProfilePage() {
           <h1 className="text-2xl font-bold">{username}</h1>
           {email && <p className="text-sm text-gray-500">{email}</p>}
           <div className="mt-3 flex flex-wrap justify-center gap-3 sm:justify-start">
-            <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-medium text-brand">
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-medium text-brand">
               <Code2 className="h-3.5 w-3.5" />
               {snippets.length} {t("snippets_count")}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1 text-sm font-medium text-violet-600">
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-sm font-medium text-violet-400">
               <Sparkles className="h-3.5 w-3.5" />
               {prompts.length} {t("prompts_count")}
             </span>
@@ -119,7 +119,7 @@ export default function ProfilePage() {
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 rounded-xl border border-red-100 px-4 py-2 text-sm font-medium text-red-500 transition-all hover:bg-red-50"
+          className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-400 transition-all hover:bg-red-500/20"
         >
           <LogOut className="h-4 w-4" />
           {t("logout")}
