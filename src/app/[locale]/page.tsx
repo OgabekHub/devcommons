@@ -15,7 +15,7 @@ import {
 import Reveal from "@/components/Reveal";
 import Typewriter from "@/components/Typewriter";
 import AnimatedCounter from "@/components/AnimatedCounter";
-import AnimatedIDE from "@/components/AnimatedIDE";
+import HeroBentoBox from "@/components/HeroBentoBox";
 import BackgroundBeams from "@/components/BackgroundBeams";
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
@@ -108,18 +108,11 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
             </div>
 
-            {/* Right Column - Premium IDE Mockup */}
-            <div className="relative lg:mt-0 mt-8 animate-fade-in-up" style={{ perspective: "1000px", animationDelay: "0.3s" }}>
-              <AnimatedIDE />
-              
-              {/* Decorative floating icons */}
-              <div className="absolute -right-4 -top-4 rounded-xl bg-yellow-400/10 p-3 shadow-lg backdrop-blur-md border border-yellow-400/20 animate-float z-20">
-                <Braces className="h-6 w-6 text-yellow-400" />
-              </div>
-              <div className="absolute -bottom-6 -left-6 rounded-xl bg-blue-400/10 p-3 shadow-lg backdrop-blur-md border border-blue-400/20 animate-float z-20" style={{ animationDelay: "1.5s" }}>
-                <Terminal className="h-6 w-6 text-blue-400" />
-              </div>
+            {/* Right Column - Hero Bento Box */}
+            <div className="relative mt-12 lg:mt-0 w-full flex justify-center perspective-1000">
+              <HeroBentoBox />
             </div>
+          </div>
           </div>
         </div>
       </section>
