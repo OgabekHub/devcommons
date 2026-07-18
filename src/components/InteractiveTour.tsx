@@ -27,8 +27,6 @@ export default function InteractiveTour() {
             popover: {
               title: t("welcome_title"),
               description: t("welcome_desc"),
-              side: "over",
-              align: "center"
             }
           },
           {
