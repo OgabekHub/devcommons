@@ -19,7 +19,6 @@ export default function InteractiveTour() {
         showProgress: true,
         allowClose: true,
         doneBtnText: t("done"),
-        closeBtnText: t("close"),
         nextBtnText: t("next"),
         prevBtnText: t("prev"),
         steps: [
