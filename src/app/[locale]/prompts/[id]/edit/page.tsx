@@ -152,7 +152,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
@@ -167,7 +167,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">{t("field_desc")}</label>
+          <label className="text-sm font-semibold text-gray-300">{t("field_desc")}</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -181,7 +181,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
         {/* Category + AI Model */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">{t("field_category")}</label>
+            <label className="text-sm font-semibold text-gray-300">{t("field_category")}</label>
             <CustomSelect
               options={CATEGORIES}
               value={category}
@@ -189,7 +189,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">{t("field_model")}</label>
+            <label className="text-sm font-semibold text-gray-300">{t("field_model")}</label>
             <CustomSelect
               options={AI_MODELS}
               value={aiModel}
@@ -200,7 +200,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
 
         {/* Prompt Content */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_content")} <span className="text-red-500">*</span>
           </label>
           <div className="overflow-hidden rounded-xl border border-white/10 shadow-sm bg-[#111111]">
@@ -221,7 +221,7 @@ export default function EditPromptPage({ params: { id, locale } }: Props) {
 
         {/* Tags */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">

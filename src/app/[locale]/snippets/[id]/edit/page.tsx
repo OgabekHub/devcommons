@@ -204,7 +204,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
@@ -219,7 +219,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_desc")}
           </label>
           <textarea
@@ -234,7 +234,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Language */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_lang")} <span className="text-red-500">*</span>
           </label>
           <CustomSelect
@@ -246,7 +246,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Code */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_code")} <span className="text-red-500">*</span>
           </label>
           <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0F0A1F] shadow-sm">
@@ -278,7 +278,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Tags */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-700">
+          <label className="text-sm font-semibold text-gray-300">
             {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
