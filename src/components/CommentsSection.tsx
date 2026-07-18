@@ -40,12 +40,17 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
 
   const loadComments = async () => {
     const query = snippetId
-      ? supabase.from("comments").select("*").eq("snippet_id", snippetId).is("parent_id", null).order("created_at", { ascending: false })
-      : supabase.from("comments").select("*").eq("prompt_id", promptId).is("parent_id", null).order("created_at", { ascending: false });
+      ? supabase.from("comments").select("*, users(github_username, avatar_url)").eq("snippet_id", snippetId).is("parent_id", null).order("created_at", { ascending: false })
+      : supabase.from("comments").select("*, users(github_username, avatar_url)").eq("prompt_id", promptId).is("parent_id", null).order("created_at", { ascending: false });
 
     const { data, error } = await query;
     if (!error && data) {
-      setComments(data as Comment[]);
+      const mappedComments = data.map((c: any) => ({
+        ...c,
+        author_name: c.users?.github_username || "Anonymous",
+        author_avatar: c.users?.avatar_url || null,
+      }));
+      setComments(mappedComments as Comment[]);
     }
     setLoading(false);
   };
@@ -60,8 +65,6 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
       snippet_id: snippetId || null,
       prompt_id: promptId || null,
       content: newComment.trim(),
-      author_name: user.user_metadata?.user_name || user.user_metadata?.name || "Anonymous",
-      author_avatar: user.user_metadata?.avatar_url || null,
     });
 
     if (!error) {
