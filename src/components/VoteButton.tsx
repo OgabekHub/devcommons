@@ -18,20 +18,22 @@ export default function VoteButton({ id, type, initialVotes }: Props) {
     e.preventDefault(); // Link ichida bo'lgani uchun
     e.stopPropagation();
 
-    if (voted || loading) return;
+    if (loading) return;
     setLoading(true);
+
+    const action = voted ? "remove" : "add";
 
     try {
       const res = await fetch("/api/vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, type }),
+        body: JSON.stringify({ id, type, action }),
       });
 
       if (res.ok) {
         const data = await res.json();
-        setVotes(data.votes ?? votes + 1);
-        setVoted(true);
+        setVotes(data.votes);
+        setVoted(!voted);
       }
     } catch {
       // Xato — UI'ni o'zgartirmaymiz
@@ -43,14 +45,14 @@ export default function VoteButton({ id, type, initialVotes }: Props) {
   return (
     <button
       onClick={handleVote}
-      disabled={voted || loading}
+      disabled={loading}
       className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 ${
         voted
-          ? "bg-brand text-white"
-          : "bg-gray-100 text-gray-500 hover:bg-brand-50 hover:text-brand"
-      } disabled:cursor-default`}
+          ? "bg-brand text-white shadow-sm"
+          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-brand/10 hover:text-brand hover:border-brand/30"
+      } disabled:opacity-50`}
     >
-      <ThumbsUp className={`h-3.5 w-3.5 ${loading ? "animate-pulse" : ""}`} />
+      <ThumbsUp className={`h-3.5 w-3.5 ${loading ? "animate-pulse" : ""} ${voted ? "fill-current" : ""}`} />
       {votes}
     </button>
   );
