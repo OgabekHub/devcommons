@@ -121,11 +121,10 @@ export default function NewSnippetPage() {
           description: description.trim(),
           code: code.trim(),
           language,
-          tags,
-          user_id: user?.id ?? null,
-          author_name: user?.user_metadata?.user_name ?? "Anonymous",
-          author_avatar: user?.user_metadata?.avatar_url ?? null,
-        });
+          author_id: user?.id ?? null,
+        })
+        .select()
+        .single();
 
       if (insertError) throw insertError;
 

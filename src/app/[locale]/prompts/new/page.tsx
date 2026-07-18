@@ -61,14 +61,9 @@ export default function NewPromptPage() {
         .from("prompts")
         .insert({
           title: title.trim(),
-          description: description.trim(),
           content: content.trim(),
           category,
-          ai_model: aiModel,
-          tags,
-          user_id: user?.id ?? null,
-          author_name: user?.user_metadata?.user_name ?? "Anonymous",
-          author_avatar: user?.user_metadata?.avatar_url ?? null,
+          author_id: user?.id ?? null,
         });
 
       if (insertError) throw insertError;
