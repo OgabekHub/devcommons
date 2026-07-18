@@ -178,10 +178,8 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="absolute inset-0 top-10 left-4 right-12 z-10"
       >
-        <motion.div
-          animate={{ y: -8 }}
-          transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
-          className="h-full rounded-2xl border border-white/10 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col"
+        <div
+          className="h-full rounded-2xl border border-white/10 bg-[#0A0A0A]/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col animate-float-slow"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
@@ -214,10 +212,9 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         className="absolute -top-4 right-0 w-64 z-20"
       >
-        <motion.div
-          animate={{ y: 8 }}
-          transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: 1 }}
-          className="rounded-xl border border-purple-500/30 bg-[#1A1525]/90 backdrop-blur-md shadow-[0_20px_40px_rgba(0,0,0,0.4)] p-4"
+        <div
+          className="rounded-xl border border-purple-500/30 bg-[#1A1525]/90 backdrop-blur-md shadow-[0_20px_40px_rgba(0,0,0,0.4)] p-4 animate-float"
+          style={{ animationDelay: "1s" }}
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20 text-purple-400">
@@ -238,10 +235,9 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
         transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         className="absolute -bottom-6 -left-6 w-72 z-30"
       >
-        <motion.div
-          animate={{ y: -6 }}
-          transition={{ duration: 3.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: 0.5 }}
-          className="rounded-xl border border-white/10 bg-[#050505]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
+        <div
+          className="rounded-xl border border-white/10 bg-[#050505]/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-float-slower"
+          style={{ animationDelay: "0.5s" }}
         >
           <div className="flex items-center gap-2 bg-white/5 px-4 py-2 border-b border-white/5">
             <TerminalIcon className="h-3.5 w-3.5 text-gray-400" />
