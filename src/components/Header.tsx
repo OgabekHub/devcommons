@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Code2, Menu, X, LogOut, User } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -18,10 +18,22 @@ export default function Header() {
   const locale = useLocale();
   const supabase = createSupabaseBrowser();
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -81,7 +93,7 @@ export default function Header() {
 
           {/* Auth section */}
           {user ? (
-            <div className="relative ml-2">
+            <div className="relative ml-2" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
