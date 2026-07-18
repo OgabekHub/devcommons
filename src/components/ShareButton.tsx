@@ -37,7 +37,7 @@ export default function ShareButton({ title, url }: Props) {
     <div className="relative">
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-400 transition-all hover:bg-white/10 hover:text-white bg-white/5 border border-white/10"
         title={t("share")}
       >
         <Share2 className="h-4 w-4" />
@@ -45,27 +45,27 @@ export default function ShareButton({ title, url }: Props) {
       </button>
 
       {showMenu && (
-        <div className="absolute right-0 top-full z-10 mt-2 w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
+        <div className="absolute right-0 top-full z-10 mt-2 w-48 rounded-xl border border-white/10 bg-[#111111] p-2 shadow-xl">
           <button
             onClick={handleTwitterShare}
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
           >
-            <Twitter className="h-4 w-4 text-blue-500" />
+            <Twitter className="h-4 w-4 text-blue-400" />
             Twitter
           </button>
           <button
             onClick={handleLinkedInShare}
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
           >
-            <Linkedin className="h-4 w-4 text-blue-700" />
+            <Linkedin className="h-4 w-4 text-blue-500" />
             LinkedIn
           </button>
           <button
             onClick={handleCopyLink}
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
           >
-            {copied ? <Check className="h-4 w-4 text-green-500" /> : <LinkIcon className="h-4 w-4" />}
-            {copied ? t("copied") : "Copy link"}
+            {copied ? <Check className="h-4 w-4 text-green-400" /> : <LinkIcon className="h-4 w-4 text-gray-400" />}
+            {copied ? t("copied") : t("copy_link")}
           </button>
         </div>
       )}

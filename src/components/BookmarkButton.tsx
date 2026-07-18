@@ -62,8 +62,8 @@ export default function BookmarkButton({ snippetId, promptId, initialBookmarked 
       disabled={loading}
       className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
         bookmarked
-          ? "bg-brand-50 text-brand hover:bg-brand-100"
-          : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+          ? "bg-brand/20 text-brand border border-brand/30 hover:bg-brand/30"
+          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
       } disabled:opacity-50`}
     >
       {bookmarked ? (
