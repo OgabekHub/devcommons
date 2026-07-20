@@ -67,8 +67,8 @@ export default function Header() {
     >
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 lg:px-12">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2.5 transition-all hover:opacity-90">
-          <Logo className="h-9 w-9 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+        <Link href="/" className="group flex items-center gap-3 transition-all hover:opacity-90">
+          <Logo className="h-12 w-12 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
           <span className="text-xl font-bold tracking-tight text-white">
             Dev<span className="text-brand">Commons</span>
           </span>
