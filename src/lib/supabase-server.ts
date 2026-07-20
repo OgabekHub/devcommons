@@ -31,3 +31,10 @@ export function createSupabaseServer() {
     },
   });
 }
+
+import { createClient } from "@supabase/supabase-js";
+export function createSupabasePublic() {
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    auth: { persistSession: false },
+  });
+}

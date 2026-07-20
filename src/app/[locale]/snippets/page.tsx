@@ -1,8 +1,10 @@
-import { isSupabaseConfigured, createSupabaseServer } from "@/lib/supabase-server";
+import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
 import type { Snippet } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import SnippetsClient from "@/components/SnippetsClient";
 import { Code2 } from "lucide-react";
+
+export const revalidate = 60;
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: "Snippets" });
@@ -20,7 +22,7 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = createSupabaseServer();
+      const supabase = createSupabasePublic();
       const { data, error: dbError } = await supabase
         .from("snippets")
         .select("*")
