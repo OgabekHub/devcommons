@@ -49,13 +49,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
   const observerRef = useRef<HTMLDivElement>(null);
-
-  // Simulate initial loading
-  useEffect(() => {
-    setTimeout(() => setInitialLoading(false), 500);
-  }, []);
 
   const filtered = useMemo(() => {
     let result = prompts.filter((p) => {
@@ -258,13 +252,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
       )}
 
       {/* Prompts Grid */}
-      {initialLoading ? (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : visiblePrompts.length > 0 ? (
+      {visiblePrompts.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
           {visiblePrompts.map((prompt, i) => (
             <Link

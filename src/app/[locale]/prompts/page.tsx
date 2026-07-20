@@ -1,8 +1,10 @@
-import { isSupabaseConfigured, createSupabaseServer } from "@/lib/supabase-server";
+import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
 import type { Prompt } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import PromptsClient from "@/components/PromptsClient";
 import { Sparkles } from "lucide-react";
+
+export const revalidate = 60; // Cache for 60 seconds
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: "Prompts" });
@@ -20,7 +22,7 @@ export default async function PromptsPage({ params: { locale } }: { params: { lo
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = createSupabaseServer();
+      const supabase = createSupabasePublic();
       const { data, error: dbError } = await supabase
         .from("prompts")
         .select("*")

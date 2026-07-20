@@ -21,6 +21,8 @@ import GitHubLoginButton from "@/components/GitHubLoginButton";
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 
+export const revalidate = 3600; // 1 hour cache for home page
+
 export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
   setRequestLocale(locale);
   const t = useTranslations("Index");
