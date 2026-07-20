@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center justify-center sm:justify-start gap-2 mb-4">
+            <Link href="/" className="flex items-center justify-center sm:justify-start gap-1 mb-4">
               <Logo className="h-16 w-16" />
               <span className="text-xl font-bold tracking-tight text-white">
                 Dev<span className="text-brand">Commons</span>
