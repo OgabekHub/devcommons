@@ -308,8 +308,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           <div className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-purple-500/20 blur-[60px]" />
 
           <div className="relative mx-auto max-w-lg space-y-6">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center animate-bounce-subtle">
-              <Logo className="h-12 w-12" />
+            <div className="mx-auto flex items-center justify-center animate-bounce-subtle">
+              <Logo className="h-20 w-20" />
             </div>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
               {t("cta_title_start")}

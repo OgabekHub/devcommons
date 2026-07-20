@@ -41,8 +41,8 @@ export default function AuthPage() {
 
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto mb-5 flex justify-center animate-scale-in">
-            <Logo className="h-16 w-16" />
+          <div className="mx-auto mb-8 flex justify-center animate-scale-in">
+            <Logo className="h-24 w-24" />
           </div>
           <h1 className="animate-fade-in-up text-2xl font-bold sm:text-3xl">
             {t("title")}
