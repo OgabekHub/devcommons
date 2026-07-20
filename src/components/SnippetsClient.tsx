@@ -41,14 +41,8 @@ export default function SnippetsClient({ snippets, labels }: Props) {
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
   const observerRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
-
-  // Simulate initial loading
-  useEffect(() => {
-    setTimeout(() => setInitialLoading(false), 500);
-  }, []);
 
   const filtered = useMemo(() => {
     let result = snippets.filter((s) => {
@@ -237,13 +231,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
       )}
 
       {/* Snippets Grid */}
-      {initialLoading ? (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : visibleSnippets.length > 0 ? (
+      {visibleSnippets.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
           {visibleSnippets.map((snippet, i) => (
             <Link
