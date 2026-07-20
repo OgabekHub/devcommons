@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/logo.png" alt="DevCommons Logo" width="100" height="100">
+  <img src="public/new-logo.png" alt="DevCommons Logo" width="100" height="100">
   <h1 align="center">DevCommons</h1>
   <p align="center">
     <strong>Dasturchilar uchun ochiq resurslar va tajriba almashish platformasi</strong>
