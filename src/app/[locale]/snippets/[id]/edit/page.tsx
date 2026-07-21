@@ -7,11 +7,7 @@ import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import CustomSelect from "@/components/CustomSelect";
-import Editor from "react-simple-code-editor";
-import Prism from "prismjs";
-
-// VS Code theme for editor
-import "prismjs/themes/prism-tomorrow.css";
+import Editor from "@monaco-editor/react";
 
 const LANGUAGES = [
   "JavaScript", "TypeScript", "Python", "Rust", "Go",
@@ -33,36 +29,9 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
-  const [prismLoaded, setPrismLoaded] = useState(false);
   const router = useRouter();
   const t = useTranslations("NewSnippet");
   const supabase = createSupabaseBrowser();
-
-  // Load language grammars safely in the browser
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const loadLanguages = async () => {
-        (window as any).Prism = Prism;
-        await import("prismjs/components/prism-javascript");
-        await import("prismjs/components/prism-typescript");
-        await import("prismjs/components/prism-python");
-        await import("prismjs/components/prism-rust");
-        await import("prismjs/components/prism-go");
-        await import("prismjs/components/prism-java");
-        await import("prismjs/components/prism-c");
-        await import("prismjs/components/prism-cpp");
-        await import("prismjs/components/prism-csharp");
-        await import("prismjs/components/prism-php");
-        await import("prismjs/components/prism-ruby");
-        await import("prismjs/components/prism-sql");
-        await import("prismjs/components/prism-bash");
-        await import("prismjs/components/prism-yaml");
-        await import("prismjs/components/prism-json");
-        setPrismLoaded(true);
-      };
-      loadLanguages();
-    }
-  }, []);
 
   // Load snippet data
   useEffect(() => {
@@ -99,31 +68,6 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
     loadSnippet();
   }, [id, locale, router, supabase]);
-
-  const highlightCode = (input: string) => {
-    if (!input) return "";
-    
-    const lang = language.toLowerCase();
-    
-    let grammar = Prism.languages[lang];
-    
-    if (!grammar) {
-      if (lang === "c++") grammar = Prism.languages.cpp;
-      else if (lang === "c#") grammar = Prism.languages.csharp;
-      else if (lang === "typescript") grammar = Prism.languages.typescript;
-    }
-
-    if (!grammar) {
-      grammar = Prism.languages.javascript || Prism.languages.clike || Prism.languages.markup;
-    }
-
-    try {
-      return Prism.highlight(input, grammar, lang);
-    } catch (err) {
-      console.error("Syntax highlighting error:", err);
-      return input;
-    }
-  };
 
   const addTag = () => {
     const trimmed = tagInput.trim().toLowerCase();
@@ -258,19 +202,22 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
                 <div className="h-3 w-3 rounded-full bg-green-500/70" />
               </div>
             </div>
-            <div className="min-h-[350px] font-mono text-sm leading-relaxed">
+            <div className="h-[400px] w-full pt-2">
               <Editor
+                height="100%"
+                language={language.toLowerCase() === "c++" ? "cpp" : language.toLowerCase() === "c#" ? "csharp" : language.toLowerCase()}
+                theme="vs-dark"
                 value={code}
-                onValueChange={(val) => setCode(val)}
-                highlight={(val) => highlightCode(val)}
-                padding={20}
-                placeholder={`// ${language} ${t("field_code_placeholder")}`}
-                style={{
-                  fontFamily: '"Fira code", "Fira Mono", monospace',
+                onChange={(val) => setCode(val || "")}
+                options={{
+                  minimap: { enabled: false },
                   fontSize: 14,
-                  backgroundColor: 'transparent',
+                  fontFamily: '"Fira Code", monospace',
+                  padding: { top: 16 },
+                  scrollBeyondLastLine: false,
+                  smoothScrolling: true,
+                  cursorBlinking: "smooth",
                 }}
-                className="w-full text-gray-100 placeholder-gray-500 focus:outline-none"
               />
             </div>
           </div>

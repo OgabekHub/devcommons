@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Bookmark, BookmarkCheck, FolderPlus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import AddToCollectionModal from "./AddToCollectionModal";
 
 interface Props {
   snippetId?: string;
@@ -17,6 +18,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
   const [bookmarked, setBookmarked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const t = useTranslations("Components");
   const locale = useLocale();
@@ -47,7 +49,6 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
     e.stopPropagation();
 
     if (!user) {
-      // Login sahifasiga yo'naltirish
       window.location.href = `/${locale}/auth`;
       return;
     }
@@ -56,7 +57,6 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
 
     try {
       if (bookmarked) {
-        // Remove bookmark
         const query = snippetId
           ? supabase.from("bookmarks").delete().eq("snippet_id", snippetId).eq("user_id", user.id)
           : supabase.from("bookmarks").delete().eq("prompt_id", promptId!).eq("user_id", user.id);
@@ -65,7 +65,6 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
         if (error) throw error;
         setBookmarked(false);
       } else {
-        // Add bookmark
         const { error } = await supabase.from("bookmarks").insert({
           user_id: user.id,
           snippet_id: snippetId || null,
@@ -81,6 +80,16 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
     }
   };
 
+  const openCollectionModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      window.location.href = `/${locale}/auth`;
+      return;
+    }
+    setShowModal(true);
+  };
+
   if (checking) {
     return compact ? null : (
       <span className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-gray-600">
@@ -89,45 +98,47 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
     );
   }
 
-  // Compact mode — kartochkalar uchun kichik tugma
-  if (compact) {
-    return (
-      <button
-        onClick={handleToggle}
-        disabled={loading}
-        className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium transition-all duration-200 ${
-          bookmarked
-            ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30"
-            : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-amber-400 hover:border-amber-500/30"
-        } disabled:opacity-50`}
-        title={bookmarked ? t("saved") : t("save")}
-      >
-        {bookmarked ? (
-          <BookmarkCheck className={`h-3.5 w-3.5 ${loading ? "animate-pulse" : ""}`} />
-        ) : (
-          <Bookmark className={`h-3.5 w-3.5 ${loading ? "animate-pulse" : ""}`} />
-        )}
-      </button>
-    );
-  }
-
-  // Full mode — detail sahifalar uchun
   return (
-    <button
-      onClick={handleToggle}
-      disabled={loading}
-      className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
-        bookmarked
-          ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30"
-          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-amber-400 hover:border-amber-500/30"
-      } disabled:opacity-50`}
-    >
-      {bookmarked ? (
-        <BookmarkCheck className={`h-4 w-4 ${loading ? "animate-pulse" : ""}`} />
-      ) : (
-        <Bookmark className={`h-4 w-4 ${loading ? "animate-pulse" : ""}`} />
+    <>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={handleToggle}
+          disabled={loading}
+          className={`flex items-center justify-center rounded-lg transition-all duration-200 ${
+            compact ? "h-7 px-2 text-xs gap-1" : "px-3 py-1.5 text-sm gap-1.5"
+          } font-medium ${
+            bookmarked
+              ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30"
+              : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-amber-400 hover:border-amber-500/30"
+          } disabled:opacity-50`}
+          title={bookmarked ? t("saved") : t("save")}
+        >
+          {bookmarked ? (
+            <BookmarkCheck className={`${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
+          ) : (
+            <Bookmark className={`${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
+          )}
+          {!compact && (bookmarked ? t("saved") : t("save"))}
+        </button>
+
+        <button
+          onClick={openCollectionModal}
+          className={`flex items-center justify-center rounded-lg border border-white/10 bg-white/5 text-gray-400 transition-all duration-200 hover:border-brand/30 hover:bg-white/10 hover:text-brand ${
+            compact ? "h-7 w-7" : "h-[34px] w-[34px]"
+          }`}
+          title={t("save_to_collection_btn")}
+        >
+          <FolderPlus className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} />
+        </button>
+      </div>
+
+      {showModal && (
+        <AddToCollectionModal
+          itemId={snippetId || promptId || ""}
+          itemType={snippetId ? "snippet" : "prompt"}
+          onClose={() => setShowModal(false)}
+        />
       )}
-      {bookmarked ? t("saved") : t("save")}
-    </button>
+    </>
   );
 }

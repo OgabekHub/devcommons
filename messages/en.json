@@ -224,7 +224,8 @@
     "login": "Log in",
     "comment_placeholder": "Write a comment...",
     "send": "Send",
-    "no_comments": "No comments yet. Be the first to share your thoughts!"
+    "no_comments": "No comments yet. Be the first to share your thoughts!",
+    "save_to_collection_btn": "Save to Collection"
   },
   "Tour": {
     "done": "Done",
@@ -252,5 +253,20 @@
     "btn_submitting": "Submitting...",
     "success": "Thank you! Your feedback has been sent successfully.",
     "btn_open": "Feedback"
+  },
+  "Collections": {
+    "tab_collections": "Collections",
+    "save_to_collection": "Add to Collection",
+    "new_collection_placeholder": "New collection name...",
+    "no_collections": "You don't have any collections yet",
+    "error_loading": "Failed to load collections",
+    "error_creating": "Failed to create collection",
+    "error_saving": "Error saving item",
+    "error_already_exists": "This item is already saved here",
+    "success_added": "Successfully saved!",
+    "empty_collection": "This collection is currently empty",
+    "items_count": "items",
+    "back_to_profile": "Back to Profile",
+    "no_description": "No description"
   }
 }

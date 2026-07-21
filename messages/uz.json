@@ -224,7 +224,8 @@
     "login": "Kirish",
     "comment_placeholder": "Fikr yozish...",
     "send": "Yuborish",
-    "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!"
+    "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!",
+    "save_to_collection_btn": "To'plamga saqlash"
   },
   "Tour": {
     "done": "Tugatish",
@@ -252,5 +253,20 @@
     "btn_submitting": "Yuborilmoqda...",
     "success": "Katta rahmat! Fikringiz muvaffaqiyatli yuborildi.",
     "btn_open": "Fikr bildirish"
+  },
+  "Collections": {
+    "tab_collections": "To'plamlar",
+    "save_to_collection": "To'plamga qo'shish",
+    "new_collection_placeholder": "Yangi to'plam nomi...",
+    "no_collections": "Sizda hozircha hech qanday to'plam yo'q",
+    "error_loading": "To'plamlarni yuklashda xatolik",
+    "error_creating": "To'plam yaratishda xatolik",
+    "error_saving": "Saqlashda xatolik yuz berdi",
+    "error_already_exists": "Bu oldin saqlangan",
+    "success_added": "Muvaffaqiyatli saqlandi!",
+    "empty_collection": "Bu to'plam hozircha bo'sh",
+    "items_count": "ta element",
+    "back_to_profile": "Profilga qaytish",
+    "no_description": "Tavsif yo'q"
   }
 }

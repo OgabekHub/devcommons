@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X } from "lucide-react";
+import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X, Folder } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const [prompts, setPrompts] = useState<any[]>([]);
   const [bookmarkedSnippets, setBookmarkedSnippets] = useState<any[]>([]);
   const [bookmarkedPrompts, setBookmarkedPrompts] = useState<any[]>([]);
+  const [collections, setCollections] = useState<any[]>([]);
   const [stats, setStats] = useState({
     totalViews: 0,
     totalVotes: 0,
@@ -21,7 +22,7 @@ export default function ProfilePage() {
     following: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"snippets" | "prompts" | "saved">("snippets");
+  const [tab, setTab] = useState<"snippets" | "prompts" | "saved" | "collections">("snippets");
   const [bio, setBio] = useState("");
   const [editingBio, setEditingBio] = useState(false);
   const [bioInput, setBioInput] = useState("");
@@ -46,6 +47,7 @@ export default function ProfilePage() {
         { data: snippetBookmarks },
         { data: promptBookmarks },
         { data: userProfile },
+        { data: userCollections },
       ] = await Promise.all([
         supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
         supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
@@ -54,12 +56,14 @@ export default function ProfilePage() {
         supabase.from("bookmarks").select("snippet_id, snippets(*)").eq("user_id", user.id).not("snippet_id", "is", null),
         supabase.from("bookmarks").select("prompt_id, prompts(*)").eq("user_id", user.id).not("prompt_id", "is", null),
         supabase.from("users").select("bio").eq("id", user.id).single(),
+        supabase.from("collections").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
       ]);
 
       setSnippets(snips ?? []);
       setPrompts(proms ?? []);
       setBookmarkedSnippets(snippetBookmarks?.map((b: any) => b.snippets).filter(Boolean) ?? []);
       setBookmarkedPrompts(promptBookmarks?.map((b: any) => b.prompts).filter(Boolean) ?? []);
+      setCollections(userCollections ?? []);
 
       if (userProfile?.bio) {
         setBio(userProfile.bio);
@@ -255,6 +259,17 @@ export default function ProfilePage() {
           <Bookmark className="h-4 w-4" />
           {t("tab_saved")} ({savedCount})
         </button>
+        <button
+          onClick={() => setTab("collections")}
+          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            tab === "collections"
+              ? "border-blue-400 text-blue-400"
+              : "border-transparent text-gray-400 hover:text-gray-200"
+          }`}
+        >
+          <Folder className="h-4 w-4" />
+          {t("tab_collections", { fallback: "To'plamlar" })} ({collections.length})
+        </button>
       </div>
 
       {/* Content — Snippets */}
@@ -378,6 +393,44 @@ export default function ProfilePage() {
                   </div>
                   <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
                   <p className="mt-2 text-xs text-gray-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Content — Collections */}
+      {tab === "collections" && (
+        <div>
+          {collections.length === 0 ? (
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Folder className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("no_collections", { fallback: "Hali to'plamlar yo'q" })}</p>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {collections.map((c: any) => (
+                <Link
+                  key={c.id}
+                  href={`/collections/${c.id}` as any}
+                  className="card card-shine group block flex flex-col h-full"
+                >
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20">
+                      <Folder className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white transition-colors group-hover:text-blue-400 line-clamp-1">{c.title}</h3>
+                      <p className="text-xs text-gray-500">{c.is_public ? "Public" : "Private"}</p>
+                    </div>
+                  </div>
+                  {c.description && <p className="mb-4 text-sm text-gray-400 line-clamp-2">{c.description}</p>}
+                  <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                    <span className="text-xs text-gray-500">
+                      {new Date(c.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                    </span>
+                  </div>
                 </Link>
               ))}
             </div>
