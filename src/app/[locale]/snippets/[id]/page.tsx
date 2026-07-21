@@ -11,6 +11,7 @@ import DownloadButton from "@/components/DownloadButton";
 import EmbedButton from "@/components/EmbedButton";
 import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
+import LivePreview from "@/components/LivePreview";
 
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
@@ -144,6 +145,8 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           <CodeHighlighter code={snippet.code} language={snippet.language} />
         </div>
       </div>
+
+      <LivePreview code={snippet.code} language={snippet.language} />
 
       {/* Footer actions */}
       <div className="mt-6 flex gap-3">

@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 
 import InteractiveTour from "@/components/InteractiveTour";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import AiAssistant from "@/components/AiAssistant";
 
 export default async function RootLayout({
   children,
@@ -41,6 +42,7 @@ export default async function RootLayout({
           <Header />
           <main className="mx-auto max-w-[1440px] px-4 py-8 md:px-8 lg:px-12">{children}</main>
           <FeedbackWidget />
+          <AiAssistant />
           <Footer />
         </NextIntlClientProvider>
         <Analytics />
