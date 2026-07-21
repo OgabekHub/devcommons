@@ -9,6 +9,7 @@ import NotificationsBell from "@/components/NotificationsBell";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import Logo from "@/components/Logo";
+import GlobalSearch from "@/components/GlobalSearch";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -77,6 +78,8 @@ export default function Header() {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 md:flex">
+          <GlobalSearch />
+          <div className="mx-2 h-5 w-px bg-white/10" />
           <Link
             id="tour-snippets"
             href="/snippets"
@@ -142,6 +145,13 @@ export default function Header() {
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {t("analytics")}
+                  </Link>
+                  <Link
+                    href="/leaderboard"
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                  >
+                    {t("leaderboard", { fallback: "Leaderboard" })}
                   </Link>
                   <Link
                     href="/tags"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X, Folder } from "lucide-react";
+import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X, Folder, Key, Copy, Plus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
@@ -21,8 +21,11 @@ export default function ProfilePage() {
     followers: 0,
     following: 0,
   });
+  const [apiKeys, setApiKeys] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"snippets" | "prompts" | "saved" | "collections">("snippets");
+  const [tab, setTab] = useState<"snippets" | "prompts" | "saved" | "collections" | "api">("snippets");
+  const [newKey, setNewKey] = useState<string | null>(null);
+  const [generatingKey, setGeneratingKey] = useState(false);
   const [bio, setBio] = useState("");
   const [editingBio, setEditingBio] = useState(false);
   const [bioInput, setBioInput] = useState("");
@@ -48,6 +51,7 @@ export default function ProfilePage() {
         { data: promptBookmarks },
         { data: userProfile },
         { data: userCollections },
+        { data: apiKeysData },
       ] = await Promise.all([
         supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
         supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
@@ -57,6 +61,7 @@ export default function ProfilePage() {
         supabase.from("bookmarks").select("prompt_id, prompts(*)").eq("user_id", user.id).not("prompt_id", "is", null),
         supabase.from("users").select("bio").eq("id", user.id).single(),
         supabase.from("collections").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("api_keys").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
       ]);
 
       setSnippets(snips ?? []);
@@ -64,6 +69,7 @@ export default function ProfilePage() {
       setBookmarkedSnippets(snippetBookmarks?.map((b: any) => b.snippets).filter(Boolean) ?? []);
       setBookmarkedPrompts(promptBookmarks?.map((b: any) => b.prompts).filter(Boolean) ?? []);
       setCollections(userCollections ?? []);
+      setApiKeys(apiKeysData ?? []);
 
       if (userProfile?.bio) {
         setBio(userProfile.bio);
@@ -87,6 +93,29 @@ export default function ProfilePage() {
 
     load();
   }, []);
+
+  const handleGenerateKey = async () => {
+    if (!user) return;
+    setGeneratingKey(true);
+    const rawKey = "dc_key_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
+    const { data, error } = await supabase.from("api_keys").insert({
+      user_id: user.id,
+      name: "Default Key",
+      key_hash: rawKey
+    }).select().single();
+
+    if (data) {
+      setApiKeys([data, ...apiKeys]);
+      setNewKey(rawKey);
+    }
+    setGeneratingKey(false);
+  };
+
+  const handleDeleteKey = async (id: string) => {
+    await supabase.from("api_keys").delete().eq("id", id);
+    setApiKeys(apiKeys.filter((k) => k.id !== id));
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -270,6 +299,17 @@ export default function ProfilePage() {
           <Folder className="h-4 w-4" />
           {t("tab_collections", { fallback: "To'plamlar" })} ({collections.length})
         </button>
+        <button
+          onClick={() => setTab("api")}
+          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            tab === "api"
+              ? "border-emerald-400 text-emerald-400"
+              : "border-transparent text-gray-400 hover:text-gray-200"
+          }`}
+        >
+          <Key className="h-4 w-4" />
+          API Keys
+        </button>
       </div>
 
       {/* Content — Snippets */}
@@ -435,6 +475,84 @@ export default function ProfilePage() {
               ))}
             </div>
           )}
+        </div>
+      )}
+      
+      {/* Content — API Keys */}
+      {tab === "api" && (
+        <div className="space-y-6">
+          <div className="card p-6 border-emerald-500/20 bg-emerald-500/5">
+            <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">Developer API Keys</h3>
+                <p className="text-sm text-gray-400">DevCommons ma'lumotlarini o'z loyihalaringizda ishlating (Faqat GET so'rovlar uchun).</p>
+              </div>
+              <button 
+                onClick={handleGenerateKey}
+                disabled={generatingKey}
+                className="btn-primary shrink-0"
+              >
+                <Plus className="w-4 h-4" />
+                {generatingKey ? "Yaratilmoqda..." : "Yangi kalit yaratish"}
+              </button>
+            </div>
+
+            {newKey && (
+              <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Check className="w-5 h-5 text-emerald-500" />
+                  <span className="font-bold text-emerald-400">Yangi API Kalit yaratildi!</span>
+                </div>
+                <p className="text-sm text-gray-300 mb-3">Bu kalitni faqat hozir ko'ra olasiz. Iltimos nusxalab oling.</p>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 block p-3 rounded-lg bg-black border border-white/10 text-emerald-400 font-mono text-sm break-all">
+                    {newKey}
+                  </code>
+                  <button 
+                    onClick={() => navigator.clipboard.writeText(newKey)}
+                    className="p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition-colors"
+                  >
+                    <Copy className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {apiKeys.length === 0 ? (
+                <div className="text-center p-8 border border-white/5 rounded-xl border-dashed">
+                  <Key className="w-8 h-8 text-gray-500 mx-auto mb-3" />
+                  <p className="text-gray-400">Hozircha API kalitlar yo'q</p>
+                </div>
+              ) : (
+                apiKeys.map((k) => (
+                  <div key={k.id} className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 rounded-xl border border-white/5 bg-black/40">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-white">{k.name}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 text-gray-400 uppercase tracking-wider">
+                          O'qish huquqi
+                        </span>
+                      </div>
+                      <code className="text-xs text-gray-500 font-mono">
+                        {k.key_hash.substring(0, 10)}...{k.key_hash.substring(k.key_hash.length - 4)}
+                      </code>
+                      <p className="text-xs text-gray-600 mt-2">
+                        Yaratilgan: {new Date(k.created_at).toLocaleDateString()}
+                        {k.last_used_at && ` • So'nggi marta ishlatilgan: ${new Date(k.last_used_at).toLocaleDateString()}`}
+                      </p>
+                    </div>
+                    <button 
+                      onClick={() => handleDeleteKey(k.id)}
+                      className="text-sm px-3 py-1.5 rounded-lg border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      O'chirish
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
