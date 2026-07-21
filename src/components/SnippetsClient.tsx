@@ -7,6 +7,7 @@ import type { Snippet } from "@/types/database";
 import { useLocale } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
+import BookmarkButton from "@/components/BookmarkButton";
 import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
 import CustomSelect from "@/components/CustomSelect";
@@ -282,7 +283,10 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                     <VoteButton id={snippet.id} type="snippet" initialVotes={snippet.votes ?? 0} />
                     <span className="text-xs text-gray-400">{new Date(snippet.created_at).toLocaleDateString("uz-UZ")}</span>
                   </div>
-                  <CopyButton text={snippet.code} label="" />
+                  <div className="flex items-center gap-1.5">
+                    <BookmarkButton snippetId={snippet.id} compact />
+                    <CopyButton text={snippet.code} label="" />
+                  </div>
                 </div>
               </SpotlightCard>
             </Link>

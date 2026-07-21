@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { UserPlus, UserCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Props {
@@ -15,30 +15,35 @@ export default function FollowButton({ targetUserId }: Props) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const t = useTranslations("Components");
+  const locale = useLocale();
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
-    
-    // Check if already following
-    if (user) {
-      checkFollowStatus();
-    }
+    const init = async () => {
+      const { data } = await supabase.auth.getUser();
+      const currentUser = data.user;
+      setUser(currentUser);
+
+      // User olingandan keyin follow statusni tekshirish
+      if (currentUser) {
+        const { data: followData } = await supabase
+          .from("follows")
+          .select("follower_id")
+          .eq("follower_id", currentUser.id)
+          .eq("following_id", targetUserId)
+          .maybeSingle();
+
+        if (followData) setFollowing(true);
+      }
+    };
+    init();
   }, [targetUserId]);
 
-  const checkFollowStatus = async () => {
-    if (!user) return;
-    const { data } = await supabase
-      .from("follows")
-      .select("*")
-      .eq("follower_id", user.id)
-      .eq("following_id", targetUserId)
-      .single();
-    setFollowing(!!data);
-  };
-
   const handleToggle = async () => {
-    if (!user) return;
+    if (!user) {
+      window.location.href = `/${locale}/auth`;
+      return;
+    }
     setLoading(true);
 
     try {
@@ -73,10 +78,10 @@ export default function FollowButton({ targetUserId }: Props) {
     <button
       onClick={handleToggle}
       disabled={loading}
-      className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+      className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
         following
-          ? "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          : "bg-brand text-white hover:bg-brand-dark"
+          ? "bg-white/10 text-gray-300 border border-white/10 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20"
+          : "bg-brand text-white hover:bg-brand-dark shadow-sm shadow-brand/20"
       } disabled:opacity-50`}
     >
       {following ? (

@@ -155,14 +155,20 @@
     "logout": "Logout",
     "tab_snippets": "My Snippets",
     "tab_prompts": "My Prompts",
+    "tab_saved": "Saved Items",
     "no_snippets": "You have not added any snippets yet",
     "no_prompts": "You have not added any prompts yet",
+    "no_saved": "You have not saved any items yet",
     "btn_add_snippet": "Add Snippet",
     "btn_add_prompt": "Add Prompt",
+    "discover": "Discover",
     "views": "Views",
     "votes": "Votes",
     "followers": "Followers",
-    "following": "Following"
+    "following": "Following",
+    "saved_count": "saved",
+    "bio_placeholder": "Write a short bio...",
+    "add_bio": "Add bio"
   },
   "Feed": {
     "title": "Activity Feed",

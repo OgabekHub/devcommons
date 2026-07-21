@@ -1,16 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus } from "lucide-react";
+import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import VoteButton from "@/components/VoteButton";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [snippets, setSnippets] = useState<any[]>([]);
   const [prompts, setPrompts] = useState<any[]>([]);
+  const [bookmarkedSnippets, setBookmarkedSnippets] = useState<any[]>([]);
+  const [bookmarkedPrompts, setBookmarkedPrompts] = useState<any[]>([]);
   const [stats, setStats] = useState({
     totalViews: 0,
     totalVotes: 0,
@@ -18,7 +21,10 @@ export default function ProfilePage() {
     following: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"snippets" | "prompts">("snippets");
+  const [tab, setTab] = useState<"snippets" | "prompts" | "saved">("snippets");
+  const [bio, setBio] = useState("");
+  const [editingBio, setEditingBio] = useState(false);
+  const [bioInput, setBioInput] = useState("");
   const t = useTranslations("Profile");
   const locale = useLocale();
   const supabase = createSupabaseBrowser();
@@ -32,22 +38,38 @@ export default function ProfilePage() {
       }
       setUser(user);
 
-      // Foydalanuvchi snippet va promptlarini olish
-      const [{ data: snips }, { data: proms }, { data: follows }, { data: following }] = await Promise.all([
+      const [
+        { data: snips },
+        { data: proms },
+        { data: follows },
+        { data: following },
+        { data: snippetBookmarks },
+        { data: promptBookmarks },
+        { data: userProfile },
+      ] = await Promise.all([
         supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
         supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
         supabase.from("follows").select("*").eq("following_id", user.id),
         supabase.from("follows").select("*").eq("follower_id", user.id),
+        supabase.from("bookmarks").select("snippet_id, snippets(*)").eq("user_id", user.id).not("snippet_id", "is", null),
+        supabase.from("bookmarks").select("prompt_id, prompts(*)").eq("user_id", user.id).not("prompt_id", "is", null),
+        supabase.from("users").select("bio").eq("id", user.id).single(),
       ]);
 
       setSnippets(snips ?? []);
       setPrompts(proms ?? []);
+      setBookmarkedSnippets(snippetBookmarks?.map((b: any) => b.snippets).filter(Boolean) ?? []);
+      setBookmarkedPrompts(promptBookmarks?.map((b: any) => b.prompts).filter(Boolean) ?? []);
 
-      // Calculate stats
-      const totalViews = (snips?.reduce((sum, s) => sum + (s.view_count || 0), 0) || 0) +
-                        (proms?.reduce((sum, p) => sum + (p.view_count || 0), 0) || 0);
-      const totalVotes = (snips?.reduce((sum, s) => sum + (s.votes || 0), 0) || 0) +
-                        (proms?.reduce((sum, p) => sum + (p.votes || 0), 0) || 0);
+      if (userProfile?.bio) {
+        setBio(userProfile.bio);
+        setBioInput(userProfile.bio);
+      }
+
+      const totalViews = (snips?.reduce((sum: number, s: any) => sum + (s.view_count || 0), 0) || 0) +
+                        (proms?.reduce((sum: number, p: any) => sum + (p.view_count || 0), 0) || 0);
+      const totalVotes = (snips?.reduce((sum: number, s: any) => sum + (s.votes || 0), 0) || 0) +
+                        (proms?.reduce((sum: number, p: any) => sum + (p.votes || 0), 0) || 0);
 
       setStats({
         totalViews,
@@ -67,6 +89,13 @@ export default function ProfilePage() {
     window.location.href = `/${locale}`;
   };
 
+  const handleSaveBio = async () => {
+    if (!user) return;
+    await supabase.from("users").update({ bio: bioInput.trim() }).eq("id", user.id);
+    setBio(bioInput.trim());
+    setEditingBio(false);
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -80,6 +109,7 @@ export default function ProfilePage() {
   const avatarUrl = user.user_metadata?.avatar_url;
   const username = user.user_metadata?.user_name || user.user_metadata?.name;
   const email = user.email;
+  const savedCount = bookmarkedSnippets.length + bookmarkedPrompts.length;
 
   return (
     <div className="mx-auto max-w-4xl space-y-8 px-4 py-8">
@@ -90,21 +120,57 @@ export default function ProfilePage() {
             <img
               src={avatarUrl}
               alt={username}
-              className="h-20 w-20 rounded-2xl shadow-md"
+              className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-white/10"
             />
           ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
-              <User className="h-10 w-10 text-brand" />
+            <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
+              <User className="h-12 w-12 text-brand" />
             </div>
           )}
-          <div className="absolute -bottom-2 -right-2 rounded-lg bg-gray-900 p-1">
+          <div className="absolute -bottom-2 -right-2 rounded-lg bg-[#111] p-1.5 border border-white/10">
             <Github className="h-4 w-4 text-white" />
           </div>
         </div>
 
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">{username}</h1>
+          <h1 className="text-2xl font-bold text-white">{username}</h1>
           {email && <p className="text-sm text-gray-500">{email}</p>}
+
+          {/* Bio */}
+          <div className="mt-2">
+            {editingBio ? (
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={bioInput}
+                  onChange={(e) => setBioInput(e.target.value)}
+                  placeholder={t("bio_placeholder")}
+                  maxLength={160}
+                  className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white placeholder:text-gray-500 focus:border-brand focus:outline-none"
+                  autoFocus
+                />
+                <button onClick={handleSaveBio} className="rounded-lg bg-brand/20 p-1.5 text-brand hover:bg-brand/30 transition-colors">
+                  <Check className="h-4 w-4" />
+                </button>
+                <button onClick={() => { setEditingBio(false); setBioInput(bio); }} className="rounded-lg bg-white/5 p-1.5 text-gray-400 hover:bg-white/10 transition-colors">
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setEditingBio(true)}
+                className="group inline-flex items-center gap-1.5 text-sm text-gray-400 transition-colors hover:text-brand"
+              >
+                {bio ? (
+                  <span>{bio}</span>
+                ) : (
+                  <span className="italic">{t("add_bio")}</span>
+                )}
+                <Edit3 className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+            )}
+          </div>
+
           <div className="mt-3 flex flex-wrap justify-center gap-3 sm:justify-start">
             <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-medium text-brand">
               <Code2 className="h-3.5 w-3.5" />
@@ -113,6 +179,10 @@ export default function ProfilePage() {
             <span className="inline-flex items-center gap-1.5 rounded-lg bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-sm font-medium text-violet-400">
               <Sparkles className="h-3.5 w-3.5" />
               {prompts.length} {t("prompts_count")}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-1 text-sm font-medium text-amber-400">
+              <Bookmark className="h-3.5 w-3.5" />
+              {savedCount} {t("saved_count")}
             </span>
           </div>
         </div>
@@ -130,34 +200,34 @@ export default function ProfilePage() {
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-4 text-center">
           <Eye className="mx-auto h-5 w-5 text-brand mb-2" />
-          <p className="text-2xl font-bold">{stats.totalViews}</p>
+          <p className="text-2xl font-bold text-white">{stats.totalViews}</p>
           <p className="text-xs text-gray-500">{t("views")}</p>
         </div>
         <div className="card p-4 text-center">
           <Heart className="mx-auto h-5 w-5 text-red-500 mb-2" />
-          <p className="text-2xl font-bold">{stats.totalVotes}</p>
+          <p className="text-2xl font-bold text-white">{stats.totalVotes}</p>
           <p className="text-xs text-gray-500">{t("votes")}</p>
         </div>
         <div className="card p-4 text-center">
           <Users className="mx-auto h-5 w-5 text-blue-500 mb-2" />
-          <p className="text-2xl font-bold">{stats.followers}</p>
+          <p className="text-2xl font-bold text-white">{stats.followers}</p>
           <p className="text-xs text-gray-500">{t("followers")}</p>
         </div>
         <div className="card p-4 text-center">
           <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-2" />
-          <p className="text-2xl font-bold">{stats.following}</p>
+          <p className="text-2xl font-bold text-white">{stats.following}</p>
           <p className="text-xs text-gray-500">{t("following")}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-100">
+      <div className="flex gap-2 border-b border-white/10">
         <button
           onClick={() => setTab("snippets")}
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "snippets"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-500 hover:text-gray-700"
+              : "border-transparent text-gray-400 hover:text-gray-200"
           }`}
         >
           <Code2 className="h-4 w-4" />
@@ -168,21 +238,32 @@ export default function ProfilePage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "prompts"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-500 hover:text-gray-700"
+              : "border-transparent text-gray-400 hover:text-gray-200"
           }`}
         >
           <Sparkles className="h-4 w-4" />
           {t("tab_prompts")} ({prompts.length})
         </button>
+        <button
+          onClick={() => setTab("saved")}
+          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            tab === "saved"
+              ? "border-amber-400 text-amber-400"
+              : "border-transparent text-gray-400 hover:text-gray-200"
+          }`}
+        >
+          <Bookmark className="h-4 w-4" />
+          {t("tab_saved")} ({savedCount})
+        </button>
       </div>
 
-      {/* Content */}
+      {/* Content — Snippets */}
       {tab === "snippets" && (
         <div>
           {snippets.length === 0 ? (
-            <div className="card border-dashed p-10 text-center">
-              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">{t("no_snippets")}</p>
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("no_snippets")}</p>
               <Link href="/snippets/new" className="btn-primary mt-4">
                 {t("btn_add_snippet")}
               </Link>
@@ -196,11 +277,16 @@ export default function ProfilePage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold transition-colors group-hover:text-brand">{s.title}</h3>
-                    <span className="ml-2 rounded-lg bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
+                    <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
-                  {s.description && <p className="text-sm text-gray-500 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-gray-400">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString("uz-UZ")}</p>
+                  {s.description && <p className="text-sm text-gray-400 line-clamp-2">{s.description}</p>}
+                  <div className="mt-3 flex items-center gap-3">
+                    <VoteButton id={s.id} type="snippet" initialVotes={s.votes ?? 0} />
+                    <span className="text-xs text-gray-500">
+                      {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                    </span>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -208,12 +294,13 @@ export default function ProfilePage() {
         </div>
       )}
 
+      {/* Content — Prompts */}
       {tab === "prompts" && (
         <div>
           {prompts.length === 0 ? (
-            <div className="card border-dashed p-10 text-center">
-              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-              <p className="text-gray-500">{t("no_prompts")}</p>
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("no_prompts")}</p>
               <Link href="/prompts/new" className="btn-primary mt-4">
                 {t("btn_add_prompt")}
               </Link>
@@ -227,11 +314,70 @@ export default function ProfilePage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold transition-colors group-hover:text-brand">{p.title}</h3>
-                    <span className="ml-2 rounded-lg bg-violet-50 px-2 py-0.5 text-xs font-semibold text-violet-600">{p.category}</span>
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
+                    <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
-                  <p className="text-sm text-gray-500 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-gray-400">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString("uz-UZ")}</p>
+                  <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
+                  <div className="mt-3 flex items-center gap-3">
+                    <VoteButton id={p.id} type="prompt" initialVotes={p.votes ?? 0} />
+                    <span className="text-xs text-gray-500">
+                      {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Content — Saved (Bookmarks) */}
+      {tab === "saved" && (
+        <div>
+          {savedCount === 0 ? (
+            <div className="card border-dashed border-white/10 p-10 text-center">
+              <Bookmark className="mx-auto mb-3 h-8 w-8 text-gray-500" />
+              <p className="text-gray-400">{t("no_saved")}</p>
+              <Link href="/snippets" className="btn-primary mt-4">
+                {t("discover")}
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {bookmarkedSnippets.map((s: any) => (
+                <Link
+                  key={s.id}
+                  href={`/snippets/${s.id}` as any}
+                  className="card card-shine group block"
+                >
+                  <div className="mb-1 flex items-center gap-1.5">
+                    <Code2 className="h-3 w-3 text-brand" />
+                    <span className="text-[10px] font-medium text-brand uppercase tracking-wide">Snippet</span>
+                  </div>
+                  <div className="mb-2 flex items-start justify-between">
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
+                    <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
+                  </div>
+                  {s.description && <p className="text-sm text-gray-400 line-clamp-2">{s.description}</p>}
+                  <p className="mt-2 text-xs text-gray-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                </Link>
+              ))}
+              {bookmarkedPrompts.map((p: any) => (
+                <Link
+                  key={p.id}
+                  href={`/prompts/${p.id}` as any}
+                  className="card card-shine group block"
+                >
+                  <div className="mb-1 flex items-center gap-1.5">
+                    <Sparkles className="h-3 w-3 text-violet-400" />
+                    <span className="text-[10px] font-medium text-violet-400 uppercase tracking-wide">Prompt</span>
+                  </div>
+                  <div className="mb-2 flex items-start justify-between">
+                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
+                    <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
+                  </div>
+                  <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
+                  <p className="mt-2 text-xs text-gray-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>

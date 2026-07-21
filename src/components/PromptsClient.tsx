@@ -5,6 +5,7 @@ import { Sparkles, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Prompt } from "@/types/database";
 import VoteButton from "@/components/VoteButton";
+import BookmarkButton from "@/components/BookmarkButton";
 import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
 import CopyButton from "@/components/CopyButton";
@@ -301,9 +302,12 @@ export default function PromptsClient({ prompts, labels }: Props) {
                     ))}
                   </div>
                 )}
-                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-3">
                     <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
                     <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
+                  </div>
+                  <BookmarkButton promptId={prompt.id} compact />
                 </div>
               </SpotlightCard>
             </Link>

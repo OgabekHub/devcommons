@@ -155,14 +155,20 @@
     "logout": "Chiqish",
     "tab_snippets": "Snippet'larim",
     "tab_prompts": "Prompt'larim",
+    "tab_saved": "Saqlanganlar",
     "no_snippets": "Hali snippet qo'shmagansiz",
     "no_prompts": "Hali prompt qo'shmagansiz",
+    "no_saved": "Hali hech narsa saqlamagansiz",
     "btn_add_snippet": "Snippet qo'shish",
     "btn_add_prompt": "Prompt qo'shish",
+    "discover": "Kashf qilish",
     "views": "Ko'rishlar",
     "votes": "Ovozlar",
     "followers": "Obunachilar",
-    "following": "Obuna"
+    "following": "Obuna",
+    "saved_count": "saqlangan",
+    "bio_placeholder": "O'zingiz haqingizda qisqacha...",
+    "add_bio": "Bio qo'shish"
   },
   "Feed": {
     "title": "Faoliyat lentasi",
