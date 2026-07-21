@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     // O'qish
     const { data: item } = await supabase
       .from(table)
-      .select("votes")
+      .select("votes, author_id")
       .eq("id", id)
       .single();
 
@@ -31,6 +31,20 @@ export async function POST(req: NextRequest) {
       .from(table)
       .update({ votes: newVotes })
       .eq("id", id);
+
+    // Send notification if adding vote
+    if (action === "add" && item?.author_id) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && user.id !== item.author_id) {
+        await supabase.from("notifications").insert({
+          user_id: item.author_id,
+          actor_id: user.id,
+          type: type === "snippet" ? "vote_snippet" : "vote_prompt",
+          snippet_id: type === "snippet" ? id : null,
+          prompt_id: type === "prompt" ? id : null,
+        });
+      }
+    }
 
     return NextResponse.json({ votes: newVotes });
   } catch {

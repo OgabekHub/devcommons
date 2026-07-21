@@ -5,6 +5,7 @@ import { Code2, Menu, X, LogOut, User } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationsBell from "@/components/NotificationsBell";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import Logo from "@/components/Logo";
@@ -95,11 +96,13 @@ export default function Header() {
 
           {/* Auth section */}
           {user ? (
-            <div id="tour-profile" className="relative ml-2" ref={dropdownRef}>
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
-              >
+            <div className="flex items-center gap-2">
+              <NotificationsBell />
+              <div id="tour-profile" className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
+                >
                 {avatarUrl ? (
                   <img src={avatarUrl} alt={username} className="h-6 w-6 rounded-full" />
                 ) : (
@@ -158,6 +161,7 @@ export default function Header() {
                 </div>
               )}
             </div>
+          </div>
           ) : (
             <Link
               id="tour-profile"

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { UserPlus, UserCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations, useLocale } from "next-intl";
+import { sendNotification } from "@/lib/notifications";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Props {
@@ -63,7 +64,13 @@ export default function FollowButton({ targetUserId }: Props) {
             follower_id: user.id,
             following_id: targetUserId,
           });
-        if (!error) setFollowing(true);
+        if (!error) {
+          setFollowing(true);
+          sendNotification({
+            userId: targetUserId,
+            type: "follow",
+          });
+        }
       }
     } catch (err) {
       console.error("Follow error:", err);

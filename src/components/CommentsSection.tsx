@@ -5,6 +5,7 @@ import { MessageSquare, Send, Trash2, ThumbsUp } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { sendNotification } from "@/lib/notifications";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Comment {
@@ -70,6 +71,22 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
     if (!error) {
       setNewComment("");
       loadComments();
+
+      // Find author and send notification
+      const table = snippetId ? "snippets" : "prompts";
+      const id = snippetId || promptId;
+      if (id) {
+        supabase.from(table).select("author_id").eq("id", id).single().then(({ data }) => {
+          if (data?.author_id) {
+            sendNotification({
+              userId: data.author_id,
+              type: snippetId ? "comment_snippet" : "comment_prompt",
+              snippetId: snippetId || undefined,
+              promptId: promptId || undefined,
+            });
+          }
+        });
+      }
     }
     setSubmitting(false);
   };
