@@ -49,7 +49,7 @@ export default async function LeaderboardPage({ params: { locale } }: { params: 
           <div className="space-y-4 relative z-10">
             {topSnippets?.map((snippet, i) => (
               <Link 
-                href={`/${locale}/snippets/${snippet.id}`}
+                href={`/snippets/${snippet.id}` as any}
                 key={snippet.id} 
                 className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:bg-white/5 hover:border-brand/30"
               >
@@ -99,7 +99,7 @@ export default async function LeaderboardPage({ params: { locale } }: { params: 
           <div className="space-y-4 relative z-10">
             {topPrompts?.map((prompt, i) => (
               <Link 
-                href={`/${locale}/prompts/${prompt.id}`}
+                href={`/prompts/${prompt.id}` as any}
                 key={prompt.id} 
                 className="group flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:bg-white/5 hover:border-violet-500/30"
               >

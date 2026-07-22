@@ -68,7 +68,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                     <div className="mb-4 flex items-start justify-between gap-4">
                       <div className="overflow-hidden">
                         <Link
-                          href={`/${locale}/snippets/${snippet.id}`}
+                          href={`/snippets/${snippet.id}` as any}
                           className="truncate text-lg font-bold text-white hover:text-brand block"
                         >
                           {snippet.title}
@@ -118,7 +118,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                     <div className="mb-4 flex items-start justify-between gap-4">
                       <div className="overflow-hidden">
                         <Link
-                          href={`/${locale}/prompts/${prompt.id}`}
+                          href={`/prompts/${prompt.id}` as any}
                           className="truncate text-lg font-bold text-white hover:text-brand block"
                         >
                           {prompt.title}

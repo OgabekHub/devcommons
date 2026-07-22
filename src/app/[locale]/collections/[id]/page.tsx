@@ -51,7 +51,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8 pb-20">
       <Link
-        href={`/${locale}/profile`}
+        href={`/profile`}
         className="mb-8 flex w-fit items-center gap-2 rounded-xl border border-white/5 bg-[#111] px-4 py-2 text-sm font-medium text-gray-400 transition-colors hover:border-white/10 hover:bg-white/5 hover:text-white"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -115,7 +115,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
                     </div>
                     <div className="overflow-hidden">
                       <Link
-                        href={`/${locale}/${isSnippet ? 'snippets' : 'prompts'}/${content.id}`}
+                        href={`/${isSnippet ? 'snippets' : 'prompts'}/${content.id}` as any}
                         className="truncate text-lg font-bold text-white hover:text-brand"
                       >
                         {content.title}
