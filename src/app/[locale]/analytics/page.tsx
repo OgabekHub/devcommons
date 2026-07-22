@@ -149,7 +149,7 @@ export default function AnalyticsPage() {
                 {data?.top_snippets.map((snippet) => (
                   <tr key={snippet.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <a href={`/snippets/${snippet.id}`} className="font-medium text-brand hover:underline">
+                      <a href={`/${locale}/snippets/${snippet.id}`} className="font-medium text-brand hover:underline">
                         {snippet.title}
                       </a>
                     </td>
@@ -184,7 +184,7 @@ export default function AnalyticsPage() {
                 {data?.top_prompts.map((prompt) => (
                   <tr key={prompt.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <a href={`/prompts/${prompt.id}`} className="font-medium text-violet-400 hover:underline">
+                      <a href={`/${locale}/prompts/${prompt.id}`} className="font-medium text-violet-400 hover:underline">
                         {prompt.title}
                       </a>
                     </td>

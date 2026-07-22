@@ -1,22 +1,23 @@
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { Link } from "@/i18n/routing";
-import { Trophy, Star, Eye, Code2, Sparkles, TrendingUp, Heart } from "lucide-react";
-import VoteButton from "@/components/VoteButton";
+import { Trophy, Eye, Code2, Sparkles, Heart } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
 
 export default async function LeaderboardPage({ params: { locale } }: { params: { locale: string } }) {
+  setRequestLocale(locale);
   const supabase = createSupabaseServer();
 
   // Fetch top 10 snippets by votes
   const { data: topSnippets } = await supabase
     .from("snippets")
-    .select("*, author:users(name, username, avatar_url)")
+    .select("*, author:users(github_username, avatar_url)")
     .order("votes", { ascending: false })
     .limit(10);
 
   // Fetch top 10 prompts by votes
   const { data: topPrompts } = await supabase
     .from("prompts")
-    .select("*, author:users(name, username, avatar_url)")
+    .select("*, author:users(github_username, avatar_url)")
     .order("votes", { ascending: false })
     .limit(10);
 
@@ -64,7 +65,7 @@ export default async function LeaderboardPage({ params: { locale } }: { params: 
                 <div className="flex-1 min-w-0">
                   <h3 className="truncate font-semibold text-white group-hover:text-brand">{snippet.title}</h3>
                   <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                    <span className="truncate">@{snippet.author?.username || "yashirin"}</span>
+                    <span className="truncate">@{snippet.author?.github_username || "yashirin"}</span>
                     <span>•</span>
                     <span className="text-brand">{snippet.language}</span>
                   </div>
@@ -114,7 +115,7 @@ export default async function LeaderboardPage({ params: { locale } }: { params: 
                 <div className="flex-1 min-w-0">
                   <h3 className="truncate font-semibold text-white group-hover:text-violet-400">{prompt.title}</h3>
                   <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                    <span className="truncate">@{prompt.author?.username || "yashirin"}</span>
+                    <span className="truncate">@{prompt.author?.github_username || "yashirin"}</span>
                     <span>•</span>
                     <span className="text-violet-400">{prompt.category}</span>
                   </div>

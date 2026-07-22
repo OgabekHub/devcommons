@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Hash, Code2, Sparkles } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
-import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -17,39 +16,42 @@ interface TagData {
 export default function TagsPage() {
   const [tags, setTags] = useState<TagData[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Tags");
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
     const loadTags = async () => {
-      // Get all tags with their usage counts
-      const { data: snippetTags } = await supabase
-        .from("snippet_tags")
-        .select("tags(name)");
+      // Query snippets.tags text[] array directly (correct data source)
+      const { data: snippets } = await supabase
+        .from("snippets")
+        .select("tags");
 
-      const { data: promptTags } = await supabase
-        .from("prompt_tags")
-        .select("tags(name)");
+      const { data: prompts } = await supabase
+        .from("prompts")
+        .select("tags");
 
-      // Count tag usage
+      // Count tag usage from text[] arrays
       const tagCounts = new Map<string, { snippet_count: number; prompt_count: number }>();
 
-      snippetTags?.forEach((st: any) => {
-        const name = st.tags?.name;
-        if (name) {
-          const current = tagCounts.get(name) || { snippet_count: 0, prompt_count: 0 };
-          tagCounts.set(name, { ...current, snippet_count: current.snippet_count + 1 });
-        }
+      snippets?.forEach((snippet: any) => {
+        const tagsArr: string[] = snippet.tags || [];
+        tagsArr.forEach((name: string) => {
+          if (name) {
+            const current = tagCounts.get(name) || { snippet_count: 0, prompt_count: 0 };
+            tagCounts.set(name, { ...current, snippet_count: current.snippet_count + 1 });
+          }
+        });
       });
 
-      promptTags?.forEach((pt: any) => {
-        const name = pt.tags?.name;
-        if (name) {
-          const current = tagCounts.get(name) || { snippet_count: 0, prompt_count: 0 };
-          tagCounts.set(name, { ...current, prompt_count: current.prompt_count + 1 });
-        }
+      prompts?.forEach((prompt: any) => {
+        const tagsArr: string[] = prompt.tags || [];
+        tagsArr.forEach((name: string) => {
+          if (name) {
+            const current = tagCounts.get(name) || { snippet_count: 0, prompt_count: 0 };
+            tagCounts.set(name, { ...current, prompt_count: current.prompt_count + 1 });
+          }
+        });
       });
 
       // Convert to array and sort by total count
@@ -101,7 +103,7 @@ export default function TagsPage() {
           {tags.map((tag) => (
             <Link
               key={tag.name}
-              href={`/snippets`}
+              href={`/snippets?tag=${encodeURIComponent(tag.name)}`}
               className="card card-shine group block"
             >
               <div className="flex items-start justify-between">

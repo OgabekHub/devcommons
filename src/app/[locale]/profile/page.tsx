@@ -97,7 +97,7 @@ export default function ProfilePage() {
   const handleGenerateKey = async () => {
     if (!user) return;
     setGeneratingKey(true);
-    const rawKey = "dc_key_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const rawKey = "dc_" + crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "").substring(0, 8);
     
     const { data, error } = await supabase.from("api_keys").insert({
       user_id: user.id,

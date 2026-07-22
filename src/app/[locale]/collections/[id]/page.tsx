@@ -22,7 +22,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
     .from("collections")
     .select(`
       *,
-      author:users (name, username, avatar_url)
+      author:users (github_username, avatar_url)
     `)
     .eq("id", id)
     .single();
@@ -42,8 +42,8 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
     .select(`
       id,
       added_at,
-      snippet:snippets(*, author:users(name, username, avatar_url)),
-      prompt:prompts(*, author:users(name, username, avatar_url))
+      snippet:snippets(*, author:users(github_username, avatar_url)),
+      prompt:prompts(*, author:users(github_username, avatar_url))
     `)
     .eq("collection_id", id)
     .order("added_at", { ascending: false });
@@ -85,7 +85,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
               </p>
               
               <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
-                <span>By @{collection.author?.username}</span>
+                <span>By @{collection.author?.github_username}</span>
                 <span>•</span>
                 <span>{items?.length || 0} {t("items_count")}</span>
               </div>
@@ -121,7 +121,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
                         {content.title}
                       </Link>
                       <div className="truncate text-sm text-gray-500">
-                        @{content.author?.username || "yashirin"}
+                        @{content.author?.github_username || "yashirin"}
                       </div>
                     </div>
                   </div>

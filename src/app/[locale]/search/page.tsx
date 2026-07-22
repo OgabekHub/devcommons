@@ -20,8 +20,8 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
   if (query) {
     const term = `%${query}%`;
     const [snippetsRes, promptsRes] = await Promise.all([
-      supabase.from("snippets").select("*, author:users(name, username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},code.ilike.${term}`).limit(20),
-      supabase.from("prompts").select("*, author:users(name, username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},content.ilike.${term}`).limit(20)
+      supabase.from("snippets").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},code.ilike.${term}`).limit(20),
+      supabase.from("prompts").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},content.ilike.${term}`).limit(20)
     ]);
     snippets = snippetsRes.data || [];
     prompts = promptsRes.data || [];
@@ -74,7 +74,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                           {snippet.title}
                         </Link>
                         <div className="truncate text-sm text-gray-500 mt-1">
-                          @{snippet.author?.username || "yashirin"}
+                          @{snippet.author?.github_username || "yashirin"}
                         </div>
                       </div>
                       <span className="flex-shrink-0 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">
@@ -124,7 +124,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                           {prompt.title}
                         </Link>
                         <div className="truncate text-sm text-gray-500 mt-1">
-                          @{prompt.author?.username || "yashirin"}
+                          @{prompt.author?.github_username || "yashirin"}
                         </div>
                       </div>
                       <span className="flex-shrink-0 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">
