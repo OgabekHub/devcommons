@@ -150,11 +150,13 @@ export default function ProfilePage() {
       <div className="card flex flex-col items-center gap-6 p-8 text-center sm:flex-row sm:text-left">
         <div className="relative">
           {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt={username}
-              className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-white/10"
-            />
+              <img
+                src={avatarUrl}
+                alt={username}
+                width={96}
+                height={96}
+                className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-white/10"
+              />
           ) : (
             <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
               <User className="h-12 w-12 text-brand" />

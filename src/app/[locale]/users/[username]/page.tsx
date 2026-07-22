@@ -65,6 +65,8 @@ export default async function PublicProfilePage({ params: { username, locale } }
             <img
               src={user.avatar_url}
               alt={user.github_username}
+              width={96}
+              height={96}
               className="h-24 w-24 rounded-2xl shadow-lg ring-2 ring-white/10"
             />
           ) : (
