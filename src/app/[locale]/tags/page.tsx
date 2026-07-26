@@ -6,6 +6,8 @@ import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
+export const revalidate = 600; // 10 minutes cache for tags page
+
 interface TagData {
   name: string;
   snippet_count: number;

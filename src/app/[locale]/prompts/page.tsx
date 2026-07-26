@@ -1,8 +1,20 @@
 import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
 import type { Prompt } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import PromptsClient from "@/components/PromptsClient";
+import dynamic from 'next/dynamic';
 import { Sparkles } from "lucide-react";
+
+// Lazy load client component
+const PromptsClient = dynamic(() => import('@/components/PromptsClient'), {
+  ssr: false,
+  loading: () => (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="card h-48 animate-pulse" />
+      ))}
+    </div>
+  )
+});
 
 export const revalidate = 60; // Cache for 60 seconds
 

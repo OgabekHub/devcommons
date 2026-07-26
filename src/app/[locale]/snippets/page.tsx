@@ -1,8 +1,20 @@
 import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
 import type { Snippet } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import SnippetsClient from "@/components/SnippetsClient";
+import dynamic from 'next/dynamic';
 import { Code2 } from "lucide-react";
+
+// Lazy load client component
+const SnippetsClient = dynamic(() => import('@/components/SnippetsClient'), {
+  ssr: false,
+  loading: () => (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="card h-48 animate-pulse" />
+      ))}
+    </div>
+  )
+});
 
 export const revalidate = 60;
 

@@ -6,6 +6,8 @@ import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
+export const revalidate = 300; // 5 minutes cache for analytics page
+
 interface AnalyticsData {
   total_snippet_views: number;
   total_prompt_views: number;

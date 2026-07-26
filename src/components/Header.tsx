@@ -4,12 +4,16 @@ import { useState, useEffect, useRef } from "react";
 import { Code2, Menu, X, LogOut, User } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import NotificationsBell from "@/components/NotificationsBell";
+import dynamic from 'next/dynamic';
 import { createSupabaseBrowser } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
-import Logo from "@/components/Logo";
-import GlobalSearch from "@/components/GlobalSearch";
+import Image from "next/image";
+
+// Lazy load heavy components
+const LanguageSwitcher = dynamic(() => import('@/components/LanguageSwitcher'), { ssr: true });
+const NotificationsBell = dynamic(() => import('@/components/NotificationsBell'), { ssr: false });
+const Logo = dynamic(() => import('@/components/Logo'), { ssr: true });
+const GlobalSearch = dynamic(() => import('@/components/GlobalSearch'), { ssr: true });
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -107,7 +111,13 @@ export default function Header() {
                   className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
                 >
                 {avatarUrl ? (
-                  <img src={avatarUrl} alt={username} className="h-6 w-6 rounded-full" />
+                  <Image
+                    src={avatarUrl}
+                    alt={username}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 rounded-full"
+                  />
                 ) : (
                   <User className="h-5 w-5" />
                 )}
@@ -256,7 +266,13 @@ export default function Header() {
                 className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
               >
                 {avatarUrl ? (
-                  <img src={avatarUrl} alt={username} className="h-7 w-7 rounded-full" />
+                  <Image
+                    src={avatarUrl}
+                    alt={username}
+                    width={28}
+                    height={28}
+                    className="h-7 w-7 rounded-full"
+                  />
                 ) : (
                   <User className="h-5 w-5 text-gray-500" />
                 )}

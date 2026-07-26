@@ -12,14 +12,17 @@ import {
   Braces,
   Cpu,
 } from "lucide-react";
-import Reveal from "@/components/Reveal";
-import Typewriter from "@/components/Typewriter";
-import HeroBentoBox from "@/components/HeroBentoBox";
-import BackgroundBeams from "@/components/BackgroundBeams";
-import Logo from "@/components/Logo";
-import GitHubLoginButton from "@/components/GitHubLoginButton";
+import dynamic from 'next/dynamic';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
+
+// Lazy load heavy components
+const Reveal = dynamic(() => import('@/components/Reveal'), { ssr: true });
+const Typewriter = dynamic(() => import('@/components/Typewriter'), { ssr: false });
+const HeroBentoBox = dynamic(() => import('@/components/HeroBentoBox'), { ssr: true });
+const BackgroundBeams = dynamic(() => import('@/components/BackgroundBeams'), { ssr: true });
+const Logo = dynamic(() => import('@/components/Logo'), { ssr: true });
+const GitHubLoginButton = dynamic(() => import('@/components/GitHubLoginButton'), { ssr: true });
 
 export const revalidate = 3600; // 1 hour cache for home page
 

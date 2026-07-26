@@ -96,17 +96,41 @@ create table follows (
 create index idx_snippets_language on snippets(language);
 create index idx_snippets_author on snippets(author_id);
 create index idx_snippets_created on snippets(created_at desc);
+create index idx_snippets_votes on snippets(votes desc);
+create index idx_snippets_view_count on snippets(view_count desc);
+create index idx_snippets_title on snippets using gin(to_tsvector('english', title));
+create index idx_snippets_description on snippets using gin(to_tsvector('english', description));
+
 create index idx_prompts_category on prompts(category);
 create index idx_prompts_author on prompts(author_id);
 create index idx_prompts_created on prompts(created_at desc);
+create index idx_prompts_votes on prompts(votes desc);
+create index idx_prompts_view_count on prompts(view_count desc);
+create index idx_prompts_title on prompts using gin(to_tsvector('english', title));
+create index idx_prompts_content on prompts using gin(to_tsvector('english', content));
+
 create index idx_tags_name on tags(name);
+
 create index idx_comments_snippet on comments(snippet_id);
 create index idx_comments_prompt on comments(prompt_id);
 create index idx_comments_user on comments(user_id);
 create index idx_comments_parent on comments(parent_id);
 create index idx_comments_created on comments(created_at desc);
+create index idx_comments_votes on comments(votes desc);
+
 create index idx_follows_follower on follows(follower_id);
 create index idx_follows_following on follows(following_id);
+
+create index idx_bookmarks_user on bookmarks(user_id);
+create index idx_bookmarks_snippet on bookmarks(snippet_id);
+create index idx_bookmarks_prompt on bookmarks(prompt_id);
+create index idx_bookmarks_created on bookmarks(created_at desc);
+
+-- Composite indexes for common query patterns
+create index idx_snippets_author_created on snippets(author_id, created_at desc);
+create index idx_prompts_author_created on prompts(author_id, created_at desc);
+create index idx_snippets_language_created on snippets(language, created_at desc);
+create index idx_prompts_category_created on prompts(category, created_at desc);
 
 -- =============================================
 -- Row Level Security (RLS)

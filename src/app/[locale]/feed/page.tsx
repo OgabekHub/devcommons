@@ -5,9 +5,12 @@ import { Code2, Sparkles, Rss, TrendingUp, Clock, Users } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
-import VoteButton from "@/components/VoteButton";
-import BookmarkButton from "@/components/BookmarkButton";
-import SpotlightCard from "@/components/SpotlightCard";
+import dynamic from 'next/dynamic';
+
+// Lazy load components
+const VoteButton = dynamic(() => import('@/components/VoteButton'), { ssr: false });
+const BookmarkButton = dynamic(() => import('@/components/BookmarkButton'), { ssr: false });
+const SpotlightCard = dynamic(() => import('@/components/SpotlightCard'), { ssr: true });
 
 interface ActivityItem {
   type: "snippet" | "prompt";

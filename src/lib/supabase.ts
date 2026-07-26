@@ -12,5 +12,8 @@ export const isSupabaseConfigured = Boolean(
 
 // Browser (Client Component) uchun — cookies import yo'q
 export function createSupabaseBrowser() {
+  if (!isSupabaseConfigured) {
+    console.warn('Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+  }
   return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
