@@ -5,7 +5,7 @@ import { Code2, Menu, X, LogOut, User } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import dynamic from 'next/dynamic';
-import { createSupabaseBrowser } from "@/lib/supabase";
+import { createSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import Image from "next/image";
 
@@ -22,7 +22,7 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const t = useTranslations("Header");
   const locale = useLocale();
-  const supabase = createSupabaseBrowser();
+  const supabase = isSupabaseConfigured ? createSupabaseBrowser() : null;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -43,6 +43,8 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    if (!supabase) return;
+
     // Foydalanuvchi holatini olish
     supabase.auth.getUser().then(({ data }) => setUser(data.user));
 
@@ -52,9 +54,10 @@ export default function Header() {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase]);
 
   const handleLogout = async () => {
+    if (!supabase) return;
     await supabase.auth.signOut();
     setDropdownOpen(false);
     window.location.href = `/${locale}`;

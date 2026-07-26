@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createSupabaseBrowser } from "@/lib/supabase";
+import { createSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase";
 
 interface GitHubLoginButtonProps {
   text: string;
@@ -10,9 +10,10 @@ interface GitHubLoginButtonProps {
 
 export default function GitHubLoginButton({ text, className }: GitHubLoginButtonProps) {
   const [loading, setLoading] = useState(false);
-  const supabase = createSupabaseBrowser();
+  const supabase = isSupabaseConfigured ? createSupabaseBrowser() : null;
 
   const handleLogin = async () => {
+    if (!supabase) return;
     setLoading(true);
     await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -23,7 +24,7 @@ export default function GitHubLoginButton({ text, className }: GitHubLoginButton
   };
 
   return (
-    <button onClick={handleLogin} disabled={loading} className={className}>
+    <button onClick={handleLogin} disabled={loading || !supabase} className={className}>
       {loading ? (
         <svg className="mr-2 h-5 w-5 animate-spin inline" viewBox="0 0 24 24" fill="none">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
