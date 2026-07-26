@@ -35,45 +35,50 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
       {/* ========================================
           HERO SECTION (Redesigned 2-Column Premium UI)
           ======================================== */}
-      <section className="relative pt-8 sm:pt-12 lg:pt-16 pb-6">
+      <section className="relative pt-10 sm:pt-16 lg:pt-24 pb-10">
         {/* Full-width Background decorations with premium fade masks */}
         <div 
-          className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 h-[calc(100%+120px)] w-[100vw] -translate-x-1/2 overflow-hidden"
-          style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
+          className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 h-[calc(100%+180px)] w-[100vw] -translate-x-1/2 overflow-hidden"
+          style={{ maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)" }}
         >
           {/* Background decorations */}
-        <BackgroundBeams />
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          {/* Dot grid */}
-          <div className="absolute inset-0 bg-dot-pattern bg-dot-md opacity-20" />
-        </div>
+          <BackgroundBeams />
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            {/* Dot grid */}
+            <div className="absolute inset-0 bg-dot-pattern bg-dot-md opacity-[0.12]" />
+          </div>
+          {/* Soft brand aurora spotlight behind the headline */}
+          <div className="absolute left-1/2 top-0 h-[420px] w-[820px] max-w-[90vw] -translate-x-1/2 rounded-full bg-brand/20 blur-[130px]" />
         </div>
 
         <div className="relative mx-auto max-w-[1440px]">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
 
             {/* Left Column - Text Content */}
-            <div className="space-y-6 text-left max-w-2xl">
+            <div className="flex flex-col items-start gap-6 text-left">
               {/* Badge */}
-              <div className="animate-fade-in-down inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-4 py-2 text-sm font-semibold text-brand shadow-[0_0_15px_rgba(124,92,252,0.15)] backdrop-blur-md">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
+              <div className="animate-fade-in-down inline-flex items-center gap-2.5 rounded-full border border-brand/25 bg-brand/[0.08] py-1.5 pl-2 pr-4 text-sm font-medium text-brand-light shadow-[0_0_25px_rgba(124,92,252,0.12)] backdrop-blur-md">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-brand/15 px-2.5 py-0.5 text-xs font-semibold text-brand-light">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
+                  </span>
+                  Live
                 </span>
                 {t("badge")}
               </div>
 
               {/* Main Headline */}
-              <h1 className="animate-fade-in-up text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="animate-fade-in-up text-balance text-[2.5rem] font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[4.25rem]">
                 {t("title_start")}
-                <span className="text-gradient-animated bg-clip-text text-transparent bg-[length:200%_auto] block mt-1 mb-1 drop-shadow-[0_0_20px_rgba(124,92,252,0.3)]">
+                <span className="text-gradient-animated bg-clip-text text-transparent bg-[length:200%_auto] block drop-shadow-[0_0_25px_rgba(124,92,252,0.35)]">
                   {t("title_highlight")}
                 </span>
                 {t("title_end")}
               </h1>
 
-              {/* Typewriter subheadline */}
-              <div className="animate-fade-in-up text-base leading-relaxed text-gray-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
+              {/* Subheadline */}
+              <div className="animate-fade-in-up max-w-xl text-pretty text-base leading-relaxed text-gray-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
                 <p>
                   {t("subtitle")}
                 </p>
@@ -83,39 +88,38 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* CTA Buttons */}
-              <div className="animate-fade-in-up flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.3s" }}>
-                <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
+              <div className="animate-fade-in-up flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={{ animationDelay: "0.3s" }}>
+                <a href="/snippets" className="btn-primary group text-base px-7 py-3.5 shadow-[0_0_25px_rgba(124,92,252,0.4)] hover:shadow-[0_0_35px_rgba(124,92,252,0.55)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 " />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
-                <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-[#111]/50 backdrop-blur-sm border-white/10 hover:border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
-                  <Sparkles className="h-4 w-4 text-brand" />
+                <a href="/prompts" className="btn-secondary group text-base px-7 py-3.5 bg-white/[0.03] backdrop-blur-sm !border !border-white/10 hover:!border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
+                  <Sparkles className="h-4 w-4 text-brand transition-transform duration-300 group-hover:rotate-12" />
                   {t("btn_prompts")}
                 </a>
               </div>
 
-              {/* Trust badges */}
-              <div className="animate-fade-in flex flex-wrap items-center gap-4 pt-4 text-xs font-medium text-gray-500" style={{ animationDelay: "0.45s" }}>
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
-                  <Globe className="h-4 w-4" />
-                  {t("trust_open_source")}
-                </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-gray-700" />
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
-                  <Heart className="h-4 w-4 text-red-400/70" />
-                  {t("trust_community")}
-                </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-gray-700" />
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
-                  <Zap className="h-4 w-4 text-amber-400/70" />
-                  {t("trust_free")}
-                </span>
+              {/* Trust pills */}
+              <div className="animate-fade-in flex flex-wrap items-center gap-2.5 pt-2" style={{ animationDelay: "0.45s" }}>
+                {[
+                  { icon: Globe, label: t("trust_open_source"), tint: "text-brand-light" },
+                  { icon: Heart, label: t("trust_community"), tint: "text-rose-400/80" },
+                  { icon: Zap, label: t("trust_free"), tint: "text-amber-400/80" },
+                ].map((item) => (
+                  <span
+                    key={item.label}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-3.5 py-1.5 text-xs font-medium text-gray-400 backdrop-blur-sm transition-colors hover:border-white/15 hover:text-gray-200"
+                  >
+                    <item.icon className={`h-3.5 w-3.5 ${item.tint}`} />
+                    {item.label}
+                  </span>
+                ))}
               </div>
             </div>
 
             {/* Right Column - Hero Bento Box */}
-            <div className="relative mt-12 lg:mt-0 w-full flex justify-center perspective-1000">
+            <div className="relative mt-8 lg:mt-0 w-full flex justify-center perspective-1000">
               <HeroBentoBox promptText={t("bento_ai_prompt")} />
             </div>
           </div>
