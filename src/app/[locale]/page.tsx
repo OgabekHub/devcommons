@@ -33,9 +33,9 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
   return (
     <div className="space-y-16 pb-16">
       {/* ========================================
-          HERO SECTION (Redesigned 2-Column Premium UI)
+          HERO SECTION
           ======================================== */}
-      <section className="relative pt-8 sm:pt-12 lg:pt-16 pb-6">
+      <section className="relative flex min-h-[calc(100vh-7rem)] items-center py-12 sm:py-16 lg:py-20">
         {/* Full-width Background decorations with premium fade masks */}
         <div 
           className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 h-[calc(100%+120px)] w-[100vw] -translate-x-1/2 overflow-hidden"
@@ -50,12 +50,12 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         </div>
 
         <div className="relative mx-auto max-w-[1440px]">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16">
 
             {/* Left Column - Text Content */}
-            <div className="space-y-6 text-left max-w-2xl">
+            <div className="max-w-2xl text-left">
               {/* Badge */}
-              <div className="animate-fade-in-down inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-4 py-2 text-sm font-semibold text-brand shadow-[0_0_15px_rgba(124,92,252,0.15)] backdrop-blur-md">
+              <div className="animate-fade-in-down mb-6 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
@@ -64,16 +64,14 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* Main Headline */}
-              <h1 className="animate-fade-in-up text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                {t("title_start")}
-                <span className="text-gradient-animated bg-clip-text text-transparent bg-[length:200%_auto] block mt-1 mb-1 drop-shadow-[0_0_20px_rgba(124,92,252,0.3)]">
-                  {t("title_highlight")}
-                </span>
+              <h1 className="animate-fade-in-up text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+                {t("title_start")}{" "}
+                <span className="text-brand">{t("title_highlight")}</span>{" "}
                 {t("title_end")}
               </h1>
 
               {/* Typewriter subheadline */}
-              <div className="animate-fade-in-up text-base leading-relaxed text-gray-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
+              <div className="animate-fade-in-up mt-6 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
                 <p>
                   {t("subtitle")}
                 </p>
@@ -83,7 +81,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* CTA Buttons */}
-              <div className="animate-fade-in-up flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.3s" }}>
+              <div className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.3s" }}>
                 <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
@@ -96,7 +94,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* Trust badges */}
-              <div className="animate-fade-in flex flex-wrap items-center gap-4 pt-4 text-xs font-medium text-gray-500" style={{ animationDelay: "0.45s" }}>
+              <div className="animate-fade-in mt-7 flex flex-wrap items-center gap-4 border-t border-white/10 pt-5 text-xs font-medium text-gray-500" style={{ animationDelay: "0.45s" }}>
                 <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
                   <Globe className="h-4 w-4" />
                   {t("trust_open_source")}
@@ -115,7 +113,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             </div>
 
             {/* Right Column - Hero Bento Box */}
-            <div className="relative mt-12 lg:mt-0 w-full flex justify-center perspective-1000">
+            <div className="relative flex w-full justify-center lg:justify-end">
               <HeroBentoBox promptText={t("bento_ai_prompt")} />
             </div>
           </div>
