@@ -1,4 +1,4 @@
-import { Github, Heart, ArrowUpRight } from "lucide-react";
+import { Github, ArrowUpRight } from "lucide-react";
 import Logo from "@/components/Logo";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -91,13 +91,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 sm:flex-row">
-          <p className="text-xs text-gray-500">
+        <div className="mt-10 flex items-center justify-center border-t border-white/5 pt-8">
+          <p className="text-xs text-gray-500 text-center">
             © {new Date().getFullYear()} DevCommons. {t("open_source")}
-          </p>
-          <p className="inline-flex items-center gap-1.5 text-xs text-gray-500">
-            <Heart className="h-3.5 w-3.5 text-red-400 animate-bounce-subtle" />
-            {t("made_with_love")}
           </p>
         </div>
       </div>
