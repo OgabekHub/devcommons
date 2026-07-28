@@ -21,8 +21,13 @@ export default function FeedbackWidget() {
         setIsSelectOpen(false);
       }
     };
+    const handleOpenFeedback = () => setIsOpen(true);
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    window.addEventListener("open-feedback", handleOpenFeedback);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("open-feedback", handleOpenFeedback);
+    };
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -49,13 +54,16 @@ export default function FeedbackWidget() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button on Bottom Left */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white shadow-lg shadow-brand/20 transition-transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-brand/30"
+        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 rounded-full bg-[#1A1A1A]/90 border border-white/10 px-4 py-2.5 text-xs sm:text-sm font-medium text-gray-300 backdrop-blur-md shadow-xl transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-brand/50 hover:scale-105 group focus:outline-none"
         aria-label={t("btn_open")}
       >
-        <MessageSquarePlus className="h-6 w-6" />
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-brand/20 text-brand group-hover:bg-brand group-hover:text-white transition-colors">
+          <MessageSquarePlus className="h-3.5 w-3.5" />
+        </div>
+        <span>{t("btn_open")}</span>
       </button>
 
       {/* Modal */}
