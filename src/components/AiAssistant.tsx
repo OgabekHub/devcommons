@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import { Bot, X, Maximize2, Minimize2, Send, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string; };
 
 export default function AiAssistant() {
+  const t = useTranslations("AiAssistant");
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const pathname = usePathname() || "";
@@ -63,7 +66,7 @@ export default function AiAssistant() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
-          data: { contextType, currentCode }
+          data: { contextType, currentCode, locale }
         })
       });
 
@@ -143,8 +146,8 @@ export default function AiAssistant() {
             {messages.length === 0 && (
               <div className="flex h-full flex-col items-center justify-center text-center text-gray-500">
                 <Sparkles className="mb-4 h-12 w-12 text-brand/20" />
-                <p>Salom! Men DevCommons AI yordamchisiman.</p>
-                <p className="mt-2 text-sm text-gray-600">Sizga qanday yordam bera olaman?</p>
+                <p>{t("welcome_title")}</p>
+                <p className="mt-2 text-sm text-gray-600">{t("welcome_subtitle")}</p>
               </div>
             )}
             {messages.map((m: ChatMessage) => (
@@ -195,7 +198,7 @@ export default function AiAssistant() {
               <input
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Xabar yozing..."
+                placeholder={t("input_placeholder")}
                 className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
               <button

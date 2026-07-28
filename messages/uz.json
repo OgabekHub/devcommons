@@ -270,5 +270,10 @@
     "items_count": "ta element",
     "back_to_profile": "Profilga qaytish",
     "no_description": "Tavsif yo'q"
+  },
+  "AiAssistant": {
+    "welcome_title": "Salom! Men DevCommons AI yordamchisiman.",
+    "welcome_subtitle": "Sizga qanday yordam bera olaman?",
+    "input_placeholder": "Xabar yozing..."
   }
 }

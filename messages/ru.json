@@ -264,5 +264,10 @@
     "items_count": "элементов",
     "back_to_profile": "Вернуться в профиль",
     "no_description": "Нет описания"
+  },
+  "AiAssistant": {
+    "welcome_title": "Привет! Я ИИ-ассистент DevCommons.",
+    "welcome_subtitle": "Чем я могу помочь вам сегодня?",
+    "input_placeholder": "Введите сообщение..."
   }
 }

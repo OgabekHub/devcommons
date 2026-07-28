@@ -270,5 +270,10 @@
     "items_count": "items",
     "back_to_profile": "Back to Profile",
     "no_description": "No description"
+  },
+  "AiAssistant": {
+    "welcome_title": "Hello! I'm your DevCommons AI Assistant.",
+    "welcome_subtitle": "How can I help you today?",
+    "input_placeholder": "Type a message..."
   }
 }
