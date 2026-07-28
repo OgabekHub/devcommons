@@ -15,16 +15,20 @@ import {
 import dynamic from 'next/dynamic';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
+import { routing } from '@/i18n/routing';
+import Reveal from '@/components/Reveal';
+import HeroBentoBox from '@/components/HeroBentoBox';
+import Logo from '@/components/Logo';
+import GitHubLoginButton from '@/components/GitHubLoginButton';
 
-// Lazy load heavy components
-const Reveal = dynamic(() => import('@/components/Reveal'), { ssr: true });
 const Typewriter = dynamic(() => import('@/components/Typewriter'), { ssr: false });
-const HeroBentoBox = dynamic(() => import('@/components/HeroBentoBox'), { ssr: true });
-const BackgroundBeams = dynamic(() => import('@/components/BackgroundBeams'), { ssr: true });
-const Logo = dynamic(() => import('@/components/Logo'), { ssr: true });
-const GitHubLoginButton = dynamic(() => import('@/components/GitHubLoginButton'), { ssr: true });
+const BackgroundBeams = dynamic(() => import('@/components/BackgroundBeams'), { ssr: false });
 
 export const revalidate = 3600; // 1 hour cache for home page
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
   setRequestLocale(locale);

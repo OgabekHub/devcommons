@@ -1,5 +1,10 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
@@ -27,6 +32,42 @@ export const metadata: Metadata = {
   title: "DevCommons — Dasturchilar uchun ochiq resurs hub",
   description:
     "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
+  openGraph: {
+    type: 'website',
+    locale: 'uz_UZ',
+    url: 'https://devcommons.uz',
+    siteName: 'DevCommons',
+    title: 'DevCommons — Dasturchilar uchun ochiq resurs hub',
+    description: 'Kod snippet\'lar, AI prompt\'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'DevCommons',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DevCommons — Dasturchilar uchun ochiq resurs hub',
+    description: 'Kod snippet\'lar, AI prompt\'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
 };
 
 export default async function RootLayout({

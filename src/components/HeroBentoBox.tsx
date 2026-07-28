@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import {
   Check,
   Code2,
@@ -19,15 +18,8 @@ const code = [
 ];
 
 export default function HeroBentoBox({ promptText }: { promptText?: string }) {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-xl"
-    >
+    <div className="relative mx-auto w-full max-w-xl animate-fade-in-up">
       <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#111111] shadow-2xl shadow-black/40">
         <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5">
           <div className="flex items-center gap-3">
@@ -74,12 +66,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
         </div>
       </div>
 
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, x: 16 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.25, duration: 0.5 }}
-        className="relative -mt-5 ml-5 rounded-2xl border border-brand/30 bg-[#17151f] p-4 shadow-xl shadow-black/40 sm:ml-auto sm:mr-6 sm:max-w-sm"
-      >
+      <div className="relative -mt-5 ml-5 rounded-2xl border border-brand/30 bg-[#17151f] p-4 shadow-xl shadow-black/40 sm:ml-auto sm:mr-6 sm:max-w-sm animate-slide-in-right">
         <div className="mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-sm font-semibold text-white">
             <Sparkles className="h-4 w-4 text-brand" aria-hidden="true" />
@@ -94,7 +81,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
           {promptText ||
             "React.js uchun asinxron ma’lumot yuklaydigan universal custom hook yozib ber."}
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

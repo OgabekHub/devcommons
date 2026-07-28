@@ -6,6 +6,7 @@ import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from 'next/dynamic';
+import FeedSkeleton from "@/components/FeedSkeleton";
 
 // Lazy load components
 const VoteButton = dynamic(() => import('@/components/VoteButton'), { ssr: false });
@@ -136,16 +137,21 @@ export default function FeedPage() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-2 border-b border-white/10 mb-6">
-        <button
-          onClick={() => setTab("following")}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
-            tab === "following"
-              ? "border-brand text-brand"
-              : "border-transparent text-gray-400 hover:text-gray-200"
-          }`}
-        >
+      {/* Loading state */}
+      {loading ? (
+        <FeedSkeleton />
+      ) : (
+        <>
+          {/* Tabs */}
+          <div className="flex gap-2 border-b border-white/10 mb-6">
+            <button
+              onClick={() => setTab("following")}
+              className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+                tab === "following"
+                  ? "border-brand text-brand"
+                  : "border-transparent text-gray-400 hover:text-gray-200"
+              }`}
+            >
           <Users className="h-4 w-4" />
           Obunalar
         </button>
@@ -174,11 +180,7 @@ export default function FeedPage() {
       </div>
 
       {/* Content */}
-      {loading ? (
-        <div className="flex min-h-[40vh] items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
-        </div>
-      ) : activities.length === 0 ? (
+      {activities.length === 0 ? (
         <div className="card border-dashed border-white/10 p-12 text-center">
           <div className="mx-auto mb-4 inline-flex rounded-2xl bg-brand/10 p-4">
             <Rss className="h-8 w-8 text-brand" />
@@ -279,6 +281,8 @@ export default function FeedPage() {
             </Link>
           ))}
         </div>
+      )}
+      </>
       )}
     </div>
   );
