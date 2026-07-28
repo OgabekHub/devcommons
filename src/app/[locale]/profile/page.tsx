@@ -299,7 +299,7 @@ export default function ProfilePage() {
           }`}
         >
           <Folder className="h-4 w-4" />
-          {t("tab_collections", { fallback: "To'plamlar" })} ({collections.length})
+          {t("tab_collections")} ({collections.length})
         </button>
         <button
           onClick={() => setTab("api")}
