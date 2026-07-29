@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import SpotlightCard from "@/components/SpotlightCard";
 import VoteButton from "@/components/VoteButton";
 import BookmarkButton from "@/components/BookmarkButton";
+import { DeleteCollectionButton, RemoveFromCollectionButton } from "@/components/CollectionActions";
 
 interface Props {
   params: { id: string; locale: string };
@@ -32,8 +33,10 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
     notFound();
   }
 
+  const isAuthor = user?.id === collection.author_id;
+
   // Is it private and not mine?
-  if (!collection.is_public && collection.author_id !== user?.id) {
+  if (!collection.is_public && !isAuthor) {
     notFound();
   }
 
@@ -92,6 +95,11 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
               </div>
             </div>
           </div>
+          {isAuthor && (
+            <div className="shrink-0">
+              <DeleteCollectionButton collectionId={id} locale={locale} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -157,6 +165,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
                       promptId={!isSnippet ? content.id : undefined}
                       compact
                     />
+                    {isAuthor && <RemoveFromCollectionButton collectionItemId={item.id} />}
                   </div>
                 </div>
               </SpotlightCard>

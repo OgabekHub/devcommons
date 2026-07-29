@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X, Plus, Folder, Loader2 } from "lucide-react";
+import { X, Plus, Folder, Loader2, Check, Trash2 } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
 
@@ -21,6 +21,7 @@ interface Props {
 export default function AddToCollectionModal({ itemId, itemType, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [savedCollectionIds, setSavedCollectionIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -49,6 +50,16 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
 
       if (error) throw error;
       setCollections(data || []);
+
+      // Tekshiramiz qaysi to'plamda allaqachон borligi
+      const { data: items } = await supabase
+        .from("collection_items")
+        .select("collection_id")
+        .eq(itemType === "snippet" ? "snippet_id" : "prompt_id", itemId);
+      
+      if (items) {
+        setSavedCollectionIds(items.map((i: any) => i.collection_id));
+      }
     } catch (err) {
       console.error(err);
       setError(t("error_loading"));
@@ -83,7 +94,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
       setNewTitle("");
       
       // Yangi to'plamga darhol qo'shish
-      await addToCollection(data.id);
+      await toggleCollection(data.id);
     } catch (err: any) {
       setError(err.message || t("error_creating"));
     } finally {
@@ -91,39 +102,64 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
     }
   };
 
-  const addToCollection = async (collectionId: string) => {
+  const toggleCollection = async (collectionId: string) => {
     setSaving(true);
     setError("");
     setSuccess("");
     
     try {
-      // Avval tekshiramiz, balki oldin qo'shilgandir
-      const { data: existing } = await supabase
-        .from("collection_items")
-        .select("id")
-        .eq("collection_id", collectionId)
-        .eq(itemType === "snippet" ? "snippet_id" : "prompt_id", itemId)
-        .single();
-        
-      if (existing) {
-        throw new Error(t("error_already_exists"));
-      }
+      const isSaved = savedCollectionIds.includes(collectionId);
+      if (isSaved) {
+        const { error } = await supabase
+          .from("collection_items")
+          .delete()
+          .eq("collection_id", collectionId)
+          .eq(itemType === "snippet" ? "snippet_id" : "prompt_id", itemId);
 
+        if (error) throw error;
+        setSavedCollectionIds(prev => prev.filter(id => id !== collectionId));
+        setSuccess(t("success_removed"));
+      } else {
+        const { error } = await supabase
+          .from("collection_items")
+          .insert({
+            collection_id: collectionId,
+            [itemType === "snippet" ? "snippet_id" : "prompt_id"]: itemId
+          });
+
+        if (error) throw error;
+        setSavedCollectionIds(prev => [...prev, collectionId]);
+        setSuccess(t("success_added"));
+      }
+      
+      setTimeout(() => {
+        setSuccess("");
+      }, 2000);
+     } catch (err: any) {
+       setError(err.message || t("error_saving"));
+     } finally {
+       setSaving(false);
+     }
+   };
+
+  const deleteCollectionFolder = async (e: React.MouseEvent, collectionId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!window.confirm(t("confirm_delete"))) return;
+
+    setSaving(true);
+    setError("");
+    try {
       const { error } = await supabase
-        .from("collection_items")
-        .insert({
-          collection_id: collectionId,
-          [itemType === "snippet" ? "snippet_id" : "prompt_id"]: itemId
-        });
+        .from("collections")
+        .delete()
+        .eq("id", collectionId);
 
       if (error) throw error;
-      
-      setSuccess(t("success_added"));
-      setTimeout(() => {
-        onClose();
-      }, 1500);
+      setCollections(prev => prev.filter(c => c.id !== collectionId));
+      setSavedCollectionIds(prev => prev.filter(id => id !== collectionId));
     } catch (err: any) {
-      setError(err.message || t("error_saving"));
+      setError(err.message || "Error deleting collection");
     } finally {
       setSaving(false);
     }
@@ -207,21 +243,44 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
               </div>
             ) : (
               <div className="max-h-60 overflow-y-auto space-y-2 pr-1">
-                {collections.map(collection => (
-                  <button
-                    key={collection.id}
-                    onClick={() => addToCollection(collection.id)}
-                    disabled={saving}
-                    className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-white/5 p-3 text-left transition-colors hover:bg-white/10"
-                  >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/20 text-brand">
-                      <Folder className="h-5 w-5" />
+                {collections.map(collection => {
+                  const isSaved = savedCollectionIds.includes(collection.id);
+                  return (
+                    <div
+                      key={collection.id}
+                      className={`flex items-center justify-between rounded-xl border p-2.5 transition-colors ${
+                        isSaved 
+                          ? "border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/15" 
+                          : "border-white/5 bg-white/5 hover:bg-white/10"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleCollection(collection.id)}
+                        disabled={saving}
+                        className="flex flex-1 items-center gap-3 text-left overflow-hidden mr-2"
+                      >
+                        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                          isSaved ? "bg-emerald-500/20 text-emerald-400" : "bg-brand/20 text-brand"
+                        }`}>
+                          {isSaved ? <Check className="h-4 w-4" /> : <Folder className="h-4 w-4" />}
+                        </div>
+                        <div className="flex-1 overflow-hidden">
+                          <div className="truncate font-medium text-white">{collection.title}</div>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => deleteCollectionFolder(e, collection.id)}
+                        disabled={saving}
+                        title={t("delete_collection")}
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/5 bg-white/5 text-gray-400 transition-colors hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </div>
-                    <div className="flex-1 overflow-hidden">
-                      <div className="truncate font-medium text-white">{collection.title}</div>
-                    </div>
-                  </button>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
