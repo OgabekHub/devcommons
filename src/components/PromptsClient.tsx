@@ -9,16 +9,11 @@ import BookmarkButton from "@/components/BookmarkButton";
 import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
 import CopyButton from "@/components/CopyButton";
+import { useTranslations } from "next-intl";
 
-const CATEGORIES = [
-  "Barchasi", "Coding", "Writing", "Analysis", "Marketing",
+const BASE_CATEGORIES = [
+  "Coding", "Writing", "Analysis", "Marketing",
   "Education", "Business", "Creative", "Research", "Other"
-];
-
-const SORT_OPTIONS = [
-  { value: "newest", label: "Eng yangi" },
-  { value: "oldest", label: "Eng eski" },
-  { value: "popular", label: "Mashhur" },
 ];
 
 const categoryStyles: Record<string, string> = {
@@ -43,8 +38,19 @@ interface Props {
 }
 
 export default function PromptsClient({ prompts, labels }: Props) {
+  const t = useTranslations("Actions");
+  const CATEGORIES = [
+    { value: "ALL", label: t("filter_all") },
+    ...BASE_CATEGORIES.map(c => ({ value: c, label: c }))
+  ];
+  const SORT_OPTIONS = [
+    { value: "newest", label: t("sort_newest") },
+    { value: "oldest", label: t("sort_oldest") },
+    { value: "popular", label: t("sort_popular") },
+  ];
+
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("Barchasi");
+  const [category, setCategory] = useState("ALL");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
   const [showSortMenu, setShowSortMenu] = useState(false);
@@ -60,7 +66,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
         p.content.toLowerCase().includes(query.toLowerCase()) ||
         (p as any).description?.toLowerCase().includes(query.toLowerCase());
 
-      const matchCat = category === "Barchasi" || p.category === category;
+      const matchCat = category === "ALL" || p.category === category;
 
       const matchTags = selectedTags.length === 0 ||
         selectedTags.some(tag => (p as any).tags?.includes(tag));
@@ -157,15 +163,15 @@ export default function PromptsClient({ prompts, labels }: Props) {
           <div className="flex flex-wrap gap-2 flex-1">
             {CATEGORIES.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setCategory(cat)}
+                key={cat.value}
+                onClick={() => setCategory(cat.value)}
                 className={`rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                  category === cat
+                  category === cat.value
                     ? "bg-brand text-white shadow-brand/20"
                     : "border border-white/10 text-gray-400 hover:border-brand/30 hover:text-brand"
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -215,17 +221,17 @@ export default function PromptsClient({ prompts, labels }: Props) {
             onClick={() => setSelectedTags([])}
             className="text-sm text-gray-400 hover:text-gray-300"
           >
-            Barchasini tozalash
+            {t("clear_all")}
           </button>
         </div>
       )}
 
       {/* Natijalar soni */}
-      {(query || category !== "Barchasi" || selectedTags.length > 0) && (
+      {(query || category !== "ALL" || selectedTags.length > 0) && (
         <p className="text-sm text-gray-400">
-          {filtered.length} ta natija
+          {filtered.length} {t("results_found")}
           {query && <span> — "<strong className="text-gray-200">{query}</strong>"</span>}
-          {selectedTags.length > 0 && <span> — {selectedTags.length} ta tag</span>}
+          {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
 
@@ -236,17 +242,17 @@ export default function PromptsClient({ prompts, labels }: Props) {
             <Sparkles className="h-7 w-7 text-purple-400" />
           </div>
           <h2 className="mb-2 text-xl font-bold text-white">
-            {query ? "Hech narsa topilmadi" : "Hozircha prompt yo'q"}
+            {query ? t("nothing_found") : t("no_prompts_yet")}
           </h2>
           <p className="mx-auto max-w-sm text-sm text-gray-400">
             {query
-              ? "Boshqa kalit so'z bilan qidiring"
-              : "Birinchi bo'lib AI prompt qo'shing!"}
+              ? t("search_again")
+              : t("first_prompt")}
           </p>
           {!query && (
             <Link href="/prompts/new" className="btn-primary mt-6">
               <Plus className="h-4 w-4" />
-              Prompt qo'shish
+              {labels.btn_add}
             </Link>
           )}
         </div>

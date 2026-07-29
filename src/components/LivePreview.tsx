@@ -3,6 +3,7 @@
 import { SandpackProvider, SandpackPreview } from "@codesandbox/sandpack-react";
 import { Play } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   code: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function LivePreview({ code, language }: Props) {
+  const t = useTranslations("Actions");
   const [showPreview, setShowPreview] = useState(false);
 
   // Default to vanilla (HTML/JS/CSS)
@@ -62,7 +64,7 @@ export default function LivePreview({ code, language }: Props) {
         className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 py-4 px-4 flex items-center justify-center gap-2 text-gray-400 hover:text-brand hover:border-brand/30 transition-all shadow-[0_0_20px_rgba(124,92,252,0.05)]"
       >
         <Play className="w-5 h-5" />
-        <span className="font-semibold">Live Previewni ishga tushirish (Sandpack)</span>
+        <span className="font-semibold">{t("live_preview")}</span>
       </button>
     );
   }

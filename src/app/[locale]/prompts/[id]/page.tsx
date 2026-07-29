@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, Calendar, Sparkles, User, Tag, Bot } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import CopyButton from "@/components/CopyButton";
@@ -15,6 +15,7 @@ interface Props {
 
 export default async function PromptDetailPage({ params: { id, locale } }: Props) {
   setRequestLocale(locale);
+  const t = await getTranslations("Actions");
   const supabase = createSupabaseServer();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -59,7 +60,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform " />
-        Prompts'ga qaytish
+        {t("back_to_prompts")}
       </Link>
 
       {/* Header */}
@@ -140,10 +141,10 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
       {/* Footer actions */}
       <div className="mt-6 flex gap-3">
         <Link href="/prompts" className="btn-secondary">
-          ← Barchasi
+          ← {t("all_list")}
         </Link>
         <Link href="/prompts/new" className="btn-primary">
-          + Yangi prompt
+          + {t("new_prompt")}
         </Link>
         {isAuthor && (
           <PromptActions promptId={prompt.id} locale={locale} />

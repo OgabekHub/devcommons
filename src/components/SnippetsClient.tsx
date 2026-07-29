@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Code2, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Snippet } from "@/types/database";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import BookmarkButton from "@/components/BookmarkButton";
@@ -12,15 +12,9 @@ import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
 import CustomSelect from "@/components/CustomSelect";
 
-const LANGUAGES = [
-  "Barchasi", "JavaScript", "TypeScript", "Python", "Rust",
+const BASE_LANGUAGES = [
+  "JavaScript", "TypeScript", "Python", "Rust",
   "Go", "Java", "C++", "C#", "PHP", "Ruby", "SQL", "Other"
-];
-
-const SORT_OPTIONS = [
-  { value: "newest", label: "Eng yangi" },
-  { value: "oldest", label: "Eng eski" },
-  { value: "popular", label: "Mashhur" },
 ];
 
 interface Props {
@@ -35,15 +29,24 @@ interface Props {
 }
 
 export default function SnippetsClient({ snippets, labels }: Props) {
+  const t = useTranslations("Actions");
+  const locale = useLocale();
+
+  const LANGUAGES = [t("filter_all"), ...BASE_LANGUAGES];
+  const SORT_OPTIONS = [
+    { value: "newest", label: t("sort_newest") },
+    { value: "oldest", label: t("sort_oldest") },
+    { value: "popular", label: t("sort_popular") },
+  ];
+
   const [query, setQuery] = useState("");
-  const [lang, setLang] = useState("Barchasi");
+  const [lang, setLang] = useState("ALL");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
-  const locale = useLocale();
 
   const filtered = useMemo(() => {
     let result = snippets.filter((s) => {
@@ -53,7 +56,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
         s.description?.toLowerCase().includes(query.toLowerCase()) ||
         s.language.toLowerCase().includes(query.toLowerCase());
 
-      const matchLang = lang === "Barchasi" || s.language === lang;
+      const matchLang = lang === "ALL" || s.language === lang;
 
       const matchTags = selectedTags.length === 0 ||
         selectedTags.some(tag => (s as any).tags?.includes(tag));
@@ -147,8 +150,8 @@ export default function SnippetsClient({ snippets, labels }: Props) {
         <div className="w-full sm:w-48">
           <CustomSelect
             options={LANGUAGES}
-            value={lang}
-            onChange={(val) => setLang(val)}
+            value={lang === "ALL" ? t("filter_all") : lang}
+            onChange={(val) => setLang(val === t("filter_all") ? "ALL" : val)}
           />
         </div>
         <div className="relative">
@@ -194,17 +197,17 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             onClick={() => setSelectedTags([])}
             className="text-sm text-gray-400 hover:text-gray-300"
           >
-            Barchasini tozalash
+            {t("clear_all")}
           </button>
         </div>
       )}
 
       {/* Natijalar soni */}
-      {(query || lang !== "Barchasi" || selectedTags.length > 0) && (
+      {(query || lang !== "ALL" || selectedTags.length > 0) && (
         <p className="text-sm text-gray-400">
-          {filtered.length} ta natija topildi
+          {filtered.length} {t("results_found")}
           {query && <span> — "<strong className="text-gray-200">{query}</strong>"</span>}
-          {selectedTags.length > 0 && <span> — {selectedTags.length} ta tag</span>}
+          {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
 
@@ -215,17 +218,17 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             <Code2 className="h-7 w-7 text-brand" />
           </div>
           <h2 className="mb-2 text-xl font-bold text-white">
-            {query ? "Hech narsa topilmadi" : "Hozircha snippet yo'q"}
+            {query ? t("nothing_found") : t("no_snippets_yet")}
           </h2>
           <p className="mx-auto max-w-sm text-sm text-gray-400">
             {query
-              ? "Boshqa kalit so'z bilan qidiring yoki filterni o'zgartiring"
-              : "Birinchi bo'lib snippet qo'shing!"}
+              ? t("search_again")
+              : t("first_snippet")}
           </p>
           {!query && (
             <Link href="/snippets/new" className="btn-primary mt-6">
               <Plus className="h-4 w-4" />
-              Snippet qo'shish
+              {labels.btn_add}
             </Link>
           )}
         </div>

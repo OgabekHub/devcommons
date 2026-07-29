@@ -269,5 +269,32 @@
     "welcome_title": "Привет! Я ИИ-ассистент DevCommons.",
     "welcome_subtitle": "Чем я могу помочь вам сегодня?",
     "input_placeholder": "Введите сообщение..."
+  },
+  "Actions": {
+    "back_to_snippets": "Назад к сниппетам",
+    "back_to_prompts": "Назад к промптам",
+    "all_list": "Все",
+    "new_snippet": "Новый сниппет",
+    "new_prompt": "Новый промпт",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "cancel": "Отмена",
+    "deleting": "Удаление...",
+    "confirm_delete": "Да, удалить",
+    "delete_error": "Ошибка при удалении",
+    "live_preview": "Запустить Live Preview (Sandpack)",
+    "clear_all": "Очистить все",
+    "results_found": "результатов",
+    "tags": "тегов",
+    "nothing_found": "Ничего не найдено",
+    "search_again": "Попробуйте изменить поисковый запрос или фильтр",
+    "no_snippets_yet": "Пока нет сниппетов",
+    "first_snippet": "Будьте первым, кто добавит сниппет!",
+    "no_prompts_yet": "Пока нет промптов",
+    "first_prompt": "Будьте первым, кто добавит ИИ промпт!",
+    "sort_newest": "Сначала новые",
+    "sort_oldest": "Сначала старые",
+    "sort_popular": "Популярные",
+    "filter_all": "Все"
   }
 }

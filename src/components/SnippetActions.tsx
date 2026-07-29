@@ -5,6 +5,7 @@ import { Edit, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 interface Props {
   snippetId: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function SnippetActions({ snippetId, locale }: Props) {
+  const t = useTranslations("Actions");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
@@ -27,7 +29,7 @@ export default function SnippetActions({ snippetId, locale }: Props) {
     if (error) {
       console.error("Delete error:", error);
       setDeleting(false);
-      alert("O'chirishda xatolik yuz berdi");
+      alert(t("delete_error"));
       return;
     }
 
@@ -41,7 +43,7 @@ export default function SnippetActions({ snippetId, locale }: Props) {
         className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-brand/10 hover:text-brand"
       >
         <Edit className="h-4 w-4" />
-        Tahrirlash
+        {t("edit")}
       </Link>
 
       {!showDeleteConfirm ? (
@@ -50,7 +52,7 @@ export default function SnippetActions({ snippetId, locale }: Props) {
           className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-400 transition-all hover:bg-red-500/20"
         >
           <Trash2 className="h-4 w-4" />
-          O'chirish
+          {t("delete")}
         </button>
       ) : (
         <div className="flex gap-2">
@@ -59,14 +61,14 @@ export default function SnippetActions({ snippetId, locale }: Props) {
             className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-white/10 hover:text-white"
             disabled={deleting}
           >
-            Bekor qilish
+            {t("cancel")}
           </button>
           <button
             onClick={handleDelete}
             disabled={deleting}
             className="flex items-center gap-2 rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-red-600 disabled:opacity-50"
           >
-            {deleting ? "O'chirilmoqda..." : "Ha, o'chirish"}
+            {deleting ? t("deleting") : t("confirm_delete")}
           </button>
         </div>
       )}

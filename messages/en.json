@@ -275,5 +275,32 @@
     "welcome_title": "Hello! I'm your DevCommons AI Assistant.",
     "welcome_subtitle": "How can I help you today?",
     "input_placeholder": "Type a message..."
+  },
+  "Actions": {
+    "back_to_snippets": "Back to Snippets",
+    "back_to_prompts": "Back to Prompts",
+    "all_list": "All items",
+    "new_snippet": "New snippet",
+    "new_prompt": "New prompt",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleting": "Deleting...",
+    "confirm_delete": "Yes, delete",
+    "delete_error": "Error while deleting",
+    "live_preview": "Run Live Preview (Sandpack)",
+    "clear_all": "Clear all",
+    "results_found": "results found",
+    "tags": "tags",
+    "nothing_found": "Nothing found",
+    "search_again": "Try searching with a different keyword or filter",
+    "no_snippets_yet": "No snippets yet",
+    "first_snippet": "Be the first to add a snippet!",
+    "no_prompts_yet": "No prompts yet",
+    "first_prompt": "Be the first to add an AI prompt!",
+    "sort_newest": "Newest first",
+    "sort_oldest": "Oldest first",
+    "sort_popular": "Most popular",
+    "filter_all": "All"
   }
 }

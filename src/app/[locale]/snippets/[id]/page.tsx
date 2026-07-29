@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, Copy, Calendar, Code2, User, Tag, Edit, Trash2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import dynamic from "next/dynamic";
@@ -24,6 +24,7 @@ interface Props {
 
 export default async function SnippetDetailPage({ params: { id, locale } }: Props) {
   setRequestLocale(locale);
+  const t = await getTranslations("Actions");
   const supabase = createSupabaseServer();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -68,7 +69,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform " />
-        Snippets'ga qaytish
+        {t("back_to_snippets")}
       </Link>
 
       {/* Header */}
@@ -151,10 +152,10 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       {/* Footer actions */}
       <div className="mt-6 flex gap-3">
         <Link href="/snippets" className="btn-secondary">
-          ← Barchasi
+          ← {t("all_list")}
         </Link>
         <Link href="/snippets/new" className="btn-primary">
-          + Yangi snippet
+          + {t("new_snippet")}
         </Link>
         {isAuthor && (
           <SnippetActions snippetId={snippet.id} locale={locale} />

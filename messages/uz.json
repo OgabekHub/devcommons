@@ -275,5 +275,32 @@
     "welcome_title": "Salom! Men DevCommons AI yordamchisiman.",
     "welcome_subtitle": "Sizga qanday yordam bera olaman?",
     "input_placeholder": "Xabar yozing..."
+  },
+  "Actions": {
+    "back_to_snippets": "Snippets'ga qaytish",
+    "back_to_prompts": "Prompts'ga qaytish",
+    "all_list": "Barchasi",
+    "new_snippet": "Yangi snippet",
+    "new_prompt": "Yangi prompt",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "cancel": "Bekor qilish",
+    "deleting": "O'chirilmoqda...",
+    "confirm_delete": "Ha, o'chirish",
+    "delete_error": "O'chirishda xatolik yuz berdi",
+    "live_preview": "Live Previewni ishga tushirish (Sandpack)",
+    "clear_all": "Barchasini tozalash",
+    "results_found": "ta natija",
+    "tags": "ta tag",
+    "nothing_found": "Hech narsa topilmadi",
+    "search_again": "Boshqa kalit so'z bilan qidiring yoki filterni o'zgartiring",
+    "no_snippets_yet": "Hozircha snippet yo'q",
+    "first_snippet": "Birinchi bo'lib snippet qo'shing!",
+    "no_prompts_yet": "Hozircha prompt yo'q",
+    "first_prompt": "Birinchi bo'lib AI prompt qo'shing!",
+    "sort_newest": "Eng yangi",
+    "sort_oldest": "Eng eski",
+    "sort_popular": "Mashhur",
+    "filter_all": "Barchasi"
   }
 }
