@@ -1,100 +1,57 @@
 "use client";
 
-import { useMemo } from "react";
-import Prism from "prismjs";
-
-// Prism dark theme — VS Code tomorrrow style
-import "prismjs/themes/prism-tomorrow.css";
-
-// All supported languages (loaded synchronously for reliability)
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-rust";
-import "prismjs/components/prism-go";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-c";
-import "prismjs/components/prism-cpp";
-import "prismjs/components/prism-csharp";
-import "prismjs/components/prism-php";
-import "prismjs/components/prism-ruby";
-import "prismjs/components/prism-sql";
-import "prismjs/components/prism-bash";
-import "prismjs/components/prism-yaml";
-import "prismjs/components/prism-json";
-import "prismjs/components/prism-markup"; // HTML
-import "prismjs/components/prism-css";
-import "prismjs/components/prism-swift";
-import "prismjs/components/prism-kotlin";
+import React from "react";
+import Editor from "@monaco-editor/react";
 
 interface Props {
   code: string;
   language: string;
 }
 
-/** Til nomini Prism grammar key ga aylantiradi */
-function toPrismLang(lang: string): string {
-  const l = lang.toLowerCase().trim();
-  const map: Record<string, string> = {
-    "c++": "cpp",
-    "c#": "csharp",
-    "javascript": "javascript",
-    "typescript": "typescript",
-    "python": "python",
-    "rust": "rust",
-    "go": "go",
-    "java": "java",
-    "c": "c",
-    "php": "php",
-    "ruby": "ruby",
-    "sql": "sql",
-    "bash": "bash",
-    "shell": "bash",
-    "yaml": "yaml",
-    "json": "json",
-    "html": "markup",
-    "css": "css",
-    "swift": "swift",
-    "kotlin": "kotlin",
-  };
-  return map[l] ?? l;
+function getMonacoLanguage(lang: string): string {
+  const l = (lang || "").toLowerCase().trim();
+  if (l === "c++") return "cpp";
+  if (l === "c#") return "csharp";
+  if (l === "shell" || l === "bash" || l === "sh") return "shell";
+  if (l === "javascript" || l === "js") return "javascript";
+  if (l === "typescript" || l === "ts") return "typescript";
+  if (l === "python" || l === "py") return "python";
+  if (l === "yaml" || l === "yml") return "yaml";
+  return l;
 }
 
-export default function CodeHighlighter({ code, language }: Props) {
-  const prismLang = toPrismLang(language);
-
-  // Prism.highlight() — to'g'ridan-to'g'ri HTML qaytaradi, highlightAll() emas
-  const highlighted = useMemo(() => {
-    const grammar = Prism.languages[prismLang];
-    if (!grammar) {
-      // Til topilmasa — oddiy matn, HTML escape
-      return code
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
-    return Prism.highlight(code, grammar, prismLang);
-  }, [code, prismLang]);
+export default function CodeHighlighter({ code = "", language = "javascript" }: Props) {
+  const lines = code ? code.split("\n").length : 1;
+  // Har bir qator ~22px. Top va bottom padding (32px) ni qo'shamiz.
+  // Qisqa snippetlar ixcham bo'lishi uchun, uzoq snippetlar 650px da skrollanishi uchun hisoblaymiz.
+  const computedHeight = Math.min(Math.max(lines * 22 + 36, 80), 650);
 
   return (
-    <pre
-      className={`language-${prismLang}`}
-      style={{
-        background: "#0F0A1F",
-        margin: 0,
-        padding: "24px",
-        fontSize: "0.875rem",
-        lineHeight: "1.7",
-        borderRadius: "0 0 1rem 1rem",
-        overflowX: "auto",
-        tabSize: 2,
-      }}
-    >
-      <code
-        className={`language-${prismLang}`}
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: highlighted }}
+    <div className="w-full bg-[#1e1e1e]">
+      <Editor
+        height={`${computedHeight}px`}
+        language={getMonacoLanguage(language)}
+        theme="vs-dark"
+        value={code}
+        loading={<div className="h-40 w-full animate-pulse bg-[#1e1e1e]" />}
+        options={{
+          readOnly: true,
+          domReadOnly: true,
+          minimap: { enabled: false },
+          fontSize: 14,
+          fontFamily: '"Fira Code", monospace',
+          padding: { top: 16, bottom: 16 },
+          scrollBeyondLastLine: false,
+          smoothScrolling: true,
+          cursorBlinking: "solid",
+          renderLineHighlight: "none",
+          contextmenu: false,
+          scrollbar: {
+            vertical: lines * 22 + 36 > 650 ? "auto" : "hidden",
+            horizontal: "auto",
+          },
+        }}
       />
-    </pre>
+    </div>
   );
 }
