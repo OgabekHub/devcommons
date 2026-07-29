@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Code, Share2, Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -11,10 +11,15 @@ interface Props {
 export default function EmbedButton({ snippetId }: Props) {
   const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [origin, setOrigin] = useState("");
   const t = useTranslations("Components");
 
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
   const embedCode = `<iframe 
-  src="${window.location.origin}/embed/snippet/${snippetId}"
+  src="${origin}/embed/snippet/${snippetId}"
   width="100%"
   height="400"
   frameborder="0"

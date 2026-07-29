@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import { Hash, Code2, Sparkles } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import TagsSkeleton from "@/components/TagsSkeleton";
 
-export const revalidate = 600; // 10 minutes cache for tags page
 
 interface TagData {
   name: string;
@@ -19,7 +18,6 @@ interface TagData {
 export default function TagsPage() {
   const [tags, setTags] = useState<TagData[]>([]);
   const [loading, setLoading] = useState(true);
-  const locale = useLocale();
   const t = useTranslations("Tags");
   const supabase = createSupabaseBrowser();
 

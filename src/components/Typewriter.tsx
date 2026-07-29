@@ -24,6 +24,7 @@ export default function Typewriter({
 
   useEffect(() => {
     const currentText = texts[textIndex];
+    if (!currentText) return;
 
     const timeout = setTimeout(
       () => {

@@ -4,11 +4,10 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Code2, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Snippet } from "@/types/database";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import BookmarkButton from "@/components/BookmarkButton";
-import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
 import CustomSelect from "@/components/CustomSelect";
 
@@ -30,7 +29,6 @@ interface Props {
 
 export default function SnippetsClient({ snippets, labels }: Props) {
   const t = useTranslations("Actions");
-  const locale = useLocale();
 
   const LANGUAGES = [t("filter_all"), ...BASE_LANGUAGES];
   const SORT_OPTIONS = [
@@ -86,7 +84,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
+        if (entries[0]?.isIntersecting && hasMore && !loading) {
           setLoading(true);
           setTimeout(() => {
             setVisibleCount((prev) => Math.min(prev + 12, filtered.length));

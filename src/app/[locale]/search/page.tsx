@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { Link } from "@/i18n/routing";
 import SpotlightCard from "@/components/SpotlightCard";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default async function SearchPage({ searchParams, params: { locale } }: Props) {
+  setRequestLocale(locale);
   const query = searchParams.q || "";
   const supabase = createSupabaseServer();
 

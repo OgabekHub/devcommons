@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Code2, Sparkles, Rss, TrendingUp, Clock, Users } from "lucide-react";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from 'next/dynamic';
@@ -34,6 +34,7 @@ export default function FeedPage() {
   const locale = useLocale();
   const t = useTranslations("Feed");
   const supabase = createSupabaseBrowser();
+  const router = useRouter();
 
   useEffect(() => {
     loadFeed();
@@ -248,16 +249,19 @@ export default function FeedPage() {
                     {/* Footer stats */}
                     <div className="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
                       <div className="flex items-center gap-3">
-                        <Link
-                          href={`/users/${item.author_name}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1.5 font-medium text-gray-300 hover:text-brand transition-colors"
+                        <span
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            router.push(`/users/${item.author_name}` as any);
+                          }}
+                          className="flex items-center gap-1.5 font-medium text-gray-300 hover:text-brand transition-colors cursor-pointer"
                         >
                           {item.author_avatar ? (
                             <img src={item.author_avatar} alt={item.author_name} className="h-4 w-4 rounded-full" />
                           ) : null}
                           {item.author_name}
-                        </Link>
+                        </span>
                         <span className="text-gray-500">•</span>
                         <span className="text-gray-500">
                           {new Date(item.created_at).toLocaleDateString(

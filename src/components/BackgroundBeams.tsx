@@ -14,8 +14,8 @@ export default function BackgroundBeams() {
 
     // Use smaller canvas dimensions — render at 0.5x for performance
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    let w = canvas.width = window.innerWidth * dpr;
-    let h = canvas.height = window.innerHeight * dpr;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
     canvas.style.width = window.innerWidth + "px";
     canvas.style.height = window.innerHeight + "px";
     ctx.scale(dpr, dpr);

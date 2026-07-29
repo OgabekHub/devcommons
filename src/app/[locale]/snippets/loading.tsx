@@ -1,5 +1,5 @@
 import SkeletonCard from "@/components/SkeletonCard";
-import { Search, Plus } from "lucide-react";
+import { Search } from "lucide-react";
 
 export default function SnippetsLoading() {
   return (

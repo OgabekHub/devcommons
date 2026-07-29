@@ -6,9 +6,7 @@ import { Link } from "@/i18n/routing";
 import type { Prompt } from "@/types/database";
 import VoteButton from "@/components/VoteButton";
 import BookmarkButton from "@/components/BookmarkButton";
-import SkeletonCard from "@/components/SkeletonCard";
 import SpotlightCard from "@/components/SpotlightCard";
-import CopyButton from "@/components/CopyButton";
 import { useTranslations } from "next-intl";
 
 const BASE_CATEGORIES = [
@@ -96,7 +94,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
+        if (entries[0]?.isIntersecting && hasMore && !loading) {
           setLoading(true);
           setTimeout(() => {
             setVisibleCount((prev) => Math.min(prev + 12, filtered.length));

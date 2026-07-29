@@ -6,7 +6,6 @@ import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import VoteButton from "@/components/VoteButton";
 
 export default function SavedPage() {
   const [snippets, setSnippets] = useState<any[]>([]);

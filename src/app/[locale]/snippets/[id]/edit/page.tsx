@@ -5,7 +5,7 @@ import { ArrowLeft, Code2, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import CustomSelect from "@/components/CustomSelect";
 import Editor from "@monaco-editor/react";
 

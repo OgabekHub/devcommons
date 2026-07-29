@@ -21,7 +21,6 @@ import HeroBentoBox from '@/components/HeroBentoBox';
 import Logo from '@/components/Logo';
 import GitHubLoginButton from '@/components/GitHubLoginButton';
 
-const Typewriter = dynamic(() => import('@/components/Typewriter'), { ssr: false });
 const BackgroundBeams = dynamic(() => import('@/components/BackgroundBeams'), { ssr: false });
 
 export const revalidate = 3600; // 1 hour cache for home page

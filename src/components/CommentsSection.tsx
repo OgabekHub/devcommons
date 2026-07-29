@@ -161,7 +161,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                   <img src={comment.author_avatar} alt={comment.author_name} className="h-8 w-8 rounded-full" />
                 ) : (
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/20 text-brand font-medium">
-                    {comment.author_name[0].toUpperCase()}
+                    {comment.author_name[0]?.toUpperCase() || 'A'}
                   </div>
                 )}
                 <div className="flex-1">

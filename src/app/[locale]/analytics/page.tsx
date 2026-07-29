@@ -131,7 +131,7 @@ export default function AnalyticsPage() {
       {/* Top Snippets */}
       <div className="mb-8">
         <h2 className="mb-4 text-lg font-semibold text-white">{t("top_snippets")}</h2>
-        {data?.top_snippets.length === 0 ? (
+        {data?.top_snippets?.length === 0 ? (
           <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
             {t("no_data")}
           </div>
@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
                 </tr>
               </thead>
               <tbody>
-                {data?.top_snippets.map((snippet) => (
+                {data?.top_snippets?.map((snippet) => (
                   <tr key={snippet.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
                       <a href={`/${locale}/snippets/${snippet.id}`} className="font-medium text-brand hover:underline">
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
       {/* Top Prompts */}
       <div>
         <h2 className="mb-4 text-lg font-semibold text-white">{t("top_prompts")}</h2>
-        {data?.top_prompts.length === 0 ? (
+        {data?.top_prompts?.length === 0 ? (
           <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
             {t("no_data")}
           </div>
@@ -181,7 +181,7 @@ export default function AnalyticsPage() {
                 </tr>
               </thead>
               <tbody>
-                {data?.top_prompts.map((prompt) => (
+                {data?.top_prompts?.map((prompt) => (
                   <tr key={prompt.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
                       <a href={`/${locale}/prompts/${prompt.id}`} className="font-medium text-violet-400 hover:underline">

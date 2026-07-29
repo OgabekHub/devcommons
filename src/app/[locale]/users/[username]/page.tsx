@@ -71,7 +71,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
             />
           ) : (
             <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20 text-3xl font-bold text-brand">
-              {user.github_username[0].toUpperCase()}
+              {user.github_username?.[0]?.toUpperCase() || 'U'}
             </div>
           )}
           <div className="absolute -bottom-2 -right-2 rounded-lg bg-[#111] p-1.5 border border-white/10">

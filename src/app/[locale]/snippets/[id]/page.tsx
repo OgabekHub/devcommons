@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { ArrowLeft, Copy, Calendar, Code2, User, Tag, Edit, Trash2 } from "lucide-react";
+import { ArrowLeft, Calendar, Code2, User, Tag } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import dynamic from "next/dynamic";
 import CopyButton from "@/components/CopyButton";

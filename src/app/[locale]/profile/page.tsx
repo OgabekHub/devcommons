@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, MapPin, Edit3, Check, X, Folder, Key, Copy, Plus } from "lucide-react";
+import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, Edit3, Check, X, Folder, Key, Copy, Plus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
@@ -99,7 +99,7 @@ export default function ProfilePage() {
     setGeneratingKey(true);
     const rawKey = "dc_" + crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "").substring(0, 8);
     
-    const { data, error } = await supabase.from("api_keys").insert({
+    const { data } = await supabase.from("api_keys").insert({
       user_id: user.id,
       name: "Default Key",
       key_hash: rawKey

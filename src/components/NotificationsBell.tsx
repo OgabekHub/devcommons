@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Bell, CheckCheck, Code2, Sparkles, MessageSquare, UserPlus, Heart } from "lucide-react";
+import { Bell, CheckCheck, MessageSquare, UserPlus, Heart } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";

@@ -2,7 +2,7 @@ import { createSupabaseServer } from "@/lib/supabase-server";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Folder, Code2, TerminalSquare, Lock, Globe } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import SpotlightCard from "@/components/SpotlightCard";
 import VoteButton from "@/components/VoteButton";
 import BookmarkButton from "@/components/BookmarkButton";
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export default async function CollectionPage({ params: { id, locale } }: Props) {
+  setRequestLocale(locale);
   const supabase = createSupabaseServer();
   const t = await getTranslations("Collections");
 
@@ -37,7 +38,7 @@ export default async function CollectionPage({ params: { id, locale } }: Props) 
   }
 
   // Fetch items
-  const { data: items, error: itemsError } = await supabase
+  const { data: items } = await supabase
     .from("collection_items")
     .select(`
       id,

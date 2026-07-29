@@ -32,6 +32,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://devcommons.uz"),
   title: "DevCommons — Dasturchilar uchun ochiq resurs hub",
   description:
     "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
