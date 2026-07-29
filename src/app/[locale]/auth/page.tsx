@@ -2,10 +2,30 @@
 
 import { Github, ArrowLeft, Shield, Trash2, Mail } from "lucide-react";
 import Logo from "@/components/Logo";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
+
+function AuthErrorBanner() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+  if (!error) return null;
+
+  let errorMessage = "Login qilishda xatolik yuz berdi. Iltimos qayta urinib ko'ring.";
+  if (error === "auth_failed") {
+    errorMessage = "GitHub orqali tizimga kirganda xatolik bo'ldi. Supabase Dashboard ichidagi Redirect URLlar yoki GitHub OAuth ruxsatlarini tekshiring.";
+  } else {
+    errorMessage = `Xatolik xabari: ${decodeURIComponent(error)}`;
+  }
+
+  return (
+    <div className="animate-fade-in-down mb-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-center text-sm font-medium text-red-400 shadow-sm">
+      ⚠️ {errorMessage}
+    </div>
+  );
+}
 
 export default function AuthPage() {
   const [loading, setLoading] = useState(false);
@@ -50,6 +70,11 @@ export default function AuthPage() {
             {t("subtitle")}
           </p>
         </div>
+
+        {/* Auth Error Banner wrapped in Suspense for SSR build compatibility */}
+        <Suspense fallback={null}>
+          <AuthErrorBanner />
+        </Suspense>
 
         {/* Login Card */}
         <div className="animate-fade-in-up card p-8" style={{ animationDelay: "0.2s" }}>
