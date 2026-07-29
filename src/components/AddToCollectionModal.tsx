@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, Plus, Folder, Loader2 } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function AddToCollectionModal({ itemId, itemType, onClose }: Props) {
+  const [mounted, setMounted] = useState(false);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -30,6 +32,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
   const t = useTranslations("Collections");
 
   useEffect(() => {
+    setMounted(true);
     loadCollections();
   }, []);
 
@@ -126,7 +129,9 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
     }
   };
 
-  return (
+  if (!mounted || typeof document === "undefined") return null;
+
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
       <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0F0A1F] shadow-xl">
         {/* Header */}
@@ -171,7 +176,6 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
               {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
             </button>
           </form>
-
           {/* Collections List */}
           <div className="space-y-2">
             {loading ? (
@@ -204,6 +208,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
