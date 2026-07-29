@@ -88,7 +88,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                 <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 " />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
                 <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-[#111]/50 backdrop-blur-sm border-white/10 hover:border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
                   <Sparkles className="h-4 w-4 text-brand" />
@@ -147,8 +147,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-brand/30">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand/10 blur-3xl transition-all duration-500 group-hover:bg-brand/20" />
               <div className="relative z-10">
-                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-3 shadow-lg shadow-brand/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  <Code2 className="h-5 w-5 text-white" />
+                <div className="mb-4 block">
+                  <div className="inline-flex rounded-2xl bg-gradient-to-br from-brand to-brand-dark p-3 shadow-lg shadow-brand/30 transition-transform duration-500 will-change-transform group-hover:scale-110 group-hover:rotate-3">
+                    <Code2 className="h-5 w-5 text-white" />
+                  </div>
                 </div>
                 <h3 className="mb-2 text-lg font-bold text-white">{t("feat1_title")}</h3>
                 <p className="text-sm leading-relaxed text-gray-400">
@@ -166,8 +168,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-purple-500/30">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl transition-all duration-500 group-hover:bg-purple-500/20" />
               <div className="relative z-10">
-                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 p-3 shadow-lg shadow-purple-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  <Sparkles className="h-5 w-5 text-white" />
+                <div className="mb-4 block">
+                  <div className="inline-flex rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 p-3 shadow-lg shadow-purple-500/30 transition-transform duration-500 will-change-transform group-hover:scale-110 group-hover:rotate-3">
+                    <Sparkles className="h-5 w-5 text-white" />
+                  </div>
                 </div>
                 <h3 className="mb-2 text-lg font-bold text-white">{t("feat2_title")}</h3>
                 <p className="text-sm leading-relaxed text-gray-400">
@@ -185,8 +189,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-emerald-500/30 sm:col-span-2 lg:col-span-1">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl transition-all duration-500 group-hover:bg-emerald-500/20" />
               <div className="relative z-10">
-                <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-3 shadow-lg shadow-emerald-500/30 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                  <Users className="h-5 w-5 text-white" />
+                <div className="mb-4 block">
+                  <div className="inline-flex rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-3 shadow-lg shadow-emerald-500/30 transition-transform duration-500 will-change-transform group-hover:scale-110 group-hover:rotate-3">
+                    <Users className="h-5 w-5 text-white" />
+                  </div>
                 </div>
                 <h3 className="mb-2 text-lg font-bold text-white">{t("feat3_title")}</h3>
                 <p className="text-sm leading-relaxed text-gray-400">

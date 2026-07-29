@@ -37,21 +37,21 @@ export default function Footer() {
                 className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
               >
                 Snippets
-                <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:opacity-100" />
+                <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
               <Link
                 href="/prompts"
                 className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
               >
                 Prompts
-                <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:opacity-100" />
+                <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
               <Link
                 href="/auth"
                 className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
               >
                 {t("login")}
-                <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:opacity-100" />
+                <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
             </nav>
           </div>
@@ -70,7 +70,7 @@ export default function Footer() {
               >
                 <Github className="h-4 w-4" />
                 GitHub
-                <ArrowUpRight className="h-3 w-3 opacity-0 transition-all group-hover:opacity-100" />
+                <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </a>
             </nav>
           </div>
