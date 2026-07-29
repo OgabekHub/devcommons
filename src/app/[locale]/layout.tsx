@@ -107,7 +107,7 @@ export default async function RootLayout({
       <body className={`${inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
-          <main className="mx-auto max-w-[1440px] px-4 pt-2 pb-12 md:px-8 lg:px-12">{children}</main>
+          <main className="mx-auto max-w-[1440px] px-4 pt-0 pb-12 md:px-8 lg:px-12">{children}</main>
           <Footer />
           {/* Deferred components — loaded after main content */}
           <InteractiveTour />
