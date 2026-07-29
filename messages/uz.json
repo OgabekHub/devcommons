@@ -220,6 +220,9 @@
   "Components": {
     "share": "Ulashish",
     "copied": "Nusxalandi!",
+    "copy": "Nusxalash",
+    "copy_prompt": "Promptni nusxalash",
+    "prompt_text": "Prompt matni",
     "follow": "Kuzatish",
     "following": "Kuzatilmoqda",
     "embed": "Embed",

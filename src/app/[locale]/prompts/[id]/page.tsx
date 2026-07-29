@@ -16,6 +16,7 @@ interface Props {
 export default async function PromptDetailPage({ params: { id, locale } }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("Actions");
+  const tComp = await getTranslations("Components");
   const supabase = createSupabaseServer();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -125,9 +126,9 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         <div className="flex items-center justify-between border-b border-white/10 bg-[#111] px-4 py-3">
           <span className="flex items-center gap-2 text-sm font-medium text-gray-300">
             <Sparkles className="h-4 w-4 text-violet-500" />
-            Prompt matni
+            {tComp("prompt_text")}
           </span>
-          <CopyButton text={prompt.content} label="Promptni nusxalash" />
+          <CopyButton text={prompt.content} label={tComp("copy_prompt")} />
         </div>
 
         {/* Content */}

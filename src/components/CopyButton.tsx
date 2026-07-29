@@ -2,14 +2,18 @@
 
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   text: string;
   label?: string;
 }
 
-export default function CopyButton({ text, label = "Nusxalash" }: Props) {
+export default function CopyButton({ text, label }: Props) {
   const [copied, setCopied] = useState(false);
+  const t = useTranslations("Components");
+
+  const displayLabel = label !== undefined ? label : t("copy");
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,12 +47,12 @@ export default function CopyButton({ text, label = "Nusxalash" }: Props) {
       {copied ? (
         <>
           <Check className="h-3.5 w-3.5" />
-          Nusxalandi!
+          {t("copied")}
         </>
       ) : (
         <>
           <Copy className="h-3.5 w-3.5" />
-          {label}
+          {displayLabel}
         </>
       )}
     </button>

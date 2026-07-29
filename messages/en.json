@@ -220,6 +220,9 @@
   "Components": {
     "share": "Share",
     "copied": "Copied!",
+    "copy": "Copy",
+    "copy_prompt": "Copy Prompt",
+    "prompt_text": "Prompt text",
     "follow": "Follow",
     "following": "Following",
     "embed": "Embed",
