@@ -104,31 +104,25 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
         <button
           onClick={handleToggle}
           disabled={loading}
-          className={`flex items-center justify-center rounded-lg transition-all duration-200 ${
-            compact ? "h-7 px-2 text-xs gap-1" : "px-3 py-1.5 text-sm gap-1.5"
-          } font-medium ${
-            bookmarked
-              ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30"
-              : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-amber-400 hover:border-amber-500/30"
-          } disabled:opacity-50`}
           title={bookmarked ? t("saved") : t("save")}
+          className={`icon-btn font-medium ${
+            compact ? "h-7 px-2 gap-1 text-xs" : "px-3 py-1.5 gap-1.5 text-sm"
+          } ${bookmarked ? "icon-btn--active-amber" : "icon-btn--amber"}`}
         >
           {bookmarked ? (
-            <BookmarkCheck className={`${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
+            <BookmarkCheck className={`shrink-0 ${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
           ) : (
-            <Bookmark className={`${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
+            <Bookmark className={`shrink-0 ${compact ? "h-3.5 w-3.5" : "h-4 w-4"} ${loading ? "animate-pulse" : ""}`} />
           )}
-          {!compact && (bookmarked ? t("saved") : t("save"))}
+          {!compact && <span>{bookmarked ? t("saved") : t("save")}</span>}
         </button>
 
         <button
           onClick={openCollectionModal}
-          className={`flex items-center justify-center rounded-lg border border-white/10 bg-white/5 text-gray-400 transition-all duration-200 hover:border-brand/30 hover:bg-white/10 hover:text-brand ${
-            compact ? "h-7 w-7" : "h-[34px] w-[34px]"
-          }`}
           title={t("save_to_collection_btn")}
+          className={`icon-btn icon-btn--brand ${compact ? "h-7 w-7" : "h-[34px] w-[34px]"}`}
         >
-          <FolderPlus className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} />
+          <FolderPlus className={`shrink-0 ${compact ? "h-3.5 w-3.5" : "h-4 w-4"}`} />
         </button>
       </div>
 

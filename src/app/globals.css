@@ -226,6 +226,60 @@
     box-shadow: 0 8px 40px rgba(124,92,252,0.18), 0 4px 24px rgba(0,0,0,0.4);
   }
 
+  /**
+   * .icon-btn — Siljishsiz kichik icon tugma pattern
+   *
+   * Qoida: Hover da hech qachon padding/margin/border-width
+   * o'zgartirma — faqat background-color va box-shadow o'zgartir.
+   * Shunday qilib ichki icon va matn qimirlamaydi.
+   *
+   * Ishlatish:
+   *   <button className="icon-btn"> <Icon /> </button>
+   *   <button className="icon-btn icon-btn--brand"> <Icon /> count </button>
+   */
+  .icon-btn {
+    @apply inline-flex shrink-0 items-center justify-center
+           rounded-lg border border-white/10
+           bg-white/5 text-gray-400
+           transition-colors duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    /* GPU hint: color-only transition, no layout change */
+    will-change: background-color, color;
+    outline: none;
+  }
+  .icon-btn:hover:not(:disabled) {
+    @apply bg-white/10 text-white;
+    border-color: rgba(255,255,255,0.15);
+  }
+  /* Brand variant */
+  .icon-btn--brand:hover:not(:disabled) {
+    background-color: rgba(124,92,252,0.15);
+    border-color: rgba(124,92,252,0.3);
+    color: #A78BFA;
+  }
+  /* Danger variant */
+  .icon-btn--danger:hover:not(:disabled) {
+    background-color: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.3);
+    color: #F87171;
+  }
+  /* Amber variant (bookmark) */
+  .icon-btn--amber:hover:not(:disabled) {
+    background-color: rgba(245,158,11,0.15);
+    border-color: rgba(245,158,11,0.3);
+    color: #FCD34D;
+  }
+  /* Active/selected state */
+  .icon-btn--active-brand {
+    @apply bg-brand/20 text-brand;
+    border-color: rgba(124,92,252,0.4);
+  }
+  .icon-btn--active-amber {
+    background-color: rgba(245,158,11,0.2);
+    border-color: rgba(245,158,11,0.4);
+    @apply text-amber-400;
+  }
+
   /* Code block styling */
   .code-block {
     @apply rounded-xl p-4 font-mono text-sm text-gray-200;

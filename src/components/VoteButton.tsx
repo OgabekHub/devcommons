@@ -46,14 +46,12 @@ export default function VoteButton({ id, type, initialVotes }: Props) {
     <button
       onClick={handleVote}
       disabled={loading}
-      className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 ${
-        voted
-          ? "bg-brand text-white shadow-sm"
-          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-brand/10 hover:text-brand hover:border-brand/30"
-      } disabled:opacity-50`}
+      className={`icon-btn gap-1.5 px-2.5 py-1 text-xs font-medium ${
+        voted ? "icon-btn--active-brand" : "icon-btn--brand"
+      }`}
     >
-      <ThumbsUp className={`h-3.5 w-3.5 ${loading ? "animate-pulse" : ""} ${voted ? "fill-current" : ""}`} />
-      {votes}
+      <ThumbsUp className={`h-3.5 w-3.5 shrink-0 ${loading ? "animate-pulse" : ""} ${voted ? "fill-current" : ""}`} />
+      <span>{votes}</span>
     </button>
   );
 }
