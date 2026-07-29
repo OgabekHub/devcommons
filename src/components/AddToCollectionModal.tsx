@@ -132,8 +132,27 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
   if (!mounted || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0F0A1F] shadow-xl">
+    <div 
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+      onMouseDown={(e) => e.stopPropagation()}
+      onPointerDown={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+    >
+      <div 
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
+        className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0F0A1F] shadow-xl"
+      >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/5 p-4">
           <h3 className="text-lg font-semibold">{t("save_to_collection")}</h3>
