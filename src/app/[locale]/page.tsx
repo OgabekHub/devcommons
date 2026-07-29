@@ -38,7 +38,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
       {/* ========================================
           HERO SECTION
           ======================================== */}
-      <section className="relative flex min-h-[calc(100vh-7rem)] items-center py-12 sm:py-16 lg:py-20">
+      <section className="relative flex min-h-[calc(100vh-7rem)] items-center py-6 sm:py-8 lg:py-10">
         {/* Full-width Background decorations with premium fade masks */}
         <div 
           className="pointer-events-none absolute left-1/2 top-[-120px] -z-10 h-[calc(100%+120px)] w-[100vw] -translate-x-1/2 overflow-hidden"
