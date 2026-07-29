@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import StructuredData from "@/components/StructuredData";
 
 // Lazy-load heavy client components that are NOT needed for initial paint
 const InteractiveTour = dynamic(() => import("@/components/InteractiveTour"), { ssr: false });
@@ -98,6 +99,9 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icon-192.png" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+        
+        {/* Structured Data */}
+        <StructuredData />
       </head>
       <body className={`${inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
