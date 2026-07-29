@@ -84,24 +84,26 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 md:flex" role="navigation" aria-label="Main navigation">
           <GlobalSearch />
-          <div className="mx-2 h-5 w-px bg-white/10" />
+          <div className="mx-2 h-5 w-px bg-white/10" aria-hidden="true" />
           <Link
             id="tour-snippets"
             href="/snippets"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="View code snippets"
           >
             {t("snippets")}
           </Link>
           <Link
             id="tour-prompts"
             href="/prompts"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
+            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="View AI prompts"
           >
             {t("prompts")}
           </Link>
-          <div className="mx-2 h-5 w-px bg-white/10" />
+          <div className="mx-2 h-5 w-px bg-white/10" aria-hidden="true" />
           <LanguageSwitcher />
 
           {/* Auth section */}
@@ -111,7 +113,10 @@ export default function Header() {
               <div id="tour-profile" className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5"
+                  className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+                  aria-expanded={dropdownOpen}
+                  aria-haspopup="true"
+                  aria-label="User menu"
                 >
                 {avatarUrl ? (
                   <Image
@@ -129,11 +134,16 @@ export default function Header() {
 
               {/* Dropdown */}
               {dropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#111111] p-1 shadow-lg">
+                <div
+                  className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#111111] p-1 shadow-lg"
+                  role="menu"
+                  aria-label="User menu"
+                >
                   <Link
                     href="/profile"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     <User className="h-4 w-4" />
                     {t("profile")}
@@ -141,42 +151,48 @@ export default function Header() {
                   <Link
                     href="/saved"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     {t("saved")}
                   </Link>
                   <Link
                     href="/feed"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     {t("feed")}
                   </Link>
                   <Link
                     href="/analytics"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     {t("analytics")}
                   </Link>
                   <Link
                     href="/leaderboard"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     {t("leaderboard", { fallback: "Leaderboard" })}
                   </Link>
                   <Link
                     href="/tags"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
+                    role="menuitem"
                   >
                     {t("tags")}
                   </Link>
-                  <div className="my-1 border-t border-white/10" />
+                  <div className="my-1 border-t border-white/10" aria-hidden="true" />
                   <button
                     onClick={handleLogout}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-inset"
+                    role="menuitem"
                   >
                     <LogOut className="h-4 w-4" />
                     {t("logout")}
@@ -194,7 +210,7 @@ export default function Header() {
               {t("login")}
             </Link>
           )}
-        </div>
+        </nav>
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 md:hidden">

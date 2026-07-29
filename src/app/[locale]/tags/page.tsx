@@ -5,6 +5,9 @@ import { Hash, Code2, Sparkles } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import TagsSkeleton from "@/components/TagsSkeleton";
+
+export const revalidate = 600; // 10 minutes cache for tags page
 
 interface TagData {
   name: string;
@@ -72,11 +75,7 @@ export default function TagsPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
-      </div>
-    );
+    return <TagsSkeleton />;
   }
 
   return (

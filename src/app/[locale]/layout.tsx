@@ -14,6 +14,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 // Lazy-load heavy client components that are NOT needed for initial paint
 const InteractiveTour = dynamic(() => import("@/components/InteractiveTour"), { ssr: false });
@@ -87,6 +89,15 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+        
+        {/* PWA Meta Tags */}
+        <meta name="theme-color" content="#7C5CFF" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="DevCommons" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className={`${inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
@@ -100,6 +111,8 @@ export default async function RootLayout({
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />
+        <ServiceWorkerRegistration />
+        <GoogleAnalytics />
       </body>
     </html>
   );

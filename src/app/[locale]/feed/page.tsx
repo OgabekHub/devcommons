@@ -282,7 +282,7 @@ export default function FeedPage() {
           ))}
         </div>
       )}
-      </>
+        </>
       )}
     </div>
   );

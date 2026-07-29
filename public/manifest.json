@@ -1,0 +1,51 @@
+{
+  "name": "DevCommons - Dasturchilar uchun ochiq resurs hub",
+  "short_name": "DevCommons",
+  "description": "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#7C5CFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["developer", "education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Snippets",
+      "short_name": "Snippets",
+      "description": "Kod snippet'larni ko'rish",
+      "url": "/snippets",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Prompts",
+      "short_name": "Prompts",
+      "description": "AI prompt'larni ko'rish",
+      "url": "/prompts",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
