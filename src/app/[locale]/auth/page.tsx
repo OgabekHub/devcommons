@@ -4,13 +4,12 @@ import { Github, ArrowLeft, Shield, Trash2, Mail } from "lucide-react";
 import Logo from "@/components/Logo";
 import { useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
 export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const t = useTranslations("Auth");
-  const locale = useLocale();
   const supabase = createSupabaseBrowser();
 
   const handleGitHubLogin = async () => {
