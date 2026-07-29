@@ -154,7 +154,7 @@ export default function FeedPage() {
               }`}
             >
           <Users className="h-4 w-4" />
-          Obunalar
+          {t("tab_following")}
         </button>
         <button
           onClick={() => setTab("trending")}
@@ -165,7 +165,7 @@ export default function FeedPage() {
           }`}
         >
           <TrendingUp className="h-4 w-4" />
-          Mashhur
+          {t("tab_trending")}
         </button>
         <button
           onClick={() => setTab("newest")}
@@ -176,7 +176,7 @@ export default function FeedPage() {
           }`}
         >
           <Clock className="h-4 w-4" />
-          Yangilar
+          {t("tab_newest")}
         </button>
       </div>
 
@@ -187,19 +187,19 @@ export default function FeedPage() {
             <Rss className="h-8 w-8 text-brand" />
           </div>
           <h2 className="text-xl font-bold text-white mb-2">
-            {tab === "following" ? t("empty") : "Hozircha hech narsa yo'q"}
+            {tab === "following" ? t("empty") : t("empty_general")}
           </h2>
           <p className="mx-auto max-w-sm text-sm text-gray-400 mb-6">
             {tab === "following"
-              ? "Boshqa dasturchilar profiliga o'tib, obuna bo'lsangiz ularning so'nggi kodingiz shu yerda chiqadi."
-              : "Birinchi bo'lib kontent ulashing!"}
+              ? t("empty_desc")
+              : t("share_first")}
           </p>
           {tab === "following" && (
             <button
               onClick={() => setTab("trending")}
               className="btn-primary shadow-lg shadow-brand/20"
             >
-              Mashhurlarni ko'rish
+              {t("view_trending")}
             </button>
           )}
         </div>

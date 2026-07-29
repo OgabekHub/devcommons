@@ -176,7 +176,13 @@
     "title": "Activity Feed",
     "subtitle": "Recent activity from people you follow",
     "empty": "No activity yet",
-    "empty_desc": "Visit other user profiles to follow them"
+    "empty_desc": "Visit other user profiles to follow them",
+    "tab_following": "Following",
+    "tab_trending": "Trending",
+    "tab_newest": "Newest",
+    "empty_general": "Nothing here yet",
+    "share_first": "Be the first to share content!",
+    "view_trending": "View trending"
   },
   "Saved": {
     "title": "Saved Items",

@@ -176,7 +176,13 @@
     "title": "Faoliyat lentasi",
     "subtitle": "Kuzatib turgan odamlaringizning so'nggi faoliyati",
     "empty": "Hozircha faoliyat yo'q",
-    "empty_desc": "Boshqa foydalanuvchilarni kuzatish uchun ularning profiliga tashrif buyuring"
+    "empty_desc": "Boshqa foydalanuvchilarni kuzatish uchun ularning profiliga tashrif buyuring",
+    "tab_following": "Obunalar",
+    "tab_trending": "Mashhur",
+    "tab_newest": "Yangilar",
+    "empty_general": "Hozircha hech narsa yo'q",
+    "share_first": "Birinchi bo'lib kontent ulashing!",
+    "view_trending": "Mashhurlarni ko'rish"
   },
   "Saved": {
     "title": "Saqlanganlar",
