@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BarChart3, Eye, Code2, Sparkles, Calendar } from "lucide-react";
+import { BarChart3, Eye, Code2, Sparkles } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
