@@ -331,7 +331,7 @@ export default function ProfilePage() {
                 <Link
                   key={s.id}
                   href={`/snippets/${s.id}` as any}
-                  className="card card-shine group block"
+                  className="card card-shine group block transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="mb-2 flex items-start justify-between">
                     <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
@@ -368,7 +368,7 @@ export default function ProfilePage() {
                 <Link
                   key={p.id}
                   href={`/prompts/${p.id}` as any}
-                  className="card card-shine group block"
+                  className="card card-shine group block transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="mb-2 flex items-start justify-between">
                     <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
@@ -405,7 +405,7 @@ export default function ProfilePage() {
                 <Link
                   key={s.id}
                   href={`/snippets/${s.id}` as any}
-                  className="card card-shine group block"
+                  className="card card-shine group block transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="mb-1 flex items-center gap-1.5">
                     <Code2 className="h-3 w-3 text-brand" />
@@ -423,7 +423,7 @@ export default function ProfilePage() {
                 <Link
                   key={p.id}
                   href={`/prompts/${p.id}` as any}
-                  className="card card-shine group block"
+                  className="card card-shine group block transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="mb-1 flex items-center gap-1.5">
                     <Sparkles className="h-3 w-3 text-violet-400" />
@@ -456,7 +456,7 @@ export default function ProfilePage() {
                 <Link
                   key={c.id}
                   href={`/collections/${c.id}` as any}
-                  className="card card-shine group block flex flex-col h-full"
+                  className="card card-shine group flex flex-col h-full transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="mb-4 flex items-center gap-3">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20">
