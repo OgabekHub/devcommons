@@ -9,7 +9,8 @@
     "feed": "Lenta",
     "analytics": "Analitika",
     "leaderboard": "Reytinglar",
-    "tags": "Teglar"
+    "tags": "Teglar",
+    "search": "Qidiruv..."
   },
   "Index": {
     "badge": "100% bepul va ochiq manba",
@@ -315,5 +316,11 @@
     "sort_oldest": "Eng eski",
     "sort_popular": "Mashhur",
     "filter_all": "Barchasi"
+  },
+  "SearchPage": {
+    "title": "Qidiruv natijalari",
+    "results_for": "bo'yicha topilgan ma'lumotlar",
+    "empty_query": "Qidirish uchun yuqoridagi maydonga so'z kiriting",
+    "nothing_found": "Hech narsa topilmadi. Boshqa so'z bilan urinib ko'ring."
   }
 }

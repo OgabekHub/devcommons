@@ -9,7 +9,8 @@
     "feed": "Feed",
     "analytics": "Analytics",
     "leaderboard": "Leaderboard",
-    "tags": "Tags"
+    "tags": "Tags",
+    "search": "Search..."
   },
   "Index": {
     "badge": "100% free and open source",
@@ -315,5 +316,11 @@
     "sort_oldest": "Oldest first",
     "sort_popular": "Most popular",
     "filter_all": "All"
+  },
+  "SearchPage": {
+    "title": "Search results",
+    "results_for": "results found for",
+    "empty_query": "Enter a word in the search field above",
+    "nothing_found": "Nothing found. Try searching with a different keyword."
   }
 }

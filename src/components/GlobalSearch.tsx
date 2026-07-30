@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function GlobalSearch() {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const t = useTranslations("Header");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ export default function GlobalSearch() {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Qidiruv..."
+        placeholder={t("search")}
         className="h-9 w-48 rounded-full border border-white/10 bg-[#111] pl-9 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all focus:w-64"
       />
     </form>

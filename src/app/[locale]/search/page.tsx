@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { Link } from "@/i18n/routing";
 import SpotlightCard from "@/components/SpotlightCard";
@@ -13,6 +13,7 @@ interface Props {
 
 export default async function SearchPage({ searchParams, params: { locale } }: Props) {
   setRequestLocale(locale);
+  const t = await getTranslations("SearchPage");
   const query = searchParams.q || "";
   const supabase = createSupabaseServer();
 
@@ -36,22 +37,22 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
           <SearchIcon className="h-8 w-8" />
         </div>
         <h1 className="text-3xl font-bold text-white sm:text-4xl">
-          Qidiruv natijalari
+          {t("title")}
         </h1>
         {query ? (
           <p className="mt-4 text-gray-400">
-            "<strong className="text-white">{query}</strong>" bo'yicha topilgan ma'lumotlar
+            <strong className="text-white">"{query}"</strong> — {t("results_for")}
           </p>
         ) : (
           <p className="mt-4 text-gray-400">
-            Qidirish uchun yuqoridagi maydonga so'z kiriting
+            {t("empty_query")}
           </p>
         )}
       </div>
 
       {query && snippets.length === 0 && prompts.length === 0 && (
         <div className="card border-dashed border-white/10 p-12 text-center text-gray-500">
-          <p>Hech narsa topilmadi. Boshqa so'z bilan urinib ko'ring.</p>
+          <p>{t("nothing_found")}</p>
         </div>
       )}
 
