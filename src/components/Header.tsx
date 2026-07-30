@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, LogOut, User } from "lucide-react";
+import { Menu, X, LogOut, User, BarChart2, Bookmark, Rss, Trophy, Tag } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import dynamic from 'next/dynamic';
@@ -113,96 +113,96 @@ export default function Header() {
             <div className="flex items-center gap-2">
               <NotificationsBell />
               <div id="tour-profile" className="relative" ref={dropdownRef}>
+                {/* Trigger button */}
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:border-brand/30 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+                  className="flex items-center gap-2 rounded-xl border border-white/10 px-3 py-1.5 text-sm font-medium text-gray-300 transition-colors duration-200 hover:border-brand/40 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
                   aria-expanded={dropdownOpen}
                   aria-haspopup="true"
                   aria-label="User menu"
                 >
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt={username}
-                    width={24}
-                    height={24}
-                    className="h-6 w-6 rounded-full"
-                  />
-                ) : (
-                  <User className="h-5 w-5" />
-                )}
-                <span className="max-w-[100px] truncate">{username}</span>
-              </button>
+                  {avatarUrl ? (
+                    <Image
+                      src={avatarUrl}
+                      alt={username ?? ""}
+                      width={24}
+                      height={24}
+                      className="h-6 w-6 rounded-full ring-1 ring-white/10"
+                    />
+                  ) : (
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-brand/20 text-brand">
+                      <User className="h-3.5 w-3.5" />
+                    </div>
+                  )}
+                  <span className="max-w-[100px] truncate">{username}</span>
+                </button>
 
-              {/* Dropdown */}
-              {dropdownOpen && (
-                <div
-                  className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#111111] p-1 shadow-lg"
-                  role="menu"
-                  aria-label="User menu"
-                >
-                  <Link
-                    href="/profile"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
+                {/* Dropdown — Vercel style */}
+                {dropdownOpen && (
+                  <div
+                    className="absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-2xl border border-white/10 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+                    role="menu"
+                    aria-label="User menu"
                   >
-                    <User className="h-4 w-4" />
-                    {t("profile")}
-                  </Link>
-                  <Link
-                    href="/saved"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
-                  >
-                    {t("saved")}
-                  </Link>
-                  <Link
-                    href="/feed"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
-                  >
-                    {t("feed")}
-                  </Link>
-                  <Link
-                    href="/analytics"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
-                  >
-                    {t("analytics")}
-                  </Link>
-                  <Link
-                    href="/leaderboard"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
-                  >
-                    {t("leaderboard", { fallback: "Leaderboard" })}
-                  </Link>
-                  <Link
-                    href="/tags"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
-                    role="menuitem"
-                  >
-                    {t("tags")}
-                  </Link>
-                  <div className="my-1 border-t border-white/10" aria-hidden="true" />
-                  <button
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-inset"
-                    role="menuitem"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    {t("logout")}
-                  </button>
-                </div>
-              )}
+                    {/* User info block */}
+                    <div className="flex items-center gap-3 px-4 py-4 border-b border-white/8">
+                      {avatarUrl ? (
+                        <Image
+                          src={avatarUrl}
+                          alt={username ?? ""}
+                          width={40}
+                          height={40}
+                          className="h-10 w-10 rounded-full ring-2 ring-brand/30"
+                        />
+                      ) : (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-dark text-white font-bold text-sm">
+                          {username?.[0]?.toUpperCase() ?? "U"}
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-white">{username}</p>
+                        <p className="truncate text-xs text-gray-400">{user?.email}</p>
+                      </div>
+                    </div>
+
+                    {/* Nav links — icon on RIGHT (Vercel style) */}
+                    <div className="p-1.5">
+                      {([
+                        { href: "/profile",    label: t("profile"),                      icon: User },
+                        { href: "/saved",      label: t("saved"),                        icon: Bookmark },
+                        { href: "/feed",       label: t("feed"),                         icon: Rss },
+                        { href: "/analytics", label: t("analytics"),                    icon: BarChart2 },
+                        { href: "/leaderboard",label: t("leaderboard", { fallback: "Leaderboard" }), icon: Trophy },
+                        { href: "/tags",       label: t("tags"),                         icon: Tag },
+                      ] as const).map(({ href, label, icon: Icon }) => (
+                        <Link
+                          key={href}
+                          href={href as any}
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm text-gray-300 transition-colors hover:bg-white/6 hover:text-white group"
+                          role="menuitem"
+                        >
+                          <span>{label}</span>
+                          <Icon className="h-4 w-4 shrink-0 text-gray-500 group-hover:text-gray-300 transition-colors" />
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Logout */}
+                    <div className="border-t border-white/8 p-1.5">
+                      <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm text-red-400 transition-colors hover:bg-red-500/8 hover:text-red-300 group"
+                        role="menuitem"
+                      >
+                        <span>{t("logout")}</span>
+                        <LogOut className="h-4 w-4 shrink-0 text-red-400/60 group-hover:text-red-300 transition-colors" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
           ) : (
             <Link
               id="tour-profile"
