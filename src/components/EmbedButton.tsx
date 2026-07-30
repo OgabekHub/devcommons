@@ -36,11 +36,11 @@ export default function EmbedButton({ snippetId }: Props) {
     <div className="relative">
       <button
         onClick={() => setShowCode(!showCode)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-300 transition-all hover:bg-white/5"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-300 transition-colors duration-200 hover:bg-white/5 border border-transparent hover:border-white/10"
         title={t("embed")}
       >
-        <Share2 className="h-4 w-4" />
-        {t("embed")}
+        <Share2 className="h-4 w-4 shrink-0" />
+        <span>{t("embed")}</span>
       </button>
 
       {showCode && (

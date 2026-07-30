@@ -298,10 +298,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             ].map((tech) => (
               <div
                 key={tech.name}
-                className={`inline-flex items-center gap-2.5 rounded-xl border px-5 py-3 text-sm font-medium transition-all duration-300 hover:-translate-y-1 ${tech.color}`}
+                className={`inline-flex items-center gap-2.5 rounded-xl border px-5 py-3 text-sm font-medium transition-[color,background-color,border-color,box-shadow,transform] duration-300 select-none hover:-translate-y-1 ${tech.color}`}
               >
-                <tech.icon className="h-4 w-4" />
-                {tech.name}
+                <tech.icon className="h-4 w-4 shrink-0 transition-none" />
+                <span>{tech.name}</span>
               </div>
             ))}
           </div>
