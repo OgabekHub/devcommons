@@ -11,83 +11,53 @@ interface SpotlightCardProps {
 
 export default function SpotlightCard({ children, className = "", delay = 0 }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
-  
-  // Spotlight state
+
+  // Spotlight mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  // 3D Tilt state
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
   const mouseXSpring = useSpring(mouseX, { stiffness: 150, damping: 20 });
   const mouseYSpring = useSpring(mouseY, { stiffness: 150, damping: 20 });
-  
-  const rotateX = useTransform(y, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(x, [-0.5, 0.5], ["-5deg", "5deg"]);
 
   const [isHovered, setIsHovered] = useState(false);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    
-    // For Spotlight
-    const clientX = e.clientX - rect.left;
-    const clientY = e.clientY - rect.top;
-    mouseX.set(clientX);
-    mouseY.set(clientY);
-
-    // For 3D Tilt
-    const width = rect.width;
-    const height = rect.height;
-    const mouseXPos = e.clientX - rect.left;
-    const mouseYPos = e.clientY - rect.top;
-    const xPct = mouseXPos / width - 0.5;
-    const yPct = mouseYPos / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  }
-
-  function handleMouseEnter() {
-    setIsHovered(true);
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   }
 
   function handleMouseLeave() {
     setIsHovered(false);
-    x.set(0);
-    y.set(0);
   }
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut", delay }}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
+      // NOTE: No rotateX/rotateY/preserve-3d — 3D tilt was causing icon layout shifts
       className={`relative overflow-hidden ${className}`}
     >
-      {/* Spotlight Effect */}
+      {/* Spotlight glow that follows the cursor */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 z-0"
+        className="pointer-events-none absolute -inset-px rounded-xl z-0"
         style={{
           opacity: isHovered ? 1 : 0,
+          transition: "opacity 0.3s ease",
           background: useTransform(
             [mouseXSpring, mouseYSpring],
-            ([mouseX, mouseY]) => `radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(124,92,252,0.15), transparent 40%)`
+            ([mx, my]) =>
+              `radial-gradient(400px circle at ${mx}px ${my}px, rgba(124,92,252,0.15), transparent 40%)`
           ) as any,
         }}
       />
-      
-      {/* Content wrapper to stay above spotlight */}
+
+      {/* Content above spotlight */}
       <div className="relative z-10 h-full w-full">
         {children}
       </div>
