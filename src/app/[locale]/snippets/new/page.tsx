@@ -15,6 +15,57 @@ const LANGUAGES = [
   "HTML", "CSS", "SQL", "Bash", "YAML", "JSON", "Other"
 ];
 
+const TEMPLATES = [
+  {
+    label: "React Component",
+    language: "TypeScript",
+    tag: "react",
+    title: "React Functional Component with Props",
+    description: "Clean functional component pattern using TypeScript interface for props and state hook.",
+    code: `import React, { useState } from "react";\n\ninterface Props {\n  title: string;\n  initialCount?: number;\n}\n\nexport const MyComponent: React.FC<Props> = ({ title, initialCount = 0 }) => {\n  const [count, setCount] = useState(initialCount);\n\n  return (\n    <div className="p-4 border rounded-xl">\n      <h2 className="text-xl font-bold">{title}</h2>\n      <p>Current count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n};`
+  },
+  {
+    label: "Next.js API Route",
+    language: "TypeScript",
+    tag: "nextjs",
+    title: "Next.js App Router GET/POST Handler",
+    description: "Standard pattern for App Router API route handlers with error wrapping and JSON response.",
+    code: `import { NextRequest, NextResponse } from "next/server";\n\nexport async function GET(req: NextRequest) {\n  try {\n    return NextResponse.json({ status: "success", data: "Hello World" });\n  } catch (error) {\n    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });\n  }\n}\n\nexport async function POST(req: NextRequest) {\n  const body = await req.json();\n  return NextResponse.json({ received: body }, { status: 201 });\n}`
+  },
+  {
+    label: "Express REST Router",
+    language: "JavaScript",
+    tag: "express",
+    title: "Express REST Router with Error Handling",
+    description: "Modular express router setup with CRUD operations and centralized async handler.",
+    code: `const express = require("express");\nconst router = express.Router();\n\n// Async wrapper\nconst asyncHandler = (fn) => (req, res, next) =>\n  Promise.resolve(fn(req, res, next)).catch(next);\n\nrouter.get("/users", asyncHandler(async (req, res) => {\n  const users = [{ id: 1, name: "John Doe" }];\n  res.json({ success: true, data: users });\n}));\n\nmodule.exports = router;`
+  },
+  {
+    label: "Python FastAPI",
+    language: "Python",
+    tag: "fastapi",
+    title: "FastAPI Router with Pydantic Schema",
+    description: "Modern Python async API endpoint with type validation using Pydantic.",
+    code: `from fastapi import APIRouter, HTTPException\nfrom pydantic import BaseModel\n\nrouter = APIRouter()\n\nclass Item(BaseModel):\n    name: str\n    price: float\n    is_offer: bool = None\n\n@router.post("/items/")\nasync def create_item(item: Item):\n    if item.price <= 0:\n        raise HTTPException(status_code=400, detail="Price must be positive")\n    return {"item_name": item.name, "price_with_tax": item.price * 1.12}`
+  },
+  {
+    label: "SQL Relational Schema",
+    language: "SQL",
+    tag: "sql",
+    title: "PostgreSQL Users & Posts Relational Table Setup",
+    description: "Clean SQL schema creation with UUID primary keys, foreign key constraints, and automatic timestamps.",
+    code: `CREATE TABLE users (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  username VARCHAR(50) UNIQUE NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT now()\n);\n\nCREATE TABLE posts (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  user_id UUID REFERENCES users(id) ON DELETE CASCADE,\n  title TEXT NOT NULL,\n  content TEXT,\n  created_at TIMESTAMPTZ DEFAULT now()\n);\n\nCREATE INDEX idx_posts_user_id ON posts(user_id);`
+  },
+  {
+    label: "Docker Compose",
+    language: "YAML",
+    tag: "docker",
+    title: "Docker Compose for Node.js + PostgreSQL + Redis",
+    description: "Complete multi-container Docker development environment with database volumes and healthchecks.",
+    code: `version: '3.8'\nservices:\n  api:\n    build: .\n    ports:\n      - "3000:3000"\n    environment:\n      DATABASE_URL: postgres://user:pass@db:5432/myapp\n    depends_on:\n      - db\n      - redis\n  db:\n    image: postgres:15-alpine\n    restart: always\n    environment:\n      POSTGRES_USER: user\n      POSTGRES_PASSWORD: pass\n      POSTGRES_DB: myapp\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n    ports:\n      - "5432:5432"\n  redis:\n    image: redis:7-alpine\n    ports:\n      - "6379:6379"\nvolumes:\n  pgdata:`
+  }
+];
+
 export default function NewSnippetPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -39,6 +90,16 @@ export default function NewSnippetPage() {
 
   const removeTag = (tag: string) => {
     setTags(tags.filter((t) => t !== tag));
+  };
+
+  const applyTemplate = (tpl: (typeof TEMPLATES)[number]) => {
+    setTitle(tpl.title);
+    setDescription(tpl.description);
+    setLanguage(tpl.language);
+    setCode(tpl.code);
+    if (tpl.tag && !tags.includes(tpl.tag)) {
+      setTags([...tags, tpl.tag].slice(0, 5));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,6 +157,30 @@ export default function NewSnippetPage() {
         <div>
           <h1 className="text-2xl font-bold">{t("title")}</h1>
           <p className="text-sm text-gray-500">{t("subtitle")}</p>
+        </div>
+      </div>
+
+      {/* Templates Selection Box */}
+      <div className="mb-8 rounded-2xl border border-brand/20 bg-brand/5 p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-semibold text-white">
+            <span className="text-brand">⚡</span>
+            <span>Tayyor shablonlar (Quick Templates)</span>
+          </div>
+          <span className="text-xs text-gray-400">Bosing va avtomatik to'ldiring</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+          {TEMPLATES.map((tpl, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => applyTemplate(tpl)}
+              className="flex flex-col items-start rounded-xl border border-white/10 bg-[#111] p-3 text-left transition-colors duration-200 hover:border-brand/50 hover:bg-white/5 group"
+            >
+              <span className="text-xs font-semibold text-brand transition-colors group-hover:text-brand-light">{tpl.language}</span>
+              <span className="mt-1 text-sm font-medium text-white line-clamp-1">{tpl.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 

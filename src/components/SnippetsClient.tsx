@@ -9,12 +9,33 @@ import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import BookmarkButton from "@/components/BookmarkButton";
 import SpotlightCard from "@/components/SpotlightCard";
-import CustomSelect from "@/components/CustomSelect";
-
-const BASE_LANGUAGES = [
-  "JavaScript", "TypeScript", "Python", "Rust",
-  "Go", "Java", "C++", "C#", "PHP", "Ruby", "SQL", "Other"
+const ALL_LANGUAGES = [
+  "JavaScript", "TypeScript", "Python", "Rust", "Go",
+  "Java", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin",
+  "HTML", "CSS", "SQL", "Bash", "YAML", "JSON", "Other"
 ];
+
+const LANGUAGE_CONFIGS: Record<string, { color: string; dot: string; bgActive: string }> = {
+  JavaScript: { color: "text-yellow-400", dot: "bg-yellow-400", bgActive: "bg-yellow-500/20 border-yellow-500/60" },
+  TypeScript: { color: "text-blue-400", dot: "bg-blue-400", bgActive: "bg-blue-500/20 border-blue-500/60" },
+  Python: { color: "text-emerald-400", dot: "bg-emerald-400", bgActive: "bg-emerald-500/20 border-emerald-500/60" },
+  Rust: { color: "text-orange-400", dot: "bg-orange-400", bgActive: "bg-orange-500/20 border-orange-500/60" },
+  Go: { color: "text-cyan-400", dot: "bg-cyan-400", bgActive: "bg-cyan-500/20 border-cyan-500/60" },
+  Java: { color: "text-red-400", dot: "bg-red-400", bgActive: "bg-red-500/20 border-red-500/60" },
+  "C++": { color: "text-purple-400", dot: "bg-purple-400", bgActive: "bg-purple-500/20 border-purple-500/60" },
+  "C#": { color: "text-fuchsia-400", dot: "bg-fuchsia-400", bgActive: "bg-fuchsia-500/20 border-fuchsia-500/60" },
+  PHP: { color: "text-indigo-400", dot: "bg-indigo-400", bgActive: "bg-indigo-500/20 border-indigo-500/60" },
+  Ruby: { color: "text-rose-400", dot: "bg-rose-500", bgActive: "bg-rose-500/20 border-rose-500/60" },
+  Swift: { color: "text-orange-500", dot: "bg-orange-500", bgActive: "bg-orange-500/20 border-orange-500/60" },
+  Kotlin: { color: "text-violet-400", dot: "bg-violet-400", bgActive: "bg-violet-500/20 border-violet-500/60" },
+  HTML: { color: "text-orange-400", dot: "bg-orange-400", bgActive: "bg-orange-500/20 border-orange-500/60" },
+  CSS: { color: "text-sky-400", dot: "bg-sky-400", bgActive: "bg-sky-500/20 border-sky-500/60" },
+  SQL: { color: "text-amber-400", dot: "bg-amber-400", bgActive: "bg-amber-500/20 border-amber-500/60" },
+  Bash: { color: "text-green-400", dot: "bg-green-400", bgActive: "bg-green-500/20 border-green-500/60" },
+  YAML: { color: "text-teal-400", dot: "bg-teal-400", bgActive: "bg-teal-500/20 border-teal-500/60" },
+  JSON: { color: "text-amber-300", dot: "bg-amber-300", bgActive: "bg-amber-400/20 border-amber-400/60" },
+  Other: { color: "text-gray-400", dot: "bg-gray-400", bgActive: "bg-gray-500/20 border-gray-500/60" },
+};
 
 interface Props {
   snippets: Snippet[];
@@ -29,8 +50,6 @@ interface Props {
 
 export default function SnippetsClient({ snippets, labels }: Props) {
   const t = useTranslations("Actions");
-
-  const LANGUAGES = [t("filter_all"), ...BASE_LANGUAGES];
   const SORT_OPTIONS = [
     { value: "newest", label: t("sort_newest") },
     { value: "oldest", label: t("sort_oldest") },
@@ -145,13 +164,6 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             </button>
           )}
         </div>
-        <div className="w-full sm:w-48">
-          <CustomSelect
-            options={LANGUAGES}
-            value={lang === "ALL" ? t("filter_all") : lang}
-            onChange={(val) => setLang(val === t("filter_all") ? "ALL" : val)}
-          />
-        </div>
         <div className="relative">
           <button
             onClick={() => setShowSortMenu(!showSortMenu)}
@@ -176,6 +188,39 @@ export default function SnippetsClient({ snippets, labels }: Props) {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Colorful Language Chips Bar */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <button
+          onClick={() => setLang("ALL")}
+          className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
+            lang === "ALL"
+              ? "bg-brand/20 border-brand/60 text-brand shadow-sm"
+              : "bg-[#111] border-white/10 text-gray-400 hover:border-white/25 hover:text-gray-200"
+          }`}
+        >
+          <span>✨</span>
+          <span>{t("filter_all")}</span>
+        </button>
+        {ALL_LANGUAGES.map((l) => {
+          const cfg = LANGUAGE_CONFIGS[l] || { color: "text-gray-400", dot: "bg-gray-400", bgActive: "bg-gray-500/20 border-gray-500/60" };
+          const isActive = lang === l;
+          return (
+            <button
+              key={l}
+              onClick={() => setLang(l)}
+              className={`inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm transition-colors whitespace-nowrap ${
+                isActive
+                  ? `${cfg.bgActive} ${cfg.color} font-semibold shadow-sm`
+                  : "bg-[#111] border-white/10 text-gray-400 hover:border-white/25 hover:text-gray-200"
+              }`}
+            >
+              <span className={`inline-block h-2 w-2 rounded-full ${cfg.dot}`} />
+              <span>{l}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Tag filter */}
