@@ -1,21 +1,21 @@
-## 📝 Taklif etilayotgan O'zgarishlar (Description of Changes)
+## 📝 Description of Changes
 
-<!-- Qaysi funksiyaviy yangilik kiritmoqdasiz yoki qanaqa xatolikka echim yaratdingiz? Qisqachasi ifoda eting: -->
+<!-- What does this PR accomplish? Briefly describe the feature added or bug resolved: -->
 
-
----
-
-## 🛠️ Majburiy Tekshiruv Ro'yxati (Checklist before submitting)
-
-Iltimos, tasdiqlagich yordamidagilarizni bajarilgan ekanligizga kafolat ko'zidan katakkalarni `[x]` bilan belgilamoqdasiz:
-
-- [ ] 🧪 Menda `npm run build` komandasi terminalda hech bir xato va eslatmalarsiz (`✓ Compiled successfully`) o'tdi.
-- [ ] 🛑 **No-Shift UI Qoyidasi:** Hover qilgangida elementlar bir chekkaga ko'chaverish, sakrash (`-translate-y`) qilinishi ko'rinmaydi. Barcha kartochka interaksiya sakramasligi oldindan nazoratchig'dirilinangan.
-- [ ] 🌍 Yangi matnlar kiritgan borganimcha mantiqi hamda u holdagina tegishli 3 xil tillarga (`uz.json`, `en.json`, `ru.json`) moslab qo'yilindi (agar faol dizayn o'zgarganda bo'lingan bo'lmasa esqitaylar yo'q)
-- [ ] 🤖 Bu ko'paytish inson o'zi yoki shuningdek avtonom AI agent kuchi hisobiga qariyb qo'l qo'ydirdi:
-  - *(Yoza olsak:* `AI / Vibe-coded` *yoki* `Hand-coded` *)* : ______________
 
 ---
 
-## 📸 Skrinshot yo Videoyig'indilar (Agar o'zgarsa)
-<!-- UI o'zgarmada qolagan taqdirdadir u qisman buni shu erlarga kamoat qolgan skrinshot bilan yuklasig' kiritilishiz imkonga ruxsatlaniladi. -->
+## 🛠️ Mandatory Engineering Checklist (Verify before submitting)
+
+Please check off all applicable boxes with an `[x]` before submitting your pull request:
+
+- [ ] 🧪 **Zero-Error Build:** I verified that running `npm run build` locally completed with `✓ Compiled successfully` and generated zero TypeScript or formatting errors.
+- [ ] 🛑 **No-Shift UI Policy:** I verified that interactive cards, buttons, and badges do NOT execute spatial layout shifting (`-translate-y`, padding/border jump) during hover states, keeping animations ultra-smooth and subpixel-jitter free.
+- [ ] 🌍 **i18n Localization:** Any user-facing strings introduced in this PR have been added across all 3 language translation registries (`uz.json`, `en.json`, and `ru.json`).
+- [ ] 🤖 **Author Identification:** Was this PR written by hand or generated with the assistance of autonomous AI coding agents (Claude Dev, Antigravity, Cursor, etc.)?
+  - *(Specify:* `AI / Vibe-coded` *or* `Hand-coded` *)* : ______________
+
+---
+
+## 📸 Screenshots or Screen Recording (If UI changed)
+<!-- Attach relevant before/after screenshots or screen GIFs here if visual changes were made: -->

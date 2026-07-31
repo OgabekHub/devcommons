@@ -1,57 +1,67 @@
-# 🤝 DevCommons Loyihasi uchun Hissa Qo'shish Qo'llanmasi (Contributing Guide)
+# 🤝 Contributing to DevCommons
 
-**DevCommons** respositoryasiga tashakkur! Biz har qaysi darajadagi dasturchi kadrining kiritayotgan foydali taklif, xatolikni barlamali tuzatishi yoki yangi funksiyaviy kod o'tkazishlarini cheksiz xush ko'rib olqishlaymiz! 
+Thank you for your interest in contributing to **DevCommons**! We welcome bug fixes, documentation improvements, translation expansions, new feature proposals, and high-performance code snippets or AI prompt templates from engineers of all backgrounds globally.
 
 ---
 
 ## 🤖 AI / Vibe-Coded PRs Strictly Welcomed! 🚀
 
-Biz kelajakning silliq texnologiyalar zanjirini olqishlovchi ochiq jamoatimiz! 
-> **Siz AI agentlar (Claude Dev, Antigravity, Cursor, Devin, ChatGPT va h.k.) dan foydalanib yozilgan har qanday xoli, sifatli va testdan o'tuvchi Pull Request (PR) yubormishingizga mutlaqo ruxsat berilamiz hamda rasm qiziqasiga qamrash qilinuvchi ruxsat ostidagi motivasiyamiz bor!**
+We actively celebrate modern AI-assisted engineering!
+> **Pull Requests created with autonomous AI agents (Claude Dev, Google Antigravity, Cursor, Devin, ChatGPT, OpenClaw tools, etc.) are strictly welcomed and actively encouraged in this repository!**
 
-Bizga muhimi – inson tomonidan bitta bitta harflab qo'lda kiritildimi yo AI ko'chirib tez kiritdingizmi qat'inazar, uning **sifati, qoidalarga mosligi va xatolamsiz qurilishidir (Clean build)**.
+Whether you write every line of code by hand or guide an AI agent via prompt engineering ("vibe-coding"), we value the **quality, cleanliness, and functional impact** of your Pull Request. 
 
 ---
 
-## 🛠️ Hissa qo'shuvining eng muhim Qonuniyatlari (Engineering Guidelines)
+## 🛠️ Engineering Standards & Rules
 
-PR yubormazingizdan oldin biz qattiq amal qilinish kerak deb belgilovchi 2 ta oliy qoidalarni ko'zdan ko'tarasiz:
+Before submitting a Pull Request, please verify adherence to our two foundational technical standards:
 
-### 1. 🛑 NO-SHIFT UI/UX QOIDASI (Zero Layout Shift on Hover!)
-Platformamiz ko'rinishi **"Vercel va Apple stsenariysi kabi sakramaydab silliq turishi"** zaruriydir:
-- **Taqiq etiladi:** Hech bir karta (`.card`), tugma yoki elementlarda hover qilinganda `transform: translateY(-1px)`yoki sakrash yig'indilari o'tkazilmaslikka buyriladi. Hover vaqtida uning o'zini o'zidan tepa-pasqa sakrashi bor yondirish qismlarini buzishga sabab bo'lardi!
-- **Ruxsat etiladi:** Hover ko'rsatib yotilsang faqatgina ranglar (`bg-white/5`), chekkacha chiziq nuray (glow shadow yoki `border-brand/50`) va yorituv obyekti o'zgarsin. Harakat faqat `transition-colors` orqalidir o'tiladi.
+### 1. 🛑 ZERO LAYOUT SHIFT POLICY (No-Shift UI/UX)
+DevCommons follows an ultra-clean visual design standard inspired by Vercel and Apple:
+- **STRICTLY PROHIBITED:** Avoid adding layout-shifting properties during hover or interactive states (e.g., `transform: translateY(-2px)`, `scale(1.02)`, or changing border-width on hover). This causes unwanted subpixel jitter and visual displacement of surrounding cards and icons.
+- **ENCOURAGED:** Use clean color transitions (`transition-colors duration-200`), background brightness changes (`hover:bg-white/5`), or glowing shadow effects (`hover:border-brand/50`, shadow glows) that do not alter spatial geometry.
 
-### 2. 🧪 TypeScript Strict Mode va Build Tekshiruv
-Loyihamiz oliq tsconfig konfida qat'iy mantiqlari o'tadi:
-- `noUnusedLocals: true`, `noUnusedParameters: true`, `noUncheckedIndexedAccess: true`.
-- Hech qanaqa keraksiz, ishlamaydab turgan `import` yig'ishga yoki qolip qoralanadigan o'zgaruvchilarga qo'ymasligingiz shart!
-- Boshqalaga yo'l yollashga kod yo'llashingizdan avval **ALBATTA terminalga quyidagi tekshiruv yuritish lozim:**
+### 2. 🧪 TypeScript Strict Mode & Zero-Error Builds
+This codebase enforces strict TypeScript safety (`noUnusedLocals: true`, `noUnusedParameters: true`, `noUncheckedIndexedAccess: true`).
+- Do not leave unused variable declarations or dead imports.
+- Always verify that your changes compile cleanly before opening a PR by running:
   ```bash
   npm run build
   ```
-  Agar o'sha buyruq `✓ Compiled successfully` va `Zero errors` bo'la olinsa – marhamam, PR ingizni xotirjamas jo'natuvga koring!
+  If `npm run build` exits cleanly with `✓ Compiled successfully` and zero TypeScript errors, your code is ready for review!
 
 ---
 
-## 🔄 PR Jo'natilish Tizimi (Step-by-Step Guide)
+## 🌍 Localization (i18n)
 
-Hissa qo'shuv qachon o'sadi va bu qanday kechishi bo'yicha 4 ta oson bosqich:
+DevCommons supports 3 core languages via `next-intl`: **English (`en.json`)**, **Uzbek (`uz.json`)**, and **Russian (`ru.json`)**.
+If you are adding new UI buttons, labels, or toasts, please add the translation keys to all three JSON registries located inside the `/messages` directory.
 
-1. **Repodan o'z papkani zbekcha Fork ekin:**
-   GitHub o'z sahifangiz burchakdagi **Fork** tugmasi orqali repo protokolini shaxsan ko'chiradi.
-2. **Lokal shoxona (branch) a'zolash: **
+---
+
+## 🔄 Contribution Workflow (Step-by-Step)
+
+1. **Fork the Repository:** Click the "Fork" button in the top right of this page.
+2. **Clone Your Fork Locally:**
    ```bash
-   git checkout -b feat/add-your-feature
+   git clone https://github.com/YOUR-USERNAME/devcommons.git
+   cd devcommons
    ```
-   (Yy xatosizlar, yangilar yechilingan ko'rinish kabi shartli nom bering: `feat/new-lang-theme`, `fix/mobile-navbar`).
-3. **Kodni yakuniy ko'ring va Commit olib yoting:**
+3. **Create a Feature Branch:**
+   ```bash
+   git checkout -b feat/your-feature-name
+   ```
+   *(Use standard prefix naming: `feat/`, `fix/`, `docs/`, `refactor/`)*
+4. **Make & Test Your Changes:**
+   Ensure `npm run build` executes without errors.
+5. **Commit & Push:**
    ```bash
    git add .
-   git commit -m "feat: add super useful AI prompt template and localization"
-   git push origin feat/add-your-feature
+   git commit -m "feat: add amazing new feature or translation"
+   git push origin feat/your-feature-name
    ```
-4. **Pull Request (PR) yozasiz va qullatib topshirilgan olinadila:**
-   Github yoritilganda **New Pull Request** qilib takliflaringiz bayonini jo'natingiz. Biz uni tekshirishdan yuvilmas va xushko'tarilgandan ko'chirma tarziga qatorga (Merge) quduvdan bo'lamiz! 
+6. **Open a Pull Request:**
+   Navigate back to `OgabekHub/devcommons` and click **New Pull Request**. Fill out the simple PR checklist, sit back, and relax!
 
-**Birinchi bo'lib qatnaganingiz yo qonuniyat ortidagi fidoyili harakatlar bori uchun RAHMAT! 🎉**
+We will review your PR promptly. Thank you for making DevCommons better for software developers everywhere! 🎉

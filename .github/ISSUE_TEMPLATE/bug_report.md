@@ -1,24 +1,25 @@
 ---
-name: "🐛 Xato Yo Nuqson Haqida Xabar (Bug Report)"
-about: Sayti yo biron interaktiv kartasi ishlash holatidan buzilib qimirlangan bo'lsa xabar berish
-title: "[BUG]: <Xatoni qisqacha yozing>"
+name: "🐛 Bug Report"
+about: Report a broken feature, visual defect, or layout shifting issue
+title: "[BUG]: <Short summary of the issue>"
 labels: ["bug", "triage"]
 assignees: []
 ---
 
-### 🔍 Xato (Bug) nima haqida?
-<!-- Qanaqa kamchilik ko'ringani, umumiydadir yuz berganini batafsil bayon qilaman: -->
+### 🔍 Description of Bug
+<!-- A clear and concise description of what the bug is: -->
 
 
-### 👣 Qanday taklif bilan uni ko'rib chiqilsiz (To Reproduce)
-Xato yigit borilgandagini yana qaytartirish bozorga kirilishi uchun:
-1. '...' sahifaga o'ting
-2. '...' tugmani yoki maydondan iborasini oling
-3. Xatoga duch qolinmoq: '...'
+### 👣 Steps To Reproduce
+1. Go to '...'
+2. Click on '...'
+3. Scroll down to '...'
+4. See error: '...'
 
-### 🖥️ Siz qayerlarda (Qaysi tizimda) tekshiryotkansiz?
-- **Operatsion tizim:** [Masalan: Windows 11, macOS, iOS, Android]
-- **Brauzer:** [Masalan: Google Chrome 120, Safari]
+### 🖥️ Environment & System
+- **OS:** [e.g., Windows 11, macOS, iOS, Android]
+- **Browser:** [e.g., Chrome 122, Safari, Firefox]
+- **Device:** [e.g., Desktop, iPhone 15, iPad]
 
-### 📸 Skrinshot yo Videosi (Mavjud bering, qo'shinchi)
-<!-- Bor bo'lasaki tezda biron fayl rasmni o'sha jamoasiningga yuklataolasizmi. -->
+### 📸 Screenshots / Video (Optional)
+<!-- If applicable, drop a screenshot or gif showing the bug or layout shift here: -->

@@ -1,18 +1,18 @@
 ---
-name: "💡 Yangi G'oya yoki Imkoniyat Taklifi (Feature Request)"
-about: Sayting rivojiga qo'shmoqli yangilik taklifi yoki biron tayyor shablon tavsiya ko'radigan bo'lsa
-title: "[FEAT]: <Yangi imkoniyat nomlashingiz>"
+name: "💡 Feature or Template Request"
+about: Suggest a new idea, AI prompt template, language filter, or improvement
+title: "[FEAT]: <Name of your proposed feature>"
 labels: ["enhancement", "proposal"]
 assignees: []
 ---
 
-### 🌟 qaysi narsa qo'shilishni so'ramagan kiritasiz?
-<!-- Loyiha va biz a'zolari kishilarda nimalarga yengillashishi, yoki yana nimalar bo'lganni qulaylik qilardigani aytsiz: -->
+### 🌟 What is your proposal?
+<!-- A clear and concise description of the feature, workflow, or architectural template you would like added: -->
 
 
-### 🤖 Bu vazifaga "AI PR / Vibe Coding" bilan shaffaf yelishingiz yeldingizmi?
-- [ ] Ha, men o'zim bu ish rejalari AI bilan yo qo'l hisobi tayyorlay hamda PR kiritib yubormagan turilib!
-- [ ] Yo'q, hozircha jamoaviy uydan ko'proq kimsa yupatishga beringandan iloji etdimi xabar beryappan.
+### 🤖 Would you like to submit a Vibe-Coded / AI PR for this?
+- [ ] Yes! I plan to implement this (either by hand or using an AI coding agent like Claude/Antigravity/Cursor) and submit a Pull Request!
+- [ ] No, just proposing the idea for the core team or community contributors to implement.
 
-### 💡 Qo'shmoqchi manbalar / Dizayn namunalar:
-<!-- Boshqa mashhur Vercel, GitHub yoki bitta sahifalarning rasm-giferlarini tavsiya etilganda etyoling! -->
+### 💡 Additional Context & Design Inspiration
+<!-- Share links, mockups, or Vercel/GitHub UX references here: -->

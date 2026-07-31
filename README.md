@@ -2,8 +2,12 @@
   <img src="public/new-logo.png" alt="DevCommons Logo" width="120" height="120">
   <h1 align="center">DevCommons 🚀</h1>
   <p align="center">
-    <strong>Dasturchilar va AI muhandislari uchun ochiq resurslar, kod snippetlari hamda prompt'lar platformasi</strong><br>
-    <em>An open-source hub for developer code snippets, live previews, and high-performance AI prompts.</em>
+    <strong>An Open-Source Hub for Code Snippets, Live Code Execution, and AI Prompts</strong><br>
+    <em>Empowering developers and AI engineers globally to share, test, and innovate together.</em>
+  </p>
+
+  <p align="center">
+    🌐 <b>English</b> | <a href="README.uz.md">🇺🇿 O'zbek</a> | <a href="README.ru.md">🇷🇺 Русский</a>
   </p>
 
   <p align="center">
@@ -11,88 +15,93 @@
     <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js" alt="Next.js"></a>
     <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-Database%20%26%20Auth-3ECF8E?logo=supabase" alt="Supabase"></a>
     <a href="https://github.com/OgabekHub/devcommons/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/AI_PRs-Welcomed_%F0%9F%A4%96-8A2BE2" alt="AI PRs Welcome"></a>
+    <a href="https://devcommons.vercel.app"><img src="https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel" alt="Vercel"></a>
   </p>
 
   <p align="center">
-    <a href="#-xususiyatlar--features">Xususiyatlar</a> •
-    <a href="#-texnologiyalar">Texnologiyalar</a> •
-    <a href="#-tezkor-ornatish--quickstart">O'rnatish</a> •
-    <a href="CONTRIBUTING.md">Hissa Qo'shish</a>
+    <a href="#-features">Features</a> •
+    <a href="#-tech-stack">Tech Stack</a> •
+    <a href="#-quickstart">Quickstart</a> •
+    <a href="CONTRIBUTING.md">Contributing</a> •
+    <a href="README.uz.md">🇺🇿 O'zbekiston</a>
   </p>
 </div>
 
 ---
 
-## 🌟 Loyiha Haqida | About The Project
+## 🌟 About The Project
 
-**DevCommons** — bu zamonaviy IT jamoatchilik uchun mo'ljallangan 100% ochiq manbali platforma hisoblanadi. Dasturchilar o'zlarining kundalik hayotida ko'p ishlatiladigan eng samarali **kod snippetlarini (Code Snippets)**, ularning **jonli ishga tushirilib tekshirish mexanizmini (Live Preview)** va **ChatGPT / Claude / Gemini AI Prompt'larini** bepul almashishadi.
+**DevCommons** is a state-of-the-art open-source platform designed for the global software development and AI engineering community. It allows engineers to effortlessly organize, discover, live-test, and distribute high-performance **Code Snippets** and production-ready **AI Prompts** (for ChatGPT, Claude, Gemini, and deep research agents).
 
----
-
-## ✨ Xususiyatlar | Features
-
-- 🖥️ **Monaco Code Editor:** VS Code tajribasi asosidagi kuchli va interaktiv kod muharriri.
-- ⚡ **Sandpack Live Preview:** React, Node.js yoki Vanilla kodi bo'lmasdan turib, bevosita brauzernigida o'nline ishga tushirish imkoniyati!
-- 🤖 **AI Prompts & Quick Templates:** 6+ xil eng mashhur tayyor arxitektura shablonlari (React, Next.js API, Express, FastAPI, Docker, SQL) bir zumda avtomatik to'ldirib beriladi.
-- 🎨 **No-Shift Premium UI/UX:** Vercel va GitHub o'lchovlaridan ilgari kelgan mukammal hover dizayni (zero layout shifting, subpixel jitter'larsiz silliq tajriba).
-- 🌍 **3 Xil Til Qo'llanishi (i18n):** Tizim to'liq **O'zbek**, **Ingliz** va **Rus** tillarida lokalizatsiya qilinib optimallashtirilgan.
-- 📊 **Vercel-style Boshqaruv Kartalari:** Shaxsiy va ochiq a'zolashuvchi sahifalarda aniq ko'rinish va oqimlilik.
-- 🔐 **GitHub Auth & API Keys:** Bir bosishda autentifikatsiya qilish va developer API kalitlarini yechib berish zanjiri.
+Originally seeded with love by Uzbekistan's thriving engineering ecosystem, DevCommons is built from day one for international scale with full localization across 3 languages, high-precision typography, and zero-layout-shift design architecture.
 
 ---
 
-## 🛠️ Texnologiyalar | Tech Stack
+## ✨ Features
 
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router & SSR)
-- **Backend & Database:** [Supabase](https://supabase.com/) (PostgreSQL, RLS, Auth)
-- **Styling:** Vanilla CSS & Tailwind CSS (Custom Tokens, Glassmorphism, Zero-jitter primitives)
-- **Editor & Runners:** `@monaco-editor/react`, `@codesANDBOX/sandpack-react`
-- **Localization:** `next-intl`
-- **Animation & Icons:** `framer-motion`, `lucide-react`
+- 🖥️ **Monaco Code Editor:** Powerful VS Code-powered editing experience with intelligent syntax highlighting and keybindings.
+- ⚡ **Sandpack Live Preview:** Execute React, Node.js, TypeScript, or Vanilla JavaScript code directly inside your browser without local server setup!
+- 🤖 **AI Prompts & Quick Templates:** 6+ one-click architectural boilerplate templates (React Components, Next.js API Routes, Express Servers, Python FastAPI, Dockerfiles, SQL schemas).
+- 🎨 **Zero-Shift Premium UI/UX:** Crafted with strict visual consistency—no jittery layout jumps or distracting transformations during hover states. Pure glassmorphism and modern dark aesthetic.
+- 🌍 **Internationalization (i18n):** Seamlessly switch between **English**, **Uzbek (O'zbek)**, and **Russian (Русский)** with complete URL-routed localization via `next-intl`.
+- 📊 **Vercel-Style Developer Profiles:** Comprehensive metrics, public tabs, activity stats, and bookmarked collections designed for professional sharing.
+- 🔐 **GitHub Auth & API Keys:** Single-click OAuth authentication via Supabase with custom developer API token management.
 
 ---
 
-## 🚀 Tezkor O'rnatish | Quickstart Guide
+## 🛠️ Tech Stack
 
-Loyihani o'z kompyuteringizda ishga tushirish (yoki unga rasiyka taklif qo'shish) uchun bor-yo'g'i quyingni bajarishingiz kifoya:
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router, SSR & React Server Components)
+- **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security, Github OAuth)
+- **Styling & Tokens:** Vanilla CSS & Tailwind CSS (Custom design system with strict zero-jitter primitives)
+- **Code Engines:** `@monaco-editor/react`, `@codesandbox/sandpack-react`, PrismJS
+- **Internationalization:** `next-intl`
+- **UI Animation & Icons:** `framer-motion`, `lucide-react`
 
-### 1. Loyihani yuklab ko'zga oling (Clone Repo)
+---
+
+## 🚀 Quickstart Guide
+
+Running DevCommons locally for testing, learning, or contributing takes less than 3 minutes:
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/OgabekHub/devcommons.git
 cd devcommons
 ```
 
-### 2. Kutubxona paketlarini o'rnating (Install Dependencies)
+### 2. Install dependencies
 ```bash
 npm install
 ```
 
-### 3. Env sirlilik fayllarini sozlang (`.env.local`)
-Loyihangiz ildizida `.env.local` fayli ochilsiz hamda Supabase o'nline muhitingizdagi url va parollarini o'rnating:
+### 3. Configure environment variables (`.env.local`)
+Create a `.env.local` file in the root directory and add your Supabase credentials:
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 ```
 
-### 4. Lokal Serverda yod yuritish! (Run Development Server)
+### 4. Start the development server
 ```bash
 npm run dev
 ```
-Brakingizda `http://localhost:3000` manzilida **DevCommons** ishona ravshan ochiydi!
+Open your browser and navigate to `http://localhost:3000`. Welcome to **DevCommons**!
 
 ---
 
-## 🤝 Hissa Qo'shish va "AI PRs Welcome!"
+## 🤝 Contributing & "AI PRs Welcome!"
 
-Biz har qanday turdagi hamkorona me'yor yigit va qizlarini xush ko'radi hamda takliflar topshirishga taklif qilinadi! 
-> **🤖 AI / Vibe-coded PRs strictly welcomed and encouraged!** 
-> Loyihaga foyda berishingiz uchun AI yordamchilardan (Claude, Antigravity, Cursor, ChatGPT) foydalanib yuritishingizdan quvonamiz! 
+We welcome developers, designers, and AI engineers of all backgrounds to join our community and submit contributions! 
 
-Batafsil qoidalarga va dizayn barqarorligi qadamlariga rasmiy [CONTRIBUTING.md](CONTRIBUTING.md) ko'rsatuvimizdan to'liq tanishingizni maslahat qilamiz.
+> **🤖 AI / Vibe-coded PRs strictly welcomed and encouraged!**
+> Whether you code by hand or leverage autonomous AI coding agents (Claude Dev, Antigravity, Cursor, Devin, ChatGPT), we gladly accept high-quality, verified Pull Requests!
+
+Before submitting, please read our concise [CONTRIBUTING.md](CONTRIBUTING.md) guide to familiarize yourself with our **Zero-Shift UI guidelines** and strict build verification process.
 
 ---
 
-## 📝 Litsenziya | License
+## 📝 License
 
-Bu respublika doirasidagi harakatlar **MIT Litsenziyasi** asosining barcha qobiliyatchilar uchun 100% ochiq, erkinlik huquqlarga tayanadi.
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
