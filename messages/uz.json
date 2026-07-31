@@ -323,5 +323,20 @@
     "results_for": "bo'yicha topilgan ma'lumotlar",
     "empty_query": "Qidirish uchun yuqoridagi maydonga so'z kiriting",
     "nothing_found": "Hech narsa topilmadi. Boshqa so'z bilan urinib ko'ring."
+  },
+  "Badges": {
+    "title": "Yutuq va Nishonlar",
+    "unlocked": "Qo'lga kiritildi",
+    "locked": "Qulflangan",
+    "early_bird_name": "Early Bird",
+    "early_bird_desc": "DevCommons platformasi dastlabki foydalanuvchisi",
+    "star_coder_name": "Star Coder",
+    "star_coder_desc": "Kamida 1 ta foydali kod snipeti ulashilgan",
+    "prompt_master_name": "AI Whisperer",
+    "prompt_master_desc": "AI uchun mahsulot prompti yaratgan usta",
+    "top_contributor_name": "Community Hero",
+    "top_contributor_desc": "Hamjamiyat tomonidan ovoz va e'tirof yig'gan a'zo",
+    "trendsetter_name": "Trendsetter",
+    "trendsetter_desc": "Yozuvlari ko'plab o'qilish va e'tibor qozongan faol"
   }
 }

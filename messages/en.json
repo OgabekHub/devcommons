@@ -323,5 +323,20 @@
     "results_for": "results found for",
     "empty_query": "Enter a word in the search field above",
     "nothing_found": "Nothing found. Try searching with a different keyword."
+  },
+  "Badges": {
+    "title": "Achievements & Badges",
+    "unlocked": "Unlocked",
+    "locked": "Locked",
+    "early_bird_name": "Early Bird",
+    "early_bird_desc": "Early adopting member of the DevCommons platform",
+    "star_coder_name": "Star Coder",
+    "star_coder_desc": "Published at least 1 quality code snippet",
+    "prompt_master_name": "AI Whisperer",
+    "prompt_master_desc": "Created AI prompts for the developer community",
+    "top_contributor_name": "Community Hero",
+    "top_contributor_desc": "Earned community upvotes and appreciation",
+    "trendsetter_name": "Trendsetter",
+    "trendsetter_desc": "Content has received significant views and attention"
   }
 }

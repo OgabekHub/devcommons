@@ -317,5 +317,20 @@
     "results_for": "найденные результаты по запросу",
     "empty_query": "Введите слово в поле поиска выше",
     "nothing_found": "Ничего не найдено. Попробуйте изменить поисковое слово."
+  },
+  "Badges": {
+    "title": "Достижения и Значки",
+    "unlocked": "Получено",
+    "locked": "Заблокировано",
+    "early_bird_name": "Early Bird",
+    "early_bird_desc": "Один из первых пользователей платформы DevCommons",
+    "star_coder_name": "Star Coder",
+    "star_coder_desc": "Опубликован как минимум 1 полезный сниппет кода",
+    "prompt_master_name": "AI Whisperer",
+    "prompt_master_desc": "Мастер создания промптов для искусственного интеллекта",
+    "top_contributor_name": "Community Hero",
+    "top_contributor_desc": "Участник, заслуживший голоса и признание сообщества",
+    "trendsetter_name": "Trendsetter",
+    "trendsetter_desc": "Публикации набрали множество просмотров и внимания"
   }
 }

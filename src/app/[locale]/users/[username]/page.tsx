@@ -5,6 +5,7 @@ import { Calendar, Github, ArrowLeft, Eye, Heart, Users, UserPlus } from "lucide
 import { Link } from "@/i18n/routing";
 import FollowButton from "@/components/FollowButton";
 import UserContentTabs from "@/components/UserContentTabs";
+import UserBadges from "@/components/UserBadges";
 
 interface Props {
   params: { username: string; locale: string };
@@ -120,6 +121,18 @@ export default async function PublicProfilePage({ params: { username, locale } }
           <p className="text-xs text-gray-500">Following</p>
         </div>
       </div>
+
+      {/* Gamification Achievements & Badges */}
+      <UserBadges
+        stats={{
+          snippetCount: snippets?.length || 0,
+          promptCount: prompts?.length || 0,
+          totalVotes,
+          totalViews,
+          followersCount: followers?.length || 0,
+        }}
+        showAll={false}
+      />
 
       {/* Content Tabs (Snippets & Prompts) */}
       <UserContentTabs

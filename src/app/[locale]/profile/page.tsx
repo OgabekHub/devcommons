@@ -7,6 +7,7 @@ import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import VoteButton from "@/components/VoteButton";
+import UserBadges from "@/components/UserBadges";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<SupabaseUser | null>(null);
@@ -254,6 +255,18 @@ export default function ProfilePage() {
           <p className="text-xs text-gray-500">{t("following")}</p>
         </div>
       </div>
+
+      {/* Gamification Achievements & Badges */}
+      <UserBadges
+        stats={{
+          snippetCount: snippets.length,
+          promptCount: prompts.length,
+          totalVotes: stats.totalVotes,
+          totalViews: stats.totalViews,
+          followersCount: stats.followers,
+        }}
+        showAll={true}
+      />
 
       {/* Tabs */}
       <div className="flex gap-2 border-b border-white/10">
