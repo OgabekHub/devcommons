@@ -1,106 +1,98 @@
 <div align="center">
   <img src="public/new-logo.png" alt="DevCommons Logo" width="120" height="120">
-  <h1 align="center">DevCommons</h1>
+  <h1 align="center">DevCommons 🚀</h1>
   <p align="center">
-    <strong>Dasturchilar uchun ochiq resurslar va tajriba almashish platformasi</strong>
+    <strong>Dasturchilar va AI muhandislari uchun ochiq resurslar, kod snippetlari hamda prompt'lar platformasi</strong><br>
+    <em>An open-source hub for developer code snippets, live previews, and high-performance AI prompts.</em>
   </p>
 
   <p align="center">
-    <a href="#xususiyatlar">Xususiyatlar</a> •
-    <a href="#texnologiyalar">Texnologiyalar</a> •
-    <a href="#o-rnatish">O'rnatish</a> •
-    <a href="#loyihani-ishga-tushirish">Ishga Tushirish</a>
+    <a href="https://github.com/OgabekHub/devcommons/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License"></a>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js" alt="Next.js"></a>
+    <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-Database%20%26%20Auth-3ECF8E?logo=supabase" alt="Supabase"></a>
+    <a href="https://github.com/OgabekHub/devcommons/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/AI_PRs-Welcomed_%F0%9F%A4%96-8A2BE2" alt="AI PRs Welcome"></a>
+  </p>
+
+  <p align="center">
+    <a href="#-xususiyatlar--features">Xususiyatlar</a> •
+    <a href="#-texnologiyalar">Texnologiyalar</a> •
+    <a href="#-tezkor-ornatish--quickstart">O'rnatish</a> •
+    <a href="CONTRIBUTING.md">Hissa Qo'shish</a>
   </p>
 </div>
 
 ---
 
-## 🌟 Loyiha Haqida
+## 🌟 Loyiha Haqida | About The Project
 
-**DevCommons** — bu dasturchilar o'zlarining foydali kod qismlari (snippets) va sun'iy intellekt (AI) uchun tayyorlagan samarali so'rovlarini (prompts) boshqalar bilan ulashishlari mumkin bo'lgan ochiq platforma. O'zbekistondagi dasturchilar hamjamiyatini rivojlantirish maqsadida yaratilgan.
+**DevCommons** — bu zamonaviy IT jamoatchilik uchun mo'ljallangan 100% ochiq manbali platforma hisoblanadi. Dasturchilar o'zlarining kundalik hayotida ko'p ishlatiladigan eng samarali **kod snippetlarini (Code Snippets)**, ularning **jonli ishga tushirilib tekshirish mexanizmini (Live Preview)** va **ChatGPT / Claude / Gemini AI Prompt'larini** bepul almashishadi.
 
-## ✨ Xususiyatlar
+---
 
-- **Kod Snippetlari:** Turli dasturlash tillarida yozilgan tayyor kod qismlarini saqlash, izlash va ulashish.
-- **AI Prompts:** ChatGPT, Claude va boshqa AI modellar uchun samarali so'rovlar bazasi.
-- **Syntax Highlighting:** Kodlarni o'ziga xos ranglarda chiroyli formatda o'qish imkoniyati (PrismJS).
-- **Qidiruv va Filtrlar:** Til, kategoriya va teglar bo'yicha tezkor qidiruv.
-- **I18n (Ko'p tillilik):** Sayt to'liq O'zbek va Ingliz tillarida ishlaydi.
-- **GitHub Auth:** Bir marta bosish orqali GitHub akkaunti yordamida tezkor ro'yxatdan o'tish.
-- **Interaktiv Sayohat (Tour):** Yangi foydalanuvchilarga saytni qanday ishlatishni o'rgatuvchi qadam-baqadam yo'riqnoma.
-- **Dark Mode:** Ko'zni charchatmaydigan, to'liq moslashtirilgan zamonaviy tungi rejim dizayni.
+## ✨ Xususiyatlar | Features
 
-## 🛠 Texnologiyalar
+- 🖥️ **Monaco Code Editor:** VS Code tajribasi asosidagi kuchli va interaktiv kod muharriri.
+- ⚡ **Sandpack Live Preview:** React, Node.js yoki Vanilla kodi bo'lmasdan turib, bevosita brauzernigida o'nline ishga tushirish imkoniyati!
+- 🤖 **AI Prompts & Quick Templates:** 6+ xil eng mashhur tayyor arxitektura shablonlari (React, Next.js API, Express, FastAPI, Docker, SQL) bir zumda avtomatik to'ldirib beriladi.
+- 🎨 **No-Shift Premium UI/UX:** Vercel va GitHub o'lchovlaridan ilgari kelgan mukammal hover dizayni (zero layout shifting, subpixel jitter'larsiz silliq tajriba).
+- 🌍 **3 Xil Til Qo'llanishi (i18n):** Tizim to'liq **O'zbek**, **Ingliz** va **Rus** tillarida lokalizatsiya qilinib optimallashtirilgan.
+- 📊 **Vercel-style Boshqaruv Kartalari:** Shaxsiy va ochiq a'zolashuvchi sahifalarda aniq ko'rinish va oqimlilik.
+- 🔐 **GitHub Auth & API Keys:** Bir bosishda autentifikatsiya qilish va developer API kalitlarini yechib berish zanjiri.
 
-Loyiha eng zamonaviy web texnologiyalar asosida qurilgan:
+---
 
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router, Server Components)
-- **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **I18n:** [next-intl](https://next-intl-docs.vercel.app/)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Tour:** [Driver.js](https://driverjs.com/)
-- **Syntax Highlighting:** [PrismJS](https://prismjs.com/)
-- **Analytics:** Vercel Speed Insights & Web Analytics
+## 🛠️ Texnologiyalar | Tech Stack
 
-## 🚀 O'rnatish
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router & SSR)
+- **Backend & Database:** [Supabase](https://supabase.com/) (PostgreSQL, RLS, Auth)
+- **Styling:** Vanilla CSS & Tailwind CSS (Custom Tokens, Glassmorphism, Zero-jitter primitives)
+- **Editor & Runners:** `@monaco-editor/react`, `@codesANDBOX/sandpack-react`
+- **Localization:** `next-intl`
+- **Animation & Icons:** `framer-motion`, `lucide-react`
 
-Loyihani o'z kompyuteringizda ishga tushirish uchun quyidagi qadamlarni bajaring:
+---
 
-### 1. Repozitoriyni klonlash
+## 🚀 Tezkor O'rnatish | Quickstart Guide
+
+Loyihani o'z kompyuteringizda ishga tushirish (yoki unga rasiyka taklif qo'shish) uchun bor-yo'g'i quyingni bajarishingiz kifoya:
+
+### 1. Loyihani yuklab ko'zga oling (Clone Repo)
 ```bash
 git clone https://github.com/OgabekHub/devcommons.git
 cd devcommons
 ```
 
-### 2. Kutubxonalarni o'rnatish
+### 2. Kutubxona paketlarini o'rnating (Install Dependencies)
 ```bash
 npm install
 ```
 
-### 3. Muhit o'zgaruvchilarini sozlash
-`.env.example` faylidan nusxa olib, yangi `.env.local` faylini yarating:
-```bash
-cp .env.example .env.local
+### 3. Env sirlilik fayllarini sozlang (`.env.local`)
+Loyihangiz ildizida `.env.local` fayli ochilsiz hamda Supabase o'nline muhitingizdagi url va parollarini o'rnating:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
-Fayl ichidagi Supabase API kalitlari (URL va ANON KEY) ni o'zingizning [Supabase](https://supabase.com) loyihangiz ma'lumotlari bilan almashtiring.
 
-### 4. Ma'lumotlar Bazasini Sozlash (Supabase)
-Supabase SQL Editor orqali `supabase/schema.sql` fayli ichidagi kodni ishga tushiring. Bu kerakli jadvallar va RLS (Row Level Security) qoidalarini yaratadi.
-
-## 💻 Loyihani Ishga Tushirish
-
-Dev serverni ishga tushirish uchun:
+### 4. Lokal Serverda yod yuritish! (Run Development Server)
 ```bash
 npm run dev
 ```
-Brauzeringizda [http://localhost:3000](http://localhost:3000) manziliga o'ting.
-
-## 📁 Loyiha Strukturasi
-
-```bash
-devcommons/
-├── src/
-│   ├── app/           # Sahifalar va marshrutlar (App Router)
-│   ├── components/    # Qayta ishlatiladigan UI komponentlar
-│   ├── i18n/          # Tarjima va til sozlamalari
-│   ├── lib/           # Yordamchi funksiyalar va Supabase client
-│   └── types/         # TypeScript tiplari
-├── messages/          # Tarjima lug'atlari (en.json, uz.json)
-├── supabase/          # SQL schemalar va migratsiyalar
-└── public/            # Rasmlar va statik fayllar
-```
-
-## 🤝 Hissa Qo'shish
-
-Biz loyihaga hissa qo'shmoqchi bo'lgan barcha dasturchilarni qo'llab-quvvatlaymiz! 
-1. Repozitoriyni **Fork** qiling.
-2. O'zgartirishlaringizni yangi branchda bajaring (`git checkout -b feature/YangiImkoniyat`).
-3. Kodni Commit qiling (`git commit -m 'Yangi imkoniyat qo'shildi'`).
-4. Branchga Push qiling (`git push origin feature/YangiImkoniyat`).
-5. **Pull Request** oching!
+Brakingizda `http://localhost:3000` manzilida **DevCommons** ishona ravshan ochiydi!
 
 ---
-<div align="center">
-  O'zbekiston 🇺🇿 dasturchilari tomonidan mehnat va mehr bilan yozildi ❤️
-</div>
+
+## 🤝 Hissa Qo'shish va "AI PRs Welcome!"
+
+Biz har qanday turdagi hamkorona me'yor yigit va qizlarini xush ko'radi hamda takliflar topshirishga taklif qilinadi! 
+> **🤖 AI / Vibe-coded PRs strictly welcomed and encouraged!** 
+> Loyihaga foyda berishingiz uchun AI yordamchilardan (Claude, Antigravity, Cursor, ChatGPT) foydalanib yuritishingizdan quvonamiz! 
+
+Batafsil qoidalarga va dizayn barqarorligi qadamlariga rasmiy [CONTRIBUTING.md](CONTRIBUTING.md) ko'rsatuvimizdan to'liq tanishingizni maslahat qilamiz.
+
+---
+
+## 📝 Litsenziya | License
+
+Bu respublika doirasidagi harakatlar **MIT Litsenziyasi** asosining barcha qobiliyatchilar uchun 100% ochiq, erkinlik huquqlarga tayanadi.
