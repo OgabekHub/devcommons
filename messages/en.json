@@ -220,6 +220,7 @@
   },
   "Components": {
     "share": "Share",
+    "copy_link": "Copy link",
     "copied": "Copied!",
     "copy": "Copy",
     "copy_prompt": "Copy Prompt",

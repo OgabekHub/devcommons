@@ -116,9 +116,10 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
             {createdAt}
           </span>
           <span className="flex items-center gap-1.5">
-            👍 {snippet.votes || 0} ovoz
+            👍 {snippet.votes || 0}
           </span>
           <BookmarkButton snippetId={snippet.id} />
+          <ShareButton title={snippet.title} url={`/snippets/${snippet.id}`} />
         </div>
       </div>
 

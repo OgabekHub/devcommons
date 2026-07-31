@@ -114,9 +114,10 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
             {createdAt}
           </span>
           <span className="flex items-center gap-1.5">
-            👍 {prompt.votes || 0} ovoz
+            👍 {prompt.votes || 0}
           </span>
           <BookmarkButton promptId={prompt.id} />
+          <ShareButton title={prompt.title} url={`/prompts/${prompt.id}`} />
         </div>
       </div>
 

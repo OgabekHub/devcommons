@@ -220,6 +220,7 @@
   },
   "Components": {
     "share": "Ulashish",
+    "copy_link": "Linkni nusxalash",
     "copied": "Nusxalandi!",
     "copy": "Nusxalash",
     "copy_prompt": "Promptni nusxalash",
