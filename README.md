@@ -7,7 +7,7 @@
   </p>
 
   <p align="center">
-    🌐 <b>English</b> | <a href="README.uz.md">🇺🇿 O'zbek</a> | <a href="README.ru.md">🇷🇺 Русский</a>
+    🌐 <b>English</b> | <a href="README.uz.md">🇺🇿 O'zbek</a>
   </p>
 
   <p align="center">
