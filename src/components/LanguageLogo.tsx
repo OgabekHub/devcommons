@@ -14,9 +14,11 @@ import {
   SiGnubash,
   SiYaml,
   SiJson,
+  SiCursor,
+  SiClaude,
 } from "react-icons/si";
-import { FaHtml5, FaCss3Alt, FaJava, FaDatabase } from "react-icons/fa";
-import { TbBrandCSharp } from "react-icons/tb";
+import { FaHtml5, FaCss3Alt, FaJava, FaDatabase, FaWind } from "react-icons/fa";
+import { TbBrandCSharp, TbBrain } from "react-icons/tb";
 
 interface Props {
   language: string;
@@ -111,6 +113,26 @@ export default function LanguageLogo({ language, className = "h-4 w-4 shrink-0" 
     case "JSON":
     case "json":
       return <SiJson className={className} style={{ color: "#F5C000" }} />;
+
+    case "Cursor Rule":
+    case "cursor rule":
+    case ".cursorrules":
+      return <SiCursor className={className} style={{ color: "#10B981" }} />;
+
+    case "Claude Config":
+    case "claude config":
+    case "CLAUDE.md":
+      return <SiClaude className={className} style={{ color: "#F97316" }} />;
+
+    case "Agent Rules":
+    case "agent rules":
+    case "AGENTS.md":
+      return <TbBrain className={className} style={{ color: "#A855F7" }} />;
+
+    case "Windsurf Rule":
+    case "windsurf rule":
+    case ".windsurfrules":
+      return <FaWind className={className} style={{ color: "#06B6D4" }} />;
 
     case "ALL":
     case "All":

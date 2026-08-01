@@ -8,14 +8,17 @@ import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import CustomSelect from "@/components/CustomSelect";
 import Editor from "@monaco-editor/react";
-
-const LANGUAGES = [
-  "JavaScript", "TypeScript", "Python", "Rust", "Go",
-  "Java", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin",
-  "HTML", "CSS", "SQL", "Bash", "YAML", "JSON", "Other"
-];
+import { ALL_SUPPORTED_LANGUAGES as LANGUAGES } from "@/lib/agent-config";
 
 const TEMPLATES = [
+  {
+    label: "⚡ Cursor Rules (.cursorrules)",
+    language: "Cursor Rule",
+    tag: "cursorrules",
+    title: "Next.js 14 & Tailwind Production .cursorrules",
+    description: "Strict TypeScript guidelines and zero layout-shift best practices for AI code generation in Cursor IDE.",
+    code: `# Cursor AI Agent Rules for Next.js 14 App Router\n1. Always write concise, modular TypeScript with strict type definitions.\n2. Use vanilla CSS or Tailwind styling without layout-shifting hover effects.\n3. Prioritize functional React components and clean hook separations.\n4. When handling async fetching, leverage React Server Components by default.`
+  },
   {
     label: "React Component",
     language: "TypeScript",

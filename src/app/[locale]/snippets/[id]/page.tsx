@@ -13,6 +13,7 @@ import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
 import LivePreview from "@/components/LivePreview";
 import LanguageLogo from "@/components/LanguageLogo";
+import AgentConfigBadge from "@/components/AgentConfigBadge";
 
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
@@ -80,6 +81,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
             <LanguageLogo language={snippet.language} className="h-4 w-4 shrink-0" />
             {snippet.language}
           </span>
+          <AgentConfigBadge title={snippet.title} language={snippet.language} className="py-1 px-3 text-sm" />
           {snippet.tags?.map((tag: string) => (
             <span
               key={tag}

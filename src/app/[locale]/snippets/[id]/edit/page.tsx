@@ -8,12 +8,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import CustomSelect from "@/components/CustomSelect";
 import Editor from "@monaco-editor/react";
-
-const LANGUAGES = [
-  "JavaScript", "TypeScript", "Python", "Rust", "Go",
-  "Java", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin",
-  "HTML", "CSS", "SQL", "Bash", "YAML", "JSON", "Other"
-];
+import { ALL_SUPPORTED_LANGUAGES as LANGUAGES } from "@/lib/agent-config";
 
 interface Props {
   params: { id: string; locale: string };

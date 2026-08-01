@@ -2,6 +2,7 @@
 
 import { Download } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { detectAgentConfig } from "@/lib/agent-config";
 
 interface Props {
   code: string;
@@ -12,6 +13,7 @@ interface Props {
 export default function DownloadButton({ code, language, filename }: Props) {
   const t = useTranslations("Components");
   const handleDownload = () => {
+    const agentConfig = detectAgentConfig(filename, language);
     const extensions: Record<string, string> = {
       JavaScript: ".js",
       TypeScript: ".ts",
@@ -34,7 +36,7 @@ export default function DownloadButton({ code, language, filename }: Props) {
     };
 
     const ext = extensions[language] || ".txt";
-    const defaultFilename = filename || `snippet${ext}`;
+    const defaultFilename = filename || (agentConfig ? agentConfig.defaultFilename : `snippet${ext}`);
 
     const blob = new Blob([code], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
