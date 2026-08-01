@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, Sparkles, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
@@ -30,6 +30,24 @@ export default function NewPromptPage() {
   const locale = useLocale();
   const t = useTranslations("NewPrompt");
   const supabase = createSupabaseBrowser();
+
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("devcommons_fork_item");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.title) setTitle(parsed.title);
+        if (parsed.content) setContent(parsed.content);
+        if (parsed.languageOrCategory && CATEGORIES.includes(parsed.languageOrCategory)) {
+          setCategory(parsed.languageOrCategory);
+        }
+        if (parsed.parent_id) setDescription(`Forked derived AI prompt from resource #${parsed.parent_id.slice(0, 8)}`);
+        sessionStorage.removeItem("devcommons_fork_item");
+      }
+    } catch {
+      // Ignore errors
+    }
+  }, []);
 
   const addTag = () => {
     const trimmed = tagInput.trim().toLowerCase();

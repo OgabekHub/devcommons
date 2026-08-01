@@ -7,6 +7,7 @@ import type { Prompt } from "@/types/database";
 import VoteButton from "@/components/VoteButton";
 import BookmarkButton from "@/components/BookmarkButton";
 import SpotlightCard from "@/components/SpotlightCard";
+import UsageStatsBadge from "@/components/UsageStatsBadge";
 import { useTranslations } from "next-intl";
 
 const BASE_CATEGORIES = [
@@ -273,6 +274,9 @@ export default function PromptsClient({ prompts, labels }: Props) {
                   <span className={`ml-2 flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${categoryStyles[prompt.category] || categoryStyles.default}`}>
                     {prompt.category}
                   </span>
+                </div>
+                <div className="mb-2">
+                  <UsageStatsBadge usedCount={(prompt as any).used_count} forksCount={(prompt as any).forks_count} />
                 </div>
                 {(prompt as any).description && (
                   <p className="mb-2 text-sm text-gray-400 line-clamp-1">

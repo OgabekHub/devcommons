@@ -13,6 +13,10 @@ export interface Snippet {
   language: string;
   author_id: string;
   votes: number;
+  used_count?: number;
+  forks_count?: number;
+  parent_id?: string | null;
+  current_version?: string;
   created_at: string;
   updated_at: string;
 }
@@ -24,6 +28,10 @@ export interface Prompt {
   category: string;
   author_id: string;
   votes: number;
+  used_count?: number;
+  forks_count?: number;
+  parent_id?: string | null;
+  current_version?: string;
   created_at: string;
   updated_at: string;
 }
@@ -41,4 +49,15 @@ export interface SnippetTag {
 export interface PromptTag {
   prompt_id: string;
   tag_id: string;
+}
+
+export interface ItemVersion {
+  id: string;
+  item_id: string;
+  item_type: "snippet" | "prompt";
+  version_label: string;
+  title: string;
+  content: string;
+  changelog?: string | null;
+  created_at: string;
 }

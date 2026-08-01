@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, Code2, Save, Plus, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
@@ -82,6 +82,22 @@ export default function NewSnippetPage() {
   const locale = useLocale();
   const t = useTranslations("NewSnippet");
   const supabase = createSupabaseBrowser();
+
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("devcommons_fork_item");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.title) setTitle(parsed.title);
+        if (parsed.content) setCode(parsed.content);
+        if (parsed.languageOrCategory) setLanguage(parsed.languageOrCategory);
+        if (parsed.parent_id) setDescription(`Forked derived revision from resource #${parsed.parent_id.slice(0, 8)}`);
+        sessionStorage.removeItem("devcommons_fork_item");
+      }
+    } catch {
+      // Ignore sessionStorage parsing errors
+    }
+  }, []);
 
   const addTag = () => {
     const trimmed = tagInput.trim().toLowerCase();

@@ -14,6 +14,9 @@ import ShareButton from "@/components/ShareButton";
 import LivePreview from "@/components/LivePreview";
 import LanguageLogo from "@/components/LanguageLogo";
 import AgentConfigBadge from "@/components/AgentConfigBadge";
+import UsageStatsBadge from "@/components/UsageStatsBadge";
+import ForkButton from "@/components/ForkButton";
+import VersionHistoryModal from "@/components/VersionHistoryModal";
 
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
@@ -121,8 +124,13 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           <span className="flex items-center gap-1.5">
             👍 {snippet.votes || 0}
           </span>
+          <UsageStatsBadge usedCount={(snippet as any).used_count} forksCount={(snippet as any).forks_count} />
           <BookmarkButton snippetId={snippet.id} />
           <ShareButton title={snippet.title} url={`/snippets/${snippet.id}`} />
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+          <VersionHistoryModal itemId={snippet.id} itemType="snippet" title={snippet.title} currentContent={snippet.code} currentVersion={(snippet as any).current_version || "v1"} />
+          <ForkButton itemId={snippet.id} itemType="snippet" title={snippet.title} content={snippet.code} languageOrCategory={snippet.language} />
         </div>
       </div>
 
@@ -143,8 +151,8 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           </div>
           <div className="flex items-center gap-2">
             <EmbedButton snippetId={snippet.id} />
-            <DownloadButton code={snippet.code} language={snippet.language} filename={`${snippet.title.replace(/\s+/g, '_')}`} />
-            <CopyButton text={snippet.code} />
+            <DownloadButton code={snippet.code} language={snippet.language} filename={`${snippet.title.replace(/\s+/g, '_')}`} itemId={snippet.id} itemType="snippet" />
+            <CopyButton text={snippet.code} itemId={snippet.id} itemType="snippet" />
           </div>
         </div>
 

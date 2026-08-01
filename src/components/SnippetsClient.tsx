@@ -11,6 +11,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 import SpotlightCard from "@/components/SpotlightCard";
 import LanguageLogo from "@/components/LanguageLogo";
 import AgentConfigBadge from "@/components/AgentConfigBadge";
+import UsageStatsBadge from "@/components/UsageStatsBadge";
 import { ALL_SUPPORTED_LANGUAGES as ALL_LANGUAGES, LANGUAGE_CONFIGS_MAP as LANGUAGE_CONFIGS } from "@/lib/agent-config";
 
 interface Props {
@@ -272,8 +273,9 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                     {snippet.language}
                   </span>
                 </div>
-                <div className="mb-2">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                   <AgentConfigBadge title={snippet.title} language={snippet.language} />
+                  <UsageStatsBadge usedCount={(snippet as any).used_count} forksCount={(snippet as any).forks_count} />
                 </div>
                 {snippet.description && (
                   <p className="mb-4 line-clamp-2 text-sm text-gray-400">

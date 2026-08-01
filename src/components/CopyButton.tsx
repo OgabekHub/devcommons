@@ -7,9 +7,11 @@ import { useTranslations } from "next-intl";
 interface Props {
   text: string;
   label?: string;
+  itemId?: string;
+  itemType?: "snippet" | "prompt";
 }
 
-export default function CopyButton({ text, label }: Props) {
+export default function CopyButton({ text, label, itemId, itemType }: Props) {
   const [copied, setCopied] = useState(false);
   const t = useTranslations("Components");
 
@@ -18,6 +20,13 @@ export default function CopyButton({ text, label }: Props) {
   const handleCopy = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (itemId && itemType) {
+      fetch("/api/stats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: itemId, type: itemType, metric: "used_count" }),
+      }).catch(() => {});
+    }
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);

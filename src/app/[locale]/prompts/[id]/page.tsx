@@ -8,6 +8,9 @@ import PromptActions from "@/components/PromptActions";
 import BookmarkButton from "@/components/BookmarkButton";
 import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
+import UsageStatsBadge from "@/components/UsageStatsBadge";
+import ForkButton from "@/components/ForkButton";
+import VersionHistoryModal from "@/components/VersionHistoryModal";
 
 interface Props {
   params: { id: string; locale: string };
@@ -116,8 +119,13 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           <span className="flex items-center gap-1.5">
             👍 {prompt.votes || 0}
           </span>
+          <UsageStatsBadge usedCount={(prompt as any).used_count} forksCount={(prompt as any).forks_count} />
           <BookmarkButton promptId={prompt.id} />
           <ShareButton title={prompt.title} url={`/prompts/${prompt.id}`} />
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+          <VersionHistoryModal itemId={prompt.id} itemType="prompt" title={prompt.title} currentContent={prompt.content} currentVersion={(prompt as any).current_version || "v1"} />
+          <ForkButton itemId={prompt.id} itemType="prompt" title={prompt.title} content={prompt.content} languageOrCategory={prompt.category} />
         </div>
       </div>
 
@@ -129,7 +137,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
             <Sparkles className="h-4 w-4 text-violet-500" />
             {tComp("prompt_text")}
           </span>
-          <CopyButton text={prompt.content} label={tComp("copy_prompt")} />
+          <CopyButton text={prompt.content} label={tComp("copy_prompt")} itemId={prompt.id} itemType="prompt" />
         </div>
 
         {/* Content */}

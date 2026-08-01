@@ -8,11 +8,20 @@ interface Props {
   code: string;
   language: string;
   filename?: string;
+  itemId?: string;
+  itemType?: "snippet" | "prompt";
 }
 
-export default function DownloadButton({ code, language, filename }: Props) {
+export default function DownloadButton({ code, language, filename, itemId, itemType }: Props) {
   const t = useTranslations("Components");
   const handleDownload = () => {
+    if (itemId && itemType) {
+      fetch("/api/stats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: itemId, type: itemType, metric: "used_count" }),
+      }).catch(() => {});
+    }
     const agentConfig = detectAgentConfig(filename, language);
     const extensions: Record<string, string> = {
       JavaScript: ".js",
