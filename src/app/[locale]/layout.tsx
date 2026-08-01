@@ -33,29 +33,29 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://devcommons.uz"),
-  title: "DevCommons — Dasturchilar uchun ochiq resurs hub",
+  title: "DevCommons — Shared library for code, prompts & AI workflows",
   description:
-    "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
+    "Discover, version, and share production-ready code snippets, AI prompts, agent config files (.cursorrules, CLAUDE.md), and AI workflows.",
   openGraph: {
     type: 'website',
-    locale: 'uz_UZ',
+    locale: 'en_US',
     url: 'https://devcommons.uz',
     siteName: 'DevCommons',
-    title: 'DevCommons — Dasturchilar uchun ochiq resurs hub',
-    description: 'Kod snippet\'lar, AI prompt\'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.',
+    title: 'DevCommons — Shared library for code, prompts & AI workflows',
+    description: 'Discover, version, and share production-ready code snippets, AI prompts, agent config files (.cursorrules, CLAUDE.md), and AI workflows.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'DevCommons',
+        alt: 'DevCommons — Shared library for code, prompts & AI workflows',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DevCommons — Dasturchilar uchun ochiq resurs hub',
-    description: 'Kod snippet\'lar, AI prompt\'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.',
+    title: 'DevCommons — Shared library for code, prompts & AI workflows',
+    description: 'Discover, version, and share production-ready code snippets, AI prompts, agent config files (.cursorrules, CLAUDE.md), and AI workflows.',
     images: ['/og-image.png'],
   },
   robots: {
