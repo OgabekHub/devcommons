@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { detectAgentConfig } from "@/lib/agent-config";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import dynamic from "next/dynamic";
@@ -25,6 +27,65 @@ const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
 
 interface Props {
   params: { id: string; locale: string };
+}
+
+export async function generateMetadata({ params: { id } }: Props): Promise<Metadata> {
+  try {
+    const supabase = createSupabaseServer();
+    const { data } = await supabase
+      .from("snippets")
+      .select("title, description, language, tags, users(github_username)")
+      .eq("id", id)
+      .single();
+
+    if (!data) {
+      return { title: "Snippet Not Found | DevCommons" };
+    }
+
+    const snippet = data as any;
+    const author = snippet.users?.github_username || "DevCommons Community";
+    const config = detectAgentConfig(snippet.title, snippet.language);
+    const badgeText = config ? config.badgeText : "Code Snippet";
+
+    const ogUrl = new URL("https://devcommons.uz/api/og");
+    ogUrl.searchParams.set("title", snippet.title);
+    ogUrl.searchParams.set("category", snippet.language || "Code");
+    ogUrl.searchParams.set("badge", badgeText);
+    ogUrl.searchParams.set("author", author);
+
+    const title = `${snippet.title} (${badgeText}) | DevCommons`;
+    const description = snippet.description || `Production-ready ${snippet.language} ${badgeText} by ${author}. Discover and fork AI workflows on DevCommons.`;
+
+    return {
+      title,
+      description,
+      keywords: Array.isArray(snippet.tags) ? snippet.tags : [snippet.language, "AI workflow", "DevCommons", "cursorrules", "prompts"],
+      authors: [{ name: author }],
+      openGraph: {
+        title,
+        description,
+        type: "article",
+        url: `https://devcommons.uz/snippets/${id}`,
+        siteName: "DevCommons",
+        images: [
+          {
+            url: ogUrl.toString(),
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [ogUrl.toString()],
+      },
+    };
+  } catch (_err) {
+    return { title: "DevCommons — Shared library for code, prompts & AI workflows" };
+  }
 }
 
 export default async function SnippetDetailPage({ params: { id, locale } }: Props) {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -14,6 +15,64 @@ import VersionHistoryModal from "@/components/VersionHistoryModal";
 
 interface Props {
   params: { id: string; locale: string };
+}
+
+export async function generateMetadata({ params: { id } }: Props): Promise<Metadata> {
+  try {
+    const supabase = createSupabaseServer();
+    const { data } = await supabase
+      .from("prompts")
+      .select("title, description, category, ai_model, tags, users(github_username)")
+      .eq("id", id)
+      .single();
+
+    if (!data) {
+      return { title: "Prompt Not Found | DevCommons" };
+    }
+
+    const prompt = data as any;
+    const author = prompt.users?.github_username || "DevCommons Community";
+    const modelBadge = prompt.ai_model && prompt.ai_model !== "Any" ? `🤖 ${prompt.ai_model}` : "💬 AI Prompt";
+
+    const ogUrl = new URL("https://devcommons.uz/api/og");
+    ogUrl.searchParams.set("title", prompt.title);
+    ogUrl.searchParams.set("category", prompt.category || "Prompt Engineering");
+    ogUrl.searchParams.set("badge", modelBadge);
+    ogUrl.searchParams.set("author", author);
+
+    const title = `${prompt.title} (${modelBadge}) | DevCommons`;
+    const description = prompt.description || `Production-ready AI prompt for ${prompt.category} by ${author}. Optimize your AI workflows on DevCommons.`;
+
+    return {
+      title,
+      description,
+      keywords: Array.isArray(prompt.tags) ? prompt.tags : [prompt.category, "AI prompt", "prompt engineering", "DevCommons", "ChatGPT", "Claude", "Cursor"],
+      authors: [{ name: author }],
+      openGraph: {
+        title,
+        description,
+        type: "article",
+        url: `https://devcommons.uz/prompts/${id}`,
+        siteName: "DevCommons",
+        images: [
+          {
+            url: ogUrl.toString(),
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [ogUrl.toString()],
+      },
+    };
+  } catch (_err) {
+    return { title: "DevCommons — Shared library for code, prompts & AI workflows" };
+  }
 }
 
 export default async function PromptDetailPage({ params: { id, locale } }: Props) {

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://devcommons.uz'
-  const locales = ['uz', 'en', 'ru']
+  const locales = ['uz', 'en']
 
   const staticPages = [
     '',

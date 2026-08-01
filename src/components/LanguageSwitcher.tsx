@@ -8,7 +8,6 @@ import { ChevronDown } from "lucide-react";
 const locales = [
   { code: "uz", name: "O'zbekcha" },
   { code: "en", name: "English" },
-  { code: "ru", name: "Русский" },
 ];
 
 export default function LanguageSwitcher() {
