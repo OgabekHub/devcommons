@@ -7,11 +7,13 @@ import { Link } from "@/i18n/routing";
 import CopyButton from "@/components/CopyButton";
 import PromptActions from "@/components/PromptActions";
 import BookmarkButton from "@/components/BookmarkButton";
+import SponsorButton from "@/components/SponsorButton";
 import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
 import VersionHistoryModal from "@/components/VersionHistoryModal";
+import PromptPlayground from "@/components/PromptPlayground";
 
 interface Props {
   params: { id: string; locale: string };
@@ -180,6 +182,9 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           </span>
           <UsageStatsBadge usedCount={(prompt as any).used_count} forksCount={(prompt as any).forks_count} />
           <BookmarkButton promptId={prompt.id} />
+          {prompt.author_name && prompt.author_name !== "DevCommons" && !isAuthor && (
+            <SponsorButton authorName={prompt.author_name} />
+          )}
           <ShareButton title={prompt.title} url={`/prompts/${prompt.id}`} />
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
@@ -205,6 +210,20 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
             {prompt.content}
           </p>
         </div>
+      </div>
+
+      {/* Interactive Prompt Playground */}
+      <div className="mt-10 mb-8 space-y-3">
+        <div className="flex items-center gap-2 text-lg font-bold text-white">
+          <span className="text-xl">🧪</span>
+          <span>Jonli Sinov va Laboratoriya (Interactive Playground)</span>
+        </div>
+        <p className="text-xs text-gray-400">Ushbu prompt qanday ishlashi hamda o'zgaruvchilarga moslashuvini derazaning o'zida sinab ko'ring:</p>
+        <PromptPlayground
+          initialSystemPrompt={prompt.content}
+          initialModel={prompt.ai_model && prompt.ai_model !== "Any" ? prompt.ai_model : "Claude 3.5 Sonnet"}
+          isEmbedded={true}
+        />
       </div>
 
       {/* Footer actions */}

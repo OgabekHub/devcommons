@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import CopyButton from "@/components/CopyButton";
 import SnippetActions from "@/components/SnippetActions";
 import BookmarkButton from "@/components/BookmarkButton";
+import SponsorButton from "@/components/SponsorButton";
 import DownloadButton from "@/components/DownloadButton";
 import EmbedButton from "@/components/EmbedButton";
 import CommentsSection from "@/components/CommentsSection";
@@ -19,6 +20,7 @@ import AgentConfigBadge from "@/components/AgentConfigBadge";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
 import VersionHistoryModal from "@/components/VersionHistoryModal";
+import PromptPlayground from "@/components/PromptPlayground";
 
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
@@ -187,6 +189,9 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           </span>
           <UsageStatsBadge usedCount={(snippet as any).used_count} forksCount={(snippet as any).forks_count} />
           <BookmarkButton snippetId={snippet.id} />
+          {snippet.author_name && snippet.author_name !== "DevCommons" && !isAuthor && (
+            <SponsorButton authorName={snippet.author_name} />
+          )}
           <ShareButton title={snippet.title} url={`/snippets/${snippet.id}`} />
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
@@ -224,6 +229,20 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       </div>
 
       <LivePreview code={snippet.code} language={snippet.language} />
+
+      {/* AI & Rule Playground Simulator */}
+      <div className="mt-10 mb-8 space-y-3">
+        <div className="flex items-center gap-2 text-lg font-bold text-white">
+          <span className="text-xl">🧪</span>
+          <span>Agent Rule & Kod Sinov Laboratoriyasi</span>
+        </div>
+        <p className="text-xs text-gray-400">Ushbu konfiguratsiya qoida yoki kod namunasi qanday ishlashini derazadan chiqmay simulyatorda sinab ko'ring:</p>
+        <PromptPlayground
+          initialSystemPrompt={snippet.code}
+          initialModel="Cursor Agent Rules Validator"
+          isEmbedded={true}
+        />
+      </div>
 
       {/* Footer actions */}
       <div className="mt-6 flex gap-3">

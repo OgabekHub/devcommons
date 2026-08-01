@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const currentCode = data?.currentCode || "";
     const locale = data?.locale || "uz";
 
-    const langName = locale === "uz" ? "O'zbek (Uzbek)" : locale === "ru" ? "Rus (Russian)" : "Ingliz (English)";
+    const langName = locale === "uz" ? "O'zbek (Uzbek)" : "Ingliz (English)";
     const languageInstruction = `\n\nMUHIM QOIDA (CRITICAL LANGUAGE RULE): The user is currently browsing the site in ${langName} (${locale}). All explanations, greeting text, code reviews, and advice MUST be provided in ${langName}. If the user asks a question in another language, adapt and respond in the language of their message!`;
 
     let systemPrompt = `Siz "DevCommons" platformasining rasmiy AI yordamchisisiz. Sizning maqsadingiz dasturchilarga yordam berish.

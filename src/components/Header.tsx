@@ -105,6 +105,39 @@ export default function Header() {
           >
             {t("prompts")}
           </Link>
+          <Link
+            id="tour-playground"
+            href="/playground"
+            className="group flex items-center gap-1.5 rounded-lg border border-brand/30 bg-brand/10 px-3.5 py-1.5 text-sm font-medium text-brand transition-all duration-200 hover:border-brand hover:bg-brand/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="AI Prompt Playground"
+          >
+            <span className="animate-pulse">🧪</span>
+            <span>{t("playground")}</span>
+          </Link>
+          <Link
+            href="/workflows"
+            className="group flex items-center gap-1.5 rounded-lg border border-purple-500/30 bg-purple-500/10 px-3.5 py-1.5 text-sm font-medium text-purple-300 transition-all duration-200 hover:border-purple-500 hover:bg-purple-500/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="AI Workflows and Skill Bundles"
+          >
+            <span>🔗</span>
+            <span>{t("workflows")}</span>
+          </Link>
+          <Link
+            href={"/cli" as any}
+            className="group flex items-center gap-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1.5 text-sm font-medium text-cyan-300 transition-all duration-200 hover:border-cyan-400 hover:bg-cyan-500/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="DevCommons CLI and IDE Integrations"
+          >
+            <span>💻</span>
+            <span>{t("cli")}</span>
+          </Link>
+          <Link
+            href={"/pricing" as any}
+            className="group flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-sm font-medium text-emerald-300 transition-all duration-200 hover:border-emerald-400 hover:bg-emerald-500/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-[#0A0A0A]"
+            aria-label="DevCommons Pricing & Tiers"
+          >
+            <span>💳</span>
+            <span>{t("pricing")}</span>
+          </Link>
           <div className="mx-2 h-5 w-px bg-white/10" aria-hidden="true" />
           <LanguageSwitcher />
 
@@ -247,6 +280,38 @@ export default function Header() {
             onClick={() => setMobileOpen(false)}
           >
             {t("prompts")}
+          </Link>
+          <Link
+            href="/playground"
+            className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-brand transition-colors hover:bg-white/5 hover:text-white"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>🧪</span>
+            <span>{t("playground")}</span>
+          </Link>
+          <Link
+            href="/workflows"
+            className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-purple-300 transition-colors hover:bg-white/5 hover:text-white"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>🔗</span>
+            <span>{t("workflows")}</span>
+          </Link>
+          <Link
+            href={"/cli" as any}
+            className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-cyan-400 transition-colors hover:bg-white/5 hover:text-white"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>💻</span>
+            <span>{t("cli")}</span>
+          </Link>
+          <Link
+            href={"/pricing" as any}
+            className="flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-emerald-400 transition-colors hover:bg-white/5 hover:text-white"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span>💳</span>
+            <span>{t("pricing")}</span>
           </Link>
 
           {user ? (

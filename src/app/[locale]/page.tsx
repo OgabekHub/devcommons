@@ -82,7 +82,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* CTA Buttons */}
-              <div className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.3s" }}>
+              <div className="animate-fade-in-up mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.3s" }}>
                 <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
@@ -91,6 +91,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                 <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-[#111]/50 backdrop-blur-sm border-white/10 hover:border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
                   <Sparkles className="h-4 w-4 text-brand" />
                   {t("btn_prompts")}
+                </a>
+                <a href="/workflows" className="btn-secondary text-base px-6 py-3 bg-purple-500/10 backdrop-blur-sm border-purple-500/30 hover:border-purple-400 hover:bg-purple-500/20 text-purple-200 hover:text-white font-semibold flex items-center gap-2">
+                  <span>🔗</span>
+                  <span>AI Workflows & Bundles</span>
                 </a>
               </div>
 
