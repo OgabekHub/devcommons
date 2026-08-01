@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { ArrowLeft, Calendar, Code2, User, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import dynamic from "next/dynamic";
 import CopyButton from "@/components/CopyButton";
@@ -12,6 +12,7 @@ import EmbedButton from "@/components/EmbedButton";
 import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
 import LivePreview from "@/components/LivePreview";
+import LanguageLogo from "@/components/LanguageLogo";
 
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
@@ -76,7 +77,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       <div className="mb-6">
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-semibold text-brand">
-            <Code2 className="h-3.5 w-3.5" />
+            <LanguageLogo language={snippet.language} className="h-4 w-4 shrink-0" />
             {snippet.language}
           </span>
           {snippet.tags?.map((tag: string) => (
@@ -133,7 +134,10 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
               <div className="h-3 w-3 rounded-full bg-yellow-500" />
               <div className="h-3 w-3 rounded-full bg-green-500" />
             </div>
-            <span className="text-xs font-medium text-gray-400">{snippet.language}</span>
+            <span className="flex items-center gap-1.5 text-xs font-medium text-gray-300">
+              <LanguageLogo language={snippet.language} className="h-3.5 w-3.5 shrink-0" />
+              {snippet.language}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <EmbedButton snippetId={snippet.id} />

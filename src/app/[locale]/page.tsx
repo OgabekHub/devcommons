@@ -8,11 +8,9 @@ import {
   Search,
   Copy,
   Heart,
-  Terminal,
-  Braces,
-  Cpu,
 } from "lucide-react";
 import dynamic from 'next/dynamic';
+import LanguageLogo from '@/components/LanguageLogo';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 import { routing } from '@/i18n/routing';
@@ -289,18 +287,18 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <Reveal stagger>
           <div className="flex flex-wrap items-center justify-center gap-4">
             {[
-              { name: "JavaScript", icon: Braces, color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20 hover:bg-yellow-500/15 hover:border-yellow-500/60 hover:shadow-[0_0_18px_rgba(234,179,8,0.25)]" },
-              { name: "TypeScript", icon: Code2, color: "bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/15 hover:border-blue-500/60 hover:shadow-[0_0_18px_rgba(59,130,246,0.25)]" },
-              { name: "Python", icon: Terminal, color: "bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/15 hover:border-green-500/60 hover:shadow-[0_0_18px_rgba(34,197,94,0.25)]" },
-              { name: "React", icon: Cpu, color: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20 hover:bg-cyan-500/15 hover:border-cyan-500/60 hover:shadow-[0_0_18px_rgba(6,182,212,0.25)]" },
-              { name: "Go", icon: Zap, color: "bg-sky-500/10 text-sky-400 border-sky-500/20 hover:bg-sky-500/15 hover:border-sky-500/60 hover:shadow-[0_0_18px_rgba(14,165,233,0.25)]" },
-              { name: "Rust", icon: Terminal, color: "bg-orange-500/10 text-orange-400 border-orange-500/20 hover:bg-orange-500/15 hover:border-orange-500/60 hover:shadow-[0_0_18px_rgba(249,115,22,0.25)]" },
+              { name: "JavaScript", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20 hover:bg-yellow-500/15 hover:border-yellow-500/60 hover:shadow-[0_0_18px_rgba(234,179,8,0.25)]" },
+              { name: "TypeScript", color: "bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/15 hover:border-blue-500/60 hover:shadow-[0_0_18px_rgba(59,130,246,0.25)]" },
+              { name: "Python", color: "bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500/15 hover:border-green-500/60 hover:shadow-[0_0_18px_rgba(34,197,94,0.25)]" },
+              { name: "React", color: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20 hover:bg-cyan-500/15 hover:border-cyan-500/60 hover:shadow-[0_0_18px_rgba(6,182,212,0.25)]" },
+              { name: "Go", color: "bg-sky-500/10 text-sky-400 border-sky-500/20 hover:bg-sky-500/15 hover:border-sky-500/60 hover:shadow-[0_0_18px_rgba(14,165,233,0.25)]" },
+              { name: "Rust", color: "bg-orange-500/10 text-orange-400 border-orange-500/20 hover:bg-orange-500/15 hover:border-orange-500/60 hover:shadow-[0_0_18px_rgba(249,115,22,0.25)]" },
             ].map((tech) => (
               <div
                 key={tech.name}
                 className={`inline-flex items-center gap-2.5 rounded-xl border px-5 py-3 text-sm font-medium transition-[background-color,border-color,box-shadow] duration-300 select-none ${tech.color}`}
               >
-                <tech.icon className="h-4 w-4 shrink-0" style={{ backfaceVisibility: "hidden" }} />
+                <LanguageLogo language={tech.name} className="h-5 w-5 shrink-0" />
                 <span>{tech.name}</span>
               </div>
             ))}

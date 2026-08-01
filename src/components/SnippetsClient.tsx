@@ -9,6 +9,7 @@ import VoteButton from "@/components/VoteButton";
 import CopyButton from "@/components/CopyButton";
 import BookmarkButton from "@/components/BookmarkButton";
 import SpotlightCard from "@/components/SpotlightCard";
+import LanguageLogo from "@/components/LanguageLogo";
 const ALL_LANGUAGES = [
   "JavaScript", "TypeScript", "Python", "Rust", "Go",
   "Java", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin",
@@ -216,7 +217,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                   : "bg-[#111] border-white/10 text-gray-400 hover:border-white/25 hover:text-gray-200"
               }`}
             >
-              <span className={`inline-block h-2 w-2 rounded-full ${cfg.dot}`} />
+              <LanguageLogo language={l} className="h-4 w-4 shrink-0" />
               <span>{l}</span>
             </button>
           );
@@ -291,7 +292,8 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                   <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
                     {snippet.title}
                   </h2>
-                  <span className="ml-2 flex-shrink-0 rounded-lg bg-brand/10 border border-brand/20 px-2.5 py-1 text-xs font-semibold text-brand">
+                  <span className="ml-2 flex-shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-2.5 py-1 text-xs font-semibold text-brand">
+                    <LanguageLogo language={snippet.language} className="h-3.5 w-3.5 shrink-0" />
                     {snippet.language}
                   </span>
                 </div>
