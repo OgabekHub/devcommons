@@ -7,8 +7,6 @@ export function generateStaticParams() {
 }
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import "@/app/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -106,9 +104,7 @@ export default async function RootLayout({
       </head>
       <body className={`${inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main className="mx-auto max-w-[1440px] px-4 pt-0 pb-12 md:px-8 lg:px-12">{children}</main>
-          <Footer />
+          {children}
           {/* Deferred components — loaded after main content */}
           <InteractiveTour />
           <FeedbackWidget />
