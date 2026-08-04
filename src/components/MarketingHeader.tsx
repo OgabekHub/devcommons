@@ -59,7 +59,7 @@ export default function MarketingHeader() {
             href="/snippets"
             className="rounded-xl px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-white/5 hover:text-white"
           >
-            {locale === "uz" ? "Kutubxayot & Lenta" : "Explore Library"}
+            {locale === "uz" ? "Kutubxona & Lenta" : "Explore Library"}
           </Link>
           <Link
             href={"/cli" as any}
