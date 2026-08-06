@@ -169,7 +169,7 @@ export default function SkillBundleCard({
         </div>
 
         {/* Content Viewer */}
-        <div className="flex flex-1 flex-col rounded-2xl border border-white/10 bg-[#06080D] p-4 shadow-inner">
+        <div className="flex flex-1 flex-col rounded-2xl border border-white/10 bg-[#06080D] p-4 shadow-inner min-w-0">
           <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">
             <div className="flex items-center gap-2 text-xs font-bold text-gray-200">
               <span className="text-cyan-400">📄 {selectedItem?.filename}</span>

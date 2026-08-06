@@ -36,10 +36,10 @@ export default function MarketingHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 border-b ${
         scrolled
-          ? "bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/10"
-          : "bg-transparent"
+          ? "bg-[#0A0A0A]/80 backdrop-blur-xl border-white/10"
+          : "bg-transparent border-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 md:px-8 lg:px-12">
