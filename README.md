@@ -105,3 +105,7 @@ Before submitting, please read our concise [CONTRIBUTING.md](CONTRIBUTING.md) gu
 ## 📝 License
 
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
+
+---
+
+> Last updated: 2026-08-06
