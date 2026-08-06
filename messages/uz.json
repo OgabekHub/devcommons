@@ -320,7 +320,8 @@
     "sort_newest": "Eng yangi",
     "sort_oldest": "Eng eski",
     "sort_popular": "Mashhur",
-    "filter_all": "Barchasi"
+    "filter_all": "Barchasi",
+    "loading": "Yuklanmoqda..."
   },
   "SearchPage": {
     "title": "Qidiruv natijalari",

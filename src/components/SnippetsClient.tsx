@@ -226,7 +226,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
       {(query || lang !== "ALL" || selectedTags.length > 0) && (
         <p className="text-sm text-gray-400">
           {filtered.length} {t("results_found")}
-          {query && <span> — "<strong className="text-gray-200">{query}</strong>"</span>}
+          {query && <span> — &ldquo;<strong className="text-gray-200">{query}</strong>&rdquo;</span>}
           {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
@@ -328,7 +328,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
           {loading && (
             <div className="flex items-center gap-2 text-gray-400">
               <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Yuklanmoqda...</span>
+              <span>{t("loading")}</span>
             </div>
           )}
         </div>

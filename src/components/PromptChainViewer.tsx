@@ -168,7 +168,7 @@ export default function PromptChainViewer({
 
                 {/* Instruction Content */}
                 <div className="rounded-xl bg-[#06080C] p-4 font-mono text-xs text-gray-300 border border-white/5 leading-relaxed">
-                  <span className="text-purple-400 font-semibold">// Prompt Instruction:</span> {step.instruction}
+                  <span className="text-purple-400 font-semibold">{"// Prompt Instruction:"}</span> {step.instruction}
                 </div>
 
                 {/* Output simulation preview if active or completed */}

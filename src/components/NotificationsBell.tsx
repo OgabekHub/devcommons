@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Bell, CheckCheck, MessageSquare, UserPlus, Heart } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
@@ -25,7 +25,7 @@ export default function NotificationsBell() {
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
-  const supabase = createSupabaseBrowser();
+  const supabase = useMemo(() => createSupabaseBrowser(), []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -111,9 +111,9 @@ export default function NotificationsBell() {
       case "comment_prompt":
         return <span><strong className="text-white">{actorName}</strong> promptingizga izoh qoldirdi</span>;
       case "follow":
-        return <span><strong className="text-white">{actorName}</strong> sizga obuna bo'ldi</span>;
+        return <span><strong className="text-white">{actorName}</strong> sizga obuna bo&apos;ldi</span>;
       default:
-        return <span><strong className="text-white">{actorName}</strong> siz bilan bog'landi</span>;
+        return <span><strong className="text-white">{actorName}</strong> siz bilan bog&apos;landi</span>;
     }
   };
 
@@ -159,7 +159,7 @@ export default function NotificationsBell() {
                 title="Barchasini o'qilgan qilish"
               >
                 <CheckCheck className="h-3.5 w-3.5" />
-                <span>O'qildi</span>
+                <span>O&apos;qildi</span>
               </button>
             )}
           </div>
@@ -170,7 +170,7 @@ export default function NotificationsBell() {
               <div className="p-6 text-center text-xs text-gray-500">Yuklanmoqda...</div>
             ) : notifications.length === 0 ? (
               <div className="p-8 text-center text-xs text-gray-500">
-                Hozircha bildirishnomalar yo'q
+                Hozircha bildirishnomalar yo&apos;q
               </div>
             ) : (
               notifications.map((item) => (

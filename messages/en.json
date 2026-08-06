@@ -320,7 +320,8 @@
     "sort_newest": "Newest first",
     "sort_oldest": "Oldest first",
     "sort_popular": "Most popular",
-    "filter_all": "All"
+    "filter_all": "All",
+    "loading": "Loading..."
   },
   "SearchPage": {
     "title": "Search results",

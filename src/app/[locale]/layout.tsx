@@ -1,10 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
@@ -15,6 +11,10 @@ import type { ReactNode } from "react";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import StructuredData from "@/components/StructuredData";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 // Lazy-load heavy client components that are NOT needed for initial paint
 const InteractiveTour = dynamic(() => import("@/components/InteractiveTour"), { ssr: false });
@@ -67,9 +67,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION && {
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+    },
+  }),
 };
 
 export default async function RootLayout({

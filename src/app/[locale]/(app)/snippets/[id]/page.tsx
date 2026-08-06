@@ -12,18 +12,34 @@ import BookmarkButton from "@/components/BookmarkButton";
 import SponsorButton from "@/components/SponsorButton";
 import DownloadButton from "@/components/DownloadButton";
 import EmbedButton from "@/components/EmbedButton";
-import CommentsSection from "@/components/CommentsSection";
 import ShareButton from "@/components/ShareButton";
-import LivePreview from "@/components/LivePreview";
 import LanguageLogo from "@/components/LanguageLogo";
 import AgentConfigBadge from "@/components/AgentConfigBadge";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
-import VersionHistoryModal from "@/components/VersionHistoryModal";
-import PromptPlayground from "@/components/PromptPlayground";
 
+// Lazy-load og'ir komponentlarni — initial bundle hajmini kamaytirish uchun
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
   loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
+  ssr: false,
+});
+
+const LivePreview = dynamic(() => import("@/components/LivePreview"), {
+  loading: () => <div className="h-32 bg-gray-900/50 animate-pulse rounded-xl mt-4" />,
+  ssr: false,
+});
+
+const PromptPlayground = dynamic(() => import("@/components/PromptPlayground"), {
+  loading: () => <div className="h-64 bg-gray-900/50 animate-pulse rounded-xl" />,
+  ssr: false,
+});
+
+const VersionHistoryModal = dynamic(() => import("@/components/VersionHistoryModal"), {
+  ssr: false,
+});
+
+const CommentsSection = dynamic(() => import("@/components/CommentsSection"), {
+  loading: () => <div className="h-48 bg-gray-900/50 animate-pulse rounded-xl mt-8" />,
   ssr: false,
 });
 
