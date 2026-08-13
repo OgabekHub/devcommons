@@ -256,7 +256,9 @@
     "prompts_title": "AI Promptlar 🤖",
     "prompts_desc": "ChatGPT yoki boshqa sun'iy intellektlar uchun to'g'ri savol (prompt) tuzishni o'rganing va ulashing.",
     "profile_title": "Shaxsiy Profil 👤",
-    "profile_desc": "Tizimga kiring, o'zingiz yoqtirgan kodlarni saqlang, do'stlaringizga obuna bo'ling va o'z 'Lenta'ngizni yarating!"
+    "profile_desc": "Tizimga kiring, o'zingiz yoqtirgan kodlarni saqlang, do'stlaringizga obuna bo'ling va o'z 'Lenta'ngizni yarating!",
+    "docs_title": "To'liq Qo'llanma 📚",
+    "docs_desc": "Batafsil ma'lumot va barcha imkoniyatlar bilan tanishish uchun 'Qo'llanma (Docs)' sahifasiga o'ting!"
   },
   "Feedback": {
     "title": "Fikr va Takliflar",
@@ -458,5 +460,28 @@
     "rule_card_desc": "Ushbu qoidalar faqat jamoangiz a'zolariga CLI orqali qabul qilishga (pull) ruxsat etiladi.",
     "create_rule_btn": "Yangi Maxfiy Qoida",
     "empty_rules": "Sizning jamoangizda hali maxfiy qoidalar yo'q. Kod yozish jarayonini tezlashtirish uchun o'z standartlaringizni kiriting."
+  },
+  "Docs": {
+    "title": "Platform Guide",
+    "subtitle": "O'rganing va DevCommons imkoniyatlaridan to'liq foydalaning",
+    "intro_title": "DevCommons nima?",
+    "intro_p1": "DevCommons — bu dasturchilar uchun mo'ljallangan markazlashgan kod kutubxonasi va sun'iy intellekt vositalari platformasi. Bu yerda siz o'z kodlaringizni, arxitektura qoidalarini (rules) va AI promptlarni jamoangiz bilan ulashishingiz mumkin.",
+    "intro_p2": "Bizning maqsadimiz – har bir loyiha uchun qayta-qayta kod yozish o'rniga, eng yaxshi amaliyotlarni to'plash va ularni CLI vositasi yordamida to'g'ridan-to'g'ri IDE va terminalingizga olib kirish imkonini berishdir.",
+    "feat_snippets_title": "Kod Snippetlar & Qoidalar",
+    "feat_snippets_desc": "O'zingiz tez-tez ishlatadigan kod bo'laklarini (React komponentlar, UI elementlar, utility funksiyalar) saqlab qo'ying. Ularni jamoangiz bilan ulashing yoki ochiq (public) qilib boshqalarga yordam bering.",
+    "go_to_snippets": "Snippetlarga o'tish",
+    "feat_prompts_title": "AI Promptlar",
+    "feat_prompts_desc": "ChatGPT, Claude yoki Gemini uchun yozilgan samarali promptlarni saqlang. To'g'ri yozilgan prompt dasturlash tezligingizni 10 barobarga oshirishi mumkin.",
+    "go_to_prompts": "Promptlarga o'tish",
+    "feat_teams_title": "Jamoaviy Ish Maydoni",
+    "feat_teams_desc": "O'z jamoangizni yarating. Jamoa ichida saqlangan snippetlar va maxfiy (private) arxitektura qoidalari faqat jamoa a'zolariga ko'rinadi.",
+    "go_to_teams": "Jamoalarga o'tish",
+    "feat_cli_title": "CLI & IDE Integratsiya",
+    "feat_cli_desc": "Bizning CLI asbobimiz yordamida saqlangan snippetlarni bitta buyruq orqali loyihangizga ko'chirib olishingiz mumkin (masalan: npx devcommons pull auth-form).",
+    "go_to_cli": "CLI ni sozlash",
+    "ready_title": "Boshlashga tayyormisiz?",
+    "ready_desc": "O'z bilimingizni boshqalar bilan ulashing va dasturchilar hamjamiyatiga o'z hissangizni qo'shing.",
+    "create_first": "Yangi Yaratish",
+    "explore_feed": "Lentani Ko'rish"
   }
 }

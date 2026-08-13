@@ -256,7 +256,9 @@
     "prompts_title": "AI Prompts 🤖",
     "prompts_desc": "Learn how to write the best prompts for ChatGPT and other AIs, and share them with the community.",
     "profile_title": "Personal Profile 👤",
-    "profile_desc": "Log in to save your favorite codes, follow friends, and create your personalized feed!"
+    "profile_desc": "Log in to save your favorite code, follow friends, and build your own Feed!",
+    "docs_title": "Full Guide 📚",
+    "docs_desc": "To learn more and discover all features, check out the 'Documentation' page!"
   },
   "Feedback": {
     "title": "Feedback & Suggestions",
@@ -458,5 +460,28 @@
     "rule_card_desc": "These rules can only be pulled via CLI by authorized members of your team.",
     "create_rule_btn": "New Private Rule",
     "empty_rules": "Your team doesn't have any private rules yet. Add your internal coding standards to speed up development."
+  },
+  "Docs": {
+    "title": "Platform Guide",
+    "subtitle": "Learn how to get the most out of DevCommons",
+    "intro_title": "What is DevCommons?",
+    "intro_p1": "DevCommons is a centralized code library and AI tools platform designed for developers. Here you can share your code, architecture rules, and AI prompts with your team or the world.",
+    "intro_p2": "Our goal is to collect best practices instead of writing the same code over and over again, and to allow you to import them directly into your IDE and terminal using our CLI tool.",
+    "feat_snippets_title": "Code Snippets & Rules",
+    "feat_snippets_desc": "Save the code snippets you use frequently (React components, UI elements, utility functions). Share them with your team or make them public to help others.",
+    "go_to_snippets": "Go to Snippets",
+    "feat_prompts_title": "AI Prompts",
+    "feat_prompts_desc": "Save effective prompts written for ChatGPT, Claude, or Gemini. A well-written prompt can increase your coding speed 10x.",
+    "go_to_prompts": "Go to Prompts",
+    "feat_teams_title": "Team Workspaces",
+    "feat_teams_desc": "Create your own team. Snippets and private architecture rules saved within a team are only visible to team members.",
+    "go_to_teams": "Go to Teams",
+    "feat_cli_title": "CLI & IDE Integration",
+    "feat_cli_desc": "Using our CLI tool, you can copy saved snippets directly into your project with a single command (e.g. npx devcommons pull auth-form).",
+    "go_to_cli": "Setup CLI",
+    "ready_title": "Ready to get started?",
+    "ready_desc": "Share your knowledge with others and contribute to the developer community.",
+    "create_first": "Create New",
+    "explore_feed": "Explore Feed"
   }
 }

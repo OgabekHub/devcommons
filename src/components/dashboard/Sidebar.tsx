@@ -13,9 +13,9 @@ import {
   Users, 
   Trophy, 
   Rss, 
-  Tag, 
   Bookmark, 
   BarChart2, 
+  BookOpen,
   X,
   ChevronRight,
   ExternalLink
@@ -32,34 +32,39 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
 
   const navigationGroups = [
     {
-      title: locale === "uz" ? "ASOSIY KUTUBXONA" : "CORE LIBRARY",
+      title: locale === "uz" ? "ASOSIY KUTUBXONA" : "LIBRARY",
       items: [
-        { name: locale === "uz" ? "Snippetlar & Qoidalar" : "Snippets & Rules", href: "/snippets", icon: Code2 },
+        { name: locale === "uz" ? "Snippetlar" : "Snippets", href: "/snippets", icon: Code2 },
         { name: locale === "uz" ? "AI Promptlar" : "AI Prompts", href: "/prompts", icon: MessageSquare },
-        { name: locale === "uz" ? "Workflow & Paketlar" : "Workflows & Bundles", href: "/workflows", icon: Layers },
+        { name: locale === "uz" ? "Workflow'lar" : "Workflows", href: "/workflows", icon: Layers },
       ],
     },
     {
-      title: locale === "uz" ? "AI LABORATORIYA & VOSITALAR" : "AI LAB & TOOLS",
+      title: locale === "uz" ? "VOSITALAR" : "TOOLS",
       items: [
-        { name: locale === "uz" ? "Prompt Playground" : "Prompt Playground", href: "/playground", icon: Sparkles, badge: "LAB", badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
-        { name: locale === "uz" ? "CLI & MCP Server" : "CLI & MCP Server", href: "/cli" as any, icon: Terminal, badge: "IDE", badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30" },
+        { name: locale === "uz" ? "Playground" : "Playground", href: "/playground", icon: Sparkles, badge: "LAB", badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
+        { name: locale === "uz" ? "CLI Integratsiya" : "CLI & MCP Server", href: "/cli" as any, icon: Terminal, badge: "IDE", badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30" },
       ],
     },
     {
-      title: locale === "uz" ? "JAMOALAR VA REYTINGLAR" : "TEAMS & COMMUNITY",
+      title: locale === "uz" ? "HAMJAMIYAT" : "COMMUNITY",
       items: [
-        { name: locale === "uz" ? "Jamoaviy Ish Maydoni" : "Team Workspaces", href: "/teams", icon: Users, badge: "NEW", badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" },
-        { name: locale === "uz" ? "Reyting (Leaderboard)" : "Leaderboard", href: "/leaderboard", icon: Trophy },
-        { name: locale === "uz" ? "Lenta (Activity Feed)" : "Activity Feed", href: "/feed", icon: Rss },
-        { name: locale === "uz" ? "Teglar" : "Tags", href: "/tags", icon: Tag },
+        { name: locale === "uz" ? "Jamoalar" : "Team Workspaces", href: "/teams", icon: Users, badge: "NEW", badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" },
+        { name: locale === "uz" ? "Reyting" : "Leaderboard", href: "/leaderboard", icon: Trophy },
+        { name: locale === "uz" ? "Lenta (Feed)" : "Activity Feed", href: "/feed", icon: Rss },
       ],
     },
     {
-      title: locale === "uz" ? "SHAXSIY HUDUD" : "PERSONAL",
+      title: locale === "uz" ? "SHAXSIY" : "PERSONAL",
       items: [
-        { name: locale === "uz" ? "Saqlanganlar" : "Saved & Bookmarks", href: "/saved", icon: Bookmark },
-        { name: locale === "uz" ? "Analitika & Stat" : "Analytics", href: "/analytics", icon: BarChart2 },
+        { name: locale === "uz" ? "Saqlanganlar" : "Saved Items", href: "/saved", icon: Bookmark },
+        { name: locale === "uz" ? "Statistika" : "Analytics", href: "/analytics", icon: BarChart2 },
+      ],
+    },
+    {
+      title: locale === "uz" ? "REсурSLAR" : "RESOURCES",
+      items: [
+        { name: locale === "uz" ? "Qo'llanma (Docs)" : "Documentation", href: "/docs" as any, icon: BookOpen },
       ],
     },
   ];
@@ -108,9 +113,9 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                     </div>
                     
                     <div className="flex items-center gap-1.5 shrink-0">
-                      {item.badge && (
-                        <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-md border ${item.badgeColor}`}>
-                          {item.badge}
+                      {("badge" in item) && (
+                        <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-md border ${(item as any).badgeColor}`}>
+                          {(item as any).badge}
                         </span>
                       )}
                       {isActive && (

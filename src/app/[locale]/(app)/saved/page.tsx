@@ -106,10 +106,13 @@ export default function SavedPage() {
       {tab === "snippets" && (
         <div>
           {snippets.length === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("empty")}</p>
-              <Link href="/snippets" className="btn-primary mt-4 shadow-brand/20 shadow-lg">
+            <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl border border-dashed border-white/10 bg-white/5 backdrop-blur-sm">
+              <div className="h-16 w-16 bg-brand/10 text-brand rounded-2xl flex items-center justify-center mb-4">
+                <Code2 className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{t("empty_title") || "Hali hech narsa yo'q"}</h3>
+              <p className="text-gray-400 max-w-sm mb-6">{t("empty")}</p>
+              <Link href="/snippets" className="btn-primary shadow-brand/20 shadow-lg px-6 py-2.5">
                 {t("discover")}
               </Link>
             </div>
@@ -137,10 +140,13 @@ export default function SavedPage() {
       {tab === "prompts" && (
         <div>
           {prompts.length === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("empty")}</p>
-              <Link href="/prompts" className="btn-primary mt-4 shadow-brand/20 shadow-lg">
+            <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl border border-dashed border-white/10 bg-white/5 backdrop-blur-sm">
+              <div className="h-16 w-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mb-4">
+                <Sparkles className="h-8 w-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{t("empty_prompts_title") || "Hali hech narsa yo'q"}</h3>
+              <p className="text-gray-400 max-w-sm mb-6">{t("empty")}</p>
+              <Link href="/prompts" className="btn-primary shadow-brand/20 shadow-lg px-6 py-2.5">
                 {t("discover")}
               </Link>
             </div>

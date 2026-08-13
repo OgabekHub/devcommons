@@ -54,6 +54,15 @@ export default function InteractiveTour() {
               side: "bottom",
               align: "end"
             }
+          },
+          {
+            element: 'a[href*="/docs"]',
+            popover: {
+              title: t("docs_title"),
+              description: t("docs_desc"),
+              side: "right",
+              align: "start"
+            }
           }
         ],
         onDestroyStarted: () => {
