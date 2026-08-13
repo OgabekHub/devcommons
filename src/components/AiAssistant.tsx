@@ -26,7 +26,7 @@ export default function AiAssistant() {
       setContextType("general");
     }
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       const codeNodes = document.querySelectorAll("code, pre");
       if (codeNodes.length > 0) {
         let longest = "";
@@ -40,6 +40,8 @@ export default function AiAssistant() {
         setCurrentCode("");
       }
     }, 1000);
+
+    return () => clearTimeout(timer);
   }, [pathname, isOpen]);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -89,7 +91,7 @@ export default function AiAssistant() {
              try {
                const chunk = JSON.parse(line.substring(2));
                setMessages(msgs => msgs.map(m => m.id === aiMsgId ? { ...m, content: m.content + chunk } : m));
-             } catch(e) {}
+             } catch(e) { console.error('Stream chunk parse error:', e); }
           }
         }
       }
@@ -116,7 +118,7 @@ export default function AiAssistant() {
       {isOpen && (
         <div
           className={`fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0B] shadow-2xl transition-all ${
-            isExpanded ? "h-[75vh] w-[650px]" : "h-[480px] w-[350px]"
+            isExpanded ? "h-[75vh] w-full sm:w-[650px]" : "h-[480px] w-full sm:w-[350px]"
           } max-w-[calc(100vw-2rem)]`}
         >
           {/* Header */}

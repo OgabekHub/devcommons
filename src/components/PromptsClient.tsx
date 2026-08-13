@@ -91,13 +91,15 @@ export default function PromptsClient({ prompts, labels }: Props) {
   const visiblePrompts = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // Infinite scroll with Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting && hasMore && !loading) {
           setLoading(true);
-          setTimeout(() => {
+          timeoutRef.current = setTimeout(() => {
             setVisibleCount((prev) => Math.min(prev + 12, filtered.length));
             setLoading(false);
           }, 300);
@@ -110,7 +112,10 @@ export default function PromptsClient({ prompts, labels }: Props) {
       observer.observe(observerRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [hasMore, loading, filtered.length]);
 
   // Reset visible count when filters change

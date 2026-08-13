@@ -26,6 +26,8 @@ export default function Typewriter({
     const currentText = texts[textIndex];
     if (!currentText) return;
 
+    let pauseTimeoutId: NodeJS.Timeout;
+
     const timeout = setTimeout(
       () => {
         if (!isDeleting) {
@@ -33,7 +35,7 @@ export default function Typewriter({
           setCharIndex((prev) => prev + 1);
 
           if (charIndex + 1 === currentText.length) {
-            setTimeout(() => setIsDeleting(true), pauseTime);
+            pauseTimeoutId = setTimeout(() => setIsDeleting(true), pauseTime);
           }
         } else {
           setDisplayText(currentText.substring(0, charIndex - 1));
@@ -48,7 +50,10 @@ export default function Typewriter({
       isDeleting ? deleteSpeed : speed
     );
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (pauseTimeoutId) clearTimeout(pauseTimeoutId);
+    };
   }, [charIndex, isDeleting, textIndex, texts, speed, deleteSpeed, pauseTime]);
 
   return (

@@ -114,7 +114,7 @@ export default function TeamDashboard() {
                 <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400 font-mono bg-black/50 px-2 py-1 rounded border border-white/10">
                   <span className="text-indigo-400">devcommons</span> pull acme-react
                 </div>
-                <button className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
+                <button className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors" aria-label="More options">
                   <MoreVertical className="h-4 w-4" />
                 </button>
               </div>
@@ -139,7 +139,7 @@ export default function TeamDashboard() {
                 <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400 font-mono bg-black/50 px-2 py-1 rounded border border-white/10">
                   <span className="text-indigo-400">devcommons</span> pull acme-cdk
                 </div>
-                <button className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
+                <button className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors" aria-label="More options">
                   <MoreVertical className="h-4 w-4" />
                 </button>
               </div>
@@ -175,7 +175,7 @@ export default function TeamDashboard() {
                     </span>
                   </td>
                   <td className="py-4 text-right pr-4">
-                    <button className="text-gray-500 hover:text-white transition-colors"><MoreVertical className="h-4 w-4 inline" /></button>
+                    <button className="text-gray-500 hover:text-white transition-colors" aria-label="Member options"><MoreVertical className="h-4 w-4 inline" /></button>
                   </td>
                 </tr>
                 <tr className="hover:bg-white/5 transition-colors">
@@ -194,7 +194,7 @@ export default function TeamDashboard() {
                     </span>
                   </td>
                   <td className="py-4 text-right pr-4">
-                    <button className="text-gray-500 hover:text-white transition-colors"><MoreVertical className="h-4 w-4 inline" /></button>
+                    <button className="text-gray-500 hover:text-white transition-colors" aria-label="Member options"><MoreVertical className="h-4 w-4 inline" /></button>
                   </td>
                 </tr>
                 <tr className="hover:bg-white/5 transition-colors">
@@ -213,7 +213,7 @@ export default function TeamDashboard() {
                     </span>
                   </td>
                   <td className="py-4 text-right pr-4">
-                    <button className="text-gray-500 hover:text-white transition-colors"><MoreVertical className="h-4 w-4 inline" /></button>
+                    <button className="text-gray-500 hover:text-white transition-colors" aria-label="Member options"><MoreVertical className="h-4 w-4 inline" /></button>
                   </td>
                 </tr>
               </tbody>

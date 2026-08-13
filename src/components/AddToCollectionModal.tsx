@@ -274,9 +274,9 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
                         onClick={(e) => deleteCollectionFolder(e, collection.id)}
                         disabled={saving}
                         title={t("delete_collection")}
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/5 bg-white/5 text-gray-400 transition-colors hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/5 bg-white/5 text-gray-400 transition-colors hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4.5 w-4.5" />
                       </button>
                     </div>
                   );

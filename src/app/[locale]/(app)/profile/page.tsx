@@ -168,8 +168,8 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold text-white">{username}</h1>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl font-bold text-white truncate">{username}</h1>
           {email && <p className="text-sm text-gray-500">{email}</p>}
 
           {/* Bio */}
@@ -185,10 +185,10 @@ export default function ProfilePage() {
                   className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white placeholder:text-gray-500 focus:border-brand focus:outline-none"
                   autoFocus
                 />
-                <button onClick={handleSaveBio} className="rounded-lg bg-brand/20 p-1.5 text-brand hover:bg-brand/30 transition-colors">
+                <button onClick={handleSaveBio} className="rounded-lg bg-brand/20 p-2.5 text-brand hover:bg-brand/30 transition-colors" aria-label="Save bio">
                   <Check className="h-4 w-4" />
                 </button>
-                <button onClick={() => { setEditingBio(false); setBioInput(bio); }} className="rounded-lg bg-white/5 p-1.5 text-gray-400 hover:bg-white/10 transition-colors">
+                <button onClick={() => { setEditingBio(false); setBioInput(bio); }} className="rounded-lg bg-white/5 p-2.5 text-gray-400 hover:bg-white/10 transition-colors" aria-label="Cancel editing">
                   <X className="h-4 w-4" />
                 </button>
               </div>

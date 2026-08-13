@@ -104,7 +104,7 @@ export default function TagsPage() {
               className="card card-shine group block"
             >
               <div className="flex items-start justify-between">
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xl font-bold text-brand group-hover:text-brand-dark transition-colors">
                       #{tag.name}

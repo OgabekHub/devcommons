@@ -45,6 +45,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
       : supabase.from("comments").select("*, users(github_username, avatar_url)").eq("prompt_id", promptId).is("parent_id", null).order("created_at", { ascending: false });
 
     const { data, error } = await query;
+    if (error) console.error('Failed to load comments:', error);
     if (!error && data) {
       const mappedComments = data.map((c: any) => ({
         ...c,
@@ -164,14 +165,14 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                     {comment.author_name[0]?.toUpperCase() || 'A'}
                   </div>
                 )}
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-gray-200">{comment.author_name}</span>
                     <span className="text-xs text-gray-500">
                       {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-300">{comment.content}</p>
+                  <p className="mt-1 text-sm text-gray-300 break-words">{comment.content}</p>
                   <div className="mt-2 flex items-center gap-4">
                     <button
                       onClick={() => handleVote(comment.id)}

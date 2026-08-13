@@ -254,7 +254,7 @@ export default function VersionHistoryModal({
                     </select>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 border border-white/10 rounded-xl p-4 bg-black/40 text-xs font-mono">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-white/10 rounded-xl p-4 bg-black/40 text-xs font-mono">
                     <div>
                       <div className="text-red-400 font-bold mb-2 pb-1 border-b border-white/10 flex items-center gap-1">
                         <span>[-] Previous: {versions[selectedDiffIndex]?.version_label || "v1"}</span>

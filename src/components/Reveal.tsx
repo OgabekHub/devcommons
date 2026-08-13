@@ -21,10 +21,12 @@ export default function Reveal({
     const el = ref.current;
     if (!el) return;
 
+    let timeoutId: NodeJS.Timeout;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setTimeout(() => {
+          timeoutId = setTimeout(() => {
             el.classList.add("revealed");
           }, delay);
           observer.unobserve(el);
@@ -34,7 +36,10 @@ export default function Reveal({
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [delay]);
 
   return (

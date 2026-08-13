@@ -123,7 +123,7 @@ export default function AuthPage() {
         </div>
 
         {/* Trust points */}
-        <div className="animate-fade-in grid grid-cols-3 gap-3" style={{ animationDelay: "0.35s" }}>
+        <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-3 gap-3" style={{ animationDelay: "0.35s" }}>
           <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
             <Shield className="mx-auto mb-1.5 h-4 w-4 text-brand" />
             <span className="text-[11px] font-medium text-gray-500">

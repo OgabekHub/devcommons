@@ -36,7 +36,8 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
           ? supabase.from("bookmarks").select("id").eq("user_id", currentUser.id).eq("snippet_id", snippetId).maybeSingle()
           : supabase.from("bookmarks").select("id").eq("user_id", currentUser.id).eq("prompt_id", promptId!).maybeSingle();
 
-        const { data: bookmark } = await query;
+        const { data: bookmark, error: bookmarkError } = await query;
+        if (bookmarkError) console.error('Bookmark check failed:', bookmarkError);
         if (bookmark) setBookmarked(true);
       }
       setChecking(false);

@@ -85,9 +85,9 @@ export function RemoveFromCollectionButton({ collectionItemId }: RemoveItemProps
       onClick={handleRemove}
       disabled={loading}
       title={t("remove_item")}
-      className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-gray-400 transition-all hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
+      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-gray-400 transition-all hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
     >
-      {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <X className="h-3.5 w-3.5" />}
+      {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
     </button>
   );
 }

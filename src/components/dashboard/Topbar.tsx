@@ -107,12 +107,12 @@ export default function Topbar({ onOpenMobileMenu }: TopbarProps) {
                   <Image
                     src={avatarUrl}
                     alt={username ?? ""}
-                    width={28}
-                    height={28}
-                    className="h-7 w-7 rounded-full ring-1 ring-white/10"
+                    width={36}
+                    height={36}
+                    className="h-9 w-9 rounded-full ring-1 ring-white/10"
                   />
                 ) : (
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/20 text-brand font-semibold text-xs">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand/20 text-brand font-semibold text-xs">
                     {username?.[0]?.toUpperCase() ?? <User className="h-3.5 w-3.5" />}
                   </div>
                 )}
