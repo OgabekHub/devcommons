@@ -12,6 +12,7 @@ import SpotlightCard from "@/components/SpotlightCard";
 import LanguageLogo from "@/components/LanguageLogo";
 import AgentConfigBadge from "@/components/AgentConfigBadge";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
+import VerifiedBadge from "@/components/VerifiedBadge";
 import { ALL_SUPPORTED_LANGUAGES as ALL_LANGUAGES, LANGUAGE_CONFIGS_MAP as LANGUAGE_CONFIGS } from "@/lib/agent-config";
 
 interface Props {
@@ -279,7 +280,10 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                   </span>
                 </div>
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                  <AgentConfigBadge title={snippet.title} language={snippet.language} />
+                  <div className="flex items-center gap-2">
+                    <VerifiedBadge isVerified={(snippet as any).is_verified} />
+                    <AgentConfigBadge title={snippet.title} language={snippet.language} />
+                  </div>
                   <UsageStatsBadge usedCount={(snippet as any).used_count} forksCount={(snippet as any).forks_count} />
                 </div>
                 {snippet.description && (
@@ -318,7 +322,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <BookmarkButton snippetId={snippet.id} compact />
-                    <CopyButton text={snippet.code} label="" />
+                    <CopyButton text={snippet.code} label="" itemId={snippet.id} itemType="snippet" />
                   </div>
                 </div>
               </SpotlightCard>

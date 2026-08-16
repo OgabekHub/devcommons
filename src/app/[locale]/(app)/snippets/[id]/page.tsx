@@ -17,6 +17,7 @@ import LanguageLogo from "@/components/LanguageLogo";
 import AgentConfigBadge from "@/components/AgentConfigBadge";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
+import VerifiedBadge from "@/components/VerifiedBadge";
 
 // Lazy-load og'ir komponentlarni — initial bundle hajmini kamaytirish uchun
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
@@ -164,6 +165,9 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
             {snippet.language}
           </span>
           <AgentConfigBadge title={snippet.title} language={snippet.language} className="py-1 px-3 text-sm" />
+          {snippet.is_verified && (
+            <VerifiedBadge isVerified={snippet.is_verified} />
+          )}
           {snippet.tags?.map((tag: string) => (
             <span
               key={tag}

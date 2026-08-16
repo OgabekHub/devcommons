@@ -8,6 +8,8 @@ import VoteButton from "@/components/VoteButton";
 import BookmarkButton from "@/components/BookmarkButton";
 import SpotlightCard from "@/components/SpotlightCard";
 import UsageStatsBadge from "@/components/UsageStatsBadge";
+import CopyButton from "@/components/CopyButton";
+import VerifiedBadge from "@/components/VerifiedBadge";
 import { useTranslations } from "next-intl";
 
 const BASE_CATEGORIES = [
@@ -280,7 +282,8 @@ export default function PromptsClient({ prompts, labels }: Props) {
                     {prompt.category}
                   </span>
                 </div>
-                <div className="mb-2">
+                <div className="mb-2 flex items-center gap-2">
+                  <VerifiedBadge isVerified={(prompt as any).is_verified} />
                   <UsageStatsBadge usedCount={(prompt as any).used_count} forksCount={(prompt as any).forks_count} />
                 </div>
                 {(prompt as any).description && (
@@ -320,7 +323,10 @@ export default function PromptsClient({ prompts, labels }: Props) {
                     <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
                     <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
                   </div>
-                  <BookmarkButton promptId={prompt.id} compact />
+                  <div className="flex items-center gap-1.5">
+                    <BookmarkButton promptId={prompt.id} compact />
+                    <CopyButton text={prompt.content} label="" itemId={prompt.id} itemType="prompt" />
+                  </div>
                 </div>
               </SpotlightCard>
             </Link>

@@ -14,6 +14,7 @@ import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
 import VersionHistoryModal from "@/components/VersionHistoryModal";
 import PromptPlayground from "@/components/PromptPlayground";
+import VerifiedBadge from "@/components/VerifiedBadge";
 
 interface Props {
   params: { id: string; locale: string };
@@ -140,6 +141,9 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
               <Bot className="h-3.5 w-3.5" />
               {prompt.ai_model}
             </span>
+          )}
+          {prompt.is_verified && (
+            <VerifiedBadge isVerified={prompt.is_verified} />
           )}
           {prompt.tags?.map((tag: string) => (
             <span

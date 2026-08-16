@@ -47,19 +47,12 @@ export default async function LeaderboardPage({ params: { locale } }: Props) {
   const t = await getTranslations("Leaderboard");
   const supabase = createSupabaseServer();
 
-  // Fetch top snippets
-  const { data: topSnippets } = await supabase
-    .from("snippets")
+  // Fetch top ranked items from the unified backend view
+  const { data: leaderboardEntries } = await supabase
+    .from("leaderboard_view")
     .select("*, author:users(github_username, avatar_url)")
-    .order("votes", { ascending: false })
-    .limit(15);
-
-  // Fetch top prompts
-  const { data: topPrompts } = await supabase
-    .from("prompts")
-    .select("*, author:users(github_username, avatar_url)")
-    .order("votes", { ascending: false })
-    .limit(15);
+    .order("impact_score", { ascending: false })
+    .limit(30);
 
   return (
     <div className="container mx-auto max-w-[1380px] px-4 py-12 pb-24 sm:px-6 lg:px-8">
@@ -76,10 +69,7 @@ export default async function LeaderboardPage({ params: { locale } }: Props) {
       </div>
 
       {/* Interactive AI Impact Leaderboard Client */}
-      <LeaderboardClient
-        snippets={topSnippets || []}
-        prompts={topPrompts || []}
-      />
+      <LeaderboardClient entries={leaderboardEntries || []} />
     </div>
   );
 }

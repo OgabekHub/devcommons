@@ -26,8 +26,7 @@ interface ResourceItem {
 }
 
 interface LeaderboardClientProps {
-  snippets: any[];
-  prompts: any[];
+  entries: any[];
 }
 
 // Deterministic stat derive generator for rich gamified display
@@ -64,19 +63,19 @@ function enrichItem(item: any, type: "snippet" | "prompt"): ResourceItem {
 
 type TabType = "impact" | "forks" | "used" | "votes";
 
-export default function LeaderboardClient({ snippets = [], prompts = [] }: LeaderboardClientProps) {
+export default function LeaderboardClient({ entries = [] }: LeaderboardClientProps) {
   const t = useTranslations("Leaderboard");
   const [activeTab, setActiveTab] = useState<TabType>("impact");
   const [showInfo, setShowInfo] = useState(false);
 
   // Enrich all items with calculated stats and impact scores
   const enrichedSnippets = useMemo(() => {
-    return (snippets || []).map((s) => enrichItem(s, "snippet"));
-  }, [snippets]);
+    return (entries || []).filter(e => e.item_type === "snippet").map((s) => enrichItem(s, "snippet"));
+  }, [entries]);
 
   const enrichedPrompts = useMemo(() => {
-    return (prompts || []).map((p) => enrichItem(p, "prompt"));
-  }, [prompts]);
+    return (entries || []).filter(e => e.item_type === "prompt").map((p) => enrichItem(p, "prompt"));
+  }, [entries]);
 
   // Combined top 3 creators across all categories for Hall of Fame Podium
   const topPodium = useMemo(() => {

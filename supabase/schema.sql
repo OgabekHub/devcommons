@@ -7,7 +7,26 @@ create table users (
   id uuid primary key references auth.users(id) on delete cascade,
   github_username text unique not null,
   avatar_url text,
+  sponsor_url text,
   created_at timestamptz default now()
+);
+
+-- Jamoalar (Teams) (Faza 4)
+create table teams (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  owner_id uuid references users(id) on delete cascade,
+  stripe_customer_id text,
+  created_at timestamptz default now()
+);
+
+-- Jamoa a'zolari (Faza 4)
+create table team_members (
+  team_id uuid references teams(id) on delete cascade,
+  user_id uuid references users(id) on delete cascade,
+  role text default 'member',
+  joined_at timestamptz default now(),
+  primary key (team_id, user_id)
 );
 
 -- Kod snippet'lar
@@ -20,6 +39,13 @@ create table snippets (
   author_id uuid references users(id) on delete cascade,
   votes integer default 0,
   view_count integer default 0,
+  used_count integer default 0,
+  forks_count integer default 0,
+  parent_id uuid references snippets(id) on delete set null,
+  current_version text default 'v1',
+  is_verified boolean default false,
+  github_repo text,
+  team_id uuid references teams(id) on delete set null,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -33,6 +59,13 @@ create table prompts (
   author_id uuid references users(id) on delete cascade,
   votes integer default 0,
   view_count integer default 0,
+  used_count integer default 0,
+  forks_count integer default 0,
+  parent_id uuid references prompts(id) on delete set null,
+  current_version text default 'v1',
+  is_verified boolean default false,
+  github_repo text,
+  team_id uuid references teams(id) on delete set null,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -48,6 +81,20 @@ create table snippet_tags (
   snippet_id uuid references snippets(id) on delete cascade,
   tag_id uuid references tags(id) on delete cascade,
   primary key (snippet_id, tag_id)
+);
+
+-- Skill Bundles (Faza 2)
+create table skill_bundles (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text,
+  author_id uuid references users(id) on delete cascade,
+  items jsonb not null default '[]',
+  votes integer default 0,
+  is_verified boolean default false,
+  team_id uuid references teams(id) on delete set null,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
 -- Many-to-many: Prompt ↔ Tag
@@ -90,6 +137,18 @@ create table follows (
   check (follower_id != following_id)
 );
 
+-- Item Versions (Faza 1)
+create table item_versions (
+  id uuid primary key default gen_random_uuid(),
+  item_id uuid not null,
+  item_type text not null check (item_type in ('snippet', 'prompt')),
+  version_label text not null,
+  title text not null,
+  content text not null,
+  changelog text,
+  created_at timestamptz default now()
+);
+
 -- =============================================
 -- Indexlar (qidiruv tezligi uchun)
 -- =============================================
@@ -118,6 +177,40 @@ create index idx_comments_parent on comments(parent_id);
 create index idx_comments_created on comments(created_at desc);
 create index idx_comments_votes on comments(votes desc);
 
+create index idx_skill_bundles_author on skill_bundles(author_id);
+create index idx_skill_bundles_votes on skill_bundles(votes desc);
+create index idx_skill_bundles_created on skill_bundles(created_at desc);
+
+-- =============================================
+-- Views (Ko'rinishlar)
+-- =============================================
+create or replace view leaderboard_view as
+select 
+  'snippet' as item_type,
+  id,
+  title,
+  author_id,
+  votes,
+  view_count,
+  used_count,
+  forks_count,
+  created_at,
+  (COALESCE(forks_count, 0) * 10 + COALESCE(used_count, 0) * 5 + COALESCE(votes, 0) * 2) as impact_score
+from snippets
+union all
+select 
+  'prompt' as item_type,
+  id,
+  title,
+  author_id,
+  votes,
+  view_count,
+  used_count,
+  forks_count,
+  created_at,
+  (COALESCE(forks_count, 0) * 10 + COALESCE(used_count, 0) * 5 + COALESCE(votes, 0) * 2) as impact_score
+from prompts;
+
 create index idx_follows_follower on follows(follower_id);
 create index idx_follows_following on follows(following_id);
 
@@ -144,6 +237,7 @@ alter table prompt_tags enable row level security;
 alter table bookmarks enable row level security;
 alter table comments enable row level security;
 alter table follows enable row level security;
+alter table item_versions enable row level security;
 
 -- Hamma o'qiy oladi
 create policy "Public read users" on users for select using (true);
@@ -154,6 +248,7 @@ create policy "Public read snippet_tags" on snippet_tags for select using (true)
 create policy "Public read prompt_tags" on prompt_tags for select using (true);
 create policy "Public read comments" on comments for select using (true);
 create policy "Public read follows" on follows for select using (true);
+create policy "Public read item_versions" on item_versions for select using (true);
 
 -- Faqat autentifikatsiyadan o'tganlar qo'sha oladi
 create policy "Authenticated insert snippets" on snippets
@@ -202,6 +297,10 @@ create policy "Authenticated insert follows" on follows
   for insert with check (auth.uid() = follower_id);
 create policy "User delete own follows" on follows
   for delete using (auth.uid() = follower_id);
+
+-- Item Versions policies
+create policy "Authenticated insert item_versions" on item_versions
+  for insert with check (auth.uid() is not null);
 
 -- RPC function to increment view count
 create or replace function increment_view_count(table_name text, item_id uuid)

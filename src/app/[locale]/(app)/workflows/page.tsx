@@ -1,4 +1,5 @@
 import React from "react";
+import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { StepItem } from "@/components/PromptChainViewer";
 import { BundleItem } from "@/components/SkillBundleCard";
@@ -98,6 +99,12 @@ const SECOND_BUNDLE_ITEMS: BundleItem[] = [
 export default async function WorkflowsPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("Workflows");
+  const supabase = createSupabaseServer();
+
+  const { data: bundlesRaw } = await supabase
+    .from("skill_bundles")
+    .select("*, author:users(github_username)")
+    .order("votes", { ascending: false });
 
   return (
     <div className="container mx-auto max-w-[1400px] px-2 md:px-6 py-6 pb-20">
@@ -136,7 +143,7 @@ export default async function WorkflowsPage({ params: { locale } }: Props) {
       {/* Interactive Workflows Dashboard (Tabs & Views) */}
       <WorkflowsDashboard
         advancedChainSteps={ADVANCED_CHAIN_STEPS}
-        secondBundleItems={SECOND_BUNDLE_ITEMS}
+        skillBundles={bundlesRaw || []}
       />
     </div>
   );

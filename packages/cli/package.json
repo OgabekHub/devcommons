@@ -1,0 +1,23 @@
+{
+  "name": "devcommons-cli",
+  "version": "1.0.0",
+  "description": "DevCommons CLI for pulling AI workflows and rules",
+  "main": "dist/index.js",
+  "bin": {
+    "devcommons": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "node-fetch": "^3.3.2",
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "type": "module"
+}

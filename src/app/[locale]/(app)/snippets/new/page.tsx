@@ -20,6 +20,22 @@ const TEMPLATES = [
     code: `# Cursor AI Agent Rules for Next.js 14 App Router\n1. Always write concise, modular TypeScript with strict type definitions.\n2. Use vanilla CSS or Tailwind styling without layout-shifting hover effects.\n3. Prioritize functional React components and clean hook separations.\n4. When handling async fetching, leverage React Server Components by default.`
   },
   {
+    label: "🤖 Claude Config (CLAUDE.md)",
+    language: "Claude Config",
+    tag: "claudemd",
+    title: "React & Next.js CLAUDE.md Rules",
+    description: "System instructions for Claude Code and Claude Desktop on handling Next.js App Router.",
+    code: `# Claude System Guidelines\n- Never use React class components. Use functional components and hooks.\n- Prefer standard HTML elements over heavy UI libraries unless explicitly instructed.\n- For styling, only use Tailwind CSS.\n- Document complex logic with JSDoc comments.`
+  },
+  {
+    label: "🏄‍♂️ Windsurf Rule (.windsurfrules)",
+    language: "Windsurf Rule",
+    tag: "windsurf",
+    title: "Node.js Backend .windsurfrules",
+    description: "Instructions for Windsurf IDE to safely modify backend Node.js code.",
+    code: `# Windsurf Coding Rules\n1. Always validate inputs using Zod schemas.\n2. Do not mutate global variables.\n3. Use explicit error handling and avoid swallowing exceptions.\n4. Ensure no secret keys are logged to the console.`
+  },
+  {
     label: "React Component",
     language: "TypeScript",
     tag: "react",
@@ -170,8 +186,8 @@ export default function NewSnippetPage() {
 
       {/* Header */}
       <div className="mb-8 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark shadow-sm">
-          <Code2 className="h-5 w-5 text-white" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-sm">
+          <Code2 className="h-5 w-5 text-zinc-300" />
         </div>
         <div>
           <h1 className="text-2xl font-bold">{t("title")}</h1>

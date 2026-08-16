@@ -1,63 +1,104 @@
 import { NextResponse } from "next/server";
+import { createSupabaseServer } from "@/lib/supabase-server";
 
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+// Basic MCP (Model Context Protocol) REST Endpoint Implementation
+// This enables Claude Desktop and Cursor to pull tools and context from DevCommons directly.
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { method, params } = body;
 
-export async function OPTIONS() {
-  return new NextResponse(null, { headers: CORS_HEADERS });
-}
+    const supabase = createSupabaseServer();
 
-export async function GET() {
-  const mcpManifest = {
-    schema_version: "2026-08-01",
-    server_name: "devcommons-ai-mcp",
-    description: "Official DevCommons Model Context Protocol (MCP) Server for Claude Desktop and Claude Code Autonomous Agents.",
-    author: "DevCommons Engineering",
-    endpoints: {
-      search_api: "https://devcommons.uz/api/v1/cli/search",
-      pull_api: "https://devcommons.uz/api/v1/cli/pull",
-    },
-    tools: [
-      {
-        name: "devcommons_search_rules",
-        description: "Search for high-performance AI system prompts, .cursorrules, and CLAUDE.md guidelines across the DevCommons ecosystem.",
-        parameters: {
-          type: "object",
-          properties: {
-            query: { type: "string", description: "Search term (e.g. 'clean architecture', 'nextjs', 'security')" },
-            limit: { type: "integer", default: 5 },
-          },
-          required: ["query"],
-        },
-      },
-      {
-        name: "devcommons_pull_context",
-        description: "Retrieve complete file contents for a specific agent configuration or prompt to inject directly into the LLM context or local filesystem.",
-        parameters: {
-          type: "object",
-          properties: {
-            slug: { type: "string", description: "Title or slug of the rule/prompt to pull" },
-            format: { type: "string", enum: ["json", "raw"], default: "raw" },
-          },
-          required: ["slug"],
-        },
-      },
-    ],
-    claude_desktop_config_snippet: {
-      mcpServers: {
-        devcommons: {
-          command: "npx",
-          args: ["-y", "@devcommons/mcp-server@latest"],
-          env: {
-            DEVCOMMONS_API_ENDPOINT: "https://devcommons.uz/api/v1",
-          },
-        },
-      },
-    },
-  };
+    // Handling typical MCP Methods
+    switch (method) {
+      case "mcp.listTools":
+        return NextResponse.json({
+          jsonrpc: "2.0",
+          result: {
+            tools: [
+              {
+                name: "devcommons_pull",
+                description: "Pull an AI workflow, prompt, or code snippet from DevCommons by ID",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string", description: "The UUID of the snippet, prompt, or bundle to pull" }
+                  },
+                  required: ["id"]
+                }
+              },
+              {
+                name: "devcommons_search",
+                description: "Search for AI workflows, rules, and prompts on DevCommons",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    query: { type: "string", description: "Search query" }
+                  },
+                  required: ["query"]
+                }
+              }
+            ]
+          }
+        });
 
-  return NextResponse.json(mcpManifest, { headers: CORS_HEADERS });
+      case "mcp.callTool":
+        if (params?.name === "devcommons_pull") {
+          const id = params.arguments?.id;
+          
+          // Try pulling bundle first
+          let { data: bundle } = await supabase.from("skill_bundles").select("*").eq("id", id).single();
+          if (bundle) {
+            return NextResponse.json({
+              jsonrpc: "2.0",
+              result: { content: [{ type: "text", text: JSON.stringify(bundle.items, null, 2) }] }
+            });
+          }
+
+          // Then snippet
+          let { data: snippet } = await supabase.from("snippets").select("*").eq("id", id).single();
+          if (snippet) {
+            return NextResponse.json({
+              jsonrpc: "2.0",
+              result: { content: [{ type: "text", text: snippet.code }] }
+            });
+          }
+
+          // Then prompt
+          let { data: prompt } = await supabase.from("prompts").select("*").eq("id", id).single();
+          if (prompt) {
+            return NextResponse.json({
+              jsonrpc: "2.0",
+              result: { content: [{ type: "text", text: prompt.content }] }
+            });
+          }
+
+          return NextResponse.json({ jsonrpc: "2.0", error: { code: -32602, message: "Resource not found" } });
+        }
+        
+        if (params?.name === "devcommons_search") {
+          const query = params.arguments?.query;
+          const { data: snippets } = await supabase.from("snippets").select("id, title").ilike("title", `%${query}%`).limit(3);
+          const { data: prompts } = await supabase.from("prompts").select("id, title").ilike("title", `%${query}%`).limit(3);
+          
+          return NextResponse.json({
+            jsonrpc: "2.0",
+            result: { 
+              content: [{ 
+                type: "text", 
+                text: JSON.stringify({ snippets, prompts }, null, 2) 
+              }] 
+            }
+          });
+        }
+        break;
+
+      default:
+        return NextResponse.json({ jsonrpc: "2.0", error: { code: -32601, message: "Method not found" } });
+    }
+
+  } catch (error) {
+    return NextResponse.json({ jsonrpc: "2.0", error: { code: -32603, message: "Internal error" } });
+  }
 }

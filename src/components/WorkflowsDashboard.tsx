@@ -8,12 +8,12 @@ import { useTranslations, useLocale } from "next-intl";
 
 interface WorkflowsDashboardProps {
   advancedChainSteps: StepItem[];
-  secondBundleItems: BundleItem[];
+  skillBundles?: any[];
 }
 
 export default function WorkflowsDashboard({
   advancedChainSteps,
-  secondBundleItems,
+  skillBundles = [],
 }: WorkflowsDashboardProps) {
   const t = useTranslations("Workflows");
   const locale = useLocale();
@@ -115,20 +115,22 @@ export default function WorkflowsDashboard({
           </div>
 
           <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
-            <SkillBundleCard
-              title="Next.js 14 + TS Enterprise Clean Architecture Pack"
-              description={t("bundle_desc_1")}
-              category="Full-Stack Web"
-              author="DevCommons Core Team"
-            />
-
-            <SkillBundleCard
-              title="Claude Code API Security & Zod Validation Kit"
-              description="An essential backend security bundle explicitly tailored for Claude Code and Anthropic agent workflows with automated payload parsing."
-              category="Backend & Security"
-              author="OWASP Working Group"
-              items={secondBundleItems}
-            />
+            {skillBundles.length > 0 ? (
+              skillBundles.map((bundle) => (
+                <SkillBundleCard
+                  key={bundle.id}
+                  title={bundle.title}
+                  description={bundle.description || ""}
+                  category="Bundle"
+                  author={bundle.author?.github_username || "Unknown"}
+                  items={bundle.items}
+                />
+              ))
+            ) : (
+              <div className="col-span-full py-12 text-center text-gray-500">
+                Hali hech qanday bundle yaratilmagan (No bundles found).
+              </div>
+            )}
           </div>
         </div>
       )}

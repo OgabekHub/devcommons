@@ -123,10 +123,10 @@ export default function VersionHistoryModal({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-purple-400 transition-colors duration-200 hover:bg-purple-500/20 hover:text-purple-300 bg-purple-500/10 border border-purple-500/30 shadow-[0_0_12px_rgba(168,85,247,0.15)]"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 bg-white/5 border border-white/10"
         title="View version history and compare content revisions"
       >
-        <History className="h-4 w-4 shrink-0 animate-pulse text-purple-400" />
+        <History className="h-4 w-4 shrink-0 text-zinc-400" />
         <span>Version {currentVersion || "v1"}</span>
       </button>
 
