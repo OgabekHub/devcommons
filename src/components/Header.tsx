@@ -185,16 +185,16 @@ export default function Header() {
                           alt={username ?? ""}
                           width={40}
                           height={40}
-                          className="h-10 w-10 rounded-full ring-2 ring-brand/30"
+                          className="h-10 w-10 rounded-full ring-1 ring-white/10"
                         />
                       ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-dark text-white font-bold text-sm">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/8 text-white font-bold text-sm">
                           {username?.[0]?.toUpperCase() ?? "U"}
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-semibold text-white">{username}</p>
-                        <p className="truncate text-xs text-gray-400">{user?.email}</p>
+                        <p className="truncate text-xs text-zinc-500">{user?.email}</p>
                       </div>
                     </div>
 

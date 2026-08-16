@@ -82,7 +82,7 @@ export default function MarketingHeader() {
           {user ? (
             <Link
               href="/snippets"
-              className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition-all hover:scale-105 hover:shadow-brand/40"
+              className="group flex items-center gap-2 rounded-lg bg-brand px-5 py-2 text-sm font-semibold text-white shadow-brand transition-all hover:bg-brand-dark"
             >
               <span>{locale === "uz" ? "Boshqaruv Paneli" : "Dashboard"}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -142,7 +142,7 @@ export default function MarketingHeader() {
               <Link
                 href="/snippets"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand to-indigo-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-brand/20"
+                className="flex items-center justify-center gap-2 rounded-lg bg-brand px-5 py-3 text-base font-semibold text-white shadow-brand transition-all hover:bg-brand-dark"
               >
                 <span>{locale === "uz" ? "Boshqaruv Paneli" : "Dashboard"}</span>
                 <ArrowRight className="h-5 w-5" />

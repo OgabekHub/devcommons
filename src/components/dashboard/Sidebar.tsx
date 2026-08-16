@@ -4,21 +4,21 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
-import { 
-  Code2, 
-  MessageSquare, 
-  Layers, 
-  Sparkles, 
-  Terminal, 
-  Users, 
-  Trophy, 
-  Rss, 
-  Bookmark, 
-  BarChart2, 
+import {
+  Code2,
+  MessageSquare,
+  Layers,
+  Sparkles,
+  Terminal,
+  Users,
+  Trophy,
+  Rss,
+  Bookmark,
+  BarChart2,
   BookOpen,
   X,
   ChevronRight,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -32,61 +32,61 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
 
   const navigationGroups = [
     {
-      title: locale === "uz" ? "ASOSIY KUTUBXONA" : "LIBRARY",
+      title: locale === "uz" ? "KUTUBXONA" : "LIBRARY",
       items: [
-        { name: locale === "uz" ? "Snippetlar" : "Snippets", href: "/snippets", icon: Code2 },
-        { name: locale === "uz" ? "AI Promptlar" : "AI Prompts", href: "/prompts", icon: MessageSquare },
-        { name: locale === "uz" ? "Workflow'lar" : "Workflows", href: "/workflows", icon: Layers },
+        { name: locale === "uz" ? "Snippetlar" : "Snippets",     href: "/snippets",  icon: Code2 },
+        { name: locale === "uz" ? "AI Promptlar" : "AI Prompts", href: "/prompts",   icon: MessageSquare },
+        { name: locale === "uz" ? "Workflowlar" : "Workflows",   href: "/workflows", icon: Layers },
       ],
     },
     {
       title: locale === "uz" ? "VOSITALAR" : "TOOLS",
       items: [
-        { name: locale === "uz" ? "Playground" : "Playground", href: "/playground", icon: Sparkles, badge: "LAB", badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
-        { name: locale === "uz" ? "CLI Integratsiya" : "CLI & MCP Server", href: "/cli" as any, icon: Terminal, badge: "IDE", badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30" },
+        { name: locale === "uz" ? "Playground" : "Playground",          href: "/playground", icon: Sparkles, badge: "LAB" },
+        { name: locale === "uz" ? "CLI & MCP Server" : "CLI & MCP Server", href: "/cli" as any, icon: Terminal, badge: "IDE" },
       ],
     },
     {
       title: locale === "uz" ? "HAMJAMIYAT" : "COMMUNITY",
       items: [
-        { name: locale === "uz" ? "Jamoalar" : "Team Workspaces", href: "/teams", icon: Users, badge: "NEW", badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" },
-        { name: locale === "uz" ? "Reyting" : "Leaderboard", href: "/leaderboard", icon: Trophy },
-        { name: locale === "uz" ? "Lenta (Feed)" : "Activity Feed", href: "/feed", icon: Rss },
+        { name: locale === "uz" ? "Jamoalar" : "Team Workspaces", href: "/teams",       icon: Users,    badge: "NEW" },
+        { name: locale === "uz" ? "Reyting" : "Leaderboard",      href: "/leaderboard", icon: Trophy },
+        { name: locale === "uz" ? "Lenta" : "Activity Feed",       href: "/feed",        icon: Rss },
       ],
     },
     {
       title: locale === "uz" ? "SHAXSIY" : "PERSONAL",
       items: [
-        { name: locale === "uz" ? "Saqlanganlar" : "Saved Items", href: "/saved", icon: Bookmark },
-        { name: locale === "uz" ? "Statistika" : "Analytics", href: "/analytics", icon: BarChart2 },
+        { name: locale === "uz" ? "Saqlanganlar" : "Saved Items", href: "/saved",     icon: Bookmark },
+        { name: locale === "uz" ? "Statistika" : "Analytics",     href: "/analytics", icon: BarChart2 },
       ],
     },
     {
-      title: locale === "uz" ? "REсурSLAR" : "RESOURCES",
+      title: locale === "uz" ? "RESURSLAR" : "RESOURCES",
       items: [
-        { name: locale === "uz" ? "Qo'llanma (Docs)" : "Documentation", href: "/docs" as any, icon: BookOpen },
+        { name: locale === "uz" ? "Qollanma" : "Documentation", href: "/docs" as any, icon: BookOpen },
       ],
     },
   ];
 
   const sidebarContent = (
-    <div className="flex h-full flex-col justify-between p-4 text-gray-300 select-none">
-      <div className="space-y-6">
-        {/* Mobile Close Button & Header */}
-        <div className="flex items-center justify-between lg:hidden mb-2 px-2">
-          <span className="text-sm font-bold tracking-wider text-brand uppercase">Navigation</span>
+    <div className="flex h-full flex-col justify-between p-3 text-zinc-400 select-none">
+      <div className="space-y-5">
+        {/* Mobile header */}
+        <div className="flex items-center justify-between lg:hidden mb-1 px-2">
+          <span className="text-xs font-bold tracking-wider text-zinc-500 uppercase">Menu</span>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-gray-400 hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-1.5 text-zinc-500 hover:bg-white/6 hover:text-white transition-colors"
             aria-label="Close menu"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {navigationGroups.map((group, groupIdx) => (
-          <div key={groupIdx} className="space-y-1">
-            <p className="px-3 pb-1 text-[11px] font-semibold tracking-wider text-gray-500 uppercase">
+          <div key={groupIdx} className="space-y-0.5">
+            <p className="px-3 pb-1.5 text-[10px] font-semibold tracking-widest text-zinc-600 uppercase">
               {group.title}
             </p>
             <div className="space-y-0.5">
@@ -99,27 +99,29 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 border ${
+                    className={`group flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150 border ${
                       isActive
-                        ? "bg-brand/15 text-white font-semibold shadow-inner shadow-brand/10 border-brand/20"
-                        : "border-transparent text-gray-400 hover:bg-white/5 hover:text-gray-200"
+                        ? "bg-white/6 text-white border-white/10"
+                        : "border-transparent text-zinc-500 hover:bg-white/4 hover:text-zinc-200"
                     }`}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <Icon className={`h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                        isActive ? "text-brand" : "text-gray-500 group-hover:text-gray-300"
-                      }`} />
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Icon
+                        className={`h-4 w-4 shrink-0 ${
+                          isActive ? "text-brand" : "text-zinc-600 group-hover:text-zinc-400"
+                        }`}
+                      />
                       <span className="truncate">{item.name}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-1.5 shrink-0">
-                      {("badge" in item) && (
-                        <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-md border ${(item as any).badgeColor}`}>
+                      {"badge" in item && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-white/6 text-zinc-500 border border-white/8">
                           {(item as any).badge}
                         </span>
                       )}
                       {isActive && (
-                        <div className="h-1.5 w-1.5 rounded-full bg-brand animate-pulse" />
+                        <div className="h-1.5 w-1.5 rounded-full bg-brand" />
                       )}
                     </div>
                   </Link>
@@ -130,31 +132,31 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
         ))}
       </div>
 
-      {/* Bottom info cards */}
-      <div className="mt-8 space-y-3 pt-4 border-t border-white/10 px-2">
+      {/* Bottom cards */}
+      <div className="mt-6 space-y-2 pt-4 border-t border-white/6 px-1">
         <Link
           href={"/pricing" as any}
-          className="flex items-center justify-between rounded-xl p-3 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent border border-indigo-500/20 hover:border-indigo-500/40 transition-all group"
+          className="flex items-center justify-between rounded-lg p-3 bg-white/3 border border-white/7 hover:bg-white/5 hover:border-white/12 transition-all group"
         >
           <div className="flex items-center gap-2.5">
             <span className="text-base">💎</span>
             <div>
-              <p className="text-xs font-semibold text-white group-hover:text-brand transition-colors">
+              <p className="text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors">
                 {locale === "uz" ? "Pro & B2B Tariflar" : "Pro & B2B Tiers"}
               </p>
-              <p className="text-[10px] text-gray-400">
+              <p className="text-[10px] text-zinc-600">
                 {locale === "uz" ? "Jamoa uchun yuklash" : "Upgrade your workspace"}
               </p>
             </div>
           </div>
-          <ChevronRight className="h-4 w-4 text-gray-500 group-hover:translate-x-0.5 transition-transform" />
+          <ChevronRight className="h-3.5 w-3.5 text-zinc-600 group-hover:text-zinc-400 group-hover:translate-x-0.5 transition-all" />
         </Link>
 
         <a
           href="https://github.com/OgabekHub/devcommons"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between text-xs text-gray-500 hover:text-gray-300 transition-colors px-1"
+          className="flex items-center justify-between text-[11px] text-zinc-600 hover:text-zinc-400 transition-colors px-1"
         >
           <span>GitHub Open Source</span>
           <ExternalLink className="h-3 w-3" />
@@ -165,22 +167,22 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Desktop sidebar - Fixed width */}
-      <aside className="hidden lg:block w-64 xl:w-72 shrink-0 border-r border-white/10 bg-[#0B0B0B]/80 backdrop-blur-2xl overflow-y-auto custom-scrollbar">
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:block w-60 xl:w-64 shrink-0 border-r border-white/7 bg-[#0f0f12] overflow-y-auto custom-scrollbar">
         {sidebarContent}
       </aside>
 
-      {/* Mobile drawer backdrop */}
+      {/* Mobile backdrop */}
       {mobileOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm lg:hidden animate-fadeIn"
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
-      {/* Mobile slide-over drawer */}
+      {/* Mobile drawer */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 w-72 bg-[#0C0C0C] border-r border-white/10 shadow-2xl transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto custom-scrollbar ${
+        className={`fixed top-0 left-0 bottom-0 z-50 w-64 bg-[#0f0f12] border-r border-white/7 shadow-overlay transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto custom-scrollbar ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
