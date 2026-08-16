@@ -99,10 +99,10 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                    className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 border ${
                       isActive
-                        ? "bg-brand/15 text-white font-semibold shadow-inner shadow-brand/10 border border-brand/20"
-                        : "text-gray-400 hover:bg-white/5 hover:text-gray-200"
+                        ? "bg-brand/15 text-white font-semibold shadow-inner shadow-brand/10 border-brand/20"
+                        : "border-transparent text-gray-400 hover:bg-white/5 hover:text-gray-200"
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">
