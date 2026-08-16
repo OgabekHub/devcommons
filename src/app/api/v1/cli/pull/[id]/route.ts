@@ -10,7 +10,7 @@ export async function GET(
     const id = params.id;
 
     // First try snippets
-    let { data: snippet } = await supabase
+    const { data: snippet } = await supabase
       .from("snippets")
       .select("*")
       .eq("id", id)
@@ -27,7 +27,7 @@ export async function GET(
     }
 
     // Then try prompts
-    let { data: prompt } = await supabase
+    const { data: prompt } = await supabase
       .from("prompts")
       .select("*")
       .eq("id", id)
@@ -43,7 +43,7 @@ export async function GET(
     }
 
     // Try skill bundles
-    let { data: bundle } = await supabase
+    const { data: bundle } = await supabase
       .from("skill_bundles")
       .select("*")
       .eq("id", id)

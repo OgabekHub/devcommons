@@ -48,7 +48,7 @@ export async function POST(req: Request) {
           const id = params.arguments?.id;
           
           // Try pulling bundle first
-          let { data: bundle } = await supabase.from("skill_bundles").select("*").eq("id", id).single();
+          const { data: bundle } = await supabase.from("skill_bundles").select("*").eq("id", id).single();
           if (bundle) {
             return NextResponse.json({
               jsonrpc: "2.0",
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
           }
 
           // Then snippet
-          let { data: snippet } = await supabase.from("snippets").select("*").eq("id", id).single();
+          const { data: snippet } = await supabase.from("snippets").select("*").eq("id", id).single();
           if (snippet) {
             return NextResponse.json({
               jsonrpc: "2.0",
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
           }
 
           // Then prompt
-          let { data: prompt } = await supabase.from("prompts").select("*").eq("id", id).single();
+          const { data: prompt } = await supabase.from("prompts").select("*").eq("id", id).single();
           if (prompt) {
             return NextResponse.json({
               jsonrpc: "2.0",
