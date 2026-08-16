@@ -18,7 +18,7 @@ export async function GET(
 
     if (snippet) {
       // Increment used_count for CLI pulls
-      await supabase.rpc('increment_used_count', { item_id: id, item_type: 'snippet' }).catch(() => {});
+      try { await supabase.rpc('increment_used_count', { item_id: id, item_type: 'snippet' }); } catch (_e) { /* ignore */ }
       return NextResponse.json({
         success: true,
         type: "snippet",
@@ -34,7 +34,7 @@ export async function GET(
       .single();
 
     if (prompt) {
-      await supabase.rpc('increment_used_count', { item_id: id, item_type: 'prompt' }).catch(() => {});
+      try { await supabase.rpc('increment_used_count', { item_id: id, item_type: 'prompt' }); } catch (_e) { /* ignore */ }
       return NextResponse.json({
         success: true,
         type: "prompt",
