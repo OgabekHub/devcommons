@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import PromptChainViewer, { StepItem } from "@/components/PromptChainViewer";
-import SkillBundleCard, { BundleItem } from "@/components/SkillBundleCard";
+import SkillBundleCard from "@/components/SkillBundleCard";
 import { Layers, Package, ShieldCheck, Filter } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 

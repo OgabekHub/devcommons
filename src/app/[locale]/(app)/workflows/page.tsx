@@ -2,7 +2,7 @@ import React from "react";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { StepItem } from "@/components/PromptChainViewer";
-import { BundleItem } from "@/components/SkillBundleCard";
+
 import WorkflowsDashboard from "@/components/WorkflowsDashboard";
 import { Sparkles, ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
