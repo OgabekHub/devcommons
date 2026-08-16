@@ -166,7 +166,7 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar - Fixed width */}
-      <aside className="hidden lg:block w-64 xl:w-72 shrink-0 border-r border-white/10 bg-[#0B0B0B]/80 backdrop-blur-2xl h-[calc(100vh-4rem)] sticky top-16 overflow-y-auto custom-scrollbar">
+      <aside className="hidden lg:block w-64 xl:w-72 shrink-0 border-r border-white/10 bg-[#0B0B0B]/80 backdrop-blur-2xl overflow-y-auto custom-scrollbar">
         {sidebarContent}
       </aside>
 
