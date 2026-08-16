@@ -75,27 +75,6 @@ const ADVANCED_CHAIN_STEPS: StepItem[] = [
   }
 ];
 
-const SECOND_BUNDLE_ITEMS: BundleItem[] = [
-  {
-    filename: "CLAUDE.md",
-    type: "rule",
-    content: `# Claude Code Protocol — DevCommons Backend Standard
-- Always validate incoming Next.js route handlers using Zod validation schemas.
-- Respond with standard JSON structures containing { success, data, error }.
-- Never output raw unhandled try/catch errors to client responses.`
-  },
-  {
-    filename: "SecurityAuditPrompt.md",
-    type: "prompt",
-    content: `You are an OWASP Top 10 Security Specialist AI. Scan all authentication routes and API route handlers for injection flaws, unverified JWT payloads, and Rate Limit evasion vulnerabilities.`
-  },
-  {
-    filename: "ZodRouteValidator.ts",
-    type: "code",
-    content: `import { z } from 'zod';\nimport { NextResponse } from 'next/server';\n\nexport const userCreateSchema = z.object({\n  email: z.string().email(),\n  githubUsername: z.string().min(2),\n});\n\nexport function validatePayload<T>(schema: z.Schema<T>, data: unknown) {\n  return schema.safeParse(data);\n}`
-  }
-];
-
 export default async function WorkflowsPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("Workflows");
