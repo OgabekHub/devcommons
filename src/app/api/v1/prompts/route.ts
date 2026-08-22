@@ -29,8 +29,8 @@ export async function GET(request: Request) {
   }
 
   // Update last used asynchronously with error handling
-  supabase.from("api_keys").update({ last_used_at: new Date().toISOString() }).eq("id", keyData.id).then().catch((err) => {
-    console.error("Failed to update api_key last_used_at:", err);
+  supabase.from("api_keys").update({ last_used_at: new Date().toISOString() }).eq("id", keyData.id).then(({ error: updateError }) => {
+    if (updateError) console.error("Failed to update api_key last_used_at:", updateError);
   });
   
   let query = supabase
