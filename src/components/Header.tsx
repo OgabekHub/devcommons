@@ -46,7 +46,12 @@ export default function Header() {
     if (!supabase) return;
 
     // Foydalanuvchi holatini olish
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    supabase.auth
+      .getUser()
+      .then(({ data }) => setUser(data.user))
+      .catch((err) => {
+        console.error("Failed to get user:", err);
+      });
 
     // Auth o'zgarganda yangilash
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -253,7 +258,8 @@ export default function Header() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-white/10"
-            aria-label="Menu"
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

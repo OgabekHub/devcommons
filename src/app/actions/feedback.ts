@@ -2,12 +2,30 @@
 
 import { createSupabaseServer } from "@/lib/supabase-server";
 
+const ALLOWED_TYPES = ["bug", "feature", "general"] as const;
+const MAX_CONTENT_LENGTH = 5000; // Maximum characters for feedback content
+
 export async function submitFeedback(formData: FormData) {
   const type = formData.get("type") as string;
   const content = formData.get("content") as string;
 
+  // Validate required fields
   if (!type || !content || content.trim().length === 0) {
     return { error: "Iltimos, barcha maydonlarni to'ldiring." };
+  }
+
+  // Validate feedback type
+  if (!ALLOWED_TYPES.includes(type as typeof ALLOWED_TYPES[number])) {
+    return { error: "Noto'g'ri feedback turi. Faqat: bug, feature, general." };
+  }
+
+  // Validate content length
+  const trimmedContent = content.trim();
+  if (trimmedContent.length < 10) {
+    return { error: "Feedback kamida 10 ta belgidan iborat bo'lishi kerak." };
+  }
+  if (trimmedContent.length > MAX_CONTENT_LENGTH) {
+    return { error: `Feedback ${MAX_CONTENT_LENGTH} ta belgidan oshmasligi kerak.` };
   }
 
   try {
@@ -16,7 +34,7 @@ export async function submitFeedback(formData: FormData) {
 
     const { error } = await supabase.from("feedback").insert({
       type,
-      content: content.trim(),
+      content: trimmedContent,
       user_id: user?.id || null,
     });
 

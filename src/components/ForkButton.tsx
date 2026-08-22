@@ -23,7 +23,9 @@ export default function ForkButton({ itemId, itemType, title, content, languageO
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: itemId, type: itemType, metric: "forks_count" }),
-    }).catch(() => {});
+    }).catch((err) => {
+      console.error("Fork failed:", err);
+    });
 
     // Save initial fork data to session storage to prepopulate new creation page
     const forkData = {

@@ -40,15 +40,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ votes: item?.votes ?? 0 });
     }
 
-    // Use the atomic RPC function to update votes (bypasses RLS correctly)
+    // Ensure atomicity: record the vote FIRST, then update the counter.
+    // If the record insert fails (e.g., duplicate), the counter stays consistent.
     if (action === "add") {
+      // Record the vote first
+      const { error: insertError } = await supabase.from(voteTable).insert({ user_id: user.id, [voteColumn]: id });
+      if (insertError) {
+        // If insert fails (likely duplicate), don't increment
+        const { data: item } = await supabase.from(table).select("votes").eq("id", id).single();
+        return NextResponse.json({ votes: item?.votes ?? 0, error: "Vote record failed" });
+      }
+      // Then increment the counter
       await supabase.rpc("increment_votes", { table_name: table, item_id: id });
-      // Record the vote
-      await supabase.from(voteTable).insert({ user_id: user.id, [voteColumn]: id });
     } else {
+      // Remove vote record first
+      const { error: deleteError } = await supabase.from(voteTable).delete().eq("user_id", user.id).eq(voteColumn, id);
+      if (deleteError) {
+        const { data: item } = await supabase.from(table).select("votes").eq("id", id).single();
+        return NextResponse.json({ votes: item?.votes ?? 0, error: "Vote removal failed" });
+      }
+      // Then decrement the counter
       await supabase.rpc("decrement_votes", { table_name: table, item_id: id });
-      // Remove vote record
-      await supabase.from(voteTable).delete().eq("user_id", user.id).eq(voteColumn, id);
     }
 
     // Get new votes count

@@ -53,14 +53,14 @@ export async function GET(request: NextRequest) {
       await supabase.from("snippets").update({ view_count: newCount }).eq("id", found.id);
     } else {
       // If not in snippets, check prompts table
-      let promptQuery = supabase.from("prompts").select("id, title, prompt_text, category, view_count");
+      let promptQuery = supabase.from("prompts").select("id, title, content, category, view_count");
       if (id) promptQuery = promptQuery.eq("id", id);
       else if (slug) promptQuery = promptQuery.ilike("title", `%${slug}%`);
 
       const { data: prompts } = await promptQuery.limit(1);
       if (prompts && prompts[0]) {
         const found = prompts[0];
-        content = found.prompt_text || "";
+        content = found.content || "";
         title = found.title;
         type = "prompt";
         filename = `${title.toLowerCase().replace(/[^a-z0-9]/gi, "_")}_prompt.md`;

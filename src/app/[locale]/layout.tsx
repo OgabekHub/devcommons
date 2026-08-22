@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Discover, version, and share production-ready code snippets, AI prompts, agent config files (.cursorrules, CLAUDE.md), and AI workflows.",
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'uz_UZ', // Default; overridden in generateMetadata if implemented
     url: 'https://devcommons.uz',
     siteName: 'DevCommons',
     title: 'DevCommons — Shared library for code, prompts & AI workflows',
@@ -87,9 +87,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} overflow-x-hidden`}>
       <head>
-        {/* Preconnect to critical third-party domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
         
         {/* PWA Meta Tags */}

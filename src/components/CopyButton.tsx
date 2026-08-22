@@ -25,7 +25,9 @@ export default function CopyButton({ text, label, itemId, itemType }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: itemId, type: itemType, metric: "used_count" }),
-      }).catch(() => {});
+      }).catch((err) => {
+        console.error("Copy failed:", err);
+      });
     }
     try {
       await navigator.clipboard.writeText(text);

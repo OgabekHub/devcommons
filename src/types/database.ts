@@ -12,7 +12,12 @@ export interface Snippet {
   description: string | null;
   code: string;
   language: string;
-  author_id: string;
+  author_id: string | null;
+  user_id?: string | null;
+  author_name?: string | null;
+  author_avatar?: string | null;
+  tags?: string[] | null;
+  view_count: number;
   votes: number;
   used_count: number;
   forks_count: number;
@@ -29,8 +34,15 @@ export interface Prompt {
   id: string;
   title: string;
   content: string;
+  description?: string | null;
   category: string;
-  author_id: string;
+  author_id: string | null;
+  user_id?: string | null;
+  author_name?: string | null;
+  author_avatar?: string | null;
+  ai_model?: string | null;
+  tags?: string[] | null;
+  view_count: number;
   votes: number;
   used_count: number;
   forks_count: number;
@@ -74,7 +86,7 @@ export interface SkillBundle {
   title: string;
   description: string | null;
   author_id: string;
-  items: any[];
+  items: Array<{ id: string; type: "snippet" | "prompt" }>;
   votes: number;
   is_verified: boolean;
   team_id?: string | null;
@@ -98,15 +110,62 @@ export interface LeaderboardEntry {
 export interface Team {
   id: string;
   name: string;
+  slug?: string | null;
+  description?: string | null;
+  avatar_url?: string | null;
   owner_id: string;
+  subscription_tier?: 'free' | 'pro' | 'enterprise' | null;
   stripe_customer_id?: string | null;
+  stripe_subscription_id?: string | null;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface TeamMember {
   team_id: string;
   user_id: string;
-  role: string;
+  role: 'owner' | 'admin' | 'member';
   joined_at: string;
 }
 
+export interface Vote {
+  id: string;
+  user_id: string;
+  created_at: string;
+}
+
+export interface SnippetVote extends Vote {
+  snippet_id: string;
+}
+
+export interface PromptVote extends Vote {
+  prompt_id: string;
+}
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  actor_id: string;
+  type: string;
+  snippet_id?: string | null;
+  prompt_id?: string | null;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface Feedback {
+  id: string;
+  type: 'bug' | 'feature' | 'general';
+  content: string;
+  user_id?: string | null;
+  created_at: string;
+}
+
+export interface ApiKey {
+  id: string;
+  user_id: string;
+  key_hash: string;
+  name: string;
+  last_used_at?: string | null;
+  created_at: string;
+}

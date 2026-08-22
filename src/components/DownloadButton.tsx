@@ -20,7 +20,9 @@ export default function DownloadButton({ code, language, filename, itemId, itemT
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: itemId, type: itemType, metric: "used_count" }),
-      }).catch(() => {});
+      }).catch((err) => {
+        console.error("Download failed:", err);
+      });
     }
     const agentConfig = detectAgentConfig(filename, language);
     const extensions: Record<string, string> = {

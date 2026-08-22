@@ -1,14 +1,51 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { streamText } from 'ai';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { createSupabaseServer } from '@/lib/supabase-server';
 
 // process.env.GOOGLE_GENERATIVE_AI_API_KEY must be configured in .env.local
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || "",
 });
 
+// Rate limit: 20 requests per minute per IP for unauthenticated, 60 for authenticated
+const UNAUTH_LIMIT = { maxRequests: 20, windowSeconds: 60 };
+const AUTH_LIMIT = { maxRequests: 60, windowSeconds: 60 };
+
 export async function POST(req: Request) {
   try {
+    // Check authentication (optional but gives higher rate limit)
+    const supabase = createSupabaseServer();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const clientIp = getClientIp(req);
+    const identifier = user?.id || clientIp;
+    const limits = user ? AUTH_LIMIT : UNAUTH_LIMIT;
+
+    const rateLimitResult = checkRateLimit(identifier, "chat", limits);
+    if (!rateLimitResult.allowed) {
+      return new Response(
+        JSON.stringify({ error: "Rate limit exceeded. Please try again later." }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(Math.ceil((rateLimitResult.resetAt - Date.now()) / 1000)),
+            "X-RateLimit-Remaining": "0",
+          },
+        }
+      );
+    }
+
     const { messages, data } = await req.json();
+
+    // Basic input validation
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "Invalid request: 'messages' array is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
     
     // We receive additional context from the client via the 'data' field
     const contextType = data?.contextType || "general";

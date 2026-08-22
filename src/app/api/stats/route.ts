@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit stats tracking: 30 requests per minute per IP
+    const clientIp = getClientIp(req);
+    const rateLimitResult = checkRateLimit(clientIp, "stats", { maxRequests: 30, windowSeconds: 60 });
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const { id, type, metric = "used_count" } = await req.json();
 
     if (!id || !["snippet", "prompt"].includes(type) || !["used_count", "forks_count"].includes(metric)) {
@@ -12,31 +20,27 @@ export async function POST(req: NextRequest) {
     const supabase = createSupabaseServer();
     const table = type === "snippet" ? "snippets" : "prompts";
 
-    // Attempt atomic RPC increment if available
+    // Use atomic RPC increment to avoid race conditions
     const { error: rpcError } = await supabase.rpc("increment_metric", {
       target_table: table,
       target_column: metric,
       item_id: id,
     });
 
-    // Fallback if RPC function is not installed yet
     if (rpcError) {
-      const { data: currentItem } = await supabase
-        .from(table)
-        .select(metric)
-        .eq("id", id)
-        .maybeSingle();
-
-      if (currentItem && typeof currentItem[metric] === "number") {
-        await supabase
-          .from(table)
-          .update({ [metric]: currentItem[metric] + 1 })
-          .eq("id", id);
-      }
+      console.error("Stats increment error:", rpcError);
+      return NextResponse.json(
+        { success: false, error: "Failed to update metric" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ success: false, note: "Gracefully handled stats tracking error" }, { status: 200 });
+  } catch (err) {
+    console.error("Stats API error:", err);
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

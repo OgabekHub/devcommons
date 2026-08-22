@@ -1,18 +1,56 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 
+// Allowed hosts for redirect (prevent open redirect attacks)
+const ALLOWED_HOSTS = new Set([
+  "devcommons.uz",
+  "www.devcommons.uz",
+  "devcommons.vercel.app",
+  "localhost",
+]);
+
+function getSafeOrigin(request: Request, requestUrl: URL): string {
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const forwardedProto = request.headers.get("x-forwarded-proto") || "https";
+
+  if (forwardedHost) {
+    // Validate forwarded host against whitelist
+    const hostname = forwardedHost.split(":")[0]; // Remove port if present
+    if (ALLOWED_HOSTS.has(hostname)) {
+      return `${forwardedProto}://${forwardedHost}`;
+    }
+  }
+
+  return requestUrl.origin;
+}
+
+/** Extract locale from the referer URL or default to 'uz' */
+function getLocaleFromReferer(request: Request): string {
+  const referer = request.headers.get("referer");
+  if (referer) {
+    try {
+      const refUrl = new URL(referer);
+      const pathSegments = refUrl.pathname.split("/").filter(Boolean);
+      const firstSegment = pathSegments[0];
+      if (firstSegment === "en" || firstSegment === "uz") {
+        return firstSegment;
+      }
+    } catch {
+      // Invalid referer URL, use default
+    }
+  }
+  return "uz";
+}
+
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  const next = requestUrl.searchParams.get("next"); // Return URL after login
   const errorParam = requestUrl.searchParams.get("error_description") || requestUrl.searchParams.get("error");
 
   // Resolve proper origin behind Vercel edge proxy / reverse proxy load balancer
-  let origin = requestUrl.origin;
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const forwardedProto = request.headers.get("x-forwarded-proto") || "https";
-  if (forwardedHost) {
-    origin = `${forwardedProto}://${forwardedHost}`;
-  }
+  const origin = getSafeOrigin(request, requestUrl);
+  const locale = getLocaleFromReferer(request);
 
   if (code) {
     const supabase = createSupabaseServer();
@@ -40,18 +78,20 @@ export async function GET(request: Request) {
         console.error("Error upserting user profile:", dbError);
       }
 
-      // Login muvaffaqiyatli — bosh sahifaga qaytarish
-      return NextResponse.redirect(`${origin}/uz`);
+      // Redirect to return URL or localized home page
+      if (next && next.startsWith("/")) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
+      return NextResponse.redirect(`${origin}/${locale}`);
     } else if (error) {
       console.error("Auth callback exchange error:", error);
       return NextResponse.redirect(
-        `${origin}/uz/auth?error=${encodeURIComponent(error.message || "auth_failed")}`
+        `${origin}/${locale}/auth?error=${encodeURIComponent(error.message || "auth_failed")}`
       );
     }
   }
 
   // Xato bo'lsa auth sahifasiga qaytarish (aniq xato xabarini url parameterida ko'rsatamiz)
   const errorMessage = errorParam || "auth_failed";
-  return NextResponse.redirect(`${origin}/uz/auth?error=${encodeURIComponent(errorMessage)}`);
+  return NextResponse.redirect(`${origin}/${locale}/auth?error=${encodeURIComponent(errorMessage)}`);
 }
-

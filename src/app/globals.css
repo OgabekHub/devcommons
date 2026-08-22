@@ -18,8 +18,10 @@
     --border-muted: rgba(255, 255, 255, 0.04);
   }
 
-  * {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    * {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -264,8 +266,10 @@
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-main {
-  animation: pageEnter 0.35s ease-out;
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: pageEnter 0.35s ease-out;
+  }
 }
 
 /* ================================================

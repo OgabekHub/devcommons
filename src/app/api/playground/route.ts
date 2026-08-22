@@ -1,6 +1,13 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { createSupabaseServer } from "@/lib/supabase-server";
+
+/** Escape special regex characters in user-supplied variable keys */
+function escapeRegExp(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || "",
@@ -9,6 +16,29 @@ const google = createGoogleGenerativeAI({
 export async function POST(req: Request) {
   const startTime = Date.now();
   try {
+    // Rate limiting: 10 requests per minute for unauthenticated, 30 for authenticated
+    const supabase = createSupabaseServer();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const clientIp = getClientIp(req);
+    const identifier = user?.id || clientIp;
+    const limits = user
+      ? { maxRequests: 30, windowSeconds: 60 }
+      : { maxRequests: 10, windowSeconds: 60 };
+
+    const rateLimitResult = checkRateLimit(identifier, "playground", limits);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { success: false, error: "Rate limit exceeded. Please try again later." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil((rateLimitResult.resetAt - Date.now()) / 1000)),
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     let systemPrompt: string = body.systemPrompt || "";
     let userQuery: string = body.userQuery || "";
@@ -20,7 +50,7 @@ export async function POST(req: Request) {
     // Substitute {{variable}} in systemPrompt and userQuery
     let variablesReplaced = 0;
     for (const [key, value] of Object.entries(variables)) {
-      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, "g");
+      const regex = new RegExp(`\\{\\{\\s*${escapeRegExp(key)}\\s*\\}\\}`, "g");
       if (systemPrompt.match(regex) || userQuery.match(regex)) {
         systemPrompt = systemPrompt.replace(regex, value || `[${key}]`);
         userQuery = userQuery.replace(regex, value || `[${key}]`);

@@ -34,8 +34,10 @@ export default function TeamDashboard() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-6 mt-8 border-b border-white/5">
+        <div role="tablist" className="flex gap-6 mt-8 border-b border-white/5">
           <button
+            role="tab"
+            aria-selected={activeTab === "rules"}
             onClick={() => setActiveTab("rules")}
             className={`pb-3 text-sm font-medium transition-colors relative ${
               activeTab === "rules" ? "text-indigo-400" : "text-gray-400 hover:text-white"
@@ -50,6 +52,8 @@ export default function TeamDashboard() {
             )}
           </button>
           <button
+            role="tab"
+            aria-selected={activeTab === "members"}
             onClick={() => setActiveTab("members")}
             className={`pb-3 text-sm font-medium transition-colors relative ${
               activeTab === "members" ? "text-indigo-400" : "text-gray-400 hover:text-white"
@@ -64,6 +68,8 @@ export default function TeamDashboard() {
             )}
           </button>
           <button
+            role="tab"
+            aria-selected={activeTab === "settings"}
             onClick={() => setActiveTab("settings")}
             className={`pb-3 text-sm font-medium transition-colors relative ${
               activeTab === "settings" ? "text-indigo-400" : "text-gray-400 hover:text-white"
