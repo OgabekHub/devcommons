@@ -15,7 +15,7 @@ function getSafeOrigin(request: Request, requestUrl: URL): string {
 
   if (forwardedHost) {
     // Validate forwarded host against whitelist
-    const hostname = forwardedHost.split(":")[0]; // Remove port if present
+    const hostname = forwardedHost.split(":")[0] || ""; // Remove port if present
     if (ALLOWED_HOSTS.has(hostname)) {
       return `${forwardedProto}://${forwardedHost}`;
     }
