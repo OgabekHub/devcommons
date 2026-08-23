@@ -35,6 +35,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
   useEffect(() => {
     setMounted(true);
     loadCollections();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadCollections = async () => {

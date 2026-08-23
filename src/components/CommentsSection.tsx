@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { MessageSquare, Send, Trash2, ThumbsUp } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useLocale, useTranslations } from "next-intl";
@@ -37,6 +38,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
   useEffect(() => {
     loadComments();
     supabase.auth.getUser().then(({ data }) => setUser(data.user));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snippetId, promptId]);
 
   const loadComments = async () => {
@@ -159,7 +161,14 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
             <div key={comment.id} className="card p-4">
               <div className="flex items-start gap-3">
                 {comment.author_avatar ? (
-                  <img src={comment.author_avatar} alt={comment.author_name} className="h-8 w-8 rounded-full" />
+                  <Image
+                    src={comment.author_avatar}
+                    alt={comment.author_name || "Author avatar"}
+                    width={32}
+                    height={32}
+                    unoptimized
+                    className="h-8 w-8 rounded-full"
+                  />
                 ) : (
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/20 text-brand font-medium">
                     {comment.author_name[0]?.toUpperCase() || 'A'}
@@ -187,7 +196,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                         className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 transition-colors"
                       >
                         <Trash2 className="h-3 w-3" />
-                        O'chirish
+                        O&apos;chirish
                       </button>
                     )}
                   </div>

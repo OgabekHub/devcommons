@@ -1,10 +1,13 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function Logo({ className = "h-8 w-8" }: { className?: string }) {
   return (
-    <img 
-      src="/new-logo.png" 
-      alt="DevCommons Logo" 
+    <Image 
+      src="/logo.svg" 
+      alt="DevCommons" 
+      width={32} 
+      height={32} 
       className={className} 
     />
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Shield, Users, Settings, Plus, Lock, MoreVertical, KeyRound } from "lucide-react";
 
@@ -167,7 +168,14 @@ export default function TeamDashboard() {
                 <tr className="hover:bg-white/5 transition-colors">
                   <td className="py-4 pl-4">
                     <div className="flex items-center gap-3">
-                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" className="w-8 h-8 rounded-full bg-white/10" alt="Avatar" />
+                      <Image
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full bg-white/10"
+                        alt="Avatar"
+                        unoptimized
+                      />
                       <div>
                         <p className="text-sm font-medium text-white">Alice (You)</p>
                         <p className="text-xs text-gray-500">alice@acmecorp.com</p>
@@ -187,7 +195,14 @@ export default function TeamDashboard() {
                 <tr className="hover:bg-white/5 transition-colors">
                   <td className="py-4 pl-4">
                     <div className="flex items-center gap-3">
-                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bob" className="w-8 h-8 rounded-full bg-white/10" alt="Avatar" />
+                      <Image
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full bg-white/10"
+                        alt="Avatar"
+                        unoptimized
+                      />
                       <div>
                         <p className="text-sm font-medium text-white">Bob Builder</p>
                         <p className="text-xs text-gray-500">bob@acmecorp.com</p>
@@ -206,7 +221,14 @@ export default function TeamDashboard() {
                 <tr className="hover:bg-white/5 transition-colors">
                   <td className="py-4 pl-4">
                     <div className="flex items-center gap-3">
-                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie" className="w-8 h-8 rounded-full bg-white/10" alt="Avatar" />
+                      <Image
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full bg-white/10"
+                        alt="Avatar"
+                        unoptimized
+                      />
                       <div>
                         <p className="text-sm font-medium text-white">Charlie</p>
                         <p className="text-xs text-gray-500">charlie@acmecorp.com</p>

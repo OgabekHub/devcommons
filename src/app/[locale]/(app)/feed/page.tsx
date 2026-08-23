@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Code2, Sparkles, Rss, TrendingUp, Clock, Users } from "lucide-react";
 import { Link, useRouter } from "@/i18n/routing";
 import { createSupabaseBrowser } from "@/lib/supabase";
@@ -38,6 +39,7 @@ export default function FeedPage() {
 
   useEffect(() => {
     loadFeed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
 
   const loadFeed = async () => {
@@ -258,7 +260,14 @@ export default function FeedPage() {
                           className="flex items-center gap-1.5 font-medium text-gray-300 hover:text-brand transition-colors cursor-pointer"
                         >
                           {item.author_avatar ? (
-                            <img src={item.author_avatar} alt={item.author_name} className="h-4 w-4 rounded-full" />
+                            <Image
+                              src={item.author_avatar}
+                              alt={item.author_name || "Author avatar"}
+                              width={16}
+                              height={16}
+                              unoptimized
+                              className="h-4 w-4 rounded-full"
+                            />
                           ) : null}
                           {item.author_name}
                         </span>

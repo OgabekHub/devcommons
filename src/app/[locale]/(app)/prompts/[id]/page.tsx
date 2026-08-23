@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -165,7 +166,14 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
           <span className="flex items-center gap-1.5">
             {prompt.author_avatar ? (
-              <img src={prompt.author_avatar} alt={prompt.author_name} className="h-5 w-5 rounded-full" />
+              <Image
+                src={prompt.author_avatar}
+                alt={prompt.author_name || "Author avatar"}
+                width={20}
+                height={20}
+                unoptimized
+                className="h-5 w-5 rounded-full"
+              />
             ) : (
               <User className="h-4 w-4" />
             )}
@@ -222,7 +230,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           <span className="text-xl">🧪</span>
           <span>Jonli Sinov va Laboratoriya (Interactive Playground)</span>
         </div>
-        <p className="text-xs text-gray-400">Ushbu prompt qanday ishlashi hamda o'zgaruvchilarga moslashuvini derazaning o'zida sinab ko'ring:</p>
+        <p className="text-xs text-gray-400">Ushbu prompt qanday ishlashi hamda o&apos;zgaruvchilarga moslashuvini derazaning o&apos;zida sinab ko&apos;ring:</p>
         <PromptPlayground
           initialSystemPrompt={prompt.content}
           initialModel={prompt.ai_model && prompt.ai_model !== "Any" ? prompt.ai_model : "Claude 3.5 Sonnet"}

@@ -41,7 +41,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
         </h1>
         {query ? (
           <p className="mt-4 text-gray-400">
-            <strong className="text-white">"{query}"</strong> — {t("results_for")}
+            <strong className="text-white">&quot;{query}&quot;</strong> — {t("results_for")}
           </p>
         ) : (
           <p className="mt-4 text-gray-400">

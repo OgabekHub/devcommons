@@ -38,6 +38,7 @@ export default function FollowButton({ targetUserId }: Props) {
       }
     };
     init();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetUserId]);
 
   const handleToggle = async () => {

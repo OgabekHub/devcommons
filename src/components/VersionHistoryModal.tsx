@@ -10,7 +10,7 @@ interface Props {
   currentVersion?: string;
   title: string;
   currentContent: string;
-  onSelectVersion?: (content: string, version: string) => void;
+  onSelectVersion?: (_content: string, _version: string) => void;
 }
 
 interface VersionRecord {
@@ -84,6 +84,7 @@ export default function VersionHistoryModal({
     if (isOpen) {
       fetchVersions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const handleCreateSnapshot = async () => {

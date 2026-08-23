@@ -135,7 +135,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold">Snippetni tahrirlash</h1>
-          <p className="text-sm text-gray-500">Ma'lumotlarni yangilang</p>
+          <p className="text-sm text-gray-500">Ma&apos;lumotlarni yangilang</p>
         </div>
       </div>
 

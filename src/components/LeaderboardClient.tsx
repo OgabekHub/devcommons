@@ -91,7 +91,9 @@ export default function LeaderboardClient({ entries = [] }: LeaderboardClientPro
     return (b.votes || 0) - (a.votes || 0);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const sortedSnippets = useMemo(() => [...enrichedSnippets].sort(sortFn), [enrichedSnippets, activeTab]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const sortedPrompts = useMemo(() => [...enrichedPrompts].sort(sortFn), [enrichedPrompts, activeTab]);
 
   return (

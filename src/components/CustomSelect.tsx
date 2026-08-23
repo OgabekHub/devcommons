@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 interface Props {
   options: string[];
   value: string;
-  onChange: (value: string) => void;
+  onChange: (_value: string) => void;
   placeholder?: string;
 }
 

@@ -202,7 +202,7 @@ export default function NewSnippetPage() {
             <span className="text-brand">⚡</span>
             <span>Tayyor shablonlar (Quick Templates)</span>
           </div>
-          <span className="text-xs text-gray-400">Bosing va avtomatik to'ldiring</span>
+          <span className="text-xs text-gray-400">Bosing va avtomatik to&apos;ldiring</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
           {TEMPLATES.map((tpl, i) => (

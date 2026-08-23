@@ -167,10 +167,10 @@ export default function AiAssistant() {
                   <div className="prose prose-invert prose-sm max-w-none break-words leading-relaxed">
                     <ReactMarkdown
                       components={{
-                        code: ({node, ...props}: any) => (
+                        code: ({ node: _node, ...props }: any) => (
                           <code className="bg-black/50 text-emerald-400 px-1 py-0.5 rounded text-xs" {...props} />
                         ),
-                        pre: ({node, ...props}: any) => (
+                        pre: ({ node: _node, ...props }: any) => (
                           <pre className="bg-black/50 p-3 rounded-lg overflow-x-auto border border-white/10 my-2 text-xs" {...props} />
                         ),
                       }}

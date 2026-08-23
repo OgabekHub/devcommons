@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Calendar, Github, ArrowLeft, Eye, Heart, Users, UserPlus } from "lucide-react";
@@ -62,7 +63,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
       <div className="card flex flex-col items-center gap-6 p-8 text-center sm:flex-row sm:text-left">
         <div className="relative shrink-0">
           {user.avatar_url ? (
-            <img
+            <Image
               src={user.avatar_url}
               alt={user.github_username}
               width={96}

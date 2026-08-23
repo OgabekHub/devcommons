@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import Image from "next/image";
 import { Bell, CheckCheck, MessageSquare, UserPlus, Heart } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
@@ -40,6 +41,7 @@ export default function NotificationsBell() {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadNotifications = async () => {
@@ -187,9 +189,12 @@ export default function NotificationsBell() {
                 >
                   <div className="relative flex-shrink-0">
                     {item.actor?.avatar_url ? (
-                      <img
+                      <Image
                         src={item.actor.avatar_url}
-                        alt=""
+                        alt={item.actor.github_username || "User avatar"}
+                        width={32}
+                        height={32}
+                        unoptimized
                         className="h-8 w-8 rounded-full ring-1 ring-white/10"
                       />
                     ) : (

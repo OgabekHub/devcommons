@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Bookmark, Edit3, Check, X, Folder, Key, Copy, Plus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
@@ -93,6 +94,7 @@ export default function ProfilePage() {
     };
 
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGenerateKey = async () => {
@@ -151,11 +153,12 @@ export default function ProfilePage() {
       <div className="card flex flex-col items-center gap-6 p-8 text-center sm:flex-row sm:text-left">
         <div className="relative">
           {avatarUrl ? (
-              <img
+              <Image
                 src={avatarUrl}
-                alt={username}
+                alt={username || "User avatar"}
                 width={96}
                 height={96}
+                unoptimized
                 className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-white/10"
               />
           ) : (
@@ -500,7 +503,7 @@ export default function ProfilePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
               <div>
                 <h3 className="text-xl font-bold text-white mb-1">Developer API Keys</h3>
-                <p className="text-sm text-gray-400">DevCommons ma'lumotlarini o'z loyihalaringizda ishlating (Faqat GET so'rovlar uchun).</p>
+                <p className="text-sm text-gray-400">DevCommons ma&apos;lumotlarini o&apos;z loyihalaringizda ishlating (Faqat GET so&apos;rovlar uchun).</p>
               </div>
               <button 
                 onClick={handleGenerateKey}
@@ -518,7 +521,7 @@ export default function ProfilePage() {
                   <Check className="w-5 h-5 text-emerald-500" />
                   <span className="font-bold text-emerald-400">Yangi API Kalit yaratildi!</span>
                 </div>
-                <p className="text-sm text-gray-300 mb-3">Bu kalitni faqat hozir ko'ra olasiz. Iltimos nusxalab oling.</p>
+                <p className="text-sm text-gray-300 mb-3">Bu kalitni faqat hozir ko&apos;ra olasiz. Iltimos nusxalab oling.</p>
                 <div className="flex items-center gap-2">
                   <code className="flex-1 block p-3 rounded-lg bg-black border border-white/10 text-emerald-400 font-mono text-sm break-all">
                     {newKey}
@@ -537,7 +540,7 @@ export default function ProfilePage() {
               {apiKeys.length === 0 ? (
                 <div className="text-center p-8 border border-white/5 rounded-xl border-dashed">
                   <Key className="w-8 h-8 text-gray-500 mx-auto mb-3" />
-                  <p className="text-gray-400">Hozircha API kalitlar yo'q</p>
+                  <p className="text-gray-400">Hozircha API kalitlar yo&apos;q</p>
                 </div>
               ) : (
                 apiKeys.map((k) => (
@@ -546,7 +549,7 @@ export default function ProfilePage() {
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold text-white">{k.name}</span>
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 text-gray-400 uppercase tracking-wider">
-                          O'qish huquqi
+                          O&apos;qish huquqi
                         </span>
                       </div>
                       <code className="text-xs text-gray-500 font-mono">
@@ -561,7 +564,7 @@ export default function ProfilePage() {
                       onClick={() => handleDeleteKey(k.id)}
                       className="text-sm px-3 py-1.5 rounded-lg border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-colors"
                     >
-                      O'chirish
+                      O&apos;chirish
                     </button>
                   </div>
                 ))

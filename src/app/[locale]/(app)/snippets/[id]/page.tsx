@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -188,7 +189,13 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
           <span className="flex items-center gap-1.5">
             {snippet.author_avatar ? (
-              <img src={snippet.author_avatar} alt={snippet.author_name} className="h-5 w-5 rounded-full" />
+              <Image
+                src={snippet.author_avatar}
+                alt={snippet.author_name || "Author"}
+                width={20}
+                height={20}
+                className="h-5 w-5 rounded-full"
+              />
             ) : (
               <User className="h-4 w-4" />
             )}
@@ -256,7 +263,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           <span className="text-xl">🧪</span>
           <span>Agent Rule & Kod Sinov Laboratoriyasi</span>
         </div>
-        <p className="text-xs text-gray-400">Ushbu konfiguratsiya qoida yoki kod namunasi qanday ishlashini derazadan chiqmay simulyatorda sinab ko'ring:</p>
+        <p className="text-xs text-gray-400">Ushbu konfiguratsiya qoida yoki kod namunasi qanday ishlashini derazadan chiqmay simulyatorda sinab ko&apos;ring:</p>
         <PromptPlayground
           initialSystemPrompt={snippet.code}
           initialModel="Cursor Agent Rules Validator"

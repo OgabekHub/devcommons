@@ -43,6 +43,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
       setChecking(false);
     };
     init();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snippetId, promptId]);
 
   const handleToggle = async (e: React.MouseEvent) => {
