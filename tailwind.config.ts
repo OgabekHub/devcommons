@@ -69,6 +69,7 @@ const config: Config = {
         "shimmer":       "shimmer 2.5s linear infinite",
         "spin-slow":     "spin 12s linear infinite",
         "fadeIn":        "fadeIn 0.3s ease-out forwards",
+        "blink":         "blink 1s step-end infinite",
       },
       keyframes: {
         fadeIn: {
@@ -102,6 +103,10 @@ const config: Config = {
         shimmer: {
           "0%":   { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%":      { opacity: "0" },
         },
       },
       backgroundImage: {
