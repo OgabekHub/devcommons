@@ -39,6 +39,7 @@ export default async function PromptsPage({ params: { locale } }: { params: { lo
         .from("prompts")
         .select("*")
         .order("created_at", { ascending: false })
+        .limit(200)
         .returns<Prompt[]>();
 
       if (dbError) error = dbError.message;

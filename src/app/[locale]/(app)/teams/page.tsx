@@ -15,7 +15,7 @@ export default function TeamsPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] relative pb-24">
+    <div className="min-h-screen bg-surface relative pb-24">
       {/* Background gradients */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-500/10 blur-[120px] pointer-events-none" />

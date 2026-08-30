@@ -12,7 +12,7 @@ export default function MarketingLayout({
 }) {
   setRequestLocale(locale);
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col justify-between">
+    <div className="min-h-screen bg-surface flex flex-col justify-between">
       <div>
         <MarketingHeader />
         <main className="mx-auto max-w-[1440px] px-4 pt-0 pb-12 md:px-8 lg:px-12">

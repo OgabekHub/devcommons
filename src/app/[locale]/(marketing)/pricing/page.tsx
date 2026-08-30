@@ -10,7 +10,7 @@ export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#070709]">
+    <div className="min-h-screen bg-surface">
       {/* Subtle background texture */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-brand/5 rounded-full blur-[120px]" />
@@ -24,23 +24,23 @@ export default function PricingPage() {
             <Star className="h-3.5 w-3.5 text-brand fill-brand" />
             <span className="text-xs font-semibold text-brand tracking-wide uppercase">Simple Pricing</span>
           </div>
-          <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl mb-5 leading-[1.1]">
+          <h1 className="text-4xl font-black tracking-tight text-fg sm:text-5xl lg:text-6xl mb-5 leading-[1.1]">
             {t("title")}
           </h1>
-          <p className="text-base text-gray-400 leading-relaxed max-w-xl mx-auto">
+          <p className="text-base text-zinc-400 leading-relaxed max-w-xl mx-auto">
             {t("subtitle")}
           </p>
         </div>
 
         {/* ── Billing Toggle ── */}
         <div className="flex justify-center mb-16">
-          <div className="flex items-center p-1 rounded-full bg-white/5 border border-white/10 gap-1">
+          <div className="flex items-center p-1 rounded-full bg-ink/5 border border-line gap-1">
             <button
               onClick={() => setIsYearly(false)}
               className={`relative px-6 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
                 !isYearly
-                  ? "bg-white/10 text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-300"
+                  ? "bg-ink/10 text-fg shadow-sm"
+                  : "text-zinc-500 hover:text-zinc-300"
               }`}
             >
               {t("monthly")}
@@ -49,8 +49,8 @@ export default function PricingPage() {
               onClick={() => setIsYearly(true)}
               className={`relative px-6 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
                 isYearly
-                  ? "bg-white/10 text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-300"
+                  ? "bg-ink/10 text-fg shadow-sm"
+                  : "text-zinc-500 hover:text-zinc-300"
               }`}
             >
               {t("yearly")}
@@ -65,17 +65,17 @@ export default function PricingPage() {
         <div className="grid md:grid-cols-3 gap-5 items-start max-w-5xl mx-auto">
 
           {/* ── FREE ── */}
-          <div className="group relative rounded-2xl bg-[#0D0D12] border border-white/8 p-7 flex flex-col hover:border-white/15 transition-all duration-300 hover:bg-[#0F0F15]">
+          <div className="group relative rounded-2xl bg-surface-subtle border border-line p-7 flex flex-col hover:border-line-strong transition-all duration-300 hover:bg-surface-subtle">
             {/* tier label */}
             <div className="mb-6">
-              <span className="inline-block px-2.5 py-1 rounded-lg bg-white/5 text-gray-400 text-[11px] font-bold uppercase tracking-widest border border-white/8 mb-5">
+              <span className="inline-block px-2.5 py-1 rounded-lg bg-ink/5 text-zinc-400 text-[11px] font-bold uppercase tracking-widest border border-line mb-5">
                 {t("tier_free")}
               </span>
               <div className="flex items-end gap-1.5">
-                <span className="text-5xl font-black text-white leading-none">{t("tier_free_price")}</span>
-                <span className="text-gray-600 text-sm font-medium mb-1">/mo</span>
+                <span className="text-5xl font-black text-fg leading-none">{t("tier_free_price")}</span>
+                <span className="text-zinc-600 text-sm font-medium mb-1">/mo</span>
               </div>
-              <p className="mt-3 text-sm text-gray-500 leading-relaxed min-h-[40px]">
+              <p className="mt-3 text-sm text-zinc-500 leading-relaxed min-h-[40px]">
                 {t("tier_free_desc")}
               </p>
             </div>
@@ -83,16 +83,16 @@ export default function PricingPage() {
             {/* CTA */}
             <Link
               href="/auth"
-              className="w-full py-2.5 px-4 rounded-xl font-semibold text-sm text-center border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all mb-7 flex items-center justify-center gap-2 group/btn"
+              className="w-full py-2.5 px-4 rounded-xl font-semibold text-sm text-center border border-line bg-ink/5 hover:bg-ink/10 text-zinc-300 hover:text-fg transition-all mb-7 flex items-center justify-center gap-2 group/btn"
             >
               {t("btn_free")}
               <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all" />
             </Link>
 
             {/* Divider */}
-            <div className="border-t border-white/5 pt-6">
-              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-widest mb-4">What&apos;s included</p>
-              <div className="flex flex-col gap-3 text-sm text-gray-400">
+            <div className="border-t border-line pt-6">
+              <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-4">What&apos;s included</p>
+              <div className="flex flex-col gap-3 text-sm text-zinc-400">
                 <FeatureRow icon="check">{t("feature_open_source")}</FeatureRow>
                 <FeatureRow icon="check">{t("feature_public_pull")}</FeatureRow>
                 <FeatureRow icon="check">{t("feature_community")}</FeatureRow>
@@ -101,7 +101,7 @@ export default function PricingPage() {
           </div>
 
           {/* ── PRO (featured) ── */}
-          <div className="group relative rounded-2xl bg-[#0E0B1A] border border-brand/25 p-7 flex flex-col hover:border-brand/40 transition-all duration-300 shadow-[0_0_60px_rgba(124,92,252,0.08)] hover:shadow-[0_0_80px_rgba(124,92,252,0.14)]">
+          <div className="group relative rounded-2xl bg-[#0E0B1A] border border-brand/25 p-7 flex flex-col hover:border-brand/40 transition-all duration-300 shadow-[0_0_60px_rgba(107,78,255,0.08)] hover:shadow-[0_0_80px_rgba(107,78,255,0.14)]">
             {/* Most popular badge — positioned INSIDE, not outside */}
             <div className="flex items-start justify-between mb-6">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand/15 text-brand text-[11px] font-bold uppercase tracking-widest border border-brand/20">
@@ -115,29 +115,29 @@ export default function PricingPage() {
 
             <div className="mb-6 -mt-2">
               <div className="flex items-end gap-1.5">
-                <span className="text-5xl font-black text-white leading-none">
+                <span className="text-5xl font-black text-fg leading-none">
                   {isYearly ? "$9" : t("tier_pro_price")}
                 </span>
-                <span className="text-gray-600 text-sm font-medium mb-1">/mo</span>
+                <span className="text-zinc-600 text-sm font-medium mb-1">/mo</span>
               </div>
               {isYearly && (
                 <p className="text-xs text-emerald-400 font-semibold mt-1">Billed $108/year · Save $36</p>
               )}
-              <p className="mt-3 text-sm text-gray-400 leading-relaxed min-h-[40px]">
+              <p className="mt-3 text-sm text-zinc-400 leading-relaxed min-h-[40px]">
                 {t("tier_pro_desc")}
               </p>
             </div>
 
             {/* CTA */}
-            <button className="w-full py-2.5 px-4 rounded-xl font-bold text-sm text-center bg-brand hover:bg-brand/90 text-white transition-all mb-7 flex items-center justify-center gap-2 group/btn shadow-[0_4px_20px_rgba(124,92,252,0.3)]">
+            <button className="btn-primary w-full mb-7 group/btn">
               <span>{t("btn_pro")}</span>
               <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-0.5 transition-transform" />
             </button>
 
             {/* Features */}
-            <div className="border-t border-white/8 pt-6">
-              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-widest mb-4">Everything in Free, plus</p>
-              <div className="flex flex-col gap-3 text-sm text-gray-300">
+            <div className="border-t border-line pt-6">
+              <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-4">Everything in Free, plus</p>
+              <div className="flex flex-col gap-3 text-sm text-zinc-300">
                 <FeatureRow icon="sparkle" accent="brand">{t("feature_private_rules")}</FeatureRow>
                 <FeatureRow icon="check" accent="brand">{t("feature_verified_market")}</FeatureRow>
                 <FeatureRow icon="check" accent="brand">{t("feature_mcp_advanced")}</FeatureRow>
@@ -154,15 +154,15 @@ export default function PricingPage() {
                 {t("tier_team")}
               </span>
               <div className="flex items-end gap-1.5">
-                <span className="text-5xl font-black text-white leading-none">
+                <span className="text-5xl font-black text-fg leading-none">
                   {isYearly ? "$39" : t("tier_team_price")}
                 </span>
-                <span className="text-gray-600 text-sm font-medium mb-1">/mo/user</span>
+                <span className="text-zinc-600 text-sm font-medium mb-1">/mo/user</span>
               </div>
               {isYearly && (
                 <p className="text-xs text-emerald-400 font-semibold mt-1">Billed annually · Save 20%</p>
               )}
-              <p className="mt-3 text-sm text-gray-500 leading-relaxed min-h-[40px]">
+              <p className="mt-3 text-sm text-zinc-500 leading-relaxed min-h-[40px]">
                 {t("tier_team_desc")}
               </p>
             </div>
@@ -177,9 +177,9 @@ export default function PricingPage() {
             </Link>
 
             {/* Features */}
-            <div className="border-t border-white/5 pt-6">
-              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-widest mb-4">Everything in Pro, plus</p>
-              <div className="flex flex-col gap-3 text-sm text-gray-400">
+            <div className="border-t border-line pt-6">
+              <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-4">Everything in Pro, plus</p>
+              <div className="flex flex-col gap-3 text-sm text-zinc-400">
                 <FeatureRow icon="sparkle" accent="cyan">{t("feature_team_space")}</FeatureRow>
                 <FeatureRow icon="check" accent="cyan">{t("feature_rbac")}</FeatureRow>
                 <FeatureRow icon="check" accent="cyan">{t("feature_priority_support")}</FeatureRow>
@@ -190,19 +190,19 @@ export default function PricingPage() {
         </div>
 
         {/* ── Trust strip ── */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-gray-600 text-xs font-medium">
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-zinc-600 text-xs font-medium">
           <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-gray-700" />
+            <Shield className="h-4 w-4 text-zinc-700" />
             <span>No credit card required</span>
           </div>
-          <div className="w-px h-4 bg-white/10 hidden sm:block" />
+          <div className="w-px h-4 bg-ink/10 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-gray-700" />
+            <CheckCircle2 className="h-4 w-4 text-zinc-700" />
             <span>Cancel anytime</span>
           </div>
-          <div className="w-px h-4 bg-white/10 hidden sm:block" />
+          <div className="w-px h-4 bg-ink/10 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-gray-700" />
+            <Zap className="h-4 w-4 text-zinc-700" />
             <span>Instant access after upgrade</span>
           </div>
         </div>
@@ -224,7 +224,7 @@ function FeatureRow({
   const colorMap = {
     brand: "text-brand",
     cyan: "text-cyan-400",
-    default: "text-gray-600",
+    default: "text-zinc-600",
   };
   const color = accent ? colorMap[accent] : colorMap.default;
 

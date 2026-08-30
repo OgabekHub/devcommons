@@ -88,16 +88,16 @@ export default async function WorkflowsPage({ params: { locale } }: Props) {
   return (
     <div className="container mx-auto max-w-[1400px] px-2 md:px-6 py-6 pb-20">
       {/* Compact Hero Section */}
-      <div className="mb-10 text-center md:text-left bg-gradient-to-r from-purple-900/20 via-[#101422] to-indigo-950/20 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="mb-10 text-center md:text-left bg-gradient-to-r from-purple-900/20 via-[#101422] to-indigo-950/20 border border-line rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="inline-flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-300 mb-3">
             <Sparkles className="h-3.5 w-3.5 animate-spin text-purple-400" />
             <span>Next-Gen Agent Architecture Hub</span>
           </div>
-          <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h1 className="text-2xl font-black tracking-tight text-fg sm:text-4xl lg:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-gray-400">
+          <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-zinc-400">
             {t("subtitle")}
           </p>
         </div>
@@ -105,7 +105,7 @@ export default async function WorkflowsPage({ params: { locale } }: Props) {
         <div className="flex flex-wrap md:flex-col shrink-0 gap-3 justify-center">
           <Link
             href="/playground"
-            className="flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/15 px-5 py-3 text-xs sm:text-sm font-bold text-white transition hover:border-brand hover:bg-white/20 shadow-md"
+            className="flex items-center justify-center gap-2 rounded-xl bg-ink/10 border border-line-strong px-5 py-3 text-xs sm:text-sm font-bold text-fg transition hover:border-brand hover:bg-ink/20 shadow-md"
           >
             <span>🧪 Open Live Simulator</span>
             <ArrowUpRight className="h-4 w-4 text-brand" />

@@ -17,17 +17,17 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface px-4">
       <div className="max-w-md w-full text-center">
         <div className="mb-8 inline-flex rounded-full bg-red-500/10 p-4">
           <AlertTriangle className="h-12 w-12 text-red-500" />
         </div>
         
-        <h2 className="mb-4 text-2xl font-bold text-white">
+        <h2 className="mb-4 text-2xl font-bold text-fg">
           Xatolik yuz berdi
         </h2>
         
-        <p className="mb-8 text-gray-400">
+        <p className="mb-8 text-zinc-400">
           Kutilmagan xatolik yuz berdi. Iltimos, qaytadan urinib ko&apos;ring yoki bosh sahifaga qayting.
         </p>
 
@@ -51,7 +51,7 @@ export default function Error({
           
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-ink/5 px-6 py-3 text-sm font-semibold text-fg transition-all hover:bg-ink/10"
           >
             <Home className="h-4 w-4" />
             Bosh sahifa

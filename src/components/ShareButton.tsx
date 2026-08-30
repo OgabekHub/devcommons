@@ -61,7 +61,7 @@ export default function ShareButton({ title, url }: Props) {
     <div className="relative inline-block text-left" ref={menuRef}>
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-300 transition-colors duration-200 hover:bg-white/10 hover:text-white bg-white/5 border border-white/10"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-ink/10 hover:text-fg bg-ink/5 border border-line"
         title={t("share")}
       >
         <Share2 className="h-4 w-4 shrink-0 text-brand" />
@@ -69,36 +69,36 @@ export default function ShareButton({ title, url }: Props) {
       </button>
 
       {showMenu && (
-        <div className="absolute right-0 top-full z-20 mt-2 w-52 rounded-xl border border-white/10 bg-[#111111] p-2 shadow-2xl backdrop-blur-xl">
+        <div className="absolute right-0 top-full z-20 mt-2 w-52 rounded-xl border border-line bg-surface-subtle p-2 shadow-2xl backdrop-blur-xl">
           <button
             onClick={handleTelegramShare}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-[#0088cc]/15 hover:text-[#0088cc]"
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-[#0088cc]/15 hover:text-[#0088cc]"
           >
             <Send className="h-4 w-4 text-[#0088cc]" />
             Telegram
           </button>
           <button
             onClick={handleTwitterShare}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/15 hover:text-white"
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-ink/15 hover:text-fg"
           >
-            <Twitter className="h-4 w-4 text-white" />
+            <Twitter className="h-4 w-4 text-fg" />
             X (Twitter)
           </button>
           <button
             onClick={handleLinkedInShare}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-[#0A66C2]/15 hover:text-[#0A66C2]"
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-[#0A66C2]/15 hover:text-[#0A66C2]"
           >
             <Linkedin className="h-4 w-4 text-[#0A66C2]" />
             LinkedIn
           </button>
           
-          <div className="my-1 border-t border-white/10" />
+          <div className="my-1 border-t border-line" />
 
           <button
             onClick={handleCopyLink}
-            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-brand/10 hover:text-brand"
+            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-brand/10 hover:text-brand"
           >
-            {copied ? <Check className="h-4 w-4 text-green-400" /> : <LinkIcon className="h-4 w-4 text-gray-400" />}
+            {copied ? <Check className="h-4 w-4 text-green-400" /> : <LinkIcon className="h-4 w-4 text-zinc-400" />}
             {copied ? t("copied") : t("copy_link")}
           </button>
         </div>

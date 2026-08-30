@@ -52,7 +52,7 @@ export default function AuthPage() {
         {/* Back link */}
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+          className="group inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
         >
           <ArrowLeft className="h-4 w-4 transition-transform " />
           {t("back_home")}
@@ -66,7 +66,7 @@ export default function AuthPage() {
           <h1 className="animate-fade-in-up text-2xl font-bold sm:text-3xl">
             {t("title")}
           </h1>
-          <p className="animate-fade-in-up mt-3 text-gray-500" style={{ animationDelay: "0.1s" }}>
+          <p className="animate-fade-in-up mt-3 text-zinc-500" style={{ animationDelay: "0.1s" }}>
             {t("subtitle")}
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function AuthPage() {
             type="button"
             onClick={handleGitHubLogin}
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-gray-900 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-800 hover:shadow-xl   disabled:opacity-70 disabled:cursor-not-allowed "
+            className="group flex w-full items-center justify-center gap-3 rounded-xl bg-zinc-900 px-6 py-4 text-base font-semibold text-fg transition-all duration-300 hover:bg-zinc-800 hover:shadow-xl   disabled:opacity-70 disabled:cursor-not-allowed "
           >
             {loading ? (
               <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -98,17 +98,17 @@ export default function AuthPage() {
           {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10" />
+              <div className="w-full border-t border-line" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[#111111] px-4 text-xs font-medium text-gray-400">
+              <span className="bg-surface-subtle px-4 text-xs font-medium text-zinc-400">
                 {t("or")}
               </span>
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/5 bg-white/5 p-4">
-            <p className="text-center text-sm text-gray-500">
+          <div className="rounded-xl border border-line bg-ink/5 p-4">
+            <p className="text-center text-sm text-zinc-500">
               {t("no_login_desc")}
             </p>
             <div className="mt-3 flex gap-2">
@@ -124,21 +124,21 @@ export default function AuthPage() {
 
         {/* Trust points */}
         <div className="animate-fade-in grid grid-cols-1 sm:grid-cols-3 gap-3" style={{ animationDelay: "0.35s" }}>
-          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
+          <div className="rounded-xl border border-line bg-surface-subtle p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-ink/5">
             <Shield className="mx-auto mb-1.5 h-4 w-4 text-brand" />
-            <span className="text-[11px] font-medium text-gray-500">
+            <span className="text-[11px] font-medium text-zinc-500">
               {t("trust_oauth")}
             </span>
           </div>
-          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
+          <div className="rounded-xl border border-line bg-surface-subtle p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-ink/5">
             <Mail className="mx-auto mb-1.5 h-4 w-4 text-brand" />
-            <span className="text-[11px] font-medium text-gray-500">
+            <span className="text-[11px] font-medium text-zinc-500">
               {t("trust_no_email")}
             </span>
           </div>
-          <div className="rounded-xl border border-white/5 bg-[#111111] p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-white/5">
+          <div className="rounded-xl border border-line bg-surface-subtle p-3 text-center transition-all duration-200 hover:border-brand/20 hover:shadow-sm hover:bg-ink/5">
             <Trash2 className="mx-auto mb-1.5 h-4 w-4 text-brand" />
-            <span className="text-[11px] font-medium text-gray-500">
+            <span className="text-[11px] font-medium text-zinc-500">
               {t("trust_delete")}
             </span>
           </div>

@@ -6,6 +6,7 @@ import { User, Code2, Sparkles, LogOut, Github, Eye, Heart, Users, UserPlus, Boo
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import VoteButton from "@/components/VoteButton";
 import UserBadges from "@/components/UserBadges";
@@ -33,13 +34,14 @@ export default function ProfilePage() {
   const [bioInput, setBioInput] = useState("");
   const t = useTranslations("Profile");
   const locale = useLocale();
+  const router = useRouter();
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        window.location.href = `/${locale}/auth`;
+        router.push("/auth");
         return;
       }
       setUser(user);
@@ -101,11 +103,19 @@ export default function ProfilePage() {
     if (!user) return;
     setGeneratingKey(true);
     const rawKey = "dc_" + crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "").substring(0, 8);
-    
+
+    // Kalitni FAQAT sha256 hash ko'rinishida saqlaymiz (server route ham
+    // sha256(key) bilan solishtiradi). Xom kalit foydalanuvchiga bir marta ko'rsatiladi.
+    const encoded = new TextEncoder().encode(rawKey);
+    const digest = await crypto.subtle.digest("SHA-256", encoded);
+    const keyHash = Array.from(new Uint8Array(digest))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+
     const { data } = await supabase.from("api_keys").insert({
       user_id: user.id,
       name: "Default Key",
-      key_hash: rawKey
+      key_hash: keyHash
     }).select().single();
 
     if (data) {
@@ -122,7 +132,8 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = `/${locale}`;
+    router.push("/");
+    router.refresh();
   };
 
   const handleSaveBio = async () => {
@@ -159,21 +170,21 @@ export default function ProfilePage() {
                 width={96}
                 height={96}
                 unoptimized
-                className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-white/10"
+                className="h-24 w-24 rounded-2xl shadow-lg shadow-brand/10 ring-2 ring-ink/10"
               />
           ) : (
             <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20">
               <User className="h-12 w-12 text-brand" />
             </div>
           )}
-          <div className="absolute -bottom-2 -right-2 rounded-lg bg-[#111] p-1.5 border border-white/10">
-            <Github className="h-4 w-4 text-white" />
+          <div className="absolute -bottom-2 -right-2 rounded-lg bg-surface-subtle p-1.5 border border-line">
+            <Github className="h-4 w-4 text-fg" />
           </div>
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-white truncate">{username}</h1>
-          {email && <p className="text-sm text-gray-500">{email}</p>}
+          <h1 className="text-2xl font-bold text-fg truncate">{username}</h1>
+          {email && <p className="text-sm text-zinc-500">{email}</p>}
 
           {/* Bio */}
           <div className="mt-2">
@@ -185,20 +196,20 @@ export default function ProfilePage() {
                   onChange={(e) => setBioInput(e.target.value)}
                   placeholder={t("bio_placeholder")}
                   maxLength={160}
-                  className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white placeholder:text-gray-500 focus:border-brand focus:outline-none"
+                  className="flex-1 rounded-lg border border-line bg-ink/5 px-3 py-1.5 text-sm text-fg placeholder:text-zinc-500 focus:border-brand focus:outline-none"
                   autoFocus
                 />
                 <button onClick={handleSaveBio} className="rounded-lg bg-brand/20 p-2.5 text-brand hover:bg-brand/30 transition-colors" aria-label="Save bio">
                   <Check className="h-4 w-4" />
                 </button>
-                <button onClick={() => { setEditingBio(false); setBioInput(bio); }} className="rounded-lg bg-white/5 p-2.5 text-gray-400 hover:bg-white/10 transition-colors" aria-label="Cancel editing">
+                <button onClick={() => { setEditingBio(false); setBioInput(bio); }} className="rounded-lg bg-ink/5 p-2.5 text-zinc-400 hover:bg-ink/10 transition-colors" aria-label="Cancel editing">
                   <X className="h-4 w-4" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => setEditingBio(true)}
-                className="group inline-flex items-center gap-1.5 text-sm text-gray-400 transition-colors hover:text-brand"
+                className="group inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-brand"
               >
                 {bio ? (
                   <span>{bio}</span>
@@ -239,23 +250,23 @@ export default function ProfilePage() {
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-4 text-center">
           <Eye className="mx-auto h-5 w-5 text-brand mb-2" />
-          <p className="text-2xl font-bold text-white">{stats.totalViews}</p>
-          <p className="text-xs text-gray-500">{t("views")}</p>
+          <p className="text-2xl font-bold text-fg">{stats.totalViews}</p>
+          <p className="text-xs text-zinc-500">{t("views")}</p>
         </div>
         <div className="card p-4 text-center">
           <Heart className="mx-auto h-5 w-5 text-red-500 mb-2" />
-          <p className="text-2xl font-bold text-white">{stats.totalVotes}</p>
-          <p className="text-xs text-gray-500">{t("votes")}</p>
+          <p className="text-2xl font-bold text-fg">{stats.totalVotes}</p>
+          <p className="text-xs text-zinc-500">{t("votes")}</p>
         </div>
         <div className="card p-4 text-center">
           <Users className="mx-auto h-5 w-5 text-blue-500 mb-2" />
-          <p className="text-2xl font-bold text-white">{stats.followers}</p>
-          <p className="text-xs text-gray-500">{t("followers")}</p>
+          <p className="text-2xl font-bold text-fg">{stats.followers}</p>
+          <p className="text-xs text-zinc-500">{t("followers")}</p>
         </div>
         <div className="card p-4 text-center">
           <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-2" />
-          <p className="text-2xl font-bold text-white">{stats.following}</p>
-          <p className="text-xs text-gray-500">{t("following")}</p>
+          <p className="text-2xl font-bold text-fg">{stats.following}</p>
+          <p className="text-xs text-zinc-500">{t("following")}</p>
         </div>
       </div>
 
@@ -272,13 +283,13 @@ export default function ProfilePage() {
       />
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-white/10">
+      <div className="flex gap-2 border-b border-line">
         <button
           onClick={() => setTab("snippets")}
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "snippets"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-400 hover:text-gray-200"
+              : "border-transparent text-zinc-400 hover:text-zinc-200"
           }`}
         >
           <Code2 className="h-4 w-4" />
@@ -289,7 +300,7 @@ export default function ProfilePage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "prompts"
               ? "border-brand text-brand"
-              : "border-transparent text-gray-400 hover:text-gray-200"
+              : "border-transparent text-zinc-400 hover:text-zinc-200"
           }`}
         >
           <Sparkles className="h-4 w-4" />
@@ -300,7 +311,7 @@ export default function ProfilePage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "saved"
               ? "border-amber-400 text-amber-400"
-              : "border-transparent text-gray-400 hover:text-gray-200"
+              : "border-transparent text-zinc-400 hover:text-zinc-200"
           }`}
         >
           <Bookmark className="h-4 w-4" />
@@ -311,7 +322,7 @@ export default function ProfilePage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "collections"
               ? "border-blue-400 text-blue-400"
-              : "border-transparent text-gray-400 hover:text-gray-200"
+              : "border-transparent text-zinc-400 hover:text-zinc-200"
           }`}
         >
           <Folder className="h-4 w-4" />
@@ -322,7 +333,7 @@ export default function ProfilePage() {
           className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             tab === "api"
               ? "border-emerald-400 text-emerald-400"
-              : "border-transparent text-gray-400 hover:text-gray-200"
+              : "border-transparent text-zinc-400 hover:text-zinc-200"
           }`}
         >
           <Key className="h-4 w-4" />
@@ -334,9 +345,9 @@ export default function ProfilePage() {
       {tab === "snippets" && (
         <div>
           {snippets.length === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Code2 className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("no_snippets")}</p>
+            <div className="card border-dashed border-line p-10 text-center">
+              <Code2 className="mx-auto mb-3 h-8 w-8 text-zinc-500" />
+              <p className="text-zinc-400">{t("no_snippets")}</p>
               <Link href="/snippets/new" className="btn-primary mt-4">
                 {t("btn_add_snippet")}
               </Link>
@@ -350,13 +361,13 @@ export default function ProfilePage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
+                    <h3 className="font-semibold text-fg transition-colors group-hover:text-brand">{s.title}</h3>
                     <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
-                  {s.description && <p className="text-sm text-gray-400 line-clamp-2">{s.description}</p>}
+                  {s.description && <p className="text-sm text-zinc-400 line-clamp-2">{s.description}</p>}
                   <div className="mt-3 flex items-center gap-3">
                     <VoteButton id={s.id} type="snippet" initialVotes={s.votes ?? 0} />
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-zinc-500">
                       {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
@@ -371,9 +382,9 @@ export default function ProfilePage() {
       {tab === "prompts" && (
         <div>
           {prompts.length === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Sparkles className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("no_prompts")}</p>
+            <div className="card border-dashed border-line p-10 text-center">
+              <Sparkles className="mx-auto mb-3 h-8 w-8 text-zinc-500" />
+              <p className="text-zinc-400">{t("no_prompts")}</p>
               <Link href="/prompts/new" className="btn-primary mt-4">
                 {t("btn_add_prompt")}
               </Link>
@@ -387,13 +398,13 @@ export default function ProfilePage() {
                   className="card card-shine group block"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
+                    <h3 className="font-semibold text-fg transition-colors group-hover:text-brand">{p.title}</h3>
                     <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
-                  <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
+                  <p className="text-sm text-zinc-400 line-clamp-2">{p.content}</p>
                   <div className="mt-3 flex items-center gap-3">
                     <VoteButton id={p.id} type="prompt" initialVotes={p.votes ?? 0} />
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-zinc-500">
                       {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
@@ -408,9 +419,9 @@ export default function ProfilePage() {
       {tab === "saved" && (
         <div>
           {savedCount === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Bookmark className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("no_saved")}</p>
+            <div className="card border-dashed border-line p-10 text-center">
+              <Bookmark className="mx-auto mb-3 h-8 w-8 text-zinc-500" />
+              <p className="text-zinc-400">{t("no_saved")}</p>
               <Link href="/snippets" className="btn-primary mt-4">
                 {t("discover")}
               </Link>
@@ -428,11 +439,11 @@ export default function ProfilePage() {
                     <span className="text-[10px] font-medium text-brand uppercase tracking-wide">Snippet</span>
                   </div>
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{s.title}</h3>
+                    <h3 className="font-semibold text-fg transition-colors group-hover:text-brand">{s.title}</h3>
                     <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
-                  {s.description && <p className="text-sm text-gray-400 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-gray-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  {s.description && <p className="text-sm text-zinc-400 line-clamp-2">{s.description}</p>}
+                  <p className="mt-2 text-xs text-zinc-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
               {bookmarkedPrompts.map((p: any) => (
@@ -446,11 +457,11 @@ export default function ProfilePage() {
                     <span className="text-[10px] font-medium text-violet-400 uppercase tracking-wide">Prompt</span>
                   </div>
                   <div className="mb-2 flex items-start justify-between">
-                    <h3 className="font-semibold text-white transition-colors group-hover:text-brand">{p.title}</h3>
+                    <h3 className="font-semibold text-fg transition-colors group-hover:text-brand">{p.title}</h3>
                     <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
-                  <p className="text-sm text-gray-400 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-gray-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="text-sm text-zinc-400 line-clamp-2">{p.content}</p>
+                  <p className="mt-2 text-xs text-zinc-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
                 </Link>
               ))}
             </div>
@@ -462,9 +473,9 @@ export default function ProfilePage() {
       {tab === "collections" && (
         <div>
           {collections.length === 0 ? (
-            <div className="card border-dashed border-white/10 p-10 text-center">
-              <Folder className="mx-auto mb-3 h-8 w-8 text-gray-500" />
-              <p className="text-gray-400">{t("no_collections", { fallback: "Hali to'plamlar yo'q" })}</p>
+            <div className="card border-dashed border-line p-10 text-center">
+              <Folder className="mx-auto mb-3 h-8 w-8 text-zinc-500" />
+              <p className="text-zinc-400">{t("no_collections", { fallback: "Hali to'plamlar yo'q" })}</p>
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -479,13 +490,13 @@ export default function ProfilePage() {
                       <Folder className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white transition-colors group-hover:text-blue-400 line-clamp-1">{c.title}</h3>
-                      <p className="text-xs text-gray-500">{c.is_public ? "Public" : "Private"}</p>
+                      <h3 className="font-semibold text-fg transition-colors group-hover:text-blue-400 line-clamp-1">{c.title}</h3>
+                      <p className="text-xs text-zinc-500">{c.is_public ? "Public" : "Private"}</p>
                     </div>
                   </div>
-                  {c.description && <p className="mb-4 text-sm text-gray-400 line-clamp-2">{c.description}</p>}
-                  <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs text-gray-500">
+                  {c.description && <p className="mb-4 text-sm text-zinc-400 line-clamp-2">{c.description}</p>}
+                  <div className="mt-auto pt-4 border-t border-line flex items-center justify-between">
+                    <span className="text-xs text-zinc-500">
                       {new Date(c.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
@@ -502,8 +513,8 @@ export default function ProfilePage() {
           <div className="card p-6 border-emerald-500/20 bg-emerald-500/5">
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-6">
               <div>
-                <h3 className="text-xl font-bold text-white mb-1">Developer API Keys</h3>
-                <p className="text-sm text-gray-400">DevCommons ma&apos;lumotlarini o&apos;z loyihalaringizda ishlating (Faqat GET so&apos;rovlar uchun).</p>
+                <h3 className="text-xl font-bold text-fg mb-1">Developer API Keys</h3>
+                <p className="text-sm text-zinc-400">DevCommons ma&apos;lumotlarini o&apos;z loyihalaringizda ishlating (Faqat GET so&apos;rovlar uchun).</p>
               </div>
               <button 
                 onClick={handleGenerateKey}
@@ -521,14 +532,14 @@ export default function ProfilePage() {
                   <Check className="w-5 h-5 text-emerald-500" />
                   <span className="font-bold text-emerald-400">Yangi API Kalit yaratildi!</span>
                 </div>
-                <p className="text-sm text-gray-300 mb-3">Bu kalitni faqat hozir ko&apos;ra olasiz. Iltimos nusxalab oling.</p>
+                <p className="text-sm text-zinc-300 mb-3">Bu kalitni faqat hozir ko&apos;ra olasiz. Iltimos nusxalab oling.</p>
                 <div className="flex items-center gap-2">
-                  <code className="flex-1 block p-3 rounded-lg bg-black border border-white/10 text-emerald-400 font-mono text-sm break-all">
+                  <code className="flex-1 block p-3 rounded-lg bg-black border border-line text-emerald-400 font-mono text-sm break-all">
                     {newKey}
                   </code>
                   <button 
                     onClick={() => navigator.clipboard.writeText(newKey)}
-                    className="p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition-colors"
+                    className="p-3 rounded-lg bg-ink/5 hover:bg-ink/10 border border-line text-zinc-300 transition-colors"
                   >
                     <Copy className="w-5 h-5" />
                   </button>
@@ -538,24 +549,24 @@ export default function ProfilePage() {
 
             <div className="space-y-4">
               {apiKeys.length === 0 ? (
-                <div className="text-center p-8 border border-white/5 rounded-xl border-dashed">
-                  <Key className="w-8 h-8 text-gray-500 mx-auto mb-3" />
-                  <p className="text-gray-400">Hozircha API kalitlar yo&apos;q</p>
+                <div className="text-center p-8 border border-line rounded-xl border-dashed">
+                  <Key className="w-8 h-8 text-zinc-500 mx-auto mb-3" />
+                  <p className="text-zinc-400">Hozircha API kalitlar yo&apos;q</p>
                 </div>
               ) : (
                 apiKeys.map((k) => (
-                  <div key={k.id} className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 rounded-xl border border-white/5 bg-black/40">
+                  <div key={k.id} className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 rounded-xl border border-line bg-black/40">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-white">{k.name}</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 text-gray-400 uppercase tracking-wider">
+                        <span className="font-semibold text-fg">{k.name}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-ink/5 text-zinc-400 uppercase tracking-wider">
                           O&apos;qish huquqi
                         </span>
                       </div>
-                      <code className="text-xs text-gray-500 font-mono">
+                      <code className="text-xs text-zinc-500 font-mono">
                         {k.key_hash.substring(0, 10)}...{k.key_hash.substring(k.key_hash.length - 4)}
                       </code>
-                      <p className="text-xs text-gray-600 mt-2">
+                      <p className="text-xs text-zinc-600 mt-2">
                         Yaratilgan: {new Date(k.created_at).toLocaleDateString()}
                         {k.last_used_at && ` • So'nggi marta ishlatilgan: ${new Date(k.last_used_at).toLocaleDateString()}`}
                       </p>

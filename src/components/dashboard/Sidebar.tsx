@@ -19,6 +19,7 @@ import {
   X,
   ChevronRight,
   ExternalLink,
+  Gem,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -77,7 +78,7 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
           <span className="text-xs font-bold tracking-wider text-zinc-500 uppercase">Menu</span>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-zinc-500 hover:bg-white/6 hover:text-white transition-colors"
+            className="rounded-lg p-1.5 text-zinc-500 hover:bg-ink/6 hover:text-fg transition-colors"
             aria-label="Close menu"
           >
             <X className="h-4 w-4" />
@@ -101,8 +102,8 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
                     onClick={onClose}
                     className={`group flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150 border ${
                       isActive
-                        ? "bg-white/6 text-white border-white/10"
-                        : "border-transparent text-zinc-500 hover:bg-white/4 hover:text-zinc-200"
+                        ? "bg-ink/6 text-fg border-line"
+                        : "border-transparent text-zinc-500 hover:bg-ink/4 hover:text-zinc-200"
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -116,7 +117,7 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
 
                     <div className="flex items-center gap-1.5 shrink-0">
                       {"badge" in item && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-white/6 text-zinc-500 border border-white/8">
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-ink/6 text-zinc-500 border border-line">
                           {(item as any).badge}
                         </span>
                       )}
@@ -133,15 +134,15 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
       </div>
 
       {/* Bottom cards */}
-      <div className="mt-6 space-y-2 pt-4 border-t border-white/6 px-1">
+      <div className="mt-6 space-y-2 pt-4 border-t border-line px-1">
         <Link
           href={"/pricing" as any}
-          className="flex items-center justify-between rounded-lg p-3 bg-white/3 border border-white/7 hover:bg-white/5 hover:border-white/12 transition-all group"
+          className="flex items-center justify-between rounded-lg p-3 bg-ink/3 border border-line hover:bg-ink/5 hover:border-line-strong transition-all group"
         >
           <div className="flex items-center gap-2.5">
-            <span className="text-base">💎</span>
+            <Gem className="h-4 w-4 text-brand" />
             <div>
-              <p className="text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors">
+              <p className="text-xs font-semibold text-zinc-300 group-hover:text-fg transition-colors">
                 {locale === "uz" ? "Pro & B2B Tariflar" : "Pro & B2B Tiers"}
               </p>
               <p className="text-[10px] text-zinc-600">
@@ -168,7 +169,7 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block w-60 xl:w-64 shrink-0 border-r border-white/7 bg-[#0f0f12] overflow-y-auto custom-scrollbar">
+      <aside className="hidden lg:block w-60 xl:w-64 shrink-0 border-r border-line bg-surface-subtle overflow-y-auto custom-scrollbar">
         {sidebarContent}
       </aside>
 
@@ -182,7 +183,7 @@ export default function Sidebar({ mobileOpen = false, onClose }: SidebarProps) {
 
       {/* Mobile drawer */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 w-64 bg-[#0f0f12] border-r border-white/7 shadow-overlay transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto custom-scrollbar ${
+        className={`fixed top-0 left-0 bottom-0 z-50 w-64 bg-surface-subtle border-r border-line shadow-overlay transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto custom-scrollbar ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

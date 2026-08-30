@@ -105,17 +105,17 @@ export default function NotificationsBell() {
 
     switch (item.type) {
       case "vote_snippet":
-        return <span><strong className="text-white">{actorName}</strong> kodingizga vote berdi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> kodingizga vote berdi</span>;
       case "vote_prompt":
-        return <span><strong className="text-white">{actorName}</strong> promptingizga vote berdi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> promptingizga vote berdi</span>;
       case "comment_snippet":
-        return <span><strong className="text-white">{actorName}</strong> kodingizga izoh qoldirdi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> kodingizga izoh qoldirdi</span>;
       case "comment_prompt":
-        return <span><strong className="text-white">{actorName}</strong> promptingizga izoh qoldirdi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> promptingizga izoh qoldirdi</span>;
       case "follow":
-        return <span><strong className="text-white">{actorName}</strong> sizga obuna bo&apos;ldi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> sizga obuna bo&apos;ldi</span>;
       default:
-        return <span><strong className="text-white">{actorName}</strong> siz bilan bog&apos;landi</span>;
+        return <span><strong className="text-fg">{actorName}</strong> siz bilan bog&apos;landi</span>;
     }
   };
 
@@ -130,7 +130,7 @@ export default function NotificationsBell() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative rounded-xl border border-white/10 bg-white/5 p-2 text-gray-400 transition-all hover:border-brand/30 hover:bg-white/10 hover:text-white"
+        className="relative rounded-xl border border-line bg-ink/5 p-2 text-zinc-400 transition-all hover:border-brand/30 hover:bg-ink/10 hover:text-fg"
         aria-label="Notifications"
       >
         <Bell className="h-5 w-5" />
@@ -142,12 +142,12 @@ export default function NotificationsBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-80 sm:w-96 overflow-hidden rounded-2xl border border-white/10 bg-[#111] shadow-2xl shadow-black/80 backdrop-blur-xl">
+        <div className="absolute right-0 top-full z-50 mt-2 w-80 sm:w-96 overflow-hidden rounded-2xl border border-line bg-surface-subtle shadow-2xl shadow-black/80 backdrop-blur-xl">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 bg-[#161616]">
+          <div className="flex items-center justify-between border-b border-line px-4 py-3 bg-surface-overlay">
             <div className="flex items-center gap-2">
               <Bell className="h-4 w-4 text-brand" />
-              <h3 className="text-sm font-semibold text-white">Bildirishnomalar</h3>
+              <h3 className="text-sm font-semibold text-fg">Bildirishnomalar</h3>
               {unreadCount > 0 && (
                 <span className="rounded-full bg-brand/20 border border-brand/30 px-2 py-0.5 text-xs font-semibold text-brand">
                   {unreadCount} yangi
@@ -157,7 +157,7 @@ export default function NotificationsBell() {
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-brand"
+                className="flex items-center gap-1 text-xs text-zinc-400 transition-colors hover:text-brand"
                 title="Barchasini o'qilgan qilish"
               >
                 <CheckCheck className="h-3.5 w-3.5" />
@@ -167,11 +167,11 @@ export default function NotificationsBell() {
           </div>
 
           {/* List */}
-          <div className="max-h-80 overflow-y-auto divide-y divide-white/5">
+          <div className="max-h-80 overflow-y-auto divide-y divide-ink/5">
             {loading ? (
-              <div className="p-6 text-center text-xs text-gray-500">Yuklanmoqda...</div>
+              <div className="p-6 text-center text-xs text-zinc-500">Yuklanmoqda...</div>
             ) : notifications.length === 0 ? (
-              <div className="p-8 text-center text-xs text-gray-500">
+              <div className="p-8 text-center text-xs text-zinc-500">
                 Hozircha bildirishnomalar yo&apos;q
               </div>
             ) : (
@@ -184,7 +184,7 @@ export default function NotificationsBell() {
                     setOpen(false);
                   }}
                   className={`flex items-start gap-3 p-3.5 text-xs transition-colors ${
-                    !item.read ? "bg-brand/5 hover:bg-brand/10" : "hover:bg-white/5"
+                    !item.read ? "bg-brand/5 hover:bg-brand/10" : "hover:bg-ink/5"
                   }`}
                 >
                   <div className="relative flex-shrink-0">
@@ -195,21 +195,21 @@ export default function NotificationsBell() {
                         width={32}
                         height={32}
                         unoptimized
-                        className="h-8 w-8 rounded-full ring-1 ring-white/10"
+                        className="h-8 w-8 rounded-full ring-1 ring-ink/10"
                       />
                     ) : (
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/20 text-brand font-bold">
                         {item.actor?.github_username?.[0]?.toUpperCase() || "U"}
                       </div>
                     )}
-                    <div className="absolute -bottom-1 -right-1 rounded-full bg-[#111] p-0.5 border border-white/10">
+                    <div className="absolute -bottom-1 -right-1 rounded-full bg-surface-subtle p-0.5 border border-line">
                       {renderIcon(item.type)}
                     </div>
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <p className="text-gray-300 leading-snug">{renderMessage(item)}</p>
-                    <span className="mt-1 block text-[10px] text-gray-500">
+                    <p className="text-zinc-300 leading-snug">{renderMessage(item)}</p>
+                    <span className="mt-1 block text-[10px] text-zinc-500">
                       {new Date(item.created_at).toLocaleDateString(
                         locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US",
                         { hour: "2-digit", minute: "2-digit" }

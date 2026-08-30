@@ -1,6 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 
+// Joriy foydalanuvchi ushbu item'ga ovoz bergan-bermaganini qaytaradi.
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const type = searchParams.get("type");
+    if (!id || !type || !["snippet", "prompt"].includes(type)) {
+      return NextResponse.json({ error: "Invalid params" }, { status: 400 });
+    }
+
+    const supabase = createSupabaseServer();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ voted: false });
+    }
+
+    const voteTable = type === "snippet" ? "snippet_votes" : "prompt_votes";
+    const voteColumn = type === "snippet" ? "snippet_id" : "prompt_id";
+    const { data: existingVote } = await supabase
+      .from(voteTable)
+      .select("id")
+      .eq("user_id", user.id)
+      .eq(voteColumn, id)
+      .maybeSingle();
+
+    return NextResponse.json({ voted: Boolean(existingVote) });
+  } catch {
+    return NextResponse.json({ voted: false });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { id, type, action = "add" } = await req.json();

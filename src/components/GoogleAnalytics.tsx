@@ -4,6 +4,7 @@ import { useEffect, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
     gtag?: (..._args: any[]) => void
     dataLayer?: any[]
@@ -14,44 +15,35 @@ function GoogleAnalyticsTracker() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
+  // gtag.js skriptini FAQAT bir marta yuklaymiz (ilgari har navigatsiyada
+  // qayta yuklanib, ikki marta sanaydigan edi).
   useEffect(() => {
-    const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+    if (!GA_MEASUREMENT_ID) return
+    if (document.getElementById('ga-gtag-script')) return
 
-    if (!GA_MEASUREMENT_ID) {
-      console.warn('Google Analytics Measurement ID is not configured')
-      return
-    }
-
-    // Load GA script
     const script = document.createElement('script')
+    script.id = 'ga-gtag-script'
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
     script.async = true
     document.head.appendChild(script)
 
-    // Initialize GA
     window.gtag = window.gtag || function (...args: any[]) {
       (window.dataLayer = window.dataLayer || []).push(args)
     }
-
     window.gtag('js', new Date())
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_path: pathname,
-    })
+    // send_page_view: false — sahifa ko'rinishini quyidagi effekt boshqaradi.
+    window.gtag('config', GA_MEASUREMENT_ID, { send_page_view: false })
+  }, [GA_MEASUREMENT_ID])
 
-    return () => {
-      document.head.removeChild(script)
-    }
-  }, [pathname])
-
-  // Track page views on route changes
+  // Route o'zgarishida bitta page_view yuboramiz.
   useEffect(() => {
-    const url = pathname + searchParams.toString()
-    if (window.gtag) {
-      window.gtag('event', 'page_view', {
-        page_path: url,
-      })
-    }
-  }, [pathname, searchParams])
+    if (!GA_MEASUREMENT_ID || !window.gtag) return
+    const qs = searchParams.toString()
+    const url = qs ? `${pathname}?${qs}` : pathname
+    window.gtag('event', 'page_view', { page_path: url })
+  }, [pathname, searchParams, GA_MEASUREMENT_ID])
 
   return null
 }

@@ -7,7 +7,7 @@ export default function Footer() {
   const t = useTranslations("Footer");
 
   return (
-    <footer className="relative mt-20 border-t border-white/5 bg-[#0A0A0A] noise">
+    <footer className="relative mt-20 border-t border-line bg-surface noise">
       {/* Top decoration */}
       <div className="pointer-events-none absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
 
@@ -17,38 +17,38 @@ export default function Footer() {
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center justify-center sm:justify-start gap-1 mb-4">
               <Logo className="h-16 w-16" />
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-xl font-bold tracking-tight text-fg">
                 Dev<span className="text-brand">Commons</span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-gray-400">
+            <p className="text-sm leading-relaxed text-zinc-400">
               {t("description")}
             </p>
           </div>
 
           {/* Sahifalar */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               {t("pages")}
             </h3>
             <nav className="flex flex-col gap-3 text-sm">
               <Link
                 href="/snippets"
-                className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
+                className="group inline-flex items-center gap-1 text-zinc-400 transition-colors hover:text-brand"
               >
                 Snippets
                 <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
               <Link
                 href="/prompts"
-                className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
+                className="group inline-flex items-center gap-1 text-zinc-400 transition-colors hover:text-brand"
               >
                 Prompts
                 <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
               <Link
                 href="/auth"
-                className="group inline-flex items-center gap-1 text-gray-400 transition-colors hover:text-brand"
+                className="group inline-flex items-center gap-1 text-zinc-400 transition-colors hover:text-brand"
               >
                 {t("login")}
                 <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -58,7 +58,7 @@ export default function Footer() {
 
           {/* Community */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               Community
             </h3>
             <nav className="flex flex-col gap-3 text-sm">
@@ -66,7 +66,7 @@ export default function Footer() {
                 href="https://github.com/OgabekHub/devcommons"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-brand"
+                className="group inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-brand"
               >
                 <Github className="h-4 w-4" />
                 GitHub
@@ -77,7 +77,7 @@ export default function Footer() {
 
           {/* Status */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               {t("status")}
             </h3>
             <div className="inline-flex items-center gap-2 rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-medium text-emerald-400">
@@ -91,8 +91,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-10 flex items-center justify-center border-t border-white/5 pt-8">
-          <p className="text-xs text-gray-500 text-center">
+        <div className="mt-10 flex items-center justify-center border-t border-line pt-8">
+          <p className="text-xs text-zinc-500 text-center">
             © {new Date().getFullYear()} DevCommons. {t("open_source")}
           </p>
         </div>

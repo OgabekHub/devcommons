@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { sendNotification } from "@/lib/notifications";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { toast } from "@/components/Toaster";
 
 interface Comment {
   id: string;
@@ -31,6 +32,9 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  // Bir sessiyada bir izohga faqat bir marta ovoz + parallel bosishdan himoya
+  const [votedIds, setVotedIds] = useState<Set<string>>(new Set());
+  const [busyIds, setBusyIds] = useState<Set<string>>(new Set());
   const locale = useLocale();
   const t = useTranslations("Components");
   const supabase = createSupabaseBrowser();
@@ -95,31 +99,42 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
   };
 
   const handleDelete = async (commentId: string) => {
-    if (!user) return;
+    if (!user || busyIds.has(commentId)) return;
+    if (!window.confirm(t("comment_delete_confirm"))) return;
+    setBusyIds((s) => new Set(s).add(commentId));
     const { error } = await supabase.from("comments").delete().eq("id", commentId).eq("user_id", user.id);
     if (!error) {
       setComments(comments.filter(c => c.id !== commentId));
+    } else {
+      toast.error("Izohni o'chirishda xatolik");
     }
+    setBusyIds((s) => { const n = new Set(s); n.delete(commentId); return n; });
   };
 
   const handleVote = async (commentId: string) => {
     if (!user) return;
-    // Simple vote increment (in production, use separate votes table)
+    // Cheksiz ovozni to'xtatish: sessiyada bir marta + parallel bosish guard
+    if (votedIds.has(commentId) || busyIds.has(commentId)) return;
+    setBusyIds((s) => new Set(s).add(commentId));
     const { error } = await supabase.rpc("increment_comment_votes", { comment_id: commentId });
     if (!error) {
+      setVotedIds((s) => new Set(s).add(commentId));
       setComments(comments.map(c => c.id === commentId ? { ...c, votes: c.votes + 1 } : c));
+    } else {
+      toast.error("Ovoz berishda xatolik");
     }
+    setBusyIds((s) => { const n = new Set(s); n.delete(commentId); return n; });
   };
 
   if (loading) {
-    return <div className="text-center text-gray-500 py-8">Yuklanmoqda...</div>;
+    return <div className="text-center text-zinc-500 py-8">{t("loading")}</div>;
   }
 
   return (
     <div className="mt-8 space-y-6">
       <div className="flex items-center gap-2">
-        <MessageSquare className="h-5 w-5 text-gray-400" />
-        <h3 className="text-lg font-semibold text-gray-100">{t("comments")} ({comments.length})</h3>
+        <MessageSquare className="h-5 w-5 text-zinc-400" />
+        <h3 className="text-lg font-semibold text-zinc-100">{t("comments")} ({comments.length})</h3>
       </div>
 
       {/* Add comment form */}
@@ -130,7 +145,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder={t("comment_placeholder")}
             rows={3}
-            className="input w-full resize-none bg-[#111111] border-white/10 text-gray-100 placeholder:text-gray-500"
+            className="input w-full resize-none bg-surface-subtle border-line text-zinc-100 placeholder:text-zinc-500"
             maxLength={1000}
           />
           <div className="flex justify-end">
@@ -145,14 +160,14 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
           </div>
         </form>
       ) : (
-        <div className="rounded-xl border border-white/5 bg-white/5 p-4 text-center text-sm text-gray-400">
+        <div className="rounded-xl border border-line bg-ink/5 p-4 text-center text-sm text-zinc-400">
           {t("comments_login")} <Link href="/auth" className="text-brand hover:underline">{t("login")}</Link>
         </div>
       )}
 
       {/* Comments list */}
       {comments.length === 0 ? (
-        <div className="text-center text-gray-500 py-8">
+        <div className="text-center text-zinc-500 py-8">
           {t("no_comments")}
         </div>
       ) : (
@@ -176,24 +191,30 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                 )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-gray-200">{comment.author_name}</span>
-                    <span className="text-xs text-gray-500">
+                    <span className="font-medium text-zinc-200">{comment.author_name}</span>
+                    <span className="text-xs text-zinc-500">
                       {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-300 break-words">{comment.content}</p>
+                  <p className="mt-1 text-sm text-zinc-300 break-words">{comment.content}</p>
                   <div className="mt-2 flex items-center gap-4">
                     <button
                       onClick={() => handleVote(comment.id)}
-                      className="flex items-center gap-1 text-xs text-gray-500 hover:text-brand transition-colors"
+                      disabled={busyIds.has(comment.id) || votedIds.has(comment.id)}
+                      aria-label="Izohga ovoz berish"
+                      className={`flex items-center gap-1 text-xs transition-colors disabled:cursor-not-allowed ${
+                        votedIds.has(comment.id) ? "text-brand" : "text-zinc-500 hover:text-brand"
+                      }`}
                     >
-                      <ThumbsUp className="h-3 w-3" />
+                      <ThumbsUp className={`h-3 w-3 ${votedIds.has(comment.id) ? "fill-current" : ""}`} />
                       {comment.votes}
                     </button>
                     {user?.id === comment.user_id && (
                       <button
                         onClick={() => handleDelete(comment.id)}
-                        className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 transition-colors"
+                        disabled={busyIds.has(comment.id)}
+                        aria-label="Izohni o'chirish"
+                        className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 transition-colors disabled:opacity-50"
                       >
                         <Trash2 className="h-3 w-3" />
                         O&apos;chirish

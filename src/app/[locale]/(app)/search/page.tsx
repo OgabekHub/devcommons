@@ -21,11 +21,17 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
   let prompts: any[] = [];
 
   if (query) {
-    const term = `%${query}%`;
-    const [snippetsRes, promptsRes] = await Promise.all([
-      supabase.from("snippets").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},code.ilike.${term}`).limit(20),
-      supabase.from("prompts").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},content.ilike.${term}`).limit(20)
-    ]);
+    // PostgREST `or()` grammatikasida `,` `(` `)` strukturaviy belgilar —
+    // foydalanuvchi kiritmasidan ularni (va `\`, `*`) olib tashlab, filter
+    // injection'ni to'xtatamiz.
+    const safeQuery = query.replace(/[,()\\*]/g, "").trim();
+    const term = `%${safeQuery}%`;
+    const [snippetsRes, promptsRes] = safeQuery
+      ? await Promise.all([
+          supabase.from("snippets").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},code.ilike.${term}`).limit(20),
+          supabase.from("prompts").select("*, author:users(github_username, avatar_url)").or(`title.ilike.${term},description.ilike.${term},content.ilike.${term}`).limit(20)
+        ])
+      : [{ data: [] }, { data: [] }];
     snippets = snippetsRes.data || [];
     prompts = promptsRes.data || [];
   }
@@ -36,22 +42,22 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 text-brand mb-6">
           <SearchIcon className="h-8 w-8" />
         </div>
-        <h1 className="text-3xl font-bold text-white sm:text-4xl">
+        <h1 className="text-3xl font-bold text-fg sm:text-4xl">
           {t("title")}
         </h1>
         {query ? (
-          <p className="mt-4 text-gray-400">
-            <strong className="text-white">&quot;{query}&quot;</strong> — {t("results_for")}
+          <p className="mt-4 text-zinc-400">
+            <strong className="text-fg">&quot;{query}&quot;</strong> — {t("results_for")}
           </p>
         ) : (
-          <p className="mt-4 text-gray-400">
+          <p className="mt-4 text-zinc-400">
             {t("empty_query")}
           </p>
         )}
       </div>
 
       {query && snippets.length === 0 && prompts.length === 0 && (
-        <div className="card border-dashed border-white/10 p-12 text-center text-gray-500">
+        <div className="card border-dashed border-line p-12 text-center text-zinc-500">
           <p>{t("nothing_found")}</p>
         </div>
       )}
@@ -63,7 +69,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
             <div>
               <div className="mb-6 flex items-center gap-2">
                 <Code2 className="h-5 w-5 text-brand" />
-                <h2 className="text-xl font-bold text-white">Snippets ({snippets.length})</h2>
+                <h2 className="text-xl font-bold text-fg">Snippets ({snippets.length})</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {snippets.map((snippet) => (
@@ -72,11 +78,11 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                       <div className="overflow-hidden">
                         <Link
                           href={`/snippets/${snippet.id}` as any}
-                          className="truncate text-lg font-bold text-white hover:text-brand block"
+                          className="truncate text-lg font-bold text-fg hover:text-brand block"
                         >
                           {snippet.title}
                         </Link>
-                        <div className="truncate text-sm text-gray-500 mt-1">
+                        <div className="truncate text-sm text-zinc-500 mt-1">
                           @{snippet.author?.github_username || "yashirin"}
                         </div>
                       </div>
@@ -85,12 +91,12 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                       </span>
                     </div>
 
-                    <p className="mb-6 line-clamp-3 text-sm text-gray-400">
+                    <p className="mb-6 line-clamp-3 text-sm text-zinc-400">
                       {snippet.description || snippet.code}
                     </p>
 
-                    <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
-                      <span className="text-xs text-gray-500">
+                    <div className="mt-auto flex items-center justify-between border-t border-line pt-4">
+                      <span className="text-xs text-zinc-500">
                         {new Date(snippet.created_at).toLocaleDateString("uz-UZ")}
                       </span>
                       <div className="flex items-center gap-2">
@@ -113,7 +119,7 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
             <div>
               <div className="mb-6 flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-violet-400" />
-                <h2 className="text-xl font-bold text-white">Prompts ({prompts.length})</h2>
+                <h2 className="text-xl font-bold text-fg">Prompts ({prompts.length})</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {prompts.map((prompt) => (
@@ -122,11 +128,11 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                       <div className="overflow-hidden">
                         <Link
                           href={`/prompts/${prompt.id}` as any}
-                          className="truncate text-lg font-bold text-white hover:text-brand block"
+                          className="truncate text-lg font-bold text-fg hover:text-brand block"
                         >
                           {prompt.title}
                         </Link>
-                        <div className="truncate text-sm text-gray-500 mt-1">
+                        <div className="truncate text-sm text-zinc-500 mt-1">
                           @{prompt.author?.github_username || "yashirin"}
                         </div>
                       </div>
@@ -135,12 +141,12 @@ export default async function SearchPage({ searchParams, params: { locale } }: P
                       </span>
                     </div>
 
-                    <p className="mb-6 line-clamp-3 text-sm text-gray-400">
+                    <p className="mb-6 line-clamp-3 text-sm text-zinc-400">
                       {prompt.description || prompt.content}
                     </p>
 
-                    <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
-                      <span className="text-xs text-gray-500">
+                    <div className="mt-auto flex items-center justify-between border-t border-line pt-4">
+                      <span className="text-xs text-zinc-500">
                         {new Date(prompt.created_at).toLocaleDateString("uz-UZ")}
                       </span>
                       <div className="flex items-center gap-2">

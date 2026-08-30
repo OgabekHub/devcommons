@@ -46,7 +46,7 @@ export default function ForkButton({ itemId, itemType, title, content, languageO
     <button
       onClick={handleFork}
       disabled={forking}
-      className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 bg-white/5 border border-white/10 disabled:opacity-50"
+      className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-ink/10 bg-ink/5 border border-line disabled:opacity-50"
       title="Fork this resource into a new customized revision"
     >
       <GitFork className={`h-4 w-4 shrink-0 ${forking ? "animate-bounce" : ""}`} />

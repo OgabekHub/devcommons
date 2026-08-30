@@ -5,6 +5,8 @@ import { BarChart3, Eye, Code2, Sparkles } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+import ListPageSkeleton from "@/components/ListPageSkeleton";
 
 interface AnalyticsData {
   total_snippet_views: number;
@@ -16,13 +18,16 @@ interface AnalyticsData {
 export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Analytics");
   const supabase = createSupabaseBrowser();
 
-  useEffect(() => {
-    const loadAnalytics = async () => {
+  const loadAnalytics = async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         router.push(`/${locale}/auth`);
@@ -30,15 +35,17 @@ export default function AnalyticsPage() {
       }
 
       // Get total views
-      const { data: snippets } = await supabase
+      const { data: snippets, error: e1 } = await supabase
         .from("snippets")
         .select("view_count")
         .eq("author_id", user.id);
+      if (e1) throw e1;
 
-      const { data: prompts } = await supabase
+      const { data: prompts, error: e2 } = await supabase
         .from("prompts")
         .select("view_count")
         .eq("author_id", user.id);
+      if (e2) throw e2;
 
       // Get top snippets
       const { data: topSnippets } = await supabase
@@ -62,17 +69,30 @@ export default function AnalyticsPage() {
         top_snippets: (topSnippets as any) || [],
         top_prompts: (topPrompts as any) || [],
       });
+    } catch (err) {
+      console.error("Analytics load error:", err);
+      setLoadError(true);
+    } finally {
       setLoading(false);
-    };
+    }
+  };
 
+  useEffect(() => {
     loadAnalytics();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
+    return <ListPageSkeleton cards={4} />;
+  }
+
+  if (loadError) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
+      <div className="mx-auto max-w-4xl px-4 py-8">
+        <div className="card border-red-500/20 bg-red-500/5 p-10 text-center">
+          <p className="mb-4 text-sm text-red-400">Statistikani yuklab bo&apos;lmadi.</p>
+          <button onClick={loadAnalytics} className="btn-primary btn-primary--sm">Qayta urinish</button>
+        </div>
       </div>
     );
   }
@@ -87,43 +107,43 @@ export default function AnalyticsPage() {
           <BarChart3 className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
-          <p className="text-sm text-gray-400">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-fg">{t("title")}</h1>
+          <p className="text-sm text-zinc-400">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Stats Cards */}
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
-        <div className="card p-6 border-white/10">
+        <div className="card p-6 border-line">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10">
               <Eye className="h-5 w-5 text-brand" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">{totalViews}</p>
-              <p className="text-xs text-gray-400">{t("views")}</p>
+              <p className="text-2xl font-bold text-fg">{totalViews}</p>
+              <p className="text-xs text-zinc-400">{t("views")}</p>
             </div>
           </div>
         </div>
-        <div className="card p-6 border-white/10">
+        <div className="card p-6 border-line">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10">
               <Code2 className="h-5 w-5 text-brand" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">{data?.total_snippet_views || 0}</p>
-              <p className="text-xs text-gray-400">Snippet {t("views").toLowerCase()}</p>
+              <p className="text-2xl font-bold text-fg">{data?.total_snippet_views || 0}</p>
+              <p className="text-xs text-zinc-400">Snippet {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
-        <div className="card p-6 border-white/10">
+        <div className="card p-6 border-line">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10">
               <Sparkles className="h-5 w-5 text-violet-500" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">{data?.total_prompt_views || 0}</p>
-              <p className="text-xs text-gray-400">Prompt {t("views").toLowerCase()}</p>
+              <p className="text-2xl font-bold text-fg">{data?.total_prompt_views || 0}</p>
+              <p className="text-xs text-zinc-400">Prompt {t("views").toLowerCase()}</p>
             </div>
           </div>
         </div>
@@ -131,31 +151,31 @@ export default function AnalyticsPage() {
 
       {/* Top Snippets */}
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-white">{t("top_snippets")}</h2>
+        <h2 className="mb-4 text-lg font-semibold text-fg">{t("top_snippets")}</h2>
         {data?.top_snippets?.length === 0 ? (
-          <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
+          <div className="card border-dashed border-line p-6 text-center text-zinc-400">
             {t("no_data")}
           </div>
         ) : (
-          <div className="card overflow-hidden border-white/10 bg-[#111]">
-            <table className="w-full">
-              <thead className="bg-white/5 border-b border-white/10">
+          <div className="card overflow-x-auto border-line bg-surface-subtle">
+            <table className="w-full min-w-[420px]">
+              <thead className="bg-ink/5 border-b border-line">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("title_col")}</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("language")}</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-300">{t("views")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-zinc-300">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-zinc-300">{t("language")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-zinc-300">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.top_snippets?.map((snippet) => (
-                  <tr key={snippet.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
+                  <tr key={snippet.id} className="border-b border-line last:border-0 hover:bg-ink/5 transition-colors">
                     <td className="px-4 py-3">
-                      <a href={`/${locale}/snippets/${snippet.id}`} className="font-medium text-brand hover:underline">
+                      <Link href={`/snippets/${snippet.id}` as any} className="font-medium text-brand hover:underline">
                         {snippet.title}
-                      </a>
+                      </Link>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">{snippet.language}</td>
-                    <td className="px-4 py-3 text-right font-medium text-white">{snippet.view_count}</td>
+                    <td className="px-4 py-3 text-sm text-zinc-400">{snippet.language}</td>
+                    <td className="px-4 py-3 text-right font-medium text-fg">{snippet.view_count}</td>
                   </tr>
                 ))}
               </tbody>
@@ -166,31 +186,31 @@ export default function AnalyticsPage() {
 
       {/* Top Prompts */}
       <div>
-        <h2 className="mb-4 text-lg font-semibold text-white">{t("top_prompts")}</h2>
+        <h2 className="mb-4 text-lg font-semibold text-fg">{t("top_prompts")}</h2>
         {data?.top_prompts?.length === 0 ? (
-          <div className="card border-dashed border-white/10 p-6 text-center text-gray-400">
+          <div className="card border-dashed border-line p-6 text-center text-zinc-400">
             {t("no_data")}
           </div>
         ) : (
-          <div className="card overflow-hidden border-white/10 bg-[#111]">
-            <table className="w-full">
-              <thead className="bg-white/5 border-b border-white/10">
+          <div className="card overflow-x-auto border-line bg-surface-subtle">
+            <table className="w-full min-w-[420px]">
+              <thead className="bg-ink/5 border-b border-line">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("title_col")}</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">{t("category")}</th>
-                  <th className="px-4 py-3 text-right text-sm font-semibold text-gray-300">{t("views")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-zinc-300">{t("title_col")}</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-zinc-300">{t("category")}</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-zinc-300">{t("views")}</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.top_prompts?.map((prompt) => (
-                  <tr key={prompt.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
+                  <tr key={prompt.id} className="border-b border-line last:border-0 hover:bg-ink/5 transition-colors">
                     <td className="px-4 py-3">
-                      <a href={`/${locale}/prompts/${prompt.id}`} className="font-medium text-violet-400 hover:underline">
+                      <Link href={`/prompts/${prompt.id}` as any} className="font-medium text-violet-400 hover:underline">
                         {prompt.title}
-                      </a>
+                      </Link>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-400">{prompt.category}</td>
-                    <td className="px-4 py-3 text-right font-medium text-white">{prompt.view_count}</td>
+                    <td className="px-4 py-3 text-sm text-zinc-400">{prompt.category}</td>
+                    <td className="px-4 py-3 text-right font-medium text-fg">{prompt.view_count}</td>
                   </tr>
                 ))}
               </tbody>

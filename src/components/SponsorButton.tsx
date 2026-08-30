@@ -15,7 +15,7 @@ export default function SponsorButton({ authorName }: SponsorButtonProps) {
       href="https://github.com/sponsors"
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 rounded-xl overflow-hidden mt-4"
+      className="group relative inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-fg transition-all duration-300 rounded-xl overflow-hidden mt-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

@@ -122,7 +122,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
       {/* Back */}
       <Link
         href={`/snippets/${id}`}
-        className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform " />
         {t("back")}
@@ -135,7 +135,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold">Snippetni tahrirlash</h1>
-          <p className="text-sm text-gray-500">Ma&apos;lumotlarni yangilang</p>
+          <p className="text-sm text-zinc-500">Ma&apos;lumotlarni yangilang</p>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
@@ -158,7 +158,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_desc")}
           </label>
           <textarea
@@ -173,7 +173,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Language */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_lang")} <span className="text-red-500">*</span>
           </label>
           <CustomSelect
@@ -185,12 +185,12 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Code */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_code")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0F0A1F] shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-800 bg-gray-900 px-4 py-2">
-              <span className="text-xs font-medium text-gray-400">{language}</span>
+          <div className="overflow-hidden rounded-xl border border-line bg-[#0F0A1F] shadow-sm">
+            <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900 px-4 py-2">
+              <span className="text-xs font-medium text-zinc-400">{language}</span>
               <div className="flex gap-1.5">
                 <div className="h-3 w-3 rounded-full bg-red-500/70" />
                 <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
@@ -207,7 +207,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
                 options={{
                   minimap: { enabled: false },
                   fontSize: 14,
-                  fontFamily: '"Fira Code", monospace',
+                  fontFamily: 'var(--font-mono), "Fira Code", monospace',
                   padding: { top: 16 },
                   scrollBeyondLastLine: false,
                   smoothScrolling: true,
@@ -220,8 +220,8 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Tags */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
-            {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
+          <label className="text-sm font-semibold text-zinc-300">
+            {t("field_tags")} <span className="text-zinc-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
             <input
@@ -247,7 +247,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-medium text-brand"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-medium text-brand"
                 >
                   #{tag}
                   <button
@@ -265,7 +265,7 @@ export default function EditSnippetPage({ params: { id, locale } }: Props) {
 
         {/* Error */}
         {error && (
-          <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
             {error}
           </div>
         )}

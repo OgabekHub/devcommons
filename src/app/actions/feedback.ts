@@ -2,7 +2,8 @@
 
 import { createSupabaseServer } from "@/lib/supabase-server";
 
-const ALLOWED_TYPES = ["bug", "feature", "general"] as const;
+// DB CHECK constraint (migration_v4_feedback.sql) va FeedbackWidget UI bilan mos:
+const ALLOWED_TYPES = ["bug", "suggestion", "other"] as const;
 const MAX_CONTENT_LENGTH = 5000; // Maximum characters for feedback content
 
 export async function submitFeedback(formData: FormData) {
@@ -16,7 +17,7 @@ export async function submitFeedback(formData: FormData) {
 
   // Validate feedback type
   if (!ALLOWED_TYPES.includes(type as typeof ALLOWED_TYPES[number])) {
-    return { error: "Noto'g'ri feedback turi. Faqat: bug, feature, general." };
+    return { error: "Noto'g'ri feedback turi. Faqat: bug, suggestion, other." };
   }
 
   // Validate content length

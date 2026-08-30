@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, Calendar, Sparkles, User, Tag, Bot } from "lucide-react";
 import { Link } from "@/i18n/routing";
@@ -110,8 +111,12 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
 
   const isAuthor = user?.id === prompt.author_id;
 
-  // Increment view count
-  await supabase.rpc("increment_view_count", { table_name: "prompts", item_id: id });
+  // Increment view count (service_role — RPC anon'dan revoke qilingan)
+  const admin = createSupabaseAdmin();
+  if (admin) {
+    const { error: viewErr } = await admin.rpc("increment_view_count", { table_name: "prompts", item_id: id });
+    if (viewErr) console.error("increment_view_count failed:", viewErr);
+  }
 
   const createdAt = new Date(prompt.created_at).toLocaleDateString("uz-UZ", {
     year: "numeric",
@@ -124,7 +129,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
       {/* Back */}
       <Link
         href="/prompts"
-        className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
         {t("back_to_prompts")}
@@ -149,7 +154,7 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           {prompt.tags?.map((tag: string) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 rounded-lg bg-white/5 border border-white/10 px-2.5 py-1 text-xs font-medium text-gray-400"
+              className="inline-flex items-center gap-1 rounded-lg bg-ink/5 border border-line px-2.5 py-1 text-xs font-medium text-zinc-400"
             >
               <Tag className="h-3 w-3" />
               {tag}
@@ -157,13 +162,13 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           ))}
         </div>
 
-        <h1 className="text-2xl font-bold text-white sm:text-3xl">{prompt.title}</h1>
+        <h1 className="text-2xl font-bold text-fg sm:text-3xl">{prompt.title}</h1>
 
         {prompt.description && (
-          <p className="mt-3 text-gray-400 leading-relaxed">{prompt.description}</p>
+          <p className="mt-3 text-zinc-400 leading-relaxed">{prompt.description}</p>
         )}
 
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-zinc-400">
           <span className="flex items-center gap-1.5">
             {prompt.author_avatar ? (
               <Image
@@ -199,17 +204,17 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
           )}
           <ShareButton title={prompt.title} url={`/prompts/${prompt.id}`} />
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-line pt-4">
           <VersionHistoryModal itemId={prompt.id} itemType="prompt" title={prompt.title} currentContent={prompt.content} currentVersion={(prompt as any).current_version || "v1"} />
           <ForkButton itemId={prompt.id} itemType="prompt" title={prompt.title} content={prompt.content} languageOrCategory={prompt.category} />
         </div>
       </div>
 
       {/* Prompt content */}
-      <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(124,92,252,0.1)]">
+      <div className="overflow-hidden rounded-2xl border border-line shadow-[0_0_30px_rgba(107,78,255,0.1)]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 bg-[#111] px-4 py-3">
-          <span className="flex items-center gap-2 text-sm font-medium text-gray-300">
+        <div className="flex items-center justify-between border-b border-line bg-surface-subtle px-4 py-3">
+          <span className="flex items-center gap-2 text-sm font-medium text-zinc-300">
             <Sparkles className="h-4 w-4 text-violet-500" />
             {tComp("prompt_text")}
           </span>
@@ -217,8 +222,8 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
         </div>
 
         {/* Content */}
-        <div className="p-6 bg-[#0A0A0A]">
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-300">
+        <div className="p-6 bg-surface">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
             {prompt.content}
           </p>
         </div>
@@ -226,11 +231,11 @@ export default async function PromptDetailPage({ params: { id, locale } }: Props
 
       {/* Interactive Prompt Playground */}
       <div className="mt-10 mb-8 space-y-3">
-        <div className="flex items-center gap-2 text-lg font-bold text-white">
+        <div className="flex items-center gap-2 text-lg font-bold text-fg">
           <span className="text-xl">🧪</span>
           <span>Jonli Sinov va Laboratoriya (Interactive Playground)</span>
         </div>
-        <p className="text-xs text-gray-400">Ushbu prompt qanday ishlashi hamda o&apos;zgaruvchilarga moslashuvini derazaning o&apos;zida sinab ko&apos;ring:</p>
+        <p className="text-xs text-zinc-400">Ushbu prompt qanday ishlashi hamda o&apos;zgaruvchilarga moslashuvini derazaning o&apos;zida sinab ko&apos;ring:</p>
         <PromptPlayground
           initialSystemPrompt={prompt.content}
           initialModel={prompt.ai_model && prompt.ai_model !== "Any" ? prompt.ai_model : "Claude 3.5 Sonnet"}

@@ -31,36 +31,41 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - Network-First Strategy for live apps (fall back to cache only when offline)
+// Fetch event — FAQAT statik assetlarni keshlaymiz.
+// HTML hujjatlar va RSC javoblarni HECH QACHON keshlamaymiz: ular
+// foydalanuvchiga xos bo'lishi mumkin (/profile, /saved) va umumiy brauzer
+// keshiga tushib qolmasligi kerak; RSC/HTML bir xil URL'da to'qnashadi.
 self.addEventListener('fetch', (event) => {
   // Only handle GET requests and valid HTTP schemes
   if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) {
     return;
   }
 
-  const url = new URL(event.request.url);
+  const req = event.request;
+  const url = new URL(req.url);
 
-  // Never cache API calls or Auth OAuth callback exchanges
-  if (url.pathname.startsWith('/api') || url.pathname.includes('/auth/callback')) {
+  // Faqat shu origin va faqat statik asset destination'lar keshlanadi.
+  const isStaticAsset =
+    url.origin === self.location.origin &&
+    ['style', 'script', 'image', 'font'].includes(req.destination);
+
+  if (!isStaticAsset) {
+    // Hujjatlar, RSC, API, navigatsiyalar — to'g'ridan-to'g'ri tarmoqqa, keshsiz.
     return;
   }
 
-  // Network-First guarantees fresh content immediately on normal page reload!
+  // Statik asetlar uchun Network-First (offline'da keshdan).
   event.respondWith(
-    fetch(event.request)
+    fetch(req)
       .then((networkResponse) => {
-        // Clone and update cache with the freshest version if successful
         if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache).catch(() => {});
+            cache.put(req, responseToCache).catch(() => {});
           });
         }
         return networkResponse;
       })
-      .catch(() => {
-        // If offline or network unavailable, fall back to whatever is cached
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(req))
   );
 });

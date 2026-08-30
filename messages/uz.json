@@ -14,7 +14,9 @@
     "analytics": "Analitika",
     "leaderboard": "Reytinglar",
     "tags": "Teglar",
-    "search": "Qidiruv..."
+    "search": "Qidiruv...",
+    "library": "Kutubxona & Lenta",
+    "dashboard": "Boshqaruv Paneli"
   },
   "Index": {
     "badge": "100% bepul va ochiq manba",
@@ -65,7 +67,8 @@
     "cta_btn_start": "Yangi Snippet",
     "cta_btn_login": "GitHub orqali kirish",
     "preview_copy": "Nusxalash",
-    "preview_error": "Xato:"
+    "preview_error": "Xato:",
+    "btn_workflows": "AI Workflow & To'plamlar"
   },
   "Snippets": {
     "meta_title": "Kod Snippet'lar — DevCommons",
@@ -242,7 +245,9 @@
     "comment_placeholder": "Fikr yozish...",
     "send": "Yuborish",
     "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!",
-    "save_to_collection_btn": "To'plamga saqlash"
+    "save_to_collection_btn": "To'plamga saqlash",
+    "comment_delete_confirm": "Bu izoh o'chirilsinmi?",
+    "loading": "Yuklanmoqda..."
   },
   "Tour": {
     "done": "Tugatish",

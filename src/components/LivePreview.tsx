@@ -71,7 +71,7 @@ export default function LivePreview({ code, language }: Props) {
     return (
       <button
         onClick={() => setShowPreview(true)}
-        className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 py-4 px-4 flex items-center justify-center gap-2 text-gray-400 hover:text-brand hover:border-brand/30 transition-all shadow-[0_0_20px_rgba(124,92,252,0.05)]"
+        className="mt-4 w-full rounded-xl border border-line bg-ink/5 py-4 px-4 flex items-center justify-center gap-2 text-zinc-400 hover:text-brand hover:border-brand/30 transition-all shadow-[0_0_20px_rgba(107,78,255,0.05)]"
       >
         <Play className="w-5 h-5" />
         <span className="font-semibold">{t("live_preview")}</span>
@@ -80,20 +80,20 @@ export default function LivePreview({ code, language }: Props) {
   }
 
   return (
-    <div className="mt-4 overflow-hidden rounded-xl border border-white/10 shadow-[0_0_30px_rgba(124,92,252,0.1)] transition-all">
+    <div className="mt-4 overflow-hidden rounded-xl border border-line shadow-[0_0_30px_rgba(107,78,255,0.1)] transition-all">
       {/* Header with tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-[#111] px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-surface-subtle px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
-          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Live Preview</span>
+          <span className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Live Preview</span>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1 rounded-lg bg-black/40 p-1 border border-white/10 text-xs">
+        <div className="flex items-center gap-1 rounded-lg bg-black/40 p-1 border border-line text-xs">
           <button
             onClick={() => setTab("console")}
             className={`flex items-center gap-1 px-3 py-1 rounded-md font-medium transition-colors ${
-              tab === "console" ? "bg-brand text-white shadow-sm" : "text-gray-400 hover:text-gray-200"
+              tab === "console" ? "bg-brand text-white shadow-sm" : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
             <Terminal className="h-3.5 w-3.5" />
@@ -102,7 +102,7 @@ export default function LivePreview({ code, language }: Props) {
           <button
             onClick={() => setTab("preview")}
             className={`flex items-center gap-1 px-3 py-1 rounded-md font-medium transition-colors ${
-              tab === "preview" ? "bg-brand text-white shadow-sm" : "text-gray-400 hover:text-gray-200"
+              tab === "preview" ? "bg-brand text-white shadow-sm" : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
             <Globe className="h-3.5 w-3.5" />
@@ -111,7 +111,7 @@ export default function LivePreview({ code, language }: Props) {
           <button
             onClick={() => setTab("split")}
             className={`flex items-center gap-1 px-3 py-1 rounded-md font-medium transition-colors ${
-              tab === "split" ? "bg-brand text-white shadow-sm" : "text-gray-400 hover:text-gray-200"
+              tab === "split" ? "bg-brand text-white shadow-sm" : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
             <LayoutGrid className="h-3.5 w-3.5" />
@@ -121,7 +121,7 @@ export default function LivePreview({ code, language }: Props) {
 
         <button
           onClick={() => setShowPreview(false)}
-          className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
+          className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-zinc-400 hover:bg-ink/5 hover:text-fg transition-colors"
           title="Yopish"
         >
           <X className="h-3.5 w-3.5" />
@@ -130,7 +130,7 @@ export default function LivePreview({ code, language }: Props) {
       </div>
 
       {/* Sandpack Workspace */}
-      <div className="w-full bg-[#111]">
+      <div className="w-full bg-surface-subtle">
         <SandpackProvider template={template} files={files} theme="dark">
           <SandpackLayout style={{ height: "420px", border: "none", borderRadius: 0, margin: 0, width: "100%" }}>
             <SandpackPreview

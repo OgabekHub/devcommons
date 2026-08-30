@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { detectAgentConfig } from "@/lib/agent-config";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
@@ -22,17 +23,17 @@ import VerifiedBadge from "@/components/VerifiedBadge";
 
 // Lazy-load og'ir komponentlarni — initial bundle hajmini kamaytirish uchun
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
-  loading: () => <div className="h-64 bg-gray-900 animate-pulse" />,
+  loading: () => <div className="h-64 bg-zinc-900 animate-pulse" />,
   ssr: false,
 });
 
 const LivePreview = dynamic(() => import("@/components/LivePreview"), {
-  loading: () => <div className="h-32 bg-gray-900/50 animate-pulse rounded-xl mt-4" />,
+  loading: () => <div className="h-32 bg-zinc-900/50 animate-pulse rounded-xl mt-4" />,
   ssr: false,
 });
 
 const PromptPlayground = dynamic(() => import("@/components/PromptPlayground"), {
-  loading: () => <div className="h-64 bg-gray-900/50 animate-pulse rounded-xl" />,
+  loading: () => <div className="h-64 bg-zinc-900/50 animate-pulse rounded-xl" />,
   ssr: false,
 });
 
@@ -41,7 +42,7 @@ const VersionHistoryModal = dynamic(() => import("@/components/VersionHistoryMod
 });
 
 const CommentsSection = dynamic(() => import("@/components/CommentsSection"), {
-  loading: () => <div className="h-48 bg-gray-900/50 animate-pulse rounded-xl mt-8" />,
+  loading: () => <div className="h-48 bg-zinc-900/50 animate-pulse rounded-xl mt-8" />,
   ssr: false,
 });
 
@@ -138,8 +139,12 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
 
   const isAuthor = user?.id === snippet.author_id;
 
-  // Increment view count
-  await supabase.rpc("increment_view_count", { table_name: "snippets", item_id: id });
+  // Increment view count (service_role — RPC anon'dan revoke qilingan)
+  const admin = createSupabaseAdmin();
+  if (admin) {
+    const { error: viewErr } = await admin.rpc("increment_view_count", { table_name: "snippets", item_id: id });
+    if (viewErr) console.error("increment_view_count failed:", viewErr);
+  }
 
   const createdAt = new Date(snippet.created_at).toLocaleDateString("uz-UZ", {
     year: "numeric",
@@ -152,7 +157,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
       {/* Back */}
       <Link
         href="/snippets"
-        className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
         {t("back_to_snippets")}
@@ -172,7 +177,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           {snippet.tags?.map((tag: string) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 rounded-lg bg-white/5 border border-white/10 px-2.5 py-1 text-xs font-medium text-gray-400"
+              className="inline-flex items-center gap-1 rounded-lg bg-ink/5 border border-line px-2.5 py-1 text-xs font-medium text-zinc-400"
             >
               <Tag className="h-3 w-3" />
               {tag}
@@ -180,13 +185,13 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           ))}
         </div>
 
-        <h1 className="text-2xl font-bold text-white sm:text-3xl">{snippet.title}</h1>
+        <h1 className="text-2xl font-bold text-fg sm:text-3xl">{snippet.title}</h1>
 
         {snippet.description && (
-          <p className="mt-3 text-gray-400 leading-relaxed">{snippet.description}</p>
+          <p className="mt-3 text-zinc-400 leading-relaxed">{snippet.description}</p>
         )}
 
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-400">
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-zinc-400">
           <span className="flex items-center gap-1.5">
             {snippet.author_avatar ? (
               <Image
@@ -221,23 +226,23 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
           )}
           <ShareButton title={snippet.title} url={`/snippets/${snippet.id}`} />
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-line pt-4">
           <VersionHistoryModal itemId={snippet.id} itemType="snippet" title={snippet.title} currentContent={snippet.code} currentVersion={(snippet as any).current_version || "v1"} />
           <ForkButton itemId={snippet.id} itemType="snippet" title={snippet.title} content={snippet.code} languageOrCategory={snippet.language} />
         </div>
       </div>
 
       {/* Code Block */}
-      <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_30px_rgba(124,92,252,0.1)]">
+      <div className="overflow-hidden rounded-2xl border border-line shadow-[0_0_30px_rgba(107,78,255,0.1)]">
         {/* Code header */}
-        <div className="flex items-center justify-between border-b border-white/10 bg-[#111] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-line bg-surface-subtle px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-red-500" />
               <div className="h-3 w-3 rounded-full bg-yellow-500" />
               <div className="h-3 w-3 rounded-full bg-green-500" />
             </div>
-            <span className="flex items-center gap-1.5 text-xs font-medium text-gray-300">
+            <span className="flex items-center gap-1.5 text-xs font-medium text-zinc-300">
               <LanguageLogo language={snippet.language} className="h-3.5 w-3.5 shrink-0" />
               {snippet.language}
             </span>
@@ -250,7 +255,7 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
         </div>
 
         {/* Code content */}
-        <div className="overflow-x-auto bg-[#0A0A0A]">
+        <div className="overflow-x-auto bg-surface">
           <CodeHighlighter code={snippet.code} language={snippet.language} />
         </div>
       </div>
@@ -259,11 +264,11 @@ export default async function SnippetDetailPage({ params: { id, locale } }: Prop
 
       {/* AI & Rule Playground Simulator */}
       <div className="mt-10 mb-8 space-y-3">
-        <div className="flex items-center gap-2 text-lg font-bold text-white">
+        <div className="flex items-center gap-2 text-lg font-bold text-fg">
           <span className="text-xl">🧪</span>
           <span>Agent Rule & Kod Sinov Laboratoriyasi</span>
         </div>
-        <p className="text-xs text-gray-400">Ushbu konfiguratsiya qoida yoki kod namunasi qanday ishlashini derazadan chiqmay simulyatorda sinab ko&apos;ring:</p>
+        <p className="text-xs text-zinc-400">Ushbu konfiguratsiya qoida yoki kod namunasi qanday ishlashini derazadan chiqmay simulyatorda sinab ko&apos;ring:</p>
         <PromptPlayground
           initialSystemPrompt={snippet.code}
           initialModel="Cursor Agent Rules Validator"

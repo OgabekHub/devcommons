@@ -8,12 +8,14 @@ import {
   Search,
   Copy,
   Heart,
+  Workflow,
 } from "lucide-react";
 import dynamic from 'next/dynamic';
 import LanguageLogo from '@/components/LanguageLogo';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from "next-intl";
 import { routing } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 import Reveal from '@/components/Reveal';
 import HeroBentoBox from '@/components/HeroBentoBox';
 import Logo from '@/components/Logo';
@@ -65,52 +67,52 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               </div>
 
               {/* Main Headline */}
-              <h1 className="animate-fade-in-up text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+              <h1 className="animate-fade-in-up text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] text-fg sm:text-5xl lg:text-6xl xl:text-7xl">
                 {t("title_start")}{" "}
                 <span className="text-brand">{t("title_highlight")}</span>{" "}
                 {t("title_end")}
               </h1>
 
               {/* Typewriter subheadline */}
-              <div className="animate-fade-in-up mt-6 max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
+              <div className="animate-fade-in-up mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg" style={{ animationDelay: "0.15s" }}>
                 <p>
                   {t("subtitle")}
                 </p>
-                <p className="mt-2 text-sm text-gray-500 font-medium">
+                <p className="mt-2 text-sm text-zinc-500 font-medium">
                   {t("no_barrier")}
                 </p>
               </div>
 
               {/* CTA Buttons */}
               <div className="animate-fade-in-up mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.3s" }}>
-                <a href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(124,92,252,0.4)]">
+                <Link href="/snippets" className="btn-primary group text-base px-6 py-3 shadow-[0_0_20px_rgba(107,78,255,0.4)]">
                   <Code2 className="h-4 w-4" />
                   {t("btn_snippets")}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
-                <a href="/prompts" className="btn-secondary text-base px-6 py-3 bg-[#111]/50 backdrop-blur-sm border-white/10 hover:border-brand/40 hover:bg-brand/10 text-gray-300 hover:text-white">
+                </Link>
+                <Link href="/prompts" className="btn-secondary text-base px-6 py-3 bg-surface-subtle/50 backdrop-blur-sm border-line hover:border-brand/40 hover:bg-brand/10 text-zinc-300 hover:text-fg">
                   <Sparkles className="h-4 w-4 text-brand" />
                   {t("btn_prompts")}
-                </a>
-                <a href="/workflows" className="btn-secondary text-base px-6 py-3 bg-purple-500/10 backdrop-blur-sm border-purple-500/30 hover:border-purple-400 hover:bg-purple-500/20 text-purple-200 hover:text-white font-semibold flex items-center gap-2">
-                  <span>🔗</span>
-                  <span>AI Workflows & Bundles</span>
-                </a>
+                </Link>
+                <Link href="/workflows" className="btn-secondary text-base px-6 py-3 bg-purple-500/10 backdrop-blur-sm border-purple-500/30 hover:border-purple-400 hover:bg-purple-500/20 font-semibold flex items-center gap-2">
+                  <Workflow className="h-4 w-4" />
+                  <span>{t("btn_workflows")}</span>
+                </Link>
               </div>
 
               {/* Trust badges */}
-              <div className="animate-fade-in mt-7 flex flex-wrap items-center gap-4 border-t border-white/10 pt-5 text-xs font-medium text-gray-500" style={{ animationDelay: "0.45s" }}>
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
+              <div className="animate-fade-in mt-7 flex flex-wrap items-center gap-4 border-t border-line pt-5 text-xs font-medium text-zinc-500" style={{ animationDelay: "0.45s" }}>
+                <span className="flex items-center gap-2 transition-colors hover:text-zinc-300">
                   <Globe className="h-4 w-4" />
                   {t("trust_open_source")}
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-gray-700" />
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-zinc-700" />
+                <span className="flex items-center gap-2 transition-colors hover:text-zinc-300">
                   <Heart className="h-4 w-4 text-red-400/70" />
                   {t("trust_community")}
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-gray-700" />
-                <span className="flex items-center gap-2 transition-colors hover:text-gray-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-zinc-700" />
+                <span className="flex items-center gap-2 transition-colors hover:text-zinc-300">
                   <Zap className="h-4 w-4 text-amber-400/70" />
                   {t("trust_free")}
                 </span>
@@ -134,10 +136,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <span className="mb-2 inline-block rounded-full bg-brand/10 border border-brand/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
               {t("feat_badge")}
             </span>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="text-2xl font-bold text-fg sm:text-3xl">
               {t("feat_title_start")}<span className="text-gradient">DevCommons</span>{t("feat_title_end")}
             </h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-gray-400">
+            <p className="mx-auto mt-2 max-w-xl text-sm text-zinc-400">
               {t("feat_desc")}
             </p>
           </div>
@@ -146,7 +148,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <Reveal stagger>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* Feature 1 */}
-            <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-brand/30">
+            <div className="card group overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-brand/30">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand/10 blur-3xl transition-all duration-500 group-hover:bg-brand/20" />
               <div className="relative z-10">
                 <div className="mb-4 block">
@@ -154,8 +156,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                     <Code2 className="h-5 w-5 text-white" />
                   </div>
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-white">{t("feat1_title")}</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
+                <h3 className="mb-2 text-lg font-bold text-fg">{t("feat1_title")}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">
                   {t("feat1_desc")}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -167,7 +169,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             </div>
 
             {/* Feature 2 */}
-            <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-purple-500/30">
+            <div className="card group overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-purple-500/30">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl transition-all duration-500 group-hover:bg-purple-500/20" />
               <div className="relative z-10">
                 <div className="mb-4 block">
@@ -175,8 +177,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                     <Sparkles className="h-5 w-5 text-white" />
                   </div>
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-white">{t("feat2_title")}</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
+                <h3 className="mb-2 text-lg font-bold text-fg">{t("feat2_title")}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">
                   {t("feat2_desc")}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -188,7 +190,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             </div>
 
             {/* Feature 3 */}
-            <div className="group relative overflow-hidden rounded-2xl bg-[#111] p-6 shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5 hover:border-emerald-500/30 sm:col-span-2 lg:col-span-1">
+            <div className="card group overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-emerald-500/30 sm:col-span-2 lg:col-span-1">
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl transition-all duration-500 group-hover:bg-emerald-500/20" />
               <div className="relative z-10">
                 <div className="mb-4 block">
@@ -196,8 +198,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
                     <Users className="h-5 w-5 text-white" />
                   </div>
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-white">{t("feat3_title")}</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
+                <h3 className="mb-2 text-lg font-bold text-fg">{t("feat3_title")}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">
                   {t("feat3_desc")}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -220,7 +222,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <span className="mb-2 inline-block rounded-full bg-brand/10 border border-brand/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
               {t("how_badge")}
             </span>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="text-2xl font-bold text-fg sm:text-3xl">
               {t("how_title")}
             </h2>
           </div>
@@ -229,11 +231,11 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
         <div className="grid gap-6 sm:grid-cols-3">
           <Reveal delay={0}>
             <div className="relative text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark text-lg font-bold text-white shadow-[0_0_15px_rgba(124,92,252,0.3)]">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark text-lg font-bold text-white shadow-[0_0_15px_rgba(107,78,255,0.3)]">
                 1
               </div>
-              <h3 className="mb-1 text-base font-bold text-white">{t("how1_title")}</h3>
-              <p className="text-xs text-gray-400">
+              <h3 className="mb-1 text-base font-bold text-fg">{t("how1_title")}</h3>
+              <p className="text-xs text-zinc-400">
                 {t("how1_desc")}
               </p>
               <Search className="mx-auto mt-2 h-4 w-4 text-brand/60" />
@@ -246,8 +248,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 text-lg font-bold text-white shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                 2
               </div>
-              <h3 className="mb-1 text-base font-bold text-white">{t("how2_title")}</h3>
-              <p className="text-xs text-gray-400">
+              <h3 className="mb-1 text-base font-bold text-fg">{t("how2_title")}</h3>
+              <p className="text-xs text-zinc-400">
                 {t("how2_desc")}
               </p>
               <Copy className="mx-auto mt-2 h-4 w-4 text-purple-400/60" />
@@ -259,8 +261,8 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-lg font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                 3
               </div>
-              <h3 className="mb-1 text-base font-bold text-white">{t("how3_title")}</h3>
-              <p className="text-xs text-gray-400">
+              <h3 className="mb-1 text-base font-bold text-fg">{t("how3_title")}</h3>
+              <p className="text-xs text-zinc-400">
                 {t("how3_desc")}
               </p>
               <Heart className="mx-auto mt-2 h-4 w-4 text-emerald-400/60" />
@@ -279,10 +281,10 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <span className="mb-3 inline-block rounded-full bg-brand/10 border border-brand/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand">
               {t("tech_badge")}
             </span>
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold text-fg sm:text-4xl">
               {t("tech_title")}
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-gray-400">
+            <p className="mx-auto mt-3 max-w-lg text-zinc-400">
               {t("tech_desc")}
             </p>
           </div>
@@ -314,7 +316,7 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
           BOTTOM CTA
           ======================================== */}
       <Reveal>
-        <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#111] px-8 py-16 text-center shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+        <section className="relative overflow-hidden rounded-3xl border border-line bg-surface-subtle px-8 py-16 text-center shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
           {/* Decorations */}
           <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-brand/20 blur-[60px]" />
           <div className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-purple-500/20 blur-[60px]" />
@@ -323,22 +325,22 @@ export default function HomePage({ params: { locale } }: { params: { locale: str
             <div className="mx-auto flex items-center justify-center animate-bounce-subtle">
               <Logo className="h-20 w-20" />
             </div>
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold text-fg sm:text-4xl">
               {t("cta_title_start")}
               <span className="text-gradient">{t("cta_title_highlight")}</span>{" "}
               {t("cta_title_end")}
             </h2>
-            <p className="text-gray-400">
+            <p className="text-zinc-400">
               {t("cta_desc")}
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a href="/snippets" className="btn-primary text-lg shadow-[0_0_20px_rgba(124,92,252,0.3)]">
+              <Link href="/snippets" className="btn-primary text-lg shadow-[0_0_20px_rgba(107,78,255,0.3)]">
                 {t("cta_btn_start")}
                 <ArrowRight className="h-5 w-5" />
-              </a>
+              </Link>
               <GitHubLoginButton 
                 text={t("cta_btn_login")} 
-                className="btn-ghost text-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center" 
+                className="btn-ghost text-lg border border-line bg-ink/5 hover:bg-ink/10 hover:text-fg flex items-center justify-center" 
               />
             </div>
           </div>

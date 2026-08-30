@@ -60,10 +60,10 @@ export default async function LeaderboardPage({ params: { locale } }: Props) {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500 mb-6 border border-amber-500/20 shadow-[0_0_35px_rgba(245,158,11,0.25)] animate-pulse">
           <Trophy className="h-8 w-8 fill-current text-amber-400" />
         </div>
-        <h1 className="text-3xl font-black text-white sm:text-5xl lg:text-6xl tracking-tight">
+        <h1 className="text-3xl font-black text-fg sm:text-5xl lg:text-6xl tracking-tight">
           {t("title")}
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed">
+        <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-zinc-400 leading-relaxed">
           {t("subtitle")}
         </p>
       </div>

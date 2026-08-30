@@ -27,19 +27,19 @@ export default function CodeHighlighter({ code = "", language = "javascript" }: 
   const computedHeight = Math.min(Math.max(lines * 22 + 36, 80), 650);
 
   return (
-    <div className="w-full bg-[#1e1e1e]">
+    <div className="w-full bg-surface-overlay">
       <Editor
         height={`${computedHeight}px`}
         language={getMonacoLanguage(language)}
         theme="vs-dark"
         value={code}
-        loading={<div className="h-40 w-full animate-pulse bg-[#1e1e1e]" />}
+        loading={<div className="h-40 w-full animate-pulse bg-surface-overlay" />}
         options={{
           readOnly: true,
           domReadOnly: true,
           minimap: { enabled: false },
           fontSize: 14,
-          fontFamily: '"Fira Code", monospace',
+          fontFamily: 'var(--font-mono), "Fira Code", monospace',
           padding: { top: 16, bottom: 16 },
           scrollBeyondLastLine: false,
           smoothScrolling: true,

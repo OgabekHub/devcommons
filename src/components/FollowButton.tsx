@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { UserPlus, UserCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 import { sendNotification } from "@/lib/notifications";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { toast } from "@/components/Toaster";
 
 interface Props {
   targetUserId: string;
@@ -16,7 +18,7 @@ export default function FollowButton({ targetUserId }: Props) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const t = useTranslations("Components");
-  const locale = useLocale();
+  const router = useRouter();
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function FollowButton({ targetUserId }: Props) {
 
   const handleToggle = async () => {
     if (!user) {
-      window.location.href = `/${locale}/auth`;
+      router.push("/auth");
       return;
     }
     setLoading(true);
@@ -56,7 +58,8 @@ export default function FollowButton({ targetUserId }: Props) {
           .delete()
           .eq("follower_id", user.id)
           .eq("following_id", targetUserId);
-        if (!error) setFollowing(false);
+        if (error) throw error;
+        setFollowing(false);
       } else {
         // Follow
         const { error } = await supabase
@@ -65,16 +68,16 @@ export default function FollowButton({ targetUserId }: Props) {
             follower_id: user.id,
             following_id: targetUserId,
           });
-        if (!error) {
-          setFollowing(true);
-          sendNotification({
-            userId: targetUserId,
-            type: "follow",
-          });
-        }
+        if (error) throw error;
+        setFollowing(true);
+        sendNotification({
+          userId: targetUserId,
+          type: "follow",
+        });
       }
     } catch (err) {
       console.error("Follow error:", err);
+      toast.error("Obuna amalida xatolik yuz berdi");
     } finally {
       setLoading(false);
     }
@@ -88,7 +91,7 @@ export default function FollowButton({ targetUserId }: Props) {
       disabled={loading}
       className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
         following
-          ? "bg-white/10 text-gray-300 border border-white/10 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20"
+          ? "bg-ink/10 text-zinc-300 border border-line hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20"
           : "bg-brand text-white hover:bg-brand-dark shadow-sm shadow-brand/20"
       } disabled:opacity-50`}
     >

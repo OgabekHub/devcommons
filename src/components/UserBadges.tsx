@@ -93,8 +93,8 @@ export default function UserBadges({ stats, showAll = true }: Props) {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Trophy className="h-5 w-5 text-amber-400" />
-        <h3 className="text-lg font-bold text-white">{t("title")}</h3>
-        <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-gray-300">
+        <h3 className="text-lg font-bold text-fg">{t("title")}</h3>
+        <span className="rounded-full bg-ink/10 px-2.5 py-0.5 text-xs font-semibold text-zinc-300">
           {badges.filter((b) => b.unlocked).length} / {badges.length}
         </span>
       </div>
@@ -108,20 +108,20 @@ export default function UserBadges({ stats, showAll = true }: Props) {
               className={`group relative flex items-start gap-3 rounded-xl border p-3.5 transition-colors duration-200 ${
                 badge.unlocked
                   ? `${badge.colors.border} ${badge.colors.bg} ${badge.colors.glow}`
-                  : "border-white/5 bg-white/[0.02] opacity-50 hover:border-white/10"
+                  : "border-line bg-white/[0.02] opacity-50 hover:border-line-strong"
               }`}
             >
               <div
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                  badge.unlocked ? badge.colors.bg : "bg-white/5 text-gray-500"
+                  badge.unlocked ? badge.colors.bg : "bg-ink/5 text-zinc-500"
                 }`}
               >
-                <Icon className={`h-5 w-5 ${badge.unlocked ? badge.colors.text : "text-gray-500"}`} />
+                <Icon className={`h-5 w-5 ${badge.unlocked ? badge.colors.text : "text-zinc-500"}`} />
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-1">
-                  <h4 className={`text-sm font-bold truncate ${badge.unlocked ? "text-white" : "text-gray-400"}`}>
+                  <h4 className={`text-sm font-bold truncate ${badge.unlocked ? "text-fg" : "text-zinc-400"}`}>
                     {badge.name}
                   </h4>
                   {badge.unlocked ? (
@@ -129,12 +129,12 @@ export default function UserBadges({ stats, showAll = true }: Props) {
                       <CheckCircle2 className="h-4 w-4" />
                     </span>
                   ) : (
-                    <span title={t("locked")} className="shrink-0 text-gray-600">
+                    <span title={t("locked")} className="shrink-0 text-zinc-600">
                       <Lock className="h-3.5 w-3.5" />
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-xs text-gray-400 leading-normal">
+                <p className="mt-1 text-xs text-zinc-400 leading-normal">
                   {badge.desc}
                 </p>
               </div>

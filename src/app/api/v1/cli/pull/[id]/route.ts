@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
+
+// used_count'ni service_role orqali oshiradi (RPC anon'dan revoke qilingan).
+async function bumpUsedCount(id: string, itemType: "snippet" | "prompt") {
+  const admin = createSupabaseAdmin();
+  if (!admin) return;
+  const { error } = await admin.rpc("increment_used_count", { item_id: id, item_type: itemType });
+  if (error) console.error("increment_used_count failed:", error);
+}
 
 export async function GET(
   _req: Request,
@@ -17,8 +26,7 @@ export async function GET(
       .single();
 
     if (snippet) {
-      // Increment used_count for CLI pulls
-      try { await supabase.rpc('increment_used_count', { item_id: id, item_type: 'snippet' }); } catch (_e) { /* ignore */ }
+      await bumpUsedCount(id, "snippet");
       return NextResponse.json({
         success: true,
         type: "snippet",
@@ -34,7 +42,7 @@ export async function GET(
       .single();
 
     if (prompt) {
-      try { await supabase.rpc('increment_used_count', { item_id: id, item_type: 'prompt' }); } catch (_e) { /* ignore */ }
+      await bumpUsedCount(id, "prompt");
       return NextResponse.json({
         success: true,
         type: "prompt",

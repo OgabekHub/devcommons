@@ -8,11 +8,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ── Single accent — logo indigo-violet ──
+        // ── Single accent — logo indigo-violet (CSS var'lardan, mavzuga tayyor) ──
         brand: {
-          DEFAULT: "#6B4EFF",
-          dark:    "#5A3FE8",
-          light:   "#8B73FF",
+          DEFAULT: "rgb(var(--brand) / <alpha-value>)",       // #6B4EFF
+          dark:    "rgb(var(--brand-dark) / <alpha-value>)",  // #5A3FE8
+          light:   "rgb(var(--brand-light) / <alpha-value>)", // #8B73FF
           50:      "#F0EDFF",
           100:     "#E0D9FF",
           200:     "#C4B8FF",
@@ -21,16 +21,40 @@ const config: Config = {
           700:     "#4530C4",
           900:     "#1A1050",
         },
-        // ── Surfaces (zinc-950 system) ──
+        // ── Surfaces (zinc-950 system, CSS var'lardan) ──
         surface: {
-          DEFAULT:  "#09090b",   // page base
-          subtle:   "#0f0f12",   // card, sidebar
-          overlay:  "#18181b",   // hover, input, dropdown
-          border:   "rgba(255,255,255,0.07)",
+          DEFAULT:  "rgb(var(--surface-1) / <alpha-value>)", // page base   #09090b
+          subtle:   "rgb(var(--surface-2) / <alpha-value>)", // card/sidebar #0f0f12
+          overlay:  "rgb(var(--surface-3) / <alpha-value>)", // hover/input  #18181b
+          border:   "var(--line)",
+        },
+        // ── Chiziqlar — border-line / border-line-muted / border-line-strong ──
+        line: {
+          DEFAULT: "var(--line)",        /* 7%  — standart border */
+          muted:   "var(--line-muted)",  /* 4%  — juda nozik */
+          strong:  "var(--line-strong)", /* 12% — hover/ajratilgan */
+        },
+        // ── Mavzuga-sezgir matn/overlay ──
+        fg:  "rgb(var(--fg) / <alpha-value>)",   /* asosiy matn (dark: oq, light: qora) */
+        ink: "rgb(var(--ink) / <alpha-value>)",  /* fon-qarama-qarshi alpha qatlam (bg-ink/5) */
+        // ── Zinc — CSS var'lardan (light mavzuda avtomatik ag'dariladi) ──
+        zinc: {
+          50:  "rgb(var(--zinc-50) / <alpha-value>)",
+          100: "rgb(var(--zinc-100) / <alpha-value>)",
+          200: "rgb(var(--zinc-200) / <alpha-value>)",
+          300: "rgb(var(--zinc-300) / <alpha-value>)",
+          400: "rgb(var(--zinc-400) / <alpha-value>)",
+          500: "rgb(var(--zinc-500) / <alpha-value>)",
+          600: "rgb(var(--zinc-600) / <alpha-value>)",
+          700: "rgb(var(--zinc-700) / <alpha-value>)",
+          800: "rgb(var(--zinc-800) / <alpha-value>)",
+          900: "rgb(var(--zinc-900) / <alpha-value>)",
+          950: "rgb(var(--zinc-950) / <alpha-value>)",
         },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       animation: {
         "fade-in":       "fadeIn 0.6s ease-out forwards",

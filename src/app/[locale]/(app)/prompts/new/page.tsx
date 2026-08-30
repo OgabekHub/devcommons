@@ -81,6 +81,7 @@ export default function NewPromptPage() {
           title: title.trim(),
           content: content.trim(),
           category,
+          tags,
           author_id: user?.id ?? null,
         });
 
@@ -99,7 +100,7 @@ export default function NewPromptPage() {
       {/* Back */}
       <Link
         href="/prompts"
-        className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform " />
         {t("back")}
@@ -112,7 +113,7 @@ export default function NewPromptPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <p className="text-sm text-zinc-500">{t("subtitle")}</p>
         </div>
       </div>
 
@@ -120,7 +121,7 @@ export default function NewPromptPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
@@ -135,7 +136,7 @@ export default function NewPromptPage() {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">{t("field_desc")}</label>
+          <label className="text-sm font-semibold text-zinc-300">{t("field_desc")}</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -149,7 +150,7 @@ export default function NewPromptPage() {
         {/* Category + AI Model */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-300">{t("field_category")}</label>
+            <label className="text-sm font-semibold text-zinc-300">{t("field_category")}</label>
             <CustomSelect
               options={CATEGORIES}
               value={category}
@@ -157,7 +158,7 @@ export default function NewPromptPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-300">{t("field_model")}</label>
+            <label className="text-sm font-semibold text-zinc-300">{t("field_model")}</label>
             <CustomSelect
               options={AI_MODELS}
               value={aiModel}
@@ -168,13 +169,13 @@ export default function NewPromptPage() {
 
         {/* Prompt Content */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_content")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-white/10 shadow-sm bg-[#111111]">
-            <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-2">
-              <span className="text-xs font-medium text-gray-500">✨ Prompt</span>
-              <span className="text-xs text-gray-400">{content.length} / 5000</span>
+          <div className="overflow-hidden rounded-xl border border-line shadow-sm bg-surface-subtle">
+            <div className="flex items-center justify-between border-b border-line bg-ink/5 px-4 py-2">
+              <span className="text-xs font-medium text-zinc-500">✨ Prompt</span>
+              <span className="text-xs text-zinc-400">{content.length} / 5000</span>
             </div>
             <textarea
               value={content}
@@ -182,15 +183,15 @@ export default function NewPromptPage() {
               placeholder={t("field_content_placeholder")}
               rows={12}
               maxLength={5000}
-              className="w-full bg-transparent p-4 text-sm text-gray-100 placeholder-gray-500 focus:outline-none resize-none"
+              className="w-full bg-transparent p-4 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none resize-none"
             />
           </div>
         </div>
 
         {/* Tags */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
-            {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
+          <label className="text-sm font-semibold text-zinc-300">
+            {t("field_tags")} <span className="text-zinc-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
             <input
@@ -216,7 +217,7 @@ export default function NewPromptPage() {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1 text-sm font-medium text-violet-600"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-sm font-medium text-violet-400"
                 >
                   #{tag}
                   <button
@@ -234,7 +235,7 @@ export default function NewPromptPage() {
 
         {/* Error */}
         {error && (
-          <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
             {error}
           </div>
         )}

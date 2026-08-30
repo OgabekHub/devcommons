@@ -81,18 +81,15 @@ export default function AiAssistant() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
 
+      // Route `toTextStreamResponse()` bilan oddiy matn oqimini qaytaradi —
+      // har bir chunk'ni to'g'ridan-to'g'ri qo'shamiz. `{ stream: true }` ko'p
+      // baytli UTF-8 (kirill/o'zbek) belgilarni chunk chegarasida buzmaydi.
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const text = decoder.decode(value);
-        const lines = text.split('\n');
-        for (const line of lines) {
-          if (line.startsWith('0:')) {
-             try {
-               const chunk = JSON.parse(line.substring(2));
-               setMessages(msgs => msgs.map(m => m.id === aiMsgId ? { ...m, content: m.content + chunk } : m));
-             } catch(e) { console.error('Stream chunk parse error:', e); }
-          }
+        const text = decoder.decode(value, { stream: true });
+        if (text) {
+          setMessages(msgs => msgs.map(m => m.id === aiMsgId ? { ...m, content: m.content + text } : m));
         }
       }
     } catch (err) {
@@ -117,26 +114,26 @@ export default function AiAssistant() {
       {/* Chat Window */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0B] shadow-2xl transition-all ${
+          className={`fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl transition-all ${
             isExpanded ? "h-[75vh] w-full sm:w-[650px]" : "h-[480px] w-full sm:w-[350px]"
           } max-w-[calc(100vw-2rem)]`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/5 bg-white/5 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-line bg-ink/5 px-4 py-3">
             <div className="flex items-center gap-2">
               <Bot className="h-5 w-5 text-brand" />
-              <span className="font-semibold text-white">DevCommons AI</span>
+              <span className="font-semibold text-fg">DevCommons AI</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="hidden sm:block rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+                className="hidden sm:block rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-ink/10 hover:text-fg"
               >
                 {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-ink/10 hover:text-fg"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -146,10 +143,10 @@ export default function AiAssistant() {
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.length === 0 && (
-              <div className="flex h-full flex-col items-center justify-center text-center text-gray-500">
+              <div className="flex h-full flex-col items-center justify-center text-center text-zinc-500">
                 <Sparkles className="mb-4 h-12 w-12 text-brand/20" />
                 <p>{t("welcome_title")}</p>
-                <p className="mt-2 text-sm text-gray-600">{t("welcome_subtitle")}</p>
+                <p className="mt-2 text-sm text-zinc-600">{t("welcome_subtitle")}</p>
               </div>
             )}
             {messages.map((m: ChatMessage) => (
@@ -161,7 +158,7 @@ export default function AiAssistant() {
                   className={`max-w-[90%] rounded-2xl px-4 py-3 ${
                     m.role === "user"
                       ? "bg-brand text-white"
-                      : "bg-white/5 text-gray-200 border border-white/10"
+                      : "bg-ink/5 text-zinc-200 border border-line"
                   }`}
                 >
                   <div className="prose prose-invert prose-sm max-w-none break-words leading-relaxed">
@@ -171,7 +168,7 @@ export default function AiAssistant() {
                           <code className="bg-black/50 text-emerald-400 px-1 py-0.5 rounded text-xs" {...props} />
                         ),
                         pre: ({ node: _node, ...props }: any) => (
-                          <pre className="bg-black/50 p-3 rounded-lg overflow-x-auto border border-white/10 my-2 text-xs" {...props} />
+                          <pre className="bg-black/50 p-3 rounded-lg overflow-x-auto border border-line my-2 text-xs" {...props} />
                         ),
                       }}
                     >
@@ -183,7 +180,7 @@ export default function AiAssistant() {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-white/5 text-gray-200 border border-white/10">
+                <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-ink/5 text-zinc-200 border border-line">
                   <div className="flex space-x-2">
                     <div className="h-2 w-2 animate-bounce rounded-full bg-brand"></div>
                     <div className="h-2 w-2 animate-bounce rounded-full bg-brand" style={{ animationDelay: "0.2s" }}></div>
@@ -195,13 +192,13 @@ export default function AiAssistant() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="border-t border-white/5 bg-[#0A0A0B] p-4">
+          <form onSubmit={handleSubmit} className="border-t border-line bg-surface p-4">
             <div className="relative">
               <input
                 value={input}
                 onChange={handleInputChange}
                 placeholder={t("input_placeholder")}
-                className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                className="w-full rounded-xl border border-line bg-ink/5 py-3 pl-4 pr-12 text-sm text-fg placeholder-zinc-500 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
               />
               <button
                 type="submit"

@@ -63,7 +63,7 @@ export default function DownloadButton({ code, language, filename, itemId, itemT
   return (
     <button
       onClick={handleDownload}
-      className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-400 transition-colors duration-200 hover:bg-white/10 hover:text-white bg-white/5 border border-white/10"
+      className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-400 transition-colors duration-200 hover:bg-ink/10 hover:text-fg bg-ink/5 border border-line"
       title={t("download")}
     >
       <Download className="h-4 w-4 shrink-0" />

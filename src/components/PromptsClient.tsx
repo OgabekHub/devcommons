@@ -24,7 +24,7 @@ const categoryStyles: Record<string, string> = {
   Creative: "bg-pink-500/10 text-pink-400 border border-pink-500/20",
   Marketing: "bg-orange-500/10 text-orange-400 border border-orange-500/20",
   Education: "bg-teal-500/10 text-teal-400 border border-teal-500/20",
-  default: "bg-white/5 text-gray-400 border border-white/10",
+  default: "bg-ink/5 text-zinc-400 border border-line",
 };
 
 interface Props {
@@ -134,8 +134,8 @@ export default function PromptsClient({ prompts, labels }: Props) {
             <Sparkles className="h-3.5 w-3.5" />
             {labels.badge}
           </div>
-          <h1 className="text-3xl font-bold text-white sm:text-4xl">{labels.title}</h1>
-          <p className="mt-2 text-gray-400">{labels.subtitle}</p>
+          <h1 className="text-3xl font-bold text-fg sm:text-4xl">{labels.title}</h1>
+          <p className="mt-2 text-zinc-400">{labels.subtitle}</p>
         </div>
         <Link href="/prompts/new" className="btn-primary">
           <Plus className="h-4 w-4" />
@@ -146,18 +146,19 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {/* Search */}
       <div className="flex flex-col gap-3">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={labels.search_placeholder}
-            className="w-full rounded-xl border border-white/10 bg-[#111] py-3 pl-11 pr-10 text-sm text-white transition-all focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 placeholder:text-gray-500"
+            className="w-full rounded-xl border border-line bg-surface-subtle py-3 pl-11 pr-10 text-sm text-fg transition-all focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 placeholder:text-zinc-500"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+              aria-label="Qidiruvni tozalash"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
             >
               <X className="h-4 w-4" />
             </button>
@@ -174,7 +175,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
                 className={`rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
                   category === cat.value
                     ? "bg-brand text-white shadow-brand/20"
-                    : "border border-white/10 text-gray-400 hover:border-brand/30 hover:text-brand"
+                    : "border border-line text-zinc-400 hover:border-brand/30 hover:text-brand"
                 }`}
               >
                 {cat.label}
@@ -186,19 +187,21 @@ export default function PromptsClient({ prompts, labels }: Props) {
           <div className="relative">
             <button
               onClick={() => setShowSortMenu(!showSortMenu)}
-              className="input flex items-center gap-2 bg-[#111] text-gray-300 cursor-pointer sm:w-40 border-white/10 hover:border-brand/50"
+            aria-label="Saralash tartibi"
+            aria-expanded={showSortMenu}
+              className="input flex items-center gap-2 bg-surface-subtle text-zinc-300 cursor-pointer sm:w-40 border-line hover:border-brand/50"
             >
               <ArrowUpDown className="h-4 w-4" />
               {SORT_OPTIONS.find(opt => opt.value === sortBy)?.label}
             </button>
             {showSortMenu && (
-              <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-xl border border-white/10 bg-[#1A1A1A] p-1 shadow-2xl">
+              <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-xl border border-line bg-surface-overlay p-1 shadow-2xl">
                 {SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => { setSortBy(opt.value); setShowSortMenu(false); }}
                     className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                      sortBy === opt.value ? "bg-brand/10 text-brand" : "text-gray-300 hover:bg-white/5 hover:text-white"
+                      sortBy === opt.value ? "bg-brand/10 text-brand" : "text-zinc-300 hover:bg-ink/5 hover:text-fg"
                     }`}
                   >
                     {opt.label}
@@ -225,7 +228,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
           ))}
           <button
             onClick={() => setSelectedTags([])}
-            className="text-sm text-gray-400 hover:text-gray-300"
+            className="text-sm text-zinc-400 hover:text-zinc-300"
           >
             {t("clear_all")}
           </button>
@@ -234,23 +237,23 @@ export default function PromptsClient({ prompts, labels }: Props) {
 
       {/* Natijalar soni */}
       {(query || category !== "ALL" || selectedTags.length > 0) && (
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-zinc-400">
           {filtered.length} {t("results_found")}
-          {query && <span> — &ldquo;<strong className="text-gray-200">{query}</strong>&rdquo;</span>}
+          {query && <span> — &ldquo;<strong className="text-zinc-200">{query}</strong>&rdquo;</span>}
           {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
 
       {/* Bo'sh holat */}
       {filtered.length === 0 && (
-        <div className="card border-dashed border-white/10 bg-gradient-to-br from-[#111] to-[#0A0A0A] p-14 text-center">
+        <div className="card border-dashed border-line bg-gradient-to-br from-surface-subtle to-surface p-14 text-center">
           <div className="mx-auto mb-5 inline-flex rounded-2xl bg-purple-500/10 border border-purple-500/20 p-4">
             <Sparkles className="h-7 w-7 text-purple-400" />
           </div>
-          <h2 className="mb-2 text-xl font-bold text-white">
+          <h2 className="mb-2 text-xl font-bold text-fg">
             {query ? t("nothing_found") : t("no_prompts_yet")}
           </h2>
-          <p className="mx-auto max-w-sm text-sm text-gray-400">
+          <p className="mx-auto max-w-sm text-sm text-zinc-400">
             {query
               ? t("search_again")
               : t("first_prompt")}
@@ -268,15 +271,16 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {visiblePrompts.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
           {visiblePrompts.map((prompt, i) => (
-            <Link
-              key={prompt.id}
-              href={`/prompts/${prompt.id}` as `/prompts/${string}`}
-              className="group block"
-            >
-              <SpotlightCard delay={i * 0.05} className="card card-shine h-full flex flex-col cursor-pointer">
+            /* Stretched-link pattern — <a> ichida <button> yo'q (a11y) */
+            <SpotlightCard key={prompt.id} delay={i * 0.05} className="card card-shine group h-full flex flex-col">
                 <div className="mb-3 flex items-start justify-between">
-                  <h2 className="font-bold text-white leading-snug transition-colors group-hover:text-brand">
-                    {prompt.title}
+                  <h2 className="font-bold text-fg leading-snug transition-colors group-hover:text-brand">
+                    <Link
+                      href={`/prompts/${prompt.id}` as `/prompts/${string}`}
+                      className="focus:outline-none after:absolute after:inset-0 after:z-0 after:content-['']"
+                    >
+                      {prompt.title}
+                    </Link>
                   </h2>
                   <span className={`ml-2 flex-shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${categoryStyles[prompt.category] || categoryStyles.default}`}>
                     {prompt.category}
@@ -287,16 +291,16 @@ export default function PromptsClient({ prompts, labels }: Props) {
                   <UsageStatsBadge usedCount={(prompt as any).used_count} forksCount={(prompt as any).forks_count} />
                 </div>
                 {(prompt as any).description && (
-                  <p className="mb-2 text-sm text-gray-400 line-clamp-1">
+                  <p className="mb-2 text-sm text-zinc-400 line-clamp-1">
                     {(prompt as any).description}
                   </p>
                 )}
-                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-400">
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-zinc-400">
                   {prompt.content}
                 </p>
                 {/* Tags */}
                 {(prompt as any).tags?.length > 0 && (
-                  <div className="mb-3 flex flex-wrap gap-1.5">
+                  <div className="relative z-10 mb-3 flex flex-wrap gap-1.5">
                     {((prompt as any).tags as string[]).slice(0, 3).map((tag) => (
                       <button
                         key={tag}
@@ -310,7 +314,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
                         className={`rounded-md px-2 py-0.5 text-xs transition-colors border ${
                           selectedTags.includes(tag)
                             ? "bg-violet-500/20 text-violet-400 border-violet-500/30"
-                            : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10"
+                            : "bg-ink/5 text-zinc-400 border-line hover:bg-ink/10"
                         }`}
                       >
                         #{tag}
@@ -318,18 +322,17 @@ export default function PromptsClient({ prompts, labels }: Props) {
                     ))}
                   </div>
                 )}
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                <div className="relative z-10 flex items-center justify-between mt-auto pt-4 border-t border-line">
                   <div className="flex items-center gap-3">
                     <VoteButton id={prompt.id} type="prompt" initialVotes={prompt.votes ?? 0} />
-                    <span className="text-xs text-gray-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
+                    <span className="text-xs text-zinc-400">{new Date(prompt.created_at).toLocaleDateString("uz-UZ")}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <BookmarkButton promptId={prompt.id} compact />
                     <CopyButton text={prompt.content} label="" itemId={prompt.id} itemType="prompt" />
                   </div>
                 </div>
-              </SpotlightCard>
-            </Link>
+            </SpotlightCard>
           ))}
         </div>
       ) : null}
@@ -338,7 +341,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {hasMore && (
         <div ref={observerRef} className="flex justify-center py-8">
           {loading && (
-            <div className="flex items-center gap-2 text-gray-400">
+            <div className="flex items-center gap-2 text-zinc-400">
               <Loader2 className="h-5 w-5 animate-spin" />
               <span>{t("loading")}</span>
             </div>

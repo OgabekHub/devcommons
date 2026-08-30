@@ -14,7 +14,9 @@
     "analytics": "Analytics",
     "leaderboard": "Leaderboard",
     "tags": "Tags",
-    "search": "Search..."
+    "search": "Search...",
+    "library": "Explore Library",
+    "dashboard": "Dashboard"
   },
   "Index": {
     "badge": "100% free and open source",
@@ -65,7 +67,8 @@
     "cta_btn_start": "New Snippet",
     "cta_btn_login": "Login with GitHub",
     "preview_copy": "Copy",
-    "preview_error": "Error:"
+    "preview_error": "Error:",
+    "btn_workflows": "AI Workflows & Bundles"
   },
   "Snippets": {
     "meta_title": "Code Snippets — DevCommons",
@@ -242,7 +245,9 @@
     "comment_placeholder": "Write a comment...",
     "send": "Send",
     "no_comments": "No comments yet. Be the first to share your thoughts!",
-    "save_to_collection_btn": "Save to Collection"
+    "save_to_collection_btn": "Save to Collection",
+    "comment_delete_confirm": "Delete this comment?",
+    "loading": "Loading..."
   },
   "Tour": {
     "done": "Done",

@@ -51,11 +51,11 @@ export const LANGUAGE_CONFIGS_MAP: Record<string, { color: string; dot: string; 
   Bash: { color: "text-green-400", dot: "bg-green-400", bgActive: "bg-green-500/20 border-green-500/60" },
   YAML: { color: "text-teal-400", dot: "bg-teal-400", bgActive: "bg-teal-500/20 border-teal-500/60" },
   JSON: { color: "text-amber-300", dot: "bg-amber-300", bgActive: "bg-amber-400/20 border-amber-400/60" },
-  "Cursor Rule": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-white/10 border-white/20" },
-  "Claude Config": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-white/10 border-white/20" },
-  "Agent Rules": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-white/10 border-white/20" },
-  "Windsurf Rule": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-white/10 border-white/20" },
-  Other: { color: "text-gray-400", dot: "bg-gray-400", bgActive: "bg-gray-500/20 border-gray-500/60" },
+  "Cursor Rule": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-ink/10 border-ink/20" },
+  "Claude Config": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-ink/10 border-ink/20" },
+  "Agent Rules": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-ink/10 border-ink/20" },
+  "Windsurf Rule": { color: "text-zinc-200 font-semibold", dot: "bg-white", bgActive: "bg-ink/10 border-ink/20" },
+  Other: { color: "text-zinc-400", dot: "bg-zinc-400", bgActive: "bg-zinc-500/20 border-zinc-500/60" },
 };
 
 export function detectAgentConfig(title?: string | null, language?: string | null): AgentConfigInfo | null {
@@ -67,7 +67,7 @@ export function detectAgentConfig(title?: string | null, language?: string | nul
       isAgentConfig: true,
       type: "Cursor Rule",
       badgeText: "⚡ Cursor Rule",
-      className: "bg-white/5 text-zinc-300 border border-white/10",
+      className: "bg-ink/5 text-zinc-300 border border-line",
       defaultFilename: ".cursorrules",
     };
   }
@@ -77,7 +77,7 @@ export function detectAgentConfig(title?: string | null, language?: string | nul
       isAgentConfig: true,
       type: "Claude Config",
       badgeText: "🤖 Claude Config",
-      className: "bg-white/5 text-zinc-300 border border-white/10",
+      className: "bg-ink/5 text-zinc-300 border border-line",
       defaultFilename: "CLAUDE.md",
     };
   }
@@ -87,7 +87,7 @@ export function detectAgentConfig(title?: string | null, language?: string | nul
       isAgentConfig: true,
       type: "Windsurf Rule",
       badgeText: "🏄‍♂️ Windsurf Rule",
-      className: "bg-white/5 text-zinc-300 border border-white/10",
+      className: "bg-ink/5 text-zinc-300 border border-line",
       defaultFilename: ".windsurfrules",
     };
   }
@@ -97,7 +97,7 @@ export function detectAgentConfig(title?: string | null, language?: string | nul
       isAgentConfig: true,
       type: "Agent Rules",
       badgeText: "🧠 Agent Rules",
-      className: "bg-white/5 text-zinc-300 border border-white/10",
+      className: "bg-ink/5 text-zinc-300 border border-line",
       defaultFilename: "AGENTS.md",
     };
   }

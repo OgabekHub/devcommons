@@ -99,14 +99,14 @@ export default function CLIEmulator() {
   return (
     <div className="space-y-12">
       {/* Interactive Bash Terminal Section */}
-      <div className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0B0D16] to-[#07090F] shadow-[0_0_50px_rgba(30,58,138,0.25)] overflow-hidden">
+      <div className="rounded-3xl border border-line-strong bg-gradient-to-b from-[#0B0D16] to-[#07090F] shadow-[0_0_50px_rgba(30,58,138,0.25)] overflow-hidden">
         {/* MacOS style window bar */}
-        <div className="flex items-center justify-between border-b border-white/10 bg-[#121622] px-5 py-3">
+        <div className="flex items-center justify-between border-b border-line bg-[#121622] px-5 py-3">
           <div className="flex items-center gap-2">
             <div className="h-3 w-3 rounded-full bg-rose-500/80" />
             <div className="h-3 w-3 rounded-full bg-amber-500/80" />
             <div className="h-3 w-3 rounded-full bg-emerald-500/80" />
-            <span className="ml-2 font-mono text-xs font-bold text-gray-400">bash — devcommons@interactive-lab: ~</span>
+            <span className="ml-2 font-mono text-xs font-bold text-zinc-400">bash — devcommons@interactive-lab: ~</span>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -116,8 +116,8 @@ export default function CLIEmulator() {
 
         <div className="p-6 font-mono text-xs sm:text-sm md:p-8">
           {/* Preset trigger pills */}
-          <div className="mb-6 flex flex-wrap items-center gap-2 pb-4 border-b border-white/10">
-            <span className="text-gray-400 text-xs flex items-center gap-1">
+          <div className="mb-6 flex flex-wrap items-center gap-2 pb-4 border-b border-line">
+            <span className="text-zinc-400 text-xs flex items-center gap-1">
               <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
               <span>Try Instant Commands:</span>
             </span>
@@ -134,10 +134,10 @@ export default function CLIEmulator() {
           </div>
 
           {/* Terminal History Output */}
-          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 text-gray-300">
+          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 text-zinc-300">
             {history.map((h, idx) => (
               <div key={idx} className="space-y-1.5">
-                <div className="flex items-center gap-2 font-bold text-white">
+                <div className="flex items-center gap-2 font-bold text-fg">
                   <span className="text-emerald-400">user@devcommons:~$</span>
                   <span className="text-cyan-400">{h.cmd}</span>
                 </div>
@@ -148,7 +148,7 @@ export default function CLIEmulator() {
                       line.startsWith("✔") || line.startsWith("✨") ? "text-emerald-400 font-bold" :
                       line.startsWith("📡") || line.startsWith("🔍") ? "text-amber-300" :
                       line.startsWith("┌") || line.startsWith("│") || line.startsWith("└") ? "text-purple-300 font-semibold" :
-                      "text-gray-400"
+                      "text-zinc-400"
                     }`}
                   >
                     {line}
@@ -165,14 +165,14 @@ export default function CLIEmulator() {
           </div>
 
           {/* Input Prompt */}
-          <form onSubmit={handleFormSubmit} className="mt-6 flex items-center gap-2 border-t border-white/10 pt-4">
+          <form onSubmit={handleFormSubmit} className="mt-6 flex items-center gap-2 border-t border-line pt-4">
             <span className="text-emerald-400 font-bold shrink-0">user@devcommons:~$</span>
             <input
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               placeholder="Type any command (e.g., devcommons pull clean-architecture)..."
-              className="flex-1 bg-transparent text-white font-mono text-sm focus:outline-none placeholder-gray-600"
+              className="flex-1 bg-transparent text-fg font-mono text-sm focus:outline-none placeholder-zinc-600"
             />
             <button
               type="submit"
@@ -185,15 +185,15 @@ export default function CLIEmulator() {
       </div>
 
       {/* IDE & MCP Integration Configuration Center */}
-      <div className="rounded-3xl border border-white/10 bg-[#0A0C13] p-6 md:p-8 shadow-2xl">
-        <div className="flex flex-col gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between">
+      <div className="rounded-3xl border border-line bg-[#0A0C13] p-6 md:p-8 shadow-2xl">
+        <div className="flex flex-col gap-4 border-b border-line pb-6 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider">
               <Cpu className="h-4 w-4 animate-spin text-cyan-400" />
               <span>Seamless Autonomous Agent Integration</span>
             </div>
-            <h3 className="mt-1 text-2xl font-black text-white">{t("config_title")}</h3>
-            <p className="mt-1 text-sm text-gray-400 max-w-2xl">{t("config_subtitle")}</p>
+            <h3 className="mt-1 text-2xl font-black text-fg">{t("config_title")}</h3>
+            <p className="mt-1 text-sm text-zinc-400 max-w-2xl">{t("config_subtitle")}</p>
           </div>
 
           <button
@@ -202,7 +202,7 @@ export default function CLIEmulator() {
           >
             {copiedConfig ? (
               <>
-                <Check className="h-4 w-4 text-white" />
+                <Check className="h-4 w-4 text-fg" />
                 <span>{t("copied_btn")}</span>
               </>
             ) : (
@@ -215,7 +215,7 @@ export default function CLIEmulator() {
         </div>
 
         {/* Tab Selection */}
-        <div className="mt-6 flex flex-wrap gap-2 border-b border-white/10 pb-4">
+        <div className="mt-6 flex flex-wrap gap-2 border-b border-line pb-4">
           {[
             { id: "cli", label: "Terminal & CLI", icon: Terminal },
             { id: "cursor", label: "Cursor & VS Code", icon: Code2 },
@@ -231,7 +231,7 @@ export default function CLIEmulator() {
                 className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition-all ${
                   isSelected
                     ? "border-cyan-500 bg-cyan-500/15 text-cyan-300 shadow"
-                    : "border-transparent bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                    : "border-transparent bg-ink/5 text-zinc-400 hover:bg-ink/10 hover:text-fg"
                 }`}
               >
                 <Icon className={`h-4 w-4 ${isSelected ? "text-cyan-400 animate-pulse" : ""}`} />
@@ -242,7 +242,7 @@ export default function CLIEmulator() {
         </div>
 
         {/* Code Viewport */}
-        <div className="mt-6 rounded-2xl border border-white/10 bg-[#06080E] p-5 font-mono text-xs sm:text-sm text-gray-200 overflow-x-auto">
+        <div className="mt-6 rounded-2xl border border-line bg-[#06080E] p-5 font-mono text-xs sm:text-sm text-zinc-200 overflow-x-auto">
           <pre className="leading-relaxed text-cyan-200">
             {configSnippets[activeConfigTab]}
           </pre>

@@ -57,7 +57,7 @@ export default function FeedbackWidget() {
       {/* Floating Button on Bottom Left */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 rounded-full bg-[#1A1A1A]/90 border border-white/10 px-4 py-2.5 text-xs sm:text-sm font-medium text-gray-300 backdrop-blur-md shadow-xl transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-brand/50 hover:scale-105 group focus:outline-none"
+        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 rounded-full bg-surface-overlay/90 border border-line px-4 py-2.5 text-xs sm:text-sm font-medium text-zinc-300 backdrop-blur-md shadow-xl transition-all duration-300 hover:bg-ink/10 hover:text-fg hover:border-brand/50 hover:scale-105 group focus:outline-none"
         aria-label={t("btn_open")}
       >
         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-brand/20 text-brand group-hover:bg-brand group-hover:text-white transition-colors">
@@ -69,17 +69,17 @@ export default function FeedbackWidget() {
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#111] p-6 shadow-2xl animate-in zoom-in-95 duration-200 relative">
+          <div className="w-full max-w-md rounded-2xl border border-line bg-surface-subtle p-6 shadow-2xl animate-in zoom-in-95 duration-200 relative">
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 text-gray-500 hover:text-white"
+              className="absolute right-4 top-4 text-zinc-500 hover:text-fg"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-white">{t("title")}</h2>
-              <p className="mt-2 text-sm text-gray-400">{t("description")}</p>
+              <h2 className="text-xl font-bold text-fg">{t("title")}</h2>
+              <p className="mt-2 text-sm text-zinc-400">{t("description")}</p>
             </div>
 
             {isSuccess ? (
@@ -87,12 +87,12 @@ export default function FeedbackWidget() {
                 <div className="mb-4 rounded-full bg-green-500/10 p-3">
                   <CheckCircle2 className="h-10 w-10 text-green-500" />
                 </div>
-                <p className="text-lg font-medium text-white">{t("success")}</p>
+                <p className="text-lg font-medium text-fg">{t("success")}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-300">
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-300">
                     Turi
                   </label>
                   <input type="hidden" name="type" value={feedbackType} />
@@ -100,14 +100,14 @@ export default function FeedbackWidget() {
                     <button
                       type="button"
                       onClick={() => setIsSelectOpen(!isSelectOpen)}
-                      className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3 text-sm text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                      className="input flex items-center justify-between cursor-pointer"
                     >
                       <span>{t(`type_${feedbackType}`)}</span>
-                      <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${isSelectOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform ${isSelectOpen ? "rotate-180" : ""}`} />
                     </button>
 
                     {isSelectOpen && (
-                      <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-white/10 bg-[#1A1A1A] shadow-xl">
+                      <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-line bg-surface-overlay shadow-xl">
                         {["suggestion", "bug", "other"].map((type) => (
                           <button
                             key={type}
@@ -117,7 +117,7 @@ export default function FeedbackWidget() {
                               setIsSelectOpen(false);
                             }}
                             className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-brand/20 hover:text-brand ${
-                              feedbackType === type ? "bg-white/5 font-medium text-brand" : "text-gray-300"
+                              feedbackType === type ? "bg-ink/5 font-medium text-brand" : "text-zinc-300"
                             }`}
                           >
                             {t(`type_${type}`)}
@@ -129,7 +129,7 @@ export default function FeedbackWidget() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-300">
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-300">
                     Xabaringiz
                   </label>
                   <textarea
@@ -137,7 +137,7 @@ export default function FeedbackWidget() {
                     required
                     rows={4}
                     placeholder={t("placeholder")}
-                    className="w-full rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                    className="input resize-none"
                   />
                 </div>
 
@@ -149,7 +149,7 @@ export default function FeedbackWidget() {
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="rounded-xl px-5 py-2.5 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    className="rounded-xl px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-ink/5 hover:text-fg"
                   >
                     {t("btn_cancel")}
                   </button>

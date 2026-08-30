@@ -188,14 +188,14 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
         }}
         onMouseDown={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
-        className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0F0A1F] shadow-xl"
+        className="w-full max-w-md overflow-hidden rounded-2xl border border-line bg-[#0F0A1F] shadow-xl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/5 p-4">
+        <div className="flex items-center justify-between border-b border-line p-4">
           <h3 className="text-lg font-semibold">{t("save_to_collection")}</h3>
           <button 
             onClick={onClose}
-            className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+            className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-ink/5 hover:text-fg"
           >
             <X className="h-5 w-5" />
           </button>
@@ -239,7 +239,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
                 <Loader2 className="h-6 w-6 animate-spin text-brand" />
               </div>
             ) : collections.length === 0 ? (
-              <div className="py-8 text-center text-sm text-gray-400">
+              <div className="py-8 text-center text-sm text-zinc-400">
                 {t("no_collections")}
               </div>
             ) : (
@@ -252,7 +252,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
                       className={`flex items-center justify-between rounded-xl border p-2.5 transition-colors ${
                         isSaved 
                           ? "border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/15" 
-                          : "border-white/5 bg-white/5 hover:bg-white/10"
+                          : "border-line bg-ink/5 hover:bg-ink/10"
                       }`}
                     >
                       <button
@@ -267,7 +267,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
                           {isSaved ? <Check className="h-4 w-4" /> : <Folder className="h-4 w-4" />}
                         </div>
                         <div className="flex-1 overflow-hidden">
-                          <div className="truncate font-medium text-white">{collection.title}</div>
+                          <div className="truncate font-medium text-fg">{collection.title}</div>
                         </div>
                       </button>
                       <button
@@ -275,7 +275,7 @@ export default function AddToCollectionModal({ itemId, itemType, onClose }: Prop
                         onClick={(e) => deleteCollectionFolder(e, collection.id)}
                         disabled={saving}
                         title={t("delete_collection")}
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/5 bg-white/5 text-gray-400 transition-colors hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-ink/5 text-zinc-400 transition-colors hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
                       >
                         <Trash2 className="h-4.5 w-4.5" />
                       </button>

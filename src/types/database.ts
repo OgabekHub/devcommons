@@ -149,13 +149,13 @@ export interface Notification {
   type: string;
   snippet_id?: string | null;
   prompt_id?: string | null;
-  is_read: boolean;
+  read: boolean; // DB ustuni "read" (migration_v6_phase2.sql), "is_read" emas
   created_at: string;
 }
 
 export interface Feedback {
   id: string;
-  type: 'bug' | 'feature' | 'general';
+  type: 'bug' | 'suggestion' | 'other';
   content: string;
   user_id?: string | null;
   created_at: string;

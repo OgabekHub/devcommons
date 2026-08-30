@@ -81,9 +81,9 @@ export default function PromptChainViewer({
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#0B0E17] to-[#141A29] p-6 shadow-2xl transition-all hover:border-purple-500/30 md:p-8">
+    <div className="rounded-3xl border border-line bg-gradient-to-br from-[#0B0E17] to-[#141A29] p-6 shadow-2xl transition-all hover:border-purple-500/30 md:p-8">
       {/* Header */}
-      <div className="flex flex-col gap-3 pb-6 md:flex-row md:items-center md:justify-between border-b border-white/10">
+      <div className="flex flex-col gap-3 pb-6 md:flex-row md:items-center md:justify-between border-b border-line">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-400">
             <Layers className="h-4 w-4 animate-pulse text-purple-400" />
@@ -92,8 +92,8 @@ export default function PromptChainViewer({
               <ShieldCheck className="h-3 w-3" /> {t("verified_badge")}
             </span>
           </div>
-          <h3 className="mt-1 text-xl font-black text-white sm:text-2xl">{title}</h3>
-          <p className="mt-1 max-w-2xl text-xs sm:text-sm text-gray-400 leading-relaxed">{description}</p>
+          <h3 className="mt-1 text-xl font-black text-fg sm:text-2xl">{title}</h3>
+          <p className="mt-1 max-w-2xl text-xs sm:text-sm text-zinc-400 leading-relaxed">{description}</p>
         </div>
 
         <button
@@ -125,7 +125,7 @@ export default function PromptChainViewer({
                     ? "border-purple-400 bg-purple-500/10 shadow-[0_0_25px_rgba(168,85,247,0.2)] scale-[1.01]"
                     : isPassed
                     ? "border-emerald-500/40 bg-emerald-500/5"
-                    : "border-white/10 bg-[#090C13] hover:border-white/20"
+                    : "border-line bg-[#090C13] hover:border-ink/20"
                 }`}
               >
                 {/* Step Bar */}
@@ -137,20 +137,20 @@ export default function PromptChainViewer({
                           ? "bg-purple-500 text-white animate-bounce"
                           : isPassed
                           ? "bg-emerald-500 text-white"
-                          : "bg-white/10 text-gray-400"
+                          : "bg-ink/10 text-zinc-400"
                       }`}
                     >
                       {isPassed ? <CheckCircle2 className="h-5 w-5" /> : `${step.id}`}
                     </div>
                     <div>
-                      <h4 className="font-bold text-white text-sm sm:text-base">{step.role}</h4>
-                      <span className="text-[11px] font-mono text-gray-500">Model Engine: {step.model}</span>
+                      <h4 className="font-bold text-fg text-sm sm:text-base">{step.role}</h4>
+                      <span className="text-[11px] font-mono text-zinc-500">Model Engine: {step.model}</span>
                     </div>
                   </div>
 
                   <button
                     onClick={() => copyStepPrompt(step.instruction, idx)}
-                    className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:border-purple-400 hover:text-white transition"
+                    className="flex items-center gap-1.5 rounded-xl border border-line bg-ink/5 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:border-purple-400 hover:text-fg transition"
                   >
                     {copiedIndex === idx ? (
                       <>
@@ -167,7 +167,7 @@ export default function PromptChainViewer({
                 </div>
 
                 {/* Instruction Content */}
-                <div className="rounded-xl bg-[#06080C] p-4 font-mono text-xs text-gray-300 border border-white/5 leading-relaxed">
+                <div className="rounded-xl bg-[#06080C] p-4 font-mono text-xs text-zinc-300 border border-line leading-relaxed">
                   <span className="text-purple-400 font-semibold">{"// Prompt Instruction:"}</span> {step.instruction}
                 </div>
 
@@ -178,7 +178,7 @@ export default function PromptChainViewer({
                       <Sparkles className="h-3.5 w-3.5" />
                       <span>Simulated Step Output (Feeds next node in sequence):</span>
                     </div>
-                    <pre className="whitespace-pre-wrap overflow-x-auto text-gray-300 text-[11px]">
+                    <pre className="whitespace-pre-wrap overflow-x-auto text-zinc-300 text-[11px]">
                       {step.outputPreview}
                     </pre>
                   </div>

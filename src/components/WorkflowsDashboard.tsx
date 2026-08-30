@@ -22,14 +22,14 @@ export default function WorkflowsDashboard({
   return (
     <div className="space-y-10">
       {/* Tab Selector & Filter Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0E121B] border border-white/10 rounded-2xl p-2 sm:p-3 shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0E121B] border border-line rounded-2xl p-2 sm:p-3 shadow-lg">
         <div className="flex items-center gap-1 overflow-x-auto p-1">
           <button
             onClick={() => setActiveTab("all")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === "all"
                 ? "bg-gradient-to-r from-brand to-indigo-600 text-white shadow-lg shadow-brand/25"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                : "text-zinc-400 hover:text-fg hover:bg-ink/5"
             }`}
           >
             <span>✨ {locale === "uz" ? "Barcha Vositalar" : "All Architecture Hub"}</span>
@@ -39,7 +39,7 @@ export default function WorkflowsDashboard({
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === "chains"
                 ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/25"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                : "text-zinc-400 hover:text-fg hover:bg-ink/5"
             }`}
           >
             <Layers className="h-4 w-4 text-purple-400" />
@@ -50,7 +50,7 @@ export default function WorkflowsDashboard({
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === "bundles"
                 ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                : "text-zinc-400 hover:text-fg hover:bg-ink/5"
             }`}
           >
             <Package className="h-4 w-4 text-cyan-400" />
@@ -58,7 +58,7 @@ export default function WorkflowsDashboard({
           </button>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 pr-2 text-xs text-gray-400 font-mono">
+        <div className="hidden md:flex items-center gap-2 pr-2 text-xs text-zinc-400 font-mono">
           <Filter className="h-3.5 w-3.5 text-brand" />
           <span>Showing verified production bundles</span>
         </div>
@@ -69,10 +69,10 @@ export default function WorkflowsDashboard({
         <div className="space-y-6 animate-fadeIn">
           <div className="flex items-center justify-between border-l-4 border-purple-500 pl-4 py-1">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-black text-fg flex items-center gap-2">
                 <span>{t("tab_chains")}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
                 {locale === "uz" ? "Kettening avtomatlashtirilgan AI proompt ketma-ketliklari" : "Multi-stage autonomous prompt sequences producing verified engineering outcomes."}
               </p>
             </div>
@@ -101,10 +101,10 @@ export default function WorkflowsDashboard({
         <div className="space-y-6 animate-fadeIn pt-4">
           <div className="flex items-center justify-between border-l-4 border-cyan-500 pl-4 py-1">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-black text-fg flex items-center gap-2">
                 <span>{t("tab_bundles")}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
                 {locale === "uz" ? "Agentlar uchun tayyor qoidalar (.cursorrules, CLAUDE.md) va kontekst paketlari" : "Pre-packaged agent context kits combining rules (.cursorrules, CLAUDE.md), prompts, and reference code."}
               </p>
             </div>
@@ -127,7 +127,7 @@ export default function WorkflowsDashboard({
                 />
               ))
             ) : (
-              <div className="col-span-full py-12 text-center text-gray-500">
+              <div className="col-span-full py-12 text-center text-zinc-500">
                 Hali hech qanday bundle yaratilmagan (No bundles found).
               </div>
             )}

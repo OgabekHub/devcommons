@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fira_Code } from "next/font/google";
 import "@/app/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -18,6 +18,7 @@ export function generateStaticParams() {
 
 // Lazy-load heavy client components that are NOT needed for initial paint
 const InteractiveTour = dynamic(() => import("@/components/InteractiveTour"), { ssr: false });
+const Toaster         = dynamic(() => import("@/components/Toaster"),         { ssr: false });
 const FeedbackWidget  = dynamic(() => import("@/components/FeedbackWidget"),  { ssr: false });
 const AiAssistant     = dynamic(() => import("@/components/AiAssistant"),     { ssr: false });
 
@@ -27,6 +28,15 @@ const inter = Inter({
   variable: "--font-inter",
   preload: true,
   fallback: ["system-ui", "arial"],  // Fallback reduces CLS
+});
+
+// Mono font — kod bloklari/editorlar uchun (ilgari "Fira Code" inline
+// havola qilinardi lekin hech qachon yuklanmasdi).
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  preload: false, // faqat kod ko'rinadigan sahifalarda kerak
 });
 
 export const metadata: Metadata = {
@@ -85,13 +95,20 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.variable} overflow-x-hidden`}>
+    <html lang={locale} className={`${inter.variable} ${firaCode.variable} overflow-x-hidden`} suppressHydrationWarning>
       <head>
+        {/* Mavzu flash'ini oldini olish: birinchi paint'dan OLDIN data-theme o'rnatiladi.
+            Default: dark (saqlangan tanlov bo'lmasa). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light")document.documentElement.dataset.theme="light"}catch(e){}`,
+          }}
+        />
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
         
         {/* PWA Meta Tags */}
-        <meta name="theme-color" content="#7C5CFF" />
+        <meta name="theme-color" content="#6B4EFF" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="DevCommons" />
@@ -109,6 +126,7 @@ export default async function RootLayout({
           <InteractiveTour />
           <FeedbackWidget />
           <AiAssistant />
+          <Toaster />
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

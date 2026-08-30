@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
@@ -17,7 +17,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid parameters" }, { status: 400 });
     }
 
-    const supabase = createSupabaseServer();
+    const supabase = createSupabaseAdmin();
+    if (!supabase) {
+      return NextResponse.json(
+        { success: false, error: "Service not configured" },
+        { status: 503 }
+      );
+    }
     const table = type === "snippet" ? "snippets" : "prompts";
 
     // Use atomic RPC increment to avoid race conditions

@@ -8,14 +8,85 @@
    ================================================ */
 
 @layer base {
+  /* ══════════════════════════════════════════════
+     MAVZU TOKENLARI — default: DARK
+     Light mavzu :root[data-theme="light"] da barcha
+     tokenlarni qayta aniqlaydi; komponentlar tegilmaydi.
+     ══════════════════════════════════════════════ */
   :root {
-    --brand:        107 78 255;
-    --brand-dark:   90 63 232;
-    --bg-base:      #09090b;
-    --bg-subtle:    #0f0f12;
-    --bg-overlay:   #18181b;
-    --border:       rgba(255, 255, 255, 0.07);
-    --border-muted: rgba(255, 255, 255, 0.04);
+    /* ── Accent (RGB triplet — rgb(var(--brand) / alpha) uchun) ── */
+    --brand:        107 78 255;   /* #6B4EFF */
+    --brand-dark:   90 63 232;    /* #5A3FE8 */
+    --brand-light:  139 115 255;  /* #8B73FF */
+
+    /* ── Sirtlar (RGB triplet) ── */
+    --surface-1:    9 9 11;       /* sahifa foni  (#09090b) */
+    --surface-2:    15 15 18;     /* karta/sidebar (#0f0f12) */
+    --surface-3:    24 24 27;     /* hover/input/dropdown (#18181b) */
+
+    /* ── Chiziqlar (border) — 3 daraja, boshqa qiymat ishlatilmasin ── */
+    --line-muted:   rgba(255, 255, 255, 0.04);
+    --line:         rgba(255, 255, 255, 0.07);
+    --line-strong:  rgba(255, 255, 255, 0.12);
+
+    /* ── Matn/overlay semantikasi ──
+       --fg  : asosiy matn rangi (dark: oq, light: qora)
+       --ink : "fon rangiga qarama-qarshi" alpha-qatlam asosi
+               (bg-ink/5 = dark'da white/5, light'da black/5) */
+    --fg:           255 255 255;
+    --ink:          255 255 255;
+
+    /* ── Zinc shkalasi (light mavzuda ag'dariladi) ── */
+    --zinc-50:  250 250 250;
+    --zinc-100: 244 244 245;
+    --zinc-200: 228 228 231;
+    --zinc-300: 212 212 216;
+    --zinc-400: 161 161 170;
+    --zinc-500: 113 113 122;
+    --zinc-600: 82 82 91;
+    --zinc-700: 63 63 70;
+    --zinc-800: 39 39 42;
+    --zinc-900: 24 24 27;
+    --zinc-950: 9 9 11;
+
+    /* ── Legacy nomlar (mavjud kod uchun) ── */
+    --bg-base:      rgb(var(--surface-1));
+    --bg-subtle:    rgb(var(--surface-2));
+    --bg-overlay:   rgb(var(--surface-3));
+    --border:       var(--line);
+    --border-muted: var(--line-muted);
+  }
+
+  /* ── LIGHT MAVZU ── */
+  :root[data-theme="light"] {
+    --brand-light:  90 63 232;    /* och fonda o'qilishi uchun quyuqroq accent */
+
+    --surface-1:    250 250 251;  /* sahifa foni */
+    --surface-2:    255 255 255;  /* karta/sidebar */
+    --surface-3:    244 244 246;  /* hover/input/dropdown */
+
+    --line-muted:   rgba(0, 0, 0, 0.05);
+    --line:         rgba(0, 0, 0, 0.08);
+    --line-strong:  rgba(0, 0, 0, 0.15);
+
+    --fg:           24 24 27;
+    --ink:          9 9 11;
+
+    /* Zinc ag'darilgan: text-zinc-300 dark'da och kulrang bo'lsa,
+       light'da avtomatik quyuq kulrang bo'ladi */
+    --zinc-50:  9 9 11;
+    --zinc-100: 24 24 27;
+    --zinc-200: 39 39 42;
+    --zinc-300: 63 63 70;
+    --zinc-400: 82 82 91;
+    --zinc-500: 113 113 122;
+    --zinc-600: 161 161 170;
+    --zinc-700: 212 212 216;
+    --zinc-800: 228 228 231;
+    --zinc-900: 244 244 245;
+    --zinc-950: 250 250 250;
+
+    color-scheme: light;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -26,13 +97,22 @@
 
   body {
     background-color: var(--bg-base);
-    @apply text-white antialiased;
+    color: rgb(var(--fg));
+    @apply antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   ::selection {
-    background-color: rgba(107, 78, 255, 0.18);
-    color: #fff;
+    background-color: rgb(var(--brand) / 0.18);
+    color: rgb(var(--fg));
+  }
+
+  /* Klaviatura fokusi HAR DOIM ko'rinadi — focus:outline-none klasslari
+     sichqoncha fokusinigina yashiradi, :focus-visible baribir ring oladi. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--brand)) !important;
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 }
 
@@ -66,11 +146,12 @@
 
   /* Glass */
   .glass {
-    @apply bg-black/40 backdrop-blur-xl;
+    background-color: rgb(var(--surface-1) / 0.40);
+    @apply backdrop-blur-xl;
     border: 1px solid var(--border);
   }
   .glass-dark {
-    background-color: rgba(15, 15, 18, 0.85);
+    background-color: rgb(var(--surface-2) / 0.85);
     @apply backdrop-blur-xl;
     border: 1px solid var(--border-muted);
   }
@@ -79,12 +160,46 @@
   .shimmer-bg {
     background: linear-gradient(
       90deg,
-      rgba(255,255,255,0.02) 25%,
-      rgba(255,255,255,0.05) 50%,
-      rgba(255,255,255,0.02) 75%
+      rgb(var(--ink) / 0.02) 25%,
+      rgb(var(--ink) / 0.05) 50%,
+      rgb(var(--ink) / 0.02) 75%
     );
     background-size: 200% 100%;
     animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Karta ustidan o'tuvchi nozik yaltillash (hover'da) —
+     ilgari klass ishlatilardi lekin aniqlanmagan edi */
+  .card-shine {
+    overflow: hidden;
+  }
+  .card-shine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, rgb(var(--ink) / 0.05) 50%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+  }
+  .card-shine:hover::before {
+    transform: translateX(120%);
+  }
+
+  /* Gradient matn — brand accent sarlavhalar uchun */
+  .text-gradient {
+    background-image: linear-gradient(120deg, rgb(var(--brand)), rgb(var(--brand-light)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Nuqtali fon to'ri (hero dekoratsiyasi) */
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgb(var(--ink) / 0.35) 1px, transparent 1px);
+  }
+  .bg-dot-md {
+    background-size: 24px 24px;
   }
 
   /* Noise texture overlay */
@@ -110,14 +225,19 @@
   /* Primary button — solid accent, no heavy glow */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl
-           px-6 py-3 text-sm font-semibold text-white
+           px-6 py-3 text-sm font-semibold
            transition-all duration-200 active:scale-[0.98];
-    background-color: #6B4EFF;
-    box-shadow: 0 2px 8px rgba(107,78,255,0.20);
+    color: #fff; /* brand fonda har ikki mavzuda ham oq */
+    background-color: rgb(var(--brand));
+    box-shadow: 0 2px 8px rgb(var(--brand) / 0.20);
   }
   .btn-primary:hover {
-    background-color: #5A3FE8;
-    box-shadow: 0 4px 16px rgba(107,78,255,0.28);
+    background-color: rgb(var(--brand-dark));
+    box-shadow: 0 4px 16px rgb(var(--brand) / 0.28);
+  }
+  /* Kichik o'lcham — topbar/header kontekstlari uchun */
+  .btn-primary--sm {
+    @apply rounded-lg px-4 py-2 text-xs md:text-sm;
   }
 
   /* Secondary button — ghost with accent border */
@@ -125,12 +245,12 @@
     @apply inline-flex items-center justify-center gap-2 rounded-xl
            bg-transparent px-6 py-3 text-sm font-semibold
            transition-all duration-200 active:scale-[0.98];
-    border: 1px solid rgba(107,78,255,0.28);
-    color: #8B73FF;
+    border: 1px solid rgb(var(--brand) / 0.28);
+    color: rgb(var(--brand-light));
   }
   .btn-secondary:hover {
-    border-color: rgba(107,78,255,0.50);
-    background-color: rgba(107,78,255,0.08);
+    border-color: rgb(var(--brand) / 0.50);
+    background-color: rgb(var(--brand) / 0.08);
     color: #a899ff;
   }
 
@@ -141,8 +261,8 @@
            transition-all duration-200;
   }
   .btn-ghost:hover {
-    background-color: rgba(255,255,255,0.06);
-    @apply text-white;
+    background-color: rgb(var(--ink) / 0.06);
+    color: rgb(var(--fg));
   }
 
   /* Base card — minimal, no glow */
@@ -153,7 +273,7 @@
     transition: border-color 0.2s ease;
   }
   .card:hover {
-    border-color: rgba(255,255,255,0.11);
+    border-color: var(--line-strong);
   }
 
   /* Icon button — no layout shift on hover */
@@ -162,21 +282,21 @@
            rounded-lg text-zinc-400
            transition-colors duration-200
            disabled:opacity-40 disabled:cursor-not-allowed;
-    background-color: rgba(255,255,255,0.04);
+    background-color: rgb(var(--ink) / 0.04);
     border: 1px solid var(--border);
     will-change: background-color, color;
     outline: none;
   }
   .icon-btn:hover:not(:disabled) {
-    background-color: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.12);
-    @apply text-white;
+    background-color: rgb(var(--ink) / 0.08);
+    border-color: var(--line-strong);
+    color: rgb(var(--fg));
   }
   /* Brand variant */
   .icon-btn--brand:hover:not(:disabled) {
-    background-color: rgba(107,78,255,0.12);
-    border-color: rgba(107,78,255,0.28);
-    color: #8B73FF;
+    background-color: rgb(var(--brand) / 0.12);
+    border-color: rgb(var(--brand) / 0.28);
+    color: rgb(var(--brand-light));
   }
   /* Danger variant */
   .icon-btn--danger:hover:not(:disabled) {
@@ -192,9 +312,9 @@
   }
   /* Active states */
   .icon-btn--active-brand {
-    background-color: rgba(107,78,255,0.15);
-    border-color: rgba(107,78,255,0.35);
-    color: #8B73FF;
+    background-color: rgb(var(--brand) / 0.15);
+    border-color: rgb(var(--brand) / 0.35);
+    color: rgb(var(--brand-light));
   }
   .icon-btn--active-amber {
     background-color: rgba(245,158,11,0.15);
@@ -205,22 +325,23 @@
   /* Code block */
   .code-block {
     @apply rounded-xl p-4 font-mono text-sm text-zinc-300;
-    background-color: #0f0f12;
+    background-color: var(--bg-subtle);
     border: 1px solid var(--border);
   }
 
   /* Form input */
   .input {
     @apply block w-full rounded-xl px-4 py-2.5
-           text-sm text-white placeholder-zinc-600
+           text-sm placeholder-zinc-600
            transition-all duration-200
            focus:outline-none;
+    color: rgb(var(--fg));
     background-color: var(--bg-overlay);
     border: 1px solid var(--border);
   }
   .input:focus {
-    border-color: rgba(107,78,255,0.50);
-    box-shadow: 0 0 0 3px rgba(107,78,255,0.12);
+    border-color: rgb(var(--brand) / 0.50);
+    box-shadow: 0 0 0 3px rgb(var(--brand) / 0.12);
   }
   select.input {
     @apply cursor-pointer;
@@ -239,11 +360,11 @@
 ::-webkit-scrollbar        { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  {
-  background: rgba(255,255,255,0.10);
+  background: rgb(var(--ink) / 0.10);
   border-radius: 100px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.18);
+  background: rgb(var(--ink) / 0.18);
 }
 
 /* ================================================
@@ -252,11 +373,11 @@
 .custom-scrollbar::-webkit-scrollbar       { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.08);
+  background: rgb(var(--ink) / 0.08);
   border-radius: 100px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.14);
+  background: rgb(var(--ink) / 0.14);
 }
 
 /* ================================================

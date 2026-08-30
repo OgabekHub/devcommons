@@ -39,6 +39,7 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
         .from("snippets")
         .select("*")
         .order("created_at", { ascending: false })
+        .limit(200)
         .returns<Snippet[]>();
 
       if (dbError) error = dbError.message;

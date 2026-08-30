@@ -8,6 +8,32 @@ import path from 'path';
 const program = new Command();
 const API_BASE = process.env.DEVCOMMONS_API || 'http://localhost:3000/api/v1/cli';
 
+/**
+ * Faylni faqat joriy ishchi papka (cwd) ichiga xavfsiz yozadi.
+ * Server bergan fayl nomlari ishonchsiz — absolyut yo'llar va `..` bilan
+ * papkadan chiqib ketish (path traversal → RCE) bloklanadi.
+ */
+function safeWrite(rawName: string, content: string): boolean {
+  if (typeof rawName !== 'string' || !rawName.trim()) {
+    console.error(chalk.red('  └─ Skipped: invalid filename'));
+    return false;
+  }
+  if (path.isAbsolute(rawName)) {
+    console.error(chalk.red(`  └─ Skipped (absolute path not allowed): ${rawName}`));
+    return false;
+  }
+  const cwd = process.cwd();
+  const target = path.resolve(cwd, rawName);
+  const rel = path.relative(cwd, target);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) {
+    console.error(chalk.red(`  └─ Skipped (path escapes project directory): ${rawName}`));
+    return false;
+  }
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, content);
+  return true;
+}
+
 program
   .name('devcommons')
   .description('DevCommons CLI - Pull AI workflows, rules, and prompts directly to your project')
@@ -33,24 +59,27 @@ program
         process.exit(1);
       }
 
+      const safeId = id.replace(/[^a-zA-Z0-9_-]/g, "").substring(0, 6);
       if (json.type === 'snippet') {
         const ext = getExtension(json.data.language);
-        const filename = `devcommons_snippet_${id.substring(0,6)}${ext}`;
-        fs.writeFileSync(path.join(process.cwd(), filename), json.data.code);
-        console.log(chalk.green(`✅ Successfully pulled snippet to ${filename}`));
+        const filename = `devcommons_snippet_${safeId}${ext}`;
+        if (safeWrite(filename, json.data.code)) {
+          console.log(chalk.green(`✅ Successfully pulled snippet to ${filename}`));
+        }
       } else if (json.type === 'prompt') {
-        const filename = `devcommons_prompt_${id.substring(0,6)}.md`;
-        fs.writeFileSync(path.join(process.cwd(), filename), json.data.content);
-        console.log(chalk.green(`✅ Successfully pulled prompt to ${filename}`));
+        const filename = `devcommons_prompt_${safeId}.md`;
+        if (safeWrite(filename, json.data.content)) {
+          console.log(chalk.green(`✅ Successfully pulled prompt to ${filename}`));
+        }
       } else if (json.type === 'bundle') {
         console.log(chalk.yellow(`📦 Found Skill Bundle: ${json.data.title}`));
         const items = json.data.items || [];
         for (const item of items) {
-          // Assume item has filename and content 
-          // (In real scenario, bundle items might just refer to IDs and we need to fetch them)
+          // item.filename ishonchsiz (server tomonidan beriladi) — safeWrite tekshiradi.
           if (item.filename && item.content) {
-             fs.writeFileSync(path.join(process.cwd(), item.filename), item.content);
-             console.log(chalk.green(`  └─ Saved ${item.filename}`));
+             if (safeWrite(item.filename, item.content)) {
+               console.log(chalk.green(`  └─ Saved ${item.filename}`));
+             }
           }
         }
         console.log(chalk.green(`✅ Successfully extracted skill bundle!`));

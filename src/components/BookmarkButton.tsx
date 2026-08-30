@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { Bookmark, BookmarkCheck, FolderPlus } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import AddToCollectionModal from "./AddToCollectionModal";
+import { toast } from "@/components/Toaster";
 
 interface Props {
   snippetId?: string;
@@ -21,7 +22,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const t = useTranslations("Components");
-  const locale = useLocale();
+  const router = useRouter();
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
     e.stopPropagation();
 
     if (!user) {
-      window.location.href = `/${locale}/auth`;
+      router.push("/auth");
       return;
     }
 
@@ -62,7 +63,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
         const query = snippetId
           ? supabase.from("bookmarks").delete().eq("snippet_id", snippetId).eq("user_id", user.id)
           : supabase.from("bookmarks").delete().eq("prompt_id", promptId!).eq("user_id", user.id);
-        
+
         const { error } = await query;
         if (error) throw error;
         setBookmarked(false);
@@ -77,6 +78,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
       }
     } catch (err) {
       console.error("Bookmark error:", err);
+      toast.error("Saqlashda xatolik yuz berdi");
     } finally {
       setLoading(false);
     }
@@ -86,7 +88,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
     e.preventDefault();
     e.stopPropagation();
     if (!user) {
-      window.location.href = `/${locale}/auth`;
+      router.push("/auth");
       return;
     }
     setShowModal(true);
@@ -94,7 +96,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
 
   if (checking) {
     return compact ? null : (
-      <span className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-gray-600">
+      <span className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-zinc-600">
         <Bookmark className="h-4 w-4 animate-pulse" />
       </span>
     );
@@ -106,6 +108,8 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
         <button
           onClick={handleToggle}
           disabled={loading}
+          aria-label={bookmarked ? t("saved") : t("save")}
+          aria-pressed={bookmarked}
           title={bookmarked ? t("saved") : t("save")}
           className={`icon-btn font-medium ${
             compact ? "h-7 px-2 gap-1 text-xs" : "px-3 py-1.5 gap-1.5 text-sm"
@@ -121,6 +125,7 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
 
         <button
           onClick={openCollectionModal}
+          aria-label={t("save_to_collection_btn")}
           title={t("save_to_collection_btn")}
           className={`icon-btn icon-btn--brand ${compact ? "h-7 w-7" : "h-[34px] w-[34px]"}`}
         >

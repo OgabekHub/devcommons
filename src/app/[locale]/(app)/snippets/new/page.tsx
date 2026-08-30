@@ -158,6 +158,7 @@ export default function NewSnippetPage() {
           description: description.trim(),
           code: code.trim(),
           language,
+          tags,
           author_id: user?.id ?? null,
         })
         .select()
@@ -178,7 +179,7 @@ export default function NewSnippetPage() {
       {/* Back */}
       <Link
         href="/snippets"
-        className="group mb-8 inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4 transition-transform " />
         {t("back")}
@@ -186,23 +187,23 @@ export default function NewSnippetPage() {
 
       {/* Header */}
       <div className="mb-8 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-sm">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink/5 border border-line shadow-sm">
           <Code2 className="h-5 w-5 text-zinc-300" />
         </div>
         <div>
           <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-gray-500">{t("subtitle")}</p>
+          <p className="text-sm text-zinc-500">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Templates Selection Box */}
       <div className="mb-8 rounded-2xl border border-brand/20 bg-brand/5 p-5">
         <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold text-white">
+          <div className="flex items-center gap-2 font-semibold text-fg">
             <span className="text-brand">⚡</span>
             <span>Tayyor shablonlar (Quick Templates)</span>
           </div>
-          <span className="text-xs text-gray-400">Bosing va avtomatik to&apos;ldiring</span>
+          <span className="text-xs text-zinc-400">Bosing va avtomatik to&apos;ldiring</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
           {TEMPLATES.map((tpl, i) => (
@@ -210,10 +211,10 @@ export default function NewSnippetPage() {
               key={i}
               type="button"
               onClick={() => applyTemplate(tpl)}
-              className="flex flex-col items-start rounded-xl border border-white/10 bg-[#111] p-3 text-left transition-colors duration-200 hover:border-brand/50 hover:bg-white/5 group"
+              className="flex flex-col items-start rounded-xl border border-line bg-surface-subtle p-3 text-left transition-colors duration-200 hover:border-brand/50 hover:bg-ink/5 group"
             >
               <span className="text-xs font-semibold text-brand transition-colors group-hover:text-brand-light">{tpl.language}</span>
-              <span className="mt-1 text-sm font-medium text-white line-clamp-1">{tpl.label}</span>
+              <span className="mt-1 text-sm font-medium text-fg line-clamp-1">{tpl.label}</span>
             </button>
           ))}
         </div>
@@ -223,7 +224,7 @@ export default function NewSnippetPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_title")} <span className="text-red-500">*</span>
           </label>
           <input
@@ -238,7 +239,7 @@ export default function NewSnippetPage() {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_desc")}
           </label>
           <textarea
@@ -253,7 +254,7 @@ export default function NewSnippetPage() {
 
         {/* Language */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_lang")} <span className="text-red-500">*</span>
           </label>
           <CustomSelect
@@ -265,12 +266,12 @@ export default function NewSnippetPage() {
 
         {/* Code */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
+          <label className="text-sm font-semibold text-zinc-300">
             {t("field_code")} <span className="text-red-500">*</span>
           </label>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0F0A1F] shadow-sm">
-            <div className="flex items-center justify-between border-b border-gray-800 bg-gray-900 px-4 py-2">
-              <span className="text-xs font-medium text-gray-400">{language}</span>
+          <div className="overflow-hidden rounded-xl border border-line bg-[#0F0A1F] shadow-sm">
+            <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900 px-4 py-2">
+              <span className="text-xs font-medium text-zinc-400">{language}</span>
               <div className="flex gap-1.5">
                 <div className="h-3 w-3 rounded-full bg-red-500/70" />
                 <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
@@ -287,7 +288,7 @@ export default function NewSnippetPage() {
                 options={{
                   minimap: { enabled: false },
                   fontSize: 14,
-                  fontFamily: '"Fira Code", monospace',
+                  fontFamily: 'var(--font-mono), "Fira Code", monospace',
                   padding: { top: 16 },
                   scrollBeyondLastLine: false,
                   smoothScrolling: true,
@@ -300,8 +301,8 @@ export default function NewSnippetPage() {
 
         {/* Tags */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-gray-300">
-            {t("field_tags")} <span className="text-gray-400 font-normal">(max 5)</span>
+          <label className="text-sm font-semibold text-zinc-300">
+            {t("field_tags")} <span className="text-zinc-400 font-normal">(max 5)</span>
           </label>
           <div className="flex gap-2">
             <input
@@ -327,7 +328,7 @@ export default function NewSnippetPage() {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-1 text-sm font-medium text-brand"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-brand/10 border border-brand/20 px-3 py-1 text-sm font-medium text-brand"
                 >
                   #{tag}
                   <button
@@ -345,7 +346,7 @@ export default function NewSnippetPage() {
 
         {/* Error */}
         {error && (
-          <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
             {error}
           </div>
         )}

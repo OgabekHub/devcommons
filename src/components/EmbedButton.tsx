@@ -36,7 +36,7 @@ export default function EmbedButton({ snippetId }: Props) {
     <div className="relative">
       <button
         onClick={() => setShowCode(!showCode)}
-        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-300 transition-colors duration-200 hover:bg-white/5 border border-transparent hover:border-white/10"
+        className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-ink/5 border border-transparent hover:border-line-strong"
         title={t("embed")}
       >
         <Share2 className="h-4 w-4 shrink-0" />
@@ -44,9 +44,9 @@ export default function EmbedButton({ snippetId }: Props) {
       </button>
 
       {showCode && (
-        <div className="absolute right-0 top-full z-10 mt-2 w-96 rounded-xl border border-white/10 bg-[#111111] p-4 shadow-2xl">
+        <div className="absolute right-0 top-full z-10 mt-2 w-96 rounded-xl border border-line bg-surface-subtle p-4 shadow-2xl">
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-100">{t("embed")} code</span>
+            <span className="text-sm font-semibold text-zinc-100">{t("embed")} code</span>
             <button
               onClick={handleCopy}
               className="flex items-center gap-1.5 rounded-lg bg-brand/10 px-2 py-1 text-xs font-medium text-brand transition-colors hover:bg-brand/20"
@@ -55,7 +55,7 @@ export default function EmbedButton({ snippetId }: Props) {
               {copied ? t("copied") : t("embed_copy")}
             </button>
           </div>
-          <pre className="overflow-x-auto rounded-lg bg-gray-900 p-3 text-xs text-gray-100">
+          <pre className="overflow-x-auto rounded-lg bg-zinc-900 p-3 text-xs text-zinc-100">
             <code>{embedCode}</code>
           </pre>
         </div>

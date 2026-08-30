@@ -70,9 +70,9 @@ export default function BackgroundBeams() {
           beam.y + Math.sin(beam.angle) * beam.length
         );
 
-        gradient.addColorStop(0, `rgba(124, 92, 252, 0)`);
-        gradient.addColorStop(0.5, `rgba(124, 92, 252, ${beam.opacity})`);
-        gradient.addColorStop(1, `rgba(124, 92, 252, 0)`);
+        gradient.addColorStop(0, `rgba(107,78,255, 0)`);
+        gradient.addColorStop(0.5, `rgba(107,78,255, ${beam.opacity})`);
+        gradient.addColorStop(1, `rgba(107,78,255, 0)`);
 
         ctx.strokeStyle = gradient;
         ctx.lineWidth = 1.5;

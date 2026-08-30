@@ -53,7 +53,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
       {/* Back */}
       <Link
         href="/"
-        className="group inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-brand"
+        className="group inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-brand"
       >
         <ArrowLeft className="h-4 w-4" />
         {t("back")}
@@ -68,27 +68,27 @@ export default async function PublicProfilePage({ params: { username, locale } }
               alt={user.github_username}
               width={96}
               height={96}
-              className="h-24 w-24 rounded-2xl shadow-lg ring-2 ring-white/10 object-cover"
+              className="h-24 w-24 rounded-2xl shadow-lg ring-2 ring-ink/10 object-cover"
             />
           ) : (
             <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand/10 border border-brand/20 text-3xl font-bold text-brand">
               {user.github_username?.[0]?.toUpperCase() || 'U'}
             </div>
           )}
-          <div className="absolute -bottom-2 -right-2 rounded-lg bg-[#111] p-1.5 border border-white/10">
-            <Github className="h-4 w-4 text-white" />
+          <div className="absolute -bottom-2 -right-2 rounded-lg bg-surface-subtle p-1.5 border border-line">
+            <Github className="h-4 w-4 text-fg" />
           </div>
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white truncate">{user.github_username}</h1>
+              <h1 className="text-2xl font-bold text-fg truncate">{user.github_username}</h1>
               {user.bio && (
-                <p className="mt-1 text-sm text-gray-300 max-w-xl">{user.bio}</p>
+                <p className="mt-1 text-sm text-zinc-300 max-w-xl">{user.bio}</p>
               )}
-              <p className="mt-2 text-xs text-gray-500">
-                <Calendar className="inline h-3.5 w-3.5 mr-1 text-gray-400" />
+              <p className="mt-2 text-xs text-zinc-500">
+                <Calendar className="inline h-3.5 w-3.5 mr-1 text-zinc-400" />
                 {createdAt} {t("member_since")}
               </p>
             </div>
@@ -103,23 +103,23 @@ export default async function PublicProfilePage({ params: { username, locale } }
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div className="card p-4 text-center">
           <Eye className="mx-auto h-5 w-5 text-brand mb-1.5" />
-          <p className="text-2xl font-bold text-white">{totalViews}</p>
-          <p className="text-xs text-gray-500">{t("views") || "Views"}</p>
+          <p className="text-2xl font-bold text-fg">{totalViews}</p>
+          <p className="text-xs text-zinc-500">{t("views") || "Views"}</p>
         </div>
         <div className="card p-4 text-center">
           <Heart className="mx-auto h-5 w-5 text-red-500 mb-1.5" />
-          <p className="text-2xl font-bold text-white">{totalVotes}</p>
-          <p className="text-xs text-gray-500">{t("votes") || "Votes"}</p>
+          <p className="text-2xl font-bold text-fg">{totalVotes}</p>
+          <p className="text-xs text-zinc-500">{t("votes") || "Votes"}</p>
         </div>
         <div className="card p-4 text-center">
           <Users className="mx-auto h-5 w-5 text-blue-500 mb-1.5" />
-          <p className="text-2xl font-bold text-white">{followers?.length || 0}</p>
-          <p className="text-xs text-gray-500">Followers</p>
+          <p className="text-2xl font-bold text-fg">{followers?.length || 0}</p>
+          <p className="text-xs text-zinc-500">Followers</p>
         </div>
         <div className="card p-4 text-center">
           <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-1.5" />
-          <p className="text-2xl font-bold text-white">{following?.length || 0}</p>
-          <p className="text-xs text-gray-500">Following</p>
+          <p className="text-2xl font-bold text-fg">{following?.length || 0}</p>
+          <p className="text-xs text-zinc-500">Following</p>
         </div>
       </div>
 

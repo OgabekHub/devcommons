@@ -4,8 +4,8 @@
   "description": "Kod snippet'lar, AI prompt'lar va tajriba almashish platformasi. Bepul, ochiq, hammaga.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0A0A0A",
-  "theme_color": "#7C5CFF",
+  "background_color": "#09090b",
+  "theme_color": "#6B4EFF",
   "orientation": "portrait-primary",
   "icons": [
     {
