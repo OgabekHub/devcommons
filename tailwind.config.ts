@@ -70,6 +70,8 @@ const config: Config = {
         "spin-slow":     "spin 12s linear infinite",
         "fadeIn":        "fadeIn 0.3s ease-out forwards",
         "blink":         "blink 1s step-end infinite",
+        "float-down":    "floatDown 9s ease-in-out infinite",
+        "glow-pulse":    "glowPulse 6s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -107,6 +109,14 @@ const config: Config = {
         blink: {
           "0%, 100%": { opacity: "1" },
           "50%":      { opacity: "0" },
+        },
+        floatDown: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%":      { transform: "translateY(10px)" },
+        },
+        glowPulse: {
+          "0%, 100%": { opacity: "0.45", transform: "scale(1)" },
+          "50%":      { opacity: "0.8",  transform: "scale(1.06)" },
         },
       },
       backgroundImage: {

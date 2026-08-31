@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, Code2, Copy, Loader2, Sparkles, Terminal } from "lucide-react";
 
-// Kod tokenlari — har biri o'z rangi bilan (typewriter'da harflarga bo'linadi)
+// Kod tokenlari — har biri o'z rangi bilan (typewriter'da bosqichma-bosqich ochiladi)
 type Tok = { v: string; c: string };
 const LINES: Tok[][] = [
   [
@@ -39,68 +39,63 @@ const LINES: Tok[][] = [
   [{ v: "}", c: "text-zinc-300" }],
 ];
 
+// "Verified" ko'rsatilib turadigan pauza (ms) — keyin qaytadan yoziladi
+const HOLD_MS = 3500;
+
 export default function HeroBentoBox({ promptText }: { promptText?: string }) {
   const reduce = useReducedMotion();
 
-  // Har bir belgini global indeks + qator raqami bilan tekislaymiz
-  const { chars, lineOffsets, total } = useMemo(() => {
-    const chars: { ch: string; c: string; li: number }[] = [];
-    const lineOffsets: number[] = [];
-    LINES.forEach((toks, li) => {
-      lineOffsets[li] = chars.length;
-      toks.forEach((tok) => {
-        for (const ch of tok.v) chars.push({ ch, c: tok.c, li });
+  // Har token uchun global boshlanish indeksini oldindan hisoblaymiz
+  const { lines, total } = useMemo(() => {
+    let pos = 0;
+    const lines = LINES.map((toks) => {
+      const start = pos;
+      const tokens = toks.map((t) => {
+        const s = pos;
+        pos += t.v.length;
+        return { ...t, start: s };
       });
+      return { tokens, start, end: pos };
     });
-    return { chars, lineOffsets, total: chars.length };
+    return { lines, total: pos };
   }, []);
 
-  // Typewriter: belgilarni bosqichma-bosqich ochamiz
   const [count, setCount] = useState(reduce ? total : 0);
   const done = count >= total;
 
+  // Typewriter: har tickda +2 belgi. Reduced-motion'da darhol to'liq ko'rsatiladi.
   useEffect(() => {
     if (reduce) {
       setCount(total);
       return;
     }
-    setCount(0);
-    const id = setInterval(() => {
-      setCount((c) => {
-        if (c >= total) {
-          clearInterval(id);
-          return c;
-        }
-        return c + 2; // yumshoq, lekin tez
-      });
-    }, 32);
+    if (done) return;
+    const id = setInterval(() => setCount((c) => Math.min(c + 2, total)), 32);
     return () => clearInterval(id);
-  }, [reduce, total]);
+  }, [reduce, done, total]);
 
-  const floatA = reduce ? {} : { y: [0, -12, 0] };
-  const floatB = reduce ? {} : { y: [0, 10, 0] };
+  // Loop: "Verified" biroz turgach tozalab, qaytadan yozamiz
+  useEffect(() => {
+    if (reduce || !done) return;
+    const t = setTimeout(() => setCount(0), HOLD_MS);
+    return () => clearTimeout(t);
+  }, [reduce, done]);
 
   return (
     <div className="relative mx-auto w-full max-w-xl">
-      {/* Yumshoq nur (glow) — kartani orqasidan */}
-      <motion.div
+      {/* Yumshoq nur (glow) — sof CSS pulsatsiya (re-render'ga bog'liq emas) */}
+      <div
         aria-hidden
-        className="absolute -inset-8 -z-10 rounded-[2.5rem] bg-gradient-to-tr from-brand/30 via-fuchsia-500/10 to-transparent blur-3xl"
-        animate={reduce ? {} : { opacity: [0.45, 0.8, 0.45], scale: [1, 1.06, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -inset-8 -z-10 animate-glow-pulse rounded-[2.5rem] bg-gradient-to-tr from-brand/30 via-fuchsia-500/10 to-transparent opacity-60 blur-3xl motion-reduce:animate-none"
       />
 
-      {/* Kod kartasi — asosiy "model" */}
+      {/* Kod kartasi — framer faqat bir martalik kirish uchun; float sof CSS */}
       <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+        initial={reduce ? false : { opacity: 0, y: 24, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <motion.div
-          animate={floatA}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="overflow-hidden rounded-3xl border border-line bg-surface-subtle shadow-2xl shadow-black/40"
-        >
+        <div className="animate-float-slow overflow-hidden rounded-3xl border border-line bg-surface-subtle shadow-2xl shadow-black/40 motion-reduce:animate-none">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-line px-4 py-3 sm:px-5">
             <div className="flex items-center gap-3">
@@ -122,29 +117,28 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
             </button>
           </div>
 
-          {/* Kod — typewriter */}
+          {/* Kod — typewriter (token bo'laklari bilan, kam DOM tugun) */}
           <div className="min-h-64 px-4 py-6 font-mono text-xs leading-7 sm:px-6 sm:text-sm">
-            {LINES.map((_, li) => {
-              const start = lineOffsets[li]!;
-              const end = (lineOffsets[li + 1] ?? total);
-              const revealed = Math.max(0, Math.min(count, end) - start);
-              const lineChars = chars.slice(start, start + revealed);
-              // Kursor shu qatorda: agar typing shu qatorga yetgan bo'lsa yoki
-              // hammasi tugab, bu oxirgi qator bo'lsa
+            {lines.map((line, li) => {
+              // Kursor: typing shu qatorda ketyapti, yoki tugagan bo'lsa oxirgi qatorda
               const isCursorLine =
-                (!done && count >= start && count < end) ||
-                (done && li === LINES.length - 1);
+                (!done && count >= line.start && count < line.end) ||
+                (done && li === lines.length - 1);
               return (
                 <div key={li} className="flex gap-4">
                   <span className="w-4 select-none text-right text-zinc-700">{li + 1}</span>
                   <code className="whitespace-pre">
-                    {lineChars.map((c, i) => (
-                      <span key={i} className={c.c}>
-                        {c.ch}
-                      </span>
-                    ))}
+                    {line.tokens.map((t, ti) => {
+                      const vis = Math.max(0, Math.min(count - t.start, t.v.length));
+                      if (vis === 0) return null;
+                      return (
+                        <span key={ti} className={t.c}>
+                          {vis === t.v.length ? t.v : t.v.slice(0, vis)}
+                        </span>
+                      );
+                    })}
                     {isCursorLine && (
-                      <span className="ml-0.5 inline-block h-4 w-[2px] -mb-0.5 animate-blink bg-brand align-middle" />
+                      <span className="ml-0.5 inline-block h-4 w-[2px] -mb-0.5 animate-blink bg-brand align-middle motion-reduce:animate-none" />
                     )}
                   </code>
                 </div>
@@ -160,7 +154,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
             </div>
             {done ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={reduce ? false : { opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex items-center gap-2 text-xs font-medium text-emerald-400"
               >
@@ -169,26 +163,22 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
               </motion.div>
             ) : (
               <div className="flex items-center gap-2 text-xs font-medium text-brand">
-                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
                 <span>Generating</span>
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* AI prompt kartasi — suzuvchi, boshqa faza bilan */}
+      {/* AI prompt kartasi — kirish framer'da, suzish sof CSS'da (boshqa faza) */}
       <motion.div
-        initial={{ opacity: 0, x: 30, y: 10 }}
+        initial={reduce ? false : { opacity: 0, x: 30, y: 10 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
         transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
-        className="relative -mt-6 ml-5 sm:ml-auto sm:mr-6 sm:max-w-sm"
+        className="relative -mt-3 ml-5 sm:ml-auto sm:mr-6 sm:max-w-sm"
       >
-        <motion.div
-          animate={floatB}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="rounded-2xl border border-brand/30 bg-surface-overlay/90 p-4 shadow-xl shadow-black/40 backdrop-blur-md"
-        >
+        <div className="animate-float-down rounded-2xl border border-brand/30 bg-surface-overlay/90 p-4 shadow-xl shadow-black/40 backdrop-blur-md motion-reduce:animate-none">
           <div className="mb-3 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-sm font-semibold text-fg">
               <Sparkles className="h-4 w-4 text-brand" aria-hidden="true" />
@@ -196,7 +186,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-brand/10 px-2 py-1 text-[11px] font-medium text-brand">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75 motion-reduce:animate-none" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
               </span>
               Ready to use
@@ -206,7 +196,7 @@ export default function HeroBentoBox({ promptText }: { promptText?: string }) {
             {promptText ||
               "React.js uchun asinxron ma'lumot yuklaydigan universal custom hook yozib ber."}
           </p>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
