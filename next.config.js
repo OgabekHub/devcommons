@@ -17,8 +17,11 @@ const nextConfig = {
   },
   // Enable SWC minification for faster builds
   swcMinify: true,
-  // Output optimization
-  output: 'standalone',
+  // Bundlerni yengillashtirish — og'ir kutubxonalardan faqat ishlatilgan
+  // qismlarni import qiladi (First Load JS ni kamaytiradi -> tezroq FCP/LCP).
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react', 'react-markdown'],
+  },
   images: {
     remotePatterns: [
       {
