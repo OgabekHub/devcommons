@@ -21,10 +21,11 @@ import UsageStatsBadge from "@/components/UsageStatsBadge";
 import ForkButton from "@/components/ForkButton";
 import VerifiedBadge from "@/components/VerifiedBadge";
 
-// Lazy-load og'ir komponentlarni — initial bundle hajmini kamaytirish uchun
+// Prism'ga o'tgandan keyin CodeHighlighter SSR'ga mos — ssr:false KERAK EMAS
+// (kod server HTML'da darhol ko'rinadi); dynamic() esa Prism'ni alohida
+// chunk'ka ajratib, boshlang'ich bundle'ni yengil saqlaydi.
 const CodeHighlighter = dynamic(() => import("@/components/CodeHighlighter"), {
-  loading: () => <div className="h-64 bg-zinc-900 animate-pulse" />,
-  ssr: false,
+  loading: () => <div className="h-64 animate-pulse bg-surface-overlay" />,
 });
 
 const LivePreview = dynamic(() => import("@/components/LivePreview"), {

@@ -252,6 +252,14 @@
     "comment_vote_aria": "Izohga ovoz berish",
     "comment_delete_aria": "Izohni o'chirish",
     "comment_delete": "O'chirish",
+    "comment_reply": "Javob berish",
+    "comment_reply_placeholder": "Javobingizni yozing...",
+    "comment_cancel": "Bekor qilish",
+    "comment_edit": "Tahrirlash",
+    "comment_save": "Saqlash",
+    "comment_edit_error": "Izohni saqlashda xatolik",
+    "comment_load_more": "Yana izohlar",
+    "comment_edited": "tahrirlangan",
     "loading": "Yuklanmoqda..."
   },
   "Tour": {
@@ -300,12 +308,22 @@
     "empty_collection": "Bu to'plam hozircha bo'sh",
     "items_count": "ta element",
     "back_to_profile": "Profilga qaytish",
-    "no_description": "Tavsif yo'q"
+    "no_description": "Tavsif yo'q",
+    "index_title": "To'plamlar",
+    "index_subtitle": "Jamiyat yig'gan eng yaxshi snippet va prompt to'plamlari",
+    "index_badge": "Community",
+    "index_empty": "Hozircha ochiq to'plamlar yo'q. Birinchi bo'lib o'z to'plamingizni yarating!",
+    "index_meta_title": "To'plamlar | DevCommons",
+    "index_meta_description": "Jamiyat tuzgan kod snippet va AI prompt to'plamlari"
   },
   "AiAssistant": {
     "welcome_title": "Salom! Men DevCommons AI yordamchisiman.",
     "welcome_subtitle": "Sizga qanday yordam bera olaman?",
-    "input_placeholder": "Xabar yozing..."
+    "input_placeholder": "Xabar yozing...",
+    "error_no_key": "AI yordamchi hozircha sozlanmagan — administrator API kalitini qo'shishi kerak.",
+    "error_generic": "Xatolik yuz berdi. Birozdan keyin qayta urinib ko'ring.",
+    "error_rate_limit": "So'rovlar juda ko'p. Bir daqiqadan keyin qayta urinib ko'ring.",
+    "clear_chat": "Suhbatni tozalash"
   },
   "Actions": {
     "back_to_snippets": "Snippets'ga qaytish",

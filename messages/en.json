@@ -252,6 +252,14 @@
     "comment_vote_aria": "Vote for this comment",
     "comment_delete_aria": "Delete this comment",
     "comment_delete": "Delete",
+    "comment_reply": "Reply",
+    "comment_reply_placeholder": "Write your reply...",
+    "comment_cancel": "Cancel",
+    "comment_save": "Save",
+    "comment_edit": "Edit",
+    "comment_edit_error": "Failed to save the comment",
+    "comment_load_more": "More comments",
+    "comment_edited": "edited",
     "loading": "Loading..."
   },
   "Tour": {
@@ -300,12 +308,22 @@
     "empty_collection": "This collection is currently empty",
     "items_count": "items",
     "back_to_profile": "Back to Profile",
-    "no_description": "No description"
+    "no_description": "No description",
+    "index_title": "Collections",
+    "index_subtitle": "The best snippet and prompt collections curated by the community",
+    "index_badge": "Community",
+    "index_empty": "No public collections yet. Be the first to create one!",
+    "index_meta_title": "Collections | DevCommons",
+    "index_meta_description": "Code snippet and AI prompt collections curated by the community"
   },
   "AiAssistant": {
     "welcome_title": "Hello! I'm your DevCommons AI Assistant.",
     "welcome_subtitle": "How can I help you today?",
-    "input_placeholder": "Type a message..."
+    "input_placeholder": "Type a message...",
+    "error_no_key": "The AI assistant is not configured yet — an administrator needs to add an API key.",
+    "error_generic": "Something went wrong. Please try again in a moment.",
+    "error_rate_limit": "Too many requests. Please try again in a minute.",
+    "clear_chat": "Clear chat"
   },
   "Actions": {
     "back_to_snippets": "Back to Snippets",

@@ -37,6 +37,14 @@ export async function POST(req: Request) {
       );
     }
 
+    // Kalit sozlanmagan bo'lsa — aniq 503 (client do'stona xabar ko'rsatadi)
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+      return new Response(JSON.stringify({ error: "not_configured" }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const { messages, data } = await req.json();
 
     // Basic input validation
@@ -46,11 +54,37 @@ export async function POST(req: Request) {
         headers: { "Content-Type": "application/json" },
       });
     }
-    
+
     // We receive additional context from the client via the 'data' field
     const contextType = data?.contextType || "general";
-    const currentCode = data?.currentCode || "";
     const locale = data?.locale || "uz";
+
+    // Kontekst: DOM scraping o'rniga item id bilan server-side yuklaymiz
+    // (aniq, to'liq va soxtalashtirib bo'lmaydigan kontekst)
+    let currentCode = "";
+    const itemId: string = typeof data?.itemId === "string" ? data.itemId : "";
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(itemId);
+    if (isUuid && (contextType === "snippet" || contextType === "prompt")) {
+      if (contextType === "snippet") {
+        const { data: item } = await supabase
+          .from("snippets")
+          .select("title, description, language, code")
+          .eq("id", itemId)
+          .maybeSingle();
+        if (item) {
+          currentCode = `Title: ${item.title}\nLanguage: ${item.language}\n${item.description ? `Description: ${item.description}\n` : ""}\n${(item.code || "").slice(0, 6000)}`;
+        }
+      } else {
+        const { data: item } = await supabase
+          .from("prompts")
+          .select("title, description, category, content")
+          .eq("id", itemId)
+          .maybeSingle();
+        if (item) {
+          currentCode = `Title: ${item.title}\nCategory: ${item.category}\n${item.description ? `Description: ${item.description}\n` : ""}\n${(item.content || "").slice(0, 6000)}`;
+        }
+      }
+    }
 
     const langName = locale === "uz" ? "O'zbek (Uzbek)" : "Ingliz (English)";
     const languageInstruction = `\n\nMUHIM QOIDA (CRITICAL LANGUAGE RULE): The user is currently browsing the site in ${langName} (${locale}). All explanations, greeting text, code reviews, and advice MUST be provided in ${langName}. If the user asks a question in another language, adapt and respond in the language of their message!`;
@@ -59,9 +93,11 @@ export async function POST(req: Request) {
 Siz doimo do'stona, aniq va texnik jihatdan to'g'ri javoblar berasiz. Barcha kod misollarini markdown (\`\`\`) ichida bering.${languageInstruction}`;
 
     if (contextType === "prompt") {
-      systemPrompt = `Siz DevCommons'ning "Prompt Enhancer" (Prompt Yaxshilovchi) sun'iy intellektisiz. 
-Foydalanuvchi qisqacha nima xohlayotganini yozadi, siz esa unga ChatGPT, Claude yoki Gemini uchun mukammal, to'liq shakllantirilgan promptni yozib berasiz. 
-Unga promptni qanday ishlatish bo'yicha maslahat ham bering.${languageInstruction}`;
+      systemPrompt = `Siz DevCommons'ning "Prompt Enhancer" (Prompt Yaxshilovchi) sun'iy intellektisiz.
+Foydalanuvchi qisqacha nima xohlayotganini yozadi, siz esa unga ChatGPT, Claude yoki Gemini uchun mukammal, to'liq shakllantirilgan promptni yozib berasiz.
+Unga promptni qanday ishlatish bo'yicha maslahat ham bering.${
+        currentCode ? `\n\nFoydalanuvchi hozir sahifada quyidagi promptni ko'rmoqda:\n\n${currentCode}` : ""
+      }${languageInstruction}`;
     } else if (contextType === "snippet") {
       systemPrompt = `Siz DevCommons'ning "Code Reviewer" (Kod tahlilchisi) sun'iy intellektisiz.
 Foydalanuvchiga berilgan kodning qanday ishlashini tushuntirasiz, undagi xatolarni yoki xavfsizlik (security) muammolarini topib berasiz.
@@ -76,7 +112,8 @@ ${languageInstruction}`;
     const result = await streamText({
       model: google('gemini-1.5-flash'), // Or 'gemini-1.5-pro' for more complex tasks
       system: systemPrompt,
-      messages: messages,
+      // Oxirgi 20 ta xabar yetarli — token xarajatini jilovlaymiz
+      messages: messages.slice(-20),
     });
 
     return result.toTextStreamResponse();

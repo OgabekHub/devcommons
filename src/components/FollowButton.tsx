@@ -5,9 +5,9 @@ import { UserPlus, UserCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
-import { sendNotification } from "@/lib/notifications";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { toast } from "@/components/Toaster";
+import { getCachedUser } from "@/lib/bookmark-state";
 
 interface Props {
   targetUserId: string;
@@ -23,8 +23,7 @@ export default function FollowButton({ targetUserId }: Props) {
 
   useEffect(() => {
     const init = async () => {
-      const { data } = await supabase.auth.getUser();
-      const currentUser = data.user;
+      const currentUser = await getCachedUser();
       setUser(currentUser);
 
       // User olingandan keyin follow statusni tekshirish
@@ -70,10 +69,7 @@ export default function FollowButton({ targetUserId }: Props) {
           });
         if (error) throw error;
         setFollowing(true);
-        sendNotification({
-          userId: targetUserId,
-          type: "follow",
-        });
+        // Bildirishnomani DB trigger yozadi (migration v19)
       }
     } catch (err) {
       console.error("Follow error:", err);

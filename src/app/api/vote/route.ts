@@ -104,20 +104,9 @@ export async function POST(req: NextRequest) {
       await supabase.rpc("decrement_votes", { table_name: table, item_id: id });
     }
 
-    // Get new votes count
-    const { data: item } = await supabase.from(table).select("votes, author_id").eq("id", id).single();
+    // Get new votes count. Bildirishnomani DB trigger yozadi (migration v19)
+    const { data: item } = await supabase.from(table).select("votes").eq("id", id).single();
     const newVotes = item?.votes ?? 0;
-
-    // Send notification if adding vote (not self-vote)
-    if (action === "add" && item?.author_id && user.id !== item.author_id) {
-      await supabase.from("notifications").insert({
-        user_id: item.author_id,
-        actor_id: user.id,
-        type: type === "snippet" ? "vote_snippet" : "vote_prompt",
-        snippet_id: type === "snippet" ? id : null,
-        prompt_id: type === "prompt" ? id : null,
-      });
-    }
 
     return NextResponse.json({ votes: newVotes });
   } catch {

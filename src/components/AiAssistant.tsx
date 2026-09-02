@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
-import { Bot, X, Maximize2, Minimize2, Send, Sparkles } from "lucide-react";
+import { Bot, X, Maximize2, Minimize2, Send, Sparkles, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string; };
+
+const STORAGE_KEY = "ai_chat_v1";
+const UUID_RE = /\/(snippets|prompts)\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
 
 export default function AiAssistant() {
   const t = useTranslations("AiAssistant");
@@ -14,39 +17,52 @@ export default function AiAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const pathname = usePathname() || "";
-  const [contextType, setContextType] = useState("general");
-  const [currentCode, setCurrentCode] = useState("");
 
-  useEffect(() => {
-    if (pathname.includes("/prompts")) {
-      setContextType("prompt");
-    } else if (pathname.includes("/snippets")) {
-      setContextType("snippet");
-    } else {
-      setContextType("general");
-    }
-
-    const timer = setTimeout(() => {
-      const codeNodes = document.querySelectorAll("code, pre");
-      if (codeNodes.length > 0) {
-        let longest = "";
-        codeNodes.forEach(node => {
-          if ((node.textContent || "").length > longest.length) {
-            longest = node.textContent || "";
-          }
-        });
-        setCurrentCode(longest.substring(0, 3000)); 
-      } else {
-        setCurrentCode("");
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [pathname, isOpen]);
+  // Kontekst: sahifa yo'lidan item id — server kontentni o'zi yuklaydi
+  // (avvalgi DOM scraping olib tashlandi)
+  const match = pathname.match(UUID_RE);
+  const contextType = match
+    ? (match[1] === "prompts" ? "prompt" : "snippet")
+    : "general";
+  const itemId = match?.[2] ?? "";
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Suhbatni localStorage'da saqlaymiz (sahifa yangilanishida yo'qolmasin)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) setMessages(JSON.parse(saved));
+    } catch {
+      // buzilgan/yo'q — bo'sh boshlaymiz
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-40)));
+    } catch {
+      // storage to'lgan/yopiq — e'tiborsiz
+    }
+  }, [messages]);
+
+  const clearChat = () => {
+    setMessages([]);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // e'tiborsiz
+    }
+  };
+
+  const pushAssistantError = (text: string) => {
+    setMessages((msgs) => [
+      ...msgs,
+      { id: `${Date.now()}-err`, role: "assistant", content: text },
+    ]);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -68,11 +84,17 @@ export default function AiAssistant() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
-          data: { contextType, currentCode, locale }
+          data: { contextType, itemId, locale }
         })
       });
 
-      if (!res.ok) throw new Error("API error");
+      if (!res.ok) {
+        // Aniq holatlarga do'stona xabar
+        if (res.status === 503) pushAssistantError(t("error_no_key"));
+        else if (res.status === 429) pushAssistantError(t("error_rate_limit"));
+        else pushAssistantError(t("error_generic"));
+        return;
+      }
       if (!res.body) throw new Error("No body");
 
       const aiMsgId = (Date.now() + 1).toString();
@@ -94,6 +116,7 @@ export default function AiAssistant() {
       }
     } catch (err) {
       console.error(err);
+      pushAssistantError(t("error_generic"));
     } finally {
       setIsLoading(false);
     }
@@ -125,6 +148,16 @@ export default function AiAssistant() {
               <span className="font-semibold text-fg">DevCommons AI</span>
             </div>
             <div className="flex items-center gap-2">
+              {messages.length > 0 && (
+                <button
+                  onClick={clearChat}
+                  aria-label={t("clear_chat")}
+                  title={t("clear_chat")}
+                  className="rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-ink/10 hover:text-fg"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              )}
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="hidden sm:block rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-ink/10 hover:text-fg"

@@ -45,6 +45,36 @@ export default function NotificationsBell() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Realtime: yangi bildirishnoma kelganda qo'ng'iroq jonli yangilanadi
+  // (migration v19 notifications'ni supabase_realtime publication'ga qo'shadi)
+  useEffect(() => {
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    let cancelled = false;
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user || cancelled) return;
+      channel = supabase
+        .channel(`notifications:${user.id}`)
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => loadNotifications()
+        )
+        .subscribe();
+    });
+
+    return () => {
+      cancelled = true;
+      if (channel) supabase.removeChannel(channel);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const loadNotifications = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {

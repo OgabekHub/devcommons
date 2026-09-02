@@ -8,6 +8,7 @@ import { useRouter } from "@/i18n/routing";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import AddToCollectionModal from "./AddToCollectionModal";
 import { toast } from "@/components/Toaster";
+import { checkBookmarked, getCachedUser } from "@/lib/bookmark-state";
 
 interface Props {
   snippetId?: string;
@@ -26,20 +27,18 @@ export default function BookmarkButton({ snippetId, promptId, compact = false }:
   const supabase = createSupabaseBrowser();
 
   useEffect(() => {
+    // N+1 emas: auth kesh + sahifadagi barcha tugmalar bitta .in() so'rovga
+    // jamlanadi (src/lib/bookmark-state.ts)
     const init = async () => {
-      const { data } = await supabase.auth.getUser();
-      const currentUser = data.user;
+      const currentUser = await getCachedUser();
       setUser(currentUser);
 
       if (currentUser) {
-        // Haqiqiy bookmark holatini tekshirish
-        const query = snippetId
-          ? supabase.from("bookmarks").select("id").eq("user_id", currentUser.id).eq("snippet_id", snippetId).maybeSingle()
-          : supabase.from("bookmarks").select("id").eq("user_id", currentUser.id).eq("prompt_id", promptId!).maybeSingle();
-
-        const { data: bookmark, error: bookmarkError } = await query;
-        if (bookmarkError) console.error('Bookmark check failed:', bookmarkError);
-        if (bookmark) setBookmarked(true);
+        const isBookmarked = await checkBookmarked(
+          snippetId ? "snippet" : "prompt",
+          snippetId || promptId!
+        );
+        if (isBookmarked) setBookmarked(true);
       }
       setChecking(false);
     };

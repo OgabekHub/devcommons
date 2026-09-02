@@ -433,3 +433,52 @@
 .driver-popover-close-btn:hover { color: #ef4444 !important; }
 .driver-popover-progress-text   { color: #71717a !important; font-size: 0.75rem !important; }
 .driver-popover-arrow           { border-color: #111113 !important; }
+
+/* ================================================
+   Prism kod ranglari — mavzu tokenlariga bog'langan
+   (.code-highlight ichida; light mavzuda zinc o'zi ag'dariladi)
+   ================================================ */
+.code-highlight code {
+  color: rgb(var(--zinc-300));
+}
+.code-highlight .token.comment,
+.code-highlight .token.prolog,
+.code-highlight .token.doctype,
+.code-highlight .token.cdata {
+  color: rgb(var(--zinc-500));
+  font-style: italic;
+}
+.code-highlight .token.keyword,
+.code-highlight .token.atrule,
+.code-highlight .token.important {
+  color: rgb(var(--brand));
+}
+.code-highlight .token.string,
+.code-highlight .token.char,
+.code-highlight .token.attr-value,
+.code-highlight .token.template-string {
+  color: #10b981; /* emerald-500 — ikkala mavzuda o'qiladi */
+}
+.code-highlight .token.function,
+.code-highlight .token.class-name,
+.code-highlight .token.selector {
+  color: #0ea5e9; /* sky-500 */
+}
+.code-highlight .token.number,
+.code-highlight .token.boolean,
+.code-highlight .token.constant,
+.code-highlight .token.symbol {
+  color: #f59e0b; /* amber-500 */
+}
+.code-highlight .token.operator,
+.code-highlight .token.punctuation {
+  color: rgb(var(--zinc-400));
+}
+.code-highlight .token.property,
+.code-highlight .token.tag,
+.code-highlight .token.attr-name,
+.code-highlight .token.builtin,
+.code-highlight .token.regex,
+.code-highlight .token.variable {
+  color: rgb(var(--brand-light));
+}
