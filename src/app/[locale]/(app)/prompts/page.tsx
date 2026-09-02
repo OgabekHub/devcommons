@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
+import { LIST_PAGE_SIZE } from "@/lib/list-shared";
 import type { Prompt } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from 'next/dynamic';
@@ -30,20 +31,25 @@ export default async function PromptsPage({ params: { locale } }: { params: { lo
   setRequestLocale(locale);
   const t = await getTranslations("Prompts");
   let prompts: Prompt[] = [];
+  let total = 0;
   let error: string | null = null;
 
   if (isSupabaseConfigured) {
     try {
       const supabase = createSupabasePublic();
-      const { data, error: dbError } = await supabase
+      // Faqat 1-sahifa — qolganini client /api/list orqali sahifalab oladi
+      const { data, count, error: dbError } = await supabase
         .from("prompts")
-        .select("*")
+        .select("*", { count: "exact" })
         .order("created_at", { ascending: false })
-        .limit(200)
+        .limit(LIST_PAGE_SIZE)
         .returns<Prompt[]>();
 
       if (dbError) error = dbError.message;
-      else prompts = data ?? [];
+      else {
+        prompts = data ?? [];
+        total = count ?? prompts.length;
+      }
     } catch (e) {
       error = e instanceof Error ? e.message : "Noma'lum xato yuz berdi";
     }
@@ -77,6 +83,7 @@ export default async function PromptsPage({ params: { locale } }: { params: { lo
   return (
     <PromptsClient
       prompts={prompts}
+      initialTotal={total}
       labels={{
         search_placeholder: t("search_placeholder"),
         btn_add: t("btn_add"),

@@ -1,1 +1,0 @@
-const Prism = require('prismjs'); require('prismjs/components/prism-python'); console.log('success');

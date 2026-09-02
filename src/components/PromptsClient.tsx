@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePaginatedList, type ListSort } from "@/lib/use-paginated-list";
 import { Sparkles, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Prompt } from "@/types/database";
@@ -29,6 +30,7 @@ const categoryStyles: Record<string, string> = {
 
 interface Props {
   prompts: Prompt[];
+  initialTotal: number;
   labels: {
     search_placeholder: string;
     btn_add: string;
@@ -38,7 +40,7 @@ interface Props {
   };
 }
 
-export default function PromptsClient({ prompts, labels }: Props) {
+export default function PromptsClient({ prompts, initialTotal, labels }: Props) {
   const t = useTranslations("Actions");
   const CATEGORIES = [
     { value: "ALL", label: t("filter_all") },
@@ -53,59 +55,27 @@ export default function PromptsClient({ prompts, labels }: Props) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALL");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState<ListSort>("newest");
   const [showSortMenu, setShowSortMenu] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(12);
-  const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
 
-  const filtered = useMemo(() => {
-    let result = prompts.filter((p) => {
-      const matchQuery =
-        !query ||
-        p.title.toLowerCase().includes(query.toLowerCase()) ||
-        p.content.toLowerCase().includes(query.toLowerCase()) ||
-        (p as any).description?.toLowerCase().includes(query.toLowerCase());
-
-      const matchCat = category === "ALL" || p.category === category;
-
-      const matchTags = selectedTags.length === 0 ||
-        selectedTags.some(tag => (p as any).tags?.includes(tag));
-
-      return matchQuery && matchCat && matchTags;
+  // Server-side pagination: filtr/sort so'rov darajasida, scroll keyingi sahifani oladi
+  const { items: visiblePrompts, total, hasMore, loading, loadMore } =
+    usePaginatedList<Prompt>({
+      type: "prompts",
+      initialItems: prompts,
+      initialTotal,
+      query,
+      facet: category,
+      tags: selectedTags,
+      sort: sortBy,
     });
-
-    // Sort
-    result = [...result].sort((a, b) => {
-      if (sortBy === "newest") {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      } else if (sortBy === "oldest") {
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      } else if (sortBy === "popular") {
-        return (b.votes || 0) - (a.votes || 0);
-      }
-      return 0;
-    });
-
-    return result;
-  }, [prompts, query, category, selectedTags, sortBy]);
-
-  const visiblePrompts = filtered.slice(0, visibleCount);
-  const hasMore = visibleCount < filtered.length;
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Infinite scroll with Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && hasMore && !loading) {
-          setLoading(true);
-          timeoutRef.current = setTimeout(() => {
-            setVisibleCount((prev) => Math.min(prev + 12, filtered.length));
-            setLoading(false);
-          }, 300);
-        }
+        if (entries[0]?.isIntersecting) loadMore();
       },
       { threshold: 0.1 }
     );
@@ -114,16 +84,8 @@ export default function PromptsClient({ prompts, labels }: Props) {
       observer.observe(observerRef.current);
     }
 
-    return () => {
-      observer.disconnect();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [hasMore, loading, filtered.length]);
-
-  // Reset visible count when filters change
-  useEffect(() => {
-    setVisibleCount(12);
-  }, [query, category, selectedTags, sortBy]);
+    return () => observer.disconnect();
+  }, [loadMore]);
 
   return (
     <div className="space-y-8">
@@ -199,7 +161,7 @@ export default function PromptsClient({ prompts, labels }: Props) {
                 {SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => { setSortBy(opt.value); setShowSortMenu(false); }}
+                    onClick={() => { setSortBy(opt.value as ListSort); setShowSortMenu(false); }}
                     className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                       sortBy === opt.value ? "bg-brand/10 text-brand" : "text-zinc-300 hover:bg-ink/5 hover:text-fg"
                     }`}
@@ -238,14 +200,14 @@ export default function PromptsClient({ prompts, labels }: Props) {
       {/* Natijalar soni */}
       {(query || category !== "ALL" || selectedTags.length > 0) && (
         <p className="text-sm text-zinc-400">
-          {filtered.length} {t("results_found")}
+          {total} {t("results_found")}
           {query && <span> — &ldquo;<strong className="text-zinc-200">{query}</strong>&rdquo;</span>}
           {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
 
       {/* Bo'sh holat */}
-      {filtered.length === 0 && (
+      {visiblePrompts.length === 0 && !loading && (
         <div className="card border-dashed border-line bg-gradient-to-br from-surface-subtle to-surface p-14 text-center">
           <div className="mx-auto mb-5 inline-flex rounded-2xl bg-purple-500/10 border border-purple-500/20 p-4">
             <Sparkles className="h-7 w-7 text-purple-400" />

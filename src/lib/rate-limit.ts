@@ -1,6 +1,11 @@
 /**
- * Simple in-memory rate limiter for API routes.
- * Uses a sliding window approach with automatic TTL cleanup.
+ * Rate limiter for API routes.
+ *
+ * Upstash Redis (REST) sozlangan bo'lsa — barcha serverless instansiyalar
+ * uchun UMUMIY hisoblagich (production'da to'g'ri ishlaydi). Sozlanmagan
+ * bo'lsa in-memory fallback (dev / bitta instansiya uchun yetarli).
+ *
+ * Env: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
  */
 
 interface RateLimitEntry {
@@ -48,17 +53,53 @@ interface RateLimitResult {
   resetAt: number;
 }
 
-/**
- * Check rate limit for a given identifier (e.g., IP address or user ID).
- */
-export function checkRateLimit(
-  identifier: string,
-  prefix: string,
-  options: RateLimitOptions
-): RateLimitResult {
-  ensureCleanup();
+const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
+const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+const upstashConfigured = Boolean(upstashUrl && upstashToken);
 
-  const key = `${prefix}:${identifier}`;
+/**
+ * Fixed-window hisoblagich Upstash REST pipeline orqali:
+ * INCR + EXPIRE(NX) + TTL — bitta HTTP so'rov, qo'shimcha dependency yo'q.
+ * Xato bo'lsa null qaytaradi (chaqiruvchi in-memory'ga tushadi).
+ */
+async function checkUpstash(
+  key: string,
+  options: RateLimitOptions
+): Promise<RateLimitResult | null> {
+  try {
+    const res = await fetch(`${upstashUrl}/pipeline`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${upstashToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([
+        ["INCR", key],
+        ["EXPIRE", key, String(options.windowSeconds), "NX"],
+        ["TTL", key],
+      ]),
+      // Rate-limit tekshiruvi javobni cho'zmasligi kerak
+      signal: AbortSignal.timeout(2000),
+    });
+    if (!res.ok) return null;
+    const data: Array<{ result?: number; error?: string }> = await res.json();
+    const count = data[0]?.result;
+    const ttl = data[2]?.result;
+    if (typeof count !== "number") return null;
+    const resetAt =
+      Date.now() + (typeof ttl === "number" && ttl > 0 ? ttl : options.windowSeconds) * 1000;
+    return {
+      allowed: count <= options.maxRequests,
+      remaining: Math.max(0, options.maxRequests - count),
+      resetAt,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function checkMemory(key: string, options: RateLimitOptions): RateLimitResult {
+  ensureCleanup();
   const now = Date.now();
   const entry = rateLimitStore.get(key);
 
@@ -79,6 +120,25 @@ export function checkRateLimit(
     remaining: options.maxRequests - entry.count,
     resetAt: entry.resetAt,
   };
+}
+
+/**
+ * Check rate limit for a given identifier (e.g., IP address or user ID).
+ */
+export async function checkRateLimit(
+  identifier: string,
+  prefix: string,
+  options: RateLimitOptions
+): Promise<RateLimitResult> {
+  const key = `rl:${prefix}:${identifier}`;
+
+  if (upstashConfigured) {
+    const result = await checkUpstash(key, options);
+    if (result) return result;
+    // Upstash vaqtincha ishlamasa — in-memory bilan davom etamiz
+  }
+
+  return checkMemory(key, options);
 }
 
 /**

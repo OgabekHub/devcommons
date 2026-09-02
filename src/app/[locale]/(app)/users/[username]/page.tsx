@@ -25,16 +25,25 @@ export default async function PublicProfilePage({ params: { username, locale } }
 
   if (error || !user) notFound();
 
+  // Tor select (katta code ustuni tortilmaydi) + follower'lar faqat count
   const [
     { data: snippets },
     { data: prompts },
-    { data: followers },
-    { data: following }
+    { count: followersCount },
+    { count: followingCount }
   ] = await Promise.all([
-    supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
-    supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
-    supabase.from("follows").select("id").eq("following_id", user.id),
-    supabase.from("follows").select("id").eq("follower_id", user.id),
+    supabase
+      .from("snippets")
+      .select("id, title, description, language, votes, view_count, created_at")
+      .eq("author_id", user.id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("prompts")
+      .select("id, title, description, content, category, votes, view_count, created_at")
+      .eq("author_id", user.id)
+      .order("created_at", { ascending: false }),
+    supabase.from("follows").select("id", { count: "exact", head: true }).eq("following_id", user.id),
+    supabase.from("follows").select("id", { count: "exact", head: true }).eq("follower_id", user.id),
   ]);
 
   const totalViews = ((snippets || []).reduce((sum, s) => sum + (s.view_count || 0), 0)) +
@@ -43,7 +52,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
                     ((prompts || []).reduce((sum, p) => sum + (p.votes || 0), 0));
 
   const createdAt = new Date(user.created_at).toLocaleDateString(
-    locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US", {
+    locale === "uz" ? "uz-UZ" : "en-US", {
     year: "numeric",
     month: "long",
   });
@@ -113,12 +122,12 @@ export default async function PublicProfilePage({ params: { username, locale } }
         </div>
         <div className="card p-4 text-center">
           <Users className="mx-auto h-5 w-5 text-blue-500 mb-1.5" />
-          <p className="text-2xl font-bold text-fg">{followers?.length || 0}</p>
+          <p className="text-2xl font-bold text-fg">{followersCount || 0}</p>
           <p className="text-xs text-zinc-500">Followers</p>
         </div>
         <div className="card p-4 text-center">
           <UserPlus className="mx-auto h-5 w-5 text-green-500 mb-1.5" />
-          <p className="text-2xl font-bold text-fg">{following?.length || 0}</p>
+          <p className="text-2xl font-bold text-fg">{followingCount || 0}</p>
           <p className="text-xs text-zinc-500">Following</p>
         </div>
       </div>
@@ -130,7 +139,7 @@ export default async function PublicProfilePage({ params: { username, locale } }
           promptCount: prompts?.length || 0,
           totalVotes,
           totalViews,
-          followersCount: followers?.length || 0,
+          followersCount: followersCount || 0,
         }}
         showAll={false}
       />

@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       ? { maxRequests: 30, windowSeconds: 60 }
       : { maxRequests: 10, windowSeconds: 60 };
 
-    const rateLimitResult = checkRateLimit(identifier, "playground", limits);
+    const rateLimitResult = await checkRateLimit(identifier, "playground", limits);
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
         { success: false, error: "Rate limit exceeded. Please try again later." },

@@ -33,3 +33,11 @@ Thumbs.db
 next-env.d.ts
 
 .vercel
+
+# one-off dev scripts (repo tarixidan olib tashlangan)
+add_i18n.js
+check_db.js
+delete_orphans.js
+fix_labels.js
+test-prism.js
+

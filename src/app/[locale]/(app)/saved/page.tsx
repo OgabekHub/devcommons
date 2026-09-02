@@ -150,7 +150,7 @@ export default function SavedPage() {
                     <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
                   {s.description && <p className="text-sm text-zinc-400 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-zinc-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="mt-2 text-xs text-zinc-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}</p>
                 </Link>
               ))}
             </div>
@@ -184,7 +184,7 @@ export default function SavedPage() {
                     <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
                   <p className="text-sm text-zinc-400 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-zinc-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="mt-2 text-xs text-zinc-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}</p>
                 </Link>
               ))}
             </div>

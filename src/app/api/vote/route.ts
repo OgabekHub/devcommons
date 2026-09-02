@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 // Joriy foydalanuvchi ushbu item'ga ovoz bergan-bermaganini qaytaradi.
 export async function GET(req: NextRequest) {
@@ -47,6 +48,15 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Rate limit: 30 vote amali / daqiqa / foydalanuvchi
+    const rl = await checkRateLimit(user.id || getClientIp(req), "vote", {
+      maxRequests: 30,
+      windowSeconds: 60,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
     // Check if user already voted (deduplication)

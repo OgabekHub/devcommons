@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     const identifier = user?.id || clientIp;
     const limits = user ? AUTH_LIMIT : UNAUTH_LIMIT;
 
-    const rateLimitResult = checkRateLimit(identifier, "chat", limits);
+    const rateLimitResult = await checkRateLimit(identifier, "chat", limits);
     if (!rateLimitResult.allowed) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Please try again later." }),

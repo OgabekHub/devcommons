@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { createSupabaseAdmin } from "@/lib/supabase-admin";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 // used_count'ni service_role orqali oshiradi (RPC anon'dan revoke qilingan).
 async function bumpUsedCount(id: string, itemType: "snippet" | "prompt") {
@@ -11,10 +12,15 @@ async function bumpUsedCount(id: string, itemType: "snippet" | "prompt") {
 }
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
+    const rl = await checkRateLimit(getClientIp(req), "v1", { maxRequests: 60, windowSeconds: 60 });
+    if (!rl.allowed) {
+      return NextResponse.json({ status: "error", message: "Too many requests" }, { status: 429 });
+    }
+
     const supabase = createSupabaseServer();
     const id = params.id;
 

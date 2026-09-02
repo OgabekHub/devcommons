@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Bell, CheckCheck, MessageSquare, UserPlus, Heart } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase";
 import { Link } from "@/i18n/routing";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface NotificationItem {
   id: string;
@@ -26,6 +26,7 @@ export default function NotificationsBell() {
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
+  const t = useTranslations("Notifications");
   const supabase = useMemo(() => createSupabaseBrowser(), []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -101,22 +102,24 @@ export default function NotificationsBell() {
   };
 
   const renderMessage = (item: NotificationItem) => {
-    const actorName = item.actor?.github_username || "Foydalanuvchi";
+    const actorName = item.actor?.github_username || t("anonymous");
+    const msgKey = (
+      ["vote_snippet", "vote_prompt", "comment_snippet", "comment_prompt", "follow"].includes(item.type)
+        ? `msg_${item.type}`
+        : "msg_default"
+    ) as
+      | "msg_vote_snippet"
+      | "msg_vote_prompt"
+      | "msg_comment_snippet"
+      | "msg_comment_prompt"
+      | "msg_follow"
+      | "msg_default";
 
-    switch (item.type) {
-      case "vote_snippet":
-        return <span><strong className="text-fg">{actorName}</strong> kodingizga vote berdi</span>;
-      case "vote_prompt":
-        return <span><strong className="text-fg">{actorName}</strong> promptingizga vote berdi</span>;
-      case "comment_snippet":
-        return <span><strong className="text-fg">{actorName}</strong> kodingizga izoh qoldirdi</span>;
-      case "comment_prompt":
-        return <span><strong className="text-fg">{actorName}</strong> promptingizga izoh qoldirdi</span>;
-      case "follow":
-        return <span><strong className="text-fg">{actorName}</strong> sizga obuna bo&apos;ldi</span>;
-      default:
-        return <span><strong className="text-fg">{actorName}</strong> siz bilan bog&apos;landi</span>;
-    }
+    return (
+      <span>
+        <strong className="text-fg">{actorName}</strong> {t(msgKey)}
+      </span>
+    );
   };
 
   const getTargetUrl = (item: NotificationItem) => {
@@ -147,10 +150,10 @@ export default function NotificationsBell() {
           <div className="flex items-center justify-between border-b border-line px-4 py-3 bg-surface-overlay">
             <div className="flex items-center gap-2">
               <Bell className="h-4 w-4 text-brand" />
-              <h3 className="text-sm font-semibold text-fg">Bildirishnomalar</h3>
+              <h3 className="text-sm font-semibold text-fg">{t("title")}</h3>
               {unreadCount > 0 && (
                 <span className="rounded-full bg-brand/20 border border-brand/30 px-2 py-0.5 text-xs font-semibold text-brand">
-                  {unreadCount} yangi
+                  {t("new_badge", { count: unreadCount })}
                 </span>
               )}
             </div>
@@ -158,10 +161,10 @@ export default function NotificationsBell() {
               <button
                 onClick={markAllAsRead}
                 className="flex items-center gap-1 text-xs text-zinc-400 transition-colors hover:text-brand"
-                title="Barchasini o'qilgan qilish"
+                title={t("mark_all_title")}
               >
                 <CheckCheck className="h-3.5 w-3.5" />
-                <span>O&apos;qildi</span>
+                <span>{t("mark_all")}</span>
               </button>
             )}
           </div>
@@ -169,10 +172,10 @@ export default function NotificationsBell() {
           {/* List */}
           <div className="max-h-80 overflow-y-auto divide-y divide-ink/5">
             {loading ? (
-              <div className="p-6 text-center text-xs text-zinc-500">Yuklanmoqda...</div>
+              <div className="p-6 text-center text-xs text-zinc-500">{t("loading")}</div>
             ) : notifications.length === 0 ? (
               <div className="p-8 text-center text-xs text-zinc-500">
-                Hozircha bildirishnomalar yo&apos;q
+                {t("empty")}
               </div>
             ) : (
               notifications.map((item) => (
@@ -211,7 +214,7 @@ export default function NotificationsBell() {
                     <p className="text-zinc-300 leading-snug">{renderMessage(item)}</p>
                     <span className="mt-1 block text-[10px] text-zinc-500">
                       {new Date(item.created_at).toLocaleDateString(
-                        locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US",
+                        locale === "uz" ? "uz-UZ" : "en-US",
                         { hour: "2-digit", minute: "2-digit" }
                       )}
                     </span>

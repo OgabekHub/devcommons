@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -13,6 +14,14 @@ export async function OPTIONS() {
 
 export async function GET(request: NextRequest) {
   try {
+    const rl = await checkRateLimit(getClientIp(request), "v1", { maxRequests: 60, windowSeconds: 60 });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { status: "error", message: "Too many requests" },
+        { status: 429, headers: CORS_HEADERS }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     const slug = searchParams.get("slug") || searchParams.get("name");

@@ -106,7 +106,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
     if (!error) {
       setComments(comments.filter(c => c.id !== commentId));
     } else {
-      toast.error("Izohni o'chirishda xatolik");
+      toast.error(t("comment_delete_error"));
     }
     setBusyIds((s) => { const n = new Set(s); n.delete(commentId); return n; });
   };
@@ -121,7 +121,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
       setVotedIds((s) => new Set(s).add(commentId));
       setComments(comments.map(c => c.id === commentId ? { ...c, votes: c.votes + 1 } : c));
     } else {
-      toast.error("Ovoz berishda xatolik");
+      toast.error(t("comment_vote_error"));
     }
     setBusyIds((s) => { const n = new Set(s); n.delete(commentId); return n; });
   };
@@ -193,7 +193,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-zinc-200">{comment.author_name}</span>
                     <span className="text-xs text-zinc-500">
-                      {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                      {new Date(comment.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-zinc-300 break-words">{comment.content}</p>
@@ -201,7 +201,7 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                     <button
                       onClick={() => handleVote(comment.id)}
                       disabled={busyIds.has(comment.id) || votedIds.has(comment.id)}
-                      aria-label="Izohga ovoz berish"
+                      aria-label={t("comment_vote_aria")}
                       className={`flex items-center gap-1 text-xs transition-colors disabled:cursor-not-allowed ${
                         votedIds.has(comment.id) ? "text-brand" : "text-zinc-500 hover:text-brand"
                       }`}
@@ -213,11 +213,11 @@ export default function CommentsSection({ snippetId, promptId }: Props) {
                       <button
                         onClick={() => handleDelete(comment.id)}
                         disabled={busyIds.has(comment.id)}
-                        aria-label="Izohni o'chirish"
+                        aria-label={t("comment_delete_aria")}
                         className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 transition-colors disabled:opacity-50"
                       >
                         <Trash2 className="h-3 w-3" />
-                        O&apos;chirish
+                        {t("comment_delete")}
                       </button>
                     )}
                   </div>

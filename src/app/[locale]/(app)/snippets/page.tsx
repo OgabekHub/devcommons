@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, createSupabasePublic } from "@/lib/supabase-server";
+import { LIST_PAGE_SIZE } from "@/lib/list-shared";
 import type { Snippet } from "@/types/database";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from 'next/dynamic';
@@ -30,20 +31,25 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
   setRequestLocale(locale);
   const t = await getTranslations("Snippets");
   let snippets: Snippet[] = [];
+  let total = 0;
   let error: string | null = null;
 
   if (isSupabaseConfigured) {
     try {
       const supabase = createSupabasePublic();
-      const { data, error: dbError } = await supabase
+      // Faqat 1-sahifa — qolganini client /api/list orqali sahifalab oladi
+      const { data, count, error: dbError } = await supabase
         .from("snippets")
-        .select("*")
+        .select("*", { count: "exact" })
         .order("created_at", { ascending: false })
-        .limit(200)
+        .limit(LIST_PAGE_SIZE)
         .returns<Snippet[]>();
 
       if (dbError) error = dbError.message;
-      else snippets = data ?? [];
+      else {
+        snippets = data ?? [];
+        total = count ?? snippets.length;
+      }
     } catch (e) {
       error = e instanceof Error ? e.message : "Noma'lum xato yuz berdi";
     }
@@ -77,6 +83,7 @@ export default async function SnippetsPage({ params: { locale } }: { params: { l
   return (
     <SnippetsClient
       snippets={snippets}
+      initialTotal={total}
       labels={{
         search_placeholder: t("search_placeholder"),
         btn_add: t("btn_add"),

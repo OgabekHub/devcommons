@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePaginatedList, type ListSort } from "@/lib/use-paginated-list";
 import { Code2, Plus, Search, X, ArrowUpDown, Loader2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import type { Snippet } from "@/types/database";
@@ -17,6 +18,7 @@ import { ALL_SUPPORTED_LANGUAGES as ALL_LANGUAGES, LANGUAGE_CONFIGS_MAP as LANGU
 
 interface Props {
   snippets: Snippet[];
+  initialTotal: number;
   labels: {
     search_placeholder: string;
     btn_add: string;
@@ -26,7 +28,7 @@ interface Props {
   };
 }
 
-export default function SnippetsClient({ snippets, labels }: Props) {
+export default function SnippetsClient({ snippets, initialTotal, labels }: Props) {
   const t = useTranslations("Actions");
   const SORT_OPTIONS = [
     { value: "newest", label: t("sort_newest") },
@@ -37,59 +39,27 @@ export default function SnippetsClient({ snippets, labels }: Props) {
   const [query, setQuery] = useState("");
   const [lang, setLang] = useState("ALL");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState<ListSort>("newest");
   const [showSortMenu, setShowSortMenu] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(12);
-  const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
 
-  const filtered = useMemo(() => {
-    let result = snippets.filter((s) => {
-      const matchQuery =
-        !query ||
-        s.title.toLowerCase().includes(query.toLowerCase()) ||
-        s.description?.toLowerCase().includes(query.toLowerCase()) ||
-        s.language.toLowerCase().includes(query.toLowerCase());
-
-      const matchLang = lang === "ALL" || s.language === lang;
-
-      const matchTags = selectedTags.length === 0 ||
-        selectedTags.some(tag => (s as any).tags?.includes(tag));
-
-      return matchQuery && matchLang && matchTags;
+  // Server-side pagination: filtr/sort so'rov darajasida, scroll keyingi sahifani oladi
+  const { items: visibleSnippets, total, hasMore, loading, loadMore } =
+    usePaginatedList<Snippet>({
+      type: "snippets",
+      initialItems: snippets,
+      initialTotal,
+      query,
+      facet: lang,
+      tags: selectedTags,
+      sort: sortBy,
     });
-
-    // Sort
-    result = [...result].sort((a, b) => {
-      if (sortBy === "newest") {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      } else if (sortBy === "oldest") {
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      } else if (sortBy === "popular") {
-        return (b.votes || 0) - (a.votes || 0);
-      }
-      return 0;
-    });
-
-    return result;
-  }, [snippets, query, lang, selectedTags, sortBy]);
-
-  const visibleSnippets = filtered.slice(0, visibleCount);
-  const hasMore = visibleCount < filtered.length;
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Infinite scroll with Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && hasMore && !loading) {
-          setLoading(true);
-          timeoutRef.current = setTimeout(() => {
-            setVisibleCount((prev) => Math.min(prev + 12, filtered.length));
-            setLoading(false);
-          }, 300);
-        }
+        if (entries[0]?.isIntersecting) loadMore();
       },
       { threshold: 0.1 }
     );
@@ -98,16 +68,8 @@ export default function SnippetsClient({ snippets, labels }: Props) {
       observer.observe(observerRef.current);
     }
 
-    return () => {
-      observer.disconnect();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [hasMore, loading, filtered.length]);
-
-  // Reset visible count when filters change
-  useEffect(() => {
-    setVisibleCount(12);
-  }, [query, lang, selectedTags, sortBy]);
+    return () => observer.disconnect();
+  }, [loadMore]);
 
   return (
     <div className="space-y-8">
@@ -163,7 +125,7 @@ export default function SnippetsClient({ snippets, labels }: Props) {
               {SORT_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
-                  onClick={() => { setSortBy(opt.value); setShowSortMenu(false); }}
+                  onClick={() => { setSortBy(opt.value as ListSort); setShowSortMenu(false); }}
                   className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                     sortBy === opt.value ? "bg-brand/10 text-brand" : "text-zinc-300 hover:bg-ink/5 hover:text-fg"
                   }`}
@@ -234,14 +196,14 @@ export default function SnippetsClient({ snippets, labels }: Props) {
       {/* Natijalar soni */}
       {(query || lang !== "ALL" || selectedTags.length > 0) && (
         <p className="text-sm text-zinc-400">
-          {filtered.length} {t("results_found")}
+          {total} {t("results_found")}
           {query && <span> — &ldquo;<strong className="text-zinc-200">{query}</strong>&rdquo;</span>}
           {selectedTags.length > 0 && <span> — {selectedTags.length} {t("tags")}</span>}
         </p>
       )}
 
       {/* Bo'sh holat */}
-      {filtered.length === 0 && (
+      {visibleSnippets.length === 0 && !loading && (
         <div className="card border-dashed border-line bg-gradient-to-br from-surface-subtle to-surface p-14 text-center">
           <div className="mx-auto mb-5 inline-flex rounded-2xl bg-brand/10 p-4">
             <Code2 className="h-7 w-7 text-brand" />

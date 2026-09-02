@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     // Rate limit stats tracking: 30 requests per minute per IP
     const clientIp = getClientIp(req);
-    const rateLimitResult = checkRateLimit(clientIp, "stats", { maxRequests: 30, windowSeconds: 60 });
+    const rateLimitResult = await checkRateLimit(clientIp, "stats", { maxRequests: 30, windowSeconds: 60 });
     if (!rateLimitResult.allowed) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }

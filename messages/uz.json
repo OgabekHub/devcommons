@@ -247,6 +247,11 @@
     "no_comments": "Hozircha fikrlar yo'q. Birinchi bo'lib fikr bildiring!",
     "save_to_collection_btn": "To'plamga saqlash",
     "comment_delete_confirm": "Bu izoh o'chirilsinmi?",
+    "comment_delete_error": "Izohni o'chirishda xatolik",
+    "comment_vote_error": "Ovoz berishda xatolik",
+    "comment_vote_aria": "Izohga ovoz berish",
+    "comment_delete_aria": "Izohni o'chirish",
+    "comment_delete": "O'chirish",
     "loading": "Yuklanmoqda..."
   },
   "Tour": {
@@ -334,7 +339,10 @@
     "title": "Qidiruv natijalari",
     "results_for": "bo'yicha topilgan ma'lumotlar",
     "empty_query": "Qidirish uchun yuqoridagi maydonga so'z kiriting",
-    "nothing_found": "Hech narsa topilmadi. Boshqa so'z bilan urinib ko'ring."
+    "nothing_found": "Hech narsa topilmadi. Boshqa so'z bilan urinib ko'ring.",
+    "filter_all": "Hammasi",
+    "prev": "Oldingi",
+    "next": "Keyingi"
   },
   "Badges": {
     "title": "Yutuq va Nishonlar",
@@ -451,20 +459,33 @@
     "feature_rbac": "Jamoa a'zolarini boshqarish (Owner, Editor, Viewer)",
     "feature_priority_support": "VIP texnik ko'mak"
   },
+  "Notifications": {
+    "title": "Bildirishnomalar",
+    "new_badge": "{count} yangi",
+    "mark_all": "O'qildi",
+    "mark_all_title": "Barchasini o'qilgan qilish",
+    "loading": "Yuklanmoqda...",
+    "empty": "Hozircha bildirishnomalar yo'q",
+    "anonymous": "Foydalanuvchi",
+    "msg_vote_snippet": "kodingizga vote berdi",
+    "msg_vote_prompt": "promptingizga vote berdi",
+    "msg_comment_snippet": "kodingizga izoh qoldirdi",
+    "msg_comment_prompt": "promptingizga izoh qoldirdi",
+    "msg_follow": "sizga obuna bo'ldi",
+    "msg_default": "siz bilan bog'landi"
+  },
   "Teams": {
-    "title": "Acme Corp Frontend Team",
-    "subtitle": "Jamoangizning maxfiy AI kontekstlari va B2B ishchi maydoni.",
-    "tab_rules": "Maxfiy Qoidalar (Private Rules)",
-    "tab_members": "A'zolar (Members)",
-    "tab_settings": "Sozlamalar (Settings)",
-    "invite_btn": "A'zo Qo'shish",
-    "member_role_owner": "Owner",
-    "member_role_editor": "Editor",
-    "member_role_viewer": "Viewer",
-    "rule_card_title": "Maxfiy Arxitektura Qoidalari",
-    "rule_card_desc": "Ushbu qoidalar faqat jamoangiz a'zolariga CLI orqali qabul qilishga (pull) ruxsat etiladi.",
-    "create_rule_btn": "Yangi Maxfiy Qoida",
-    "empty_rules": "Sizning jamoangizda hali maxfiy qoidalar yo'q. Kod yozish jarayonini tezlashtirish uchun o'z standartlaringizni kiriting."
+    "badge": "Tez kunda",
+    "title": "Jamoaviy ish maydonlari",
+    "subtitle": "Jamoangiz uchun maxfiy AI qoidalari, prompt kutubxonasi va rolga asoslangan ruxsatlar — hozirda ishlab chiqilmoqda.",
+    "feature_1_title": "Maxfiy qoidalar",
+    "feature_1_desc": "Jamoangizning ichki .cursorrules va CLAUDE.md fayllari faqat a'zolarga ko'rinadi.",
+    "feature_2_title": "Rollar va ruxsatlar",
+    "feature_2_desc": "Owner, Editor va Viewer rollari bilan kim nimani o'zgartira olishini boshqarasiz.",
+    "feature_3_title": "CLI orqali ulash",
+    "feature_3_desc": "Jamoa qoidalarini har bir a'zo terminaldan bitta buyruq bilan loyihasiga tortadi.",
+    "waitlist_hint": "Bu funksiya jamoangizga kerakmi? Chap pastdagi Feedback tugmasi orqali qiziqish bildiring — ustuvorlikni talabga qarab belgilaymiz.",
+    "back_home": "Bosh sahifaga qaytish"
   },
   "Docs": {
     "title": "Platform Guide",

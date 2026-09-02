@@ -49,8 +49,8 @@ export default function ProfilePage() {
       const [
         { data: snips },
         { data: proms },
-        { data: follows },
-        { data: following },
+        { count: followersCount },
+        { count: followingCount },
         { data: snippetBookmarks },
         { data: promptBookmarks },
         { data: userProfile },
@@ -59,8 +59,9 @@ export default function ProfilePage() {
       ] = await Promise.all([
         supabase.from("snippets").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
         supabase.from("prompts").select("*").eq("author_id", user.id).order("created_at", { ascending: false }),
-        supabase.from("follows").select("*").eq("following_id", user.id),
-        supabase.from("follows").select("*").eq("follower_id", user.id),
+        // Faqat son kerak — qatorlar tortilmaydi
+        supabase.from("follows").select("id", { count: "exact", head: true }).eq("following_id", user.id),
+        supabase.from("follows").select("id", { count: "exact", head: true }).eq("follower_id", user.id),
         supabase.from("bookmarks").select("snippet_id, snippets(*)").eq("user_id", user.id).not("snippet_id", "is", null),
         supabase.from("bookmarks").select("prompt_id, prompts(*)").eq("user_id", user.id).not("prompt_id", "is", null),
         supabase.from("users").select("bio").eq("id", user.id).single(),
@@ -88,8 +89,8 @@ export default function ProfilePage() {
       setStats({
         totalViews,
         totalVotes,
-        followers: follows?.length || 0,
-        following: following?.length || 0,
+        followers: followersCount || 0,
+        following: followingCount || 0,
       });
 
       setLoading(false);
@@ -368,7 +369,7 @@ export default function ProfilePage() {
                   <div className="mt-3 flex items-center gap-3">
                     <VoteButton id={s.id} type="snippet" initialVotes={s.votes ?? 0} />
                     <span className="text-xs text-zinc-500">
-                      {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                      {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}
                     </span>
                   </div>
                 </Link>
@@ -405,7 +406,7 @@ export default function ProfilePage() {
                   <div className="mt-3 flex items-center gap-3">
                     <VoteButton id={p.id} type="prompt" initialVotes={p.votes ?? 0} />
                     <span className="text-xs text-zinc-500">
-                      {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                      {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}
                     </span>
                   </div>
                 </Link>
@@ -443,7 +444,7 @@ export default function ProfilePage() {
                     <span className="ml-2 rounded-lg bg-brand/10 border border-brand/20 px-2 py-0.5 text-xs font-semibold text-brand">{s.language}</span>
                   </div>
                   {s.description && <p className="text-sm text-zinc-400 line-clamp-2">{s.description}</p>}
-                  <p className="mt-2 text-xs text-zinc-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="mt-2 text-xs text-zinc-500">👍 {s.votes} · {new Date(s.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}</p>
                 </Link>
               ))}
               {bookmarkedPrompts.map((p: any) => (
@@ -461,7 +462,7 @@ export default function ProfilePage() {
                     <span className="ml-2 rounded-lg bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400">{p.category}</span>
                   </div>
                   <p className="text-sm text-zinc-400 line-clamp-2">{p.content}</p>
-                  <p className="mt-2 text-xs text-zinc-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}</p>
+                  <p className="mt-2 text-xs text-zinc-500">👍 {p.votes} · {new Date(p.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}</p>
                 </Link>
               ))}
             </div>
@@ -497,7 +498,7 @@ export default function ProfilePage() {
                   {c.description && <p className="mb-4 text-sm text-zinc-400 line-clamp-2">{c.description}</p>}
                   <div className="mt-auto pt-4 border-t border-line flex items-center justify-between">
                     <span className="text-xs text-zinc-500">
-                      {new Date(c.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US")}
+                      {new Date(c.created_at).toLocaleDateString(locale === "uz" ? "uz-UZ" : "en-US")}
                     </span>
                   </div>
                 </Link>

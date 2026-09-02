@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function GET(req: Request) {
   try {
+    const rl = await checkRateLimit(getClientIp(req), "v1", { maxRequests: 60, windowSeconds: 60 });
+    if (!rl.allowed) {
+      return NextResponse.json({ success: false, error: "Too many requests" }, { status: 429 });
+    }
+
     const { searchParams } = new URL(req.url);
     const query = searchParams.get("q") || "";
     

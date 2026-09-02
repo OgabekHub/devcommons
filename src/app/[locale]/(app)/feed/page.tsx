@@ -285,7 +285,7 @@ export default function FeedPage() {
                         <span className="text-zinc-500">•</span>
                         <span className="text-zinc-500">
                           {new Date(item.created_at).toLocaleDateString(
-                            locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US"
+                            locale === "uz" ? "uz-UZ" : "en-US"
                           )}
                         </span>
                       </div>

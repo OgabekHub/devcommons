@@ -2,8 +2,14 @@ import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { createHash } from "crypto";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function GET(request: Request) {
+  const rl = await checkRateLimit(getClientIp(request), "v1", { maxRequests: 60, windowSeconds: 60 });
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(request.url);
   const limit = Math.min(Math.max(parseInt(searchParams.get("limit") || "10") || 10, 1), 50);
   const language = searchParams.get("language");

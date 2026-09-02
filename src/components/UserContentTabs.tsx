@@ -27,7 +27,7 @@ export default function UserContentTabs({ snippets, prompts, locale, emptyText =
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString(
-      locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US"
+      locale === "uz" ? "uz-UZ" : "en-US"
     );
   };
 

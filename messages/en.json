@@ -247,6 +247,11 @@
     "no_comments": "No comments yet. Be the first to share your thoughts!",
     "save_to_collection_btn": "Save to Collection",
     "comment_delete_confirm": "Delete this comment?",
+    "comment_delete_error": "Failed to delete the comment",
+    "comment_vote_error": "Failed to vote",
+    "comment_vote_aria": "Vote for this comment",
+    "comment_delete_aria": "Delete this comment",
+    "comment_delete": "Delete",
     "loading": "Loading..."
   },
   "Tour": {
@@ -334,7 +339,10 @@
     "title": "Search results",
     "results_for": "results found for",
     "empty_query": "Enter a word in the search field above",
-    "nothing_found": "Nothing found. Try searching with a different keyword."
+    "nothing_found": "Nothing found. Try searching with a different keyword.",
+    "filter_all": "All",
+    "prev": "Previous",
+    "next": "Next"
   },
   "Badges": {
     "title": "Achievements & Badges",
@@ -451,20 +459,33 @@
     "feature_rbac": "Role-Based Access Control (Owner, Editor)",
     "feature_priority_support": "VIP Priority Technical Support"
   },
+  "Notifications": {
+    "title": "Notifications",
+    "new_badge": "{count} new",
+    "mark_all": "Mark read",
+    "mark_all_title": "Mark all as read",
+    "loading": "Loading...",
+    "empty": "No notifications yet",
+    "anonymous": "User",
+    "msg_vote_snippet": "voted for your snippet",
+    "msg_vote_prompt": "voted for your prompt",
+    "msg_comment_snippet": "commented on your snippet",
+    "msg_comment_prompt": "commented on your prompt",
+    "msg_follow": "followed you",
+    "msg_default": "interacted with you"
+  },
   "Teams": {
-    "title": "Acme Corp Frontend Team",
-    "subtitle": "Your team's private AI contexts and B2B workspace.",
-    "tab_rules": "Private Rules",
-    "tab_members": "Members",
-    "tab_settings": "Settings",
-    "invite_btn": "Invite Member",
-    "member_role_owner": "Owner",
-    "member_role_editor": "Editor",
-    "member_role_viewer": "Viewer",
-    "rule_card_title": "Private Architecture Rules",
-    "rule_card_desc": "These rules can only be pulled via CLI by authorized members of your team.",
-    "create_rule_btn": "New Private Rule",
-    "empty_rules": "Your team doesn't have any private rules yet. Add your internal coding standards to speed up development."
+    "badge": "Coming soon",
+    "title": "Team Workspaces",
+    "subtitle": "Private AI rules, a shared prompt library, and role-based access for your team — currently in development.",
+    "feature_1_title": "Private rules",
+    "feature_1_desc": "Your team's internal .cursorrules and CLAUDE.md files are visible to members only.",
+    "feature_2_title": "Roles & permissions",
+    "feature_2_desc": "Control who can edit what with Owner, Editor, and Viewer roles.",
+    "feature_3_title": "CLI integration",
+    "feature_3_desc": "Every member pulls team rules into their project with a single terminal command.",
+    "waitlist_hint": "Does your team need this? Let us know via the Feedback button in the bottom-left — we prioritize by demand.",
+    "back_home": "Back to home"
   },
   "Docs": {
     "title": "Platform Guide",
